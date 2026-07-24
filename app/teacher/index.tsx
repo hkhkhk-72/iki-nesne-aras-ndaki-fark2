@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScreenHeader, Card, Button } from '@/components/ui';
-import { getCurriculum } from '@/core/content-loader';
-import { colors, spacing, typography } from '@/theme';
+import { getAllCurricula, getTotalStats } from '@/core/content-loader';
+import { colors, spacing, typography, radius } from '@/theme';
 
 export default function TeacherScreen() {
   const router = useRouter();
-  const curriculum = getCurriculum(1);
+  const [selectedGrade, setSelectedGrade] = useState(1);
+  const stats = getTotalStats();
+  const curricula = getAllCurricula();
+  const curriculum = curricula.find((c) => c.grade === selectedGrade);
 
   return (
     <SafeAreaView style={styles.safe}>
       <ScreenHeader
         title="Öğretmen Paneli"
-        subtitle="Sınıf yönetimi ve ilerleme takibi"
+        subtitle="Tüm sınıflar · İlerleme takibi"
         onBack={() => router.back()}
       />
       <ScrollView contentContainerStyle={styles.container}>
@@ -24,12 +27,12 @@ export default function TeacherScreen() {
             <Text style={styles.statLabel}>Öğrenci</Text>
           </View>
           <View style={styles.statCard}>
-            <Text style={styles.statNumber}>6</Text>
+            <Text style={styles.statNumber}>{stats.outcomes}</Text>
             <Text style={styles.statLabel}>Kazanım</Text>
           </View>
           <View style={styles.statCard}>
-            <Text style={styles.statNumber}>68%</Text>
-            <Text style={styles.statLabel}>Ort. İlerleme</Text>
+            <Text style={styles.statNumber}>{stats.activities}</Text>
+            <Text style={styles.statLabel}>Etkinlik</Text>
           </View>
         </View>
 
@@ -40,32 +43,60 @@ export default function TeacherScreen() {
           <Button title="Yazdırılabilir Etkinlik" icon="📄" variant="outline" onPress={() => {}} fullWidth />
         </View>
 
-        <Text style={styles.sectionTitle}>Kazanım İlerlemeleri</Text>
-        {curriculum?.outcomes.map((outcome) => (
-          <Card
-            key={outcome.id}
-            title={outcome.title}
-            subtitle={`${outcome.activities.length} etkinlik`}
-            icon={outcome.icon}
-            color={outcome.color}
-            progress={Math.floor(Math.random() * 40 + 40)}
-            onPress={() => router.push(`/outcome/1/${outcome.id}`)}
-            style={styles.outcomeCard}
-          />
-        ))}
+        <Text style={styles.sectionTitle}>Sınıf Seç</Text>
+        <View style={styles.gradeTabs}>
+          {[1, 2, 3, 4].map((g) => (
+            <TouchableOpacity
+              key={g}
+              style={[styles.gradeTab, selectedGrade === g && styles.gradeTabActive]}
+              onPress={() => setSelectedGrade(g)}
+            >
+              <Text style={[styles.gradeTabText, selectedGrade === g && styles.gradeTabTextActive]}>
+                {g}. Sınıf
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <Text style={styles.sectionTitle}>
+          {curriculum?.title} — {curriculum?.outcomes.length} Kazanım
+        </Text>
+        {curriculum?.units.map((unit) => {
+          const unitOutcomes = curriculum.outcomes.filter((o) => o.unitId === unit.id);
+          return (
+            <View key={unit.id} style={styles.unitSection}>
+              <Text style={styles.unitTitle}>{unit.icon} {unit.title}</Text>
+              {unitOutcomes.map((outcome) => (
+                <Card
+                  key={outcome.id}
+                  title={outcome.title}
+                  subtitle={`${outcome.code} · ${outcome.activities.length} etkinlik`}
+                  icon={outcome.icon}
+                  color={outcome.color}
+                  progress={Math.floor(Math.random() * 40 + 30)}
+                  onPress={() => router.push(`/outcome/${selectedGrade}/${outcome.id}`)}
+                  style={styles.outcomeCard}
+                />
+              ))}
+            </View>
+          );
+        })}
 
         <View style={styles.aiSection}>
           <Text style={styles.sectionTitle}>🤖 AI Önerileri</Text>
           <View style={styles.aiCard}>
             <Text style={styles.aiText}>
-              3 öğrenci "Daha Fazla – Daha Az" kazanımında zorlanıyor.
-              Karşılaştırma oyununu sınıfta tekrar oynamanız önerilir.
+              1. sınıfta 3 öğrenci "Daha Fazla – Daha Az" kazanımında zorlanıyor.
             </Text>
           </View>
           <View style={styles.aiCard}>
             <Text style={styles.aiText}>
-              Velilere ev etkinliği önerisi: "Çorap Eşleştir" etkinliğini
-              bu hafta sonu evde yapın.
+              3. sınıfta çarpım tablosu pekiştirmesi önerilir. 7 ve 8'ler zayıf.
+            </Text>
+          </View>
+          <View style={styles.aiCard}>
+            <Text style={styles.aiText}>
+              4. sınıf kesir toplama konusunda sınıf ortalaması %45. Akıllı tahta etkinliği önerilir.
             </Text>
           </View>
         </View>
@@ -89,6 +120,19 @@ const styles = StyleSheet.create({
   statLabel: { ...typography.caption, color: colors.textSecondary },
   sectionTitle: { ...typography.heading, color: colors.text },
   actions: { gap: spacing.sm },
+  gradeTabs: { flexDirection: 'row', gap: spacing.xs },
+  gradeTab: {
+    flex: 1,
+    paddingVertical: spacing.sm,
+    alignItems: 'center',
+    borderRadius: radius.md,
+    backgroundColor: colors.border,
+  },
+  gradeTabActive: { backgroundColor: colors.primary },
+  gradeTabText: { ...typography.caption, fontWeight: '600', color: colors.textSecondary },
+  gradeTabTextActive: { color: colors.textLight },
+  unitSection: { gap: spacing.xs },
+  unitTitle: { ...typography.subheading, color: colors.text, marginBottom: spacing.xs },
   outcomeCard: { marginBottom: spacing.xs },
   aiSection: { gap: spacing.sm },
   aiCard: {

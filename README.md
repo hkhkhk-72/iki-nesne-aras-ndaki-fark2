@@ -47,6 +47,6 @@ Motorlar içerikten tamamen bağımsızdır. Yeni bir kazanım eklemek için yal
 
 ## Kapsam
 
-- **Şu an:** 1. Sınıf Matematik
-- **Hedef:** 1-4. Sınıf Matematik
+- **1-4. Sınıf Matematik** — 24 ünite, 59 kazanım, ~295 etkinlik
 - **Odak:** Her kazanım bir Öğrenme Merkezi
+- **İçerik Fabrikası:** TypeScript tabanlı otomatik aktivite üretimi

@@ -1,10 +1,17 @@
 import React from 'react';
-import { Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScreenHeader, Card } from '@/components/ui';
 import { getCurriculum } from '@/core/content-loader';
 import { colors, spacing, typography } from '@/theme';
+
+const GRADE_COLORS: Record<number, string> = {
+  1: colors.grade1,
+  2: colors.grade2,
+  3: colors.grade3,
+  4: colors.grade4,
+};
 
 export default function GradeScreen() {
   const { grade } = useLocalSearchParams<{ grade: string }>();
@@ -29,6 +36,12 @@ export default function GradeScreen() {
         onBack={() => router.back()}
       />
       <ScrollView contentContainerStyle={styles.container}>
+        <View style={[styles.summary, { backgroundColor: (GRADE_COLORS[gradeNum] ?? colors.primary) + '15' }]}>
+          <Text style={styles.summaryText}>
+            {curriculum.outcomes.length} kazanım ·{' '}
+            {curriculum.outcomes.reduce((s, o) => s + o.activities.length, 0)} etkinlik
+          </Text>
+        </View>
         <Text style={styles.sectionTitle}>Üniteler</Text>
         {curriculum.units.map((unit) => {
           const outcomes = curriculum.outcomes.filter((o) => unit.outcomeIds.includes(o.id));
@@ -53,6 +66,8 @@ export default function GradeScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   container: { padding: spacing.md, gap: spacing.md, paddingBottom: spacing.xxl },
+  summary: { borderRadius: 12, padding: spacing.md, alignItems: 'center' },
+  summaryText: { ...typography.bodyBold, color: colors.text },
   sectionTitle: { ...typography.heading, color: colors.text, marginBottom: spacing.xs },
   unitCard: { marginBottom: spacing.sm },
   error: { ...typography.body, color: colors.error, textAlign: 'center', marginTop: spacing.xl },

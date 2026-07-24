@@ -127,7 +127,7 @@ export interface SmartboardDuelConfig {
 export type ComparisonSymbol = 'more' | 'less' | 'equal';
 
 export interface ComparisonItem {
-  id: string;
+  id?: string;
   label?: string;
   count: number;
   image?: string;

@@ -61,18 +61,22 @@ Format: `M.{sınıf}.{ünite}.{sıra}`
 - [ ] Ön koşullar tanımlı mı?
 - [ ] 10 çalışma prensibi test edildi mi?
 
-## 1. Sınıf Müfredat Durumu
+## Müfredat Durumu (Tüm Sınıflar)
 
-| Ünite | Kazanım | Etkinlik | Durum |
-|-------|---------|----------|-------|
-| Sayılar ve Sayma | 3 | 7 | ✅ |
-| Karşılaştırma | 2 | 8 | ✅ |
-| Toplama | 1 | 1 | 🔄 |
+| Sınıf | Ünite | Kazanım | Etkinlik |
+|-------|-------|---------|----------|
+| 1. Sınıf | 6 | 14 | ~70 |
+| 2. Sınıf | 6 | 14 | ~70 |
+| 3. Sınıf | 6 | 15 | ~75 |
+| 4. Sınıf | 6 | 16 | ~80 |
+| **Toplam** | **24** | **59** | **~295** |
+
+İçerik `src/content/grades/index.ts` ve `src/content/factories/activity-factory.ts` ile üretilir.
 
 ## İçerik Ekleme Adımları
 
-1. `src/content/grade1/curriculum.json` dosyasını aç
-2. Yeni kazanım veya aktivite ekle
-3. Uygun `engineId` ve `payload` tanımla
+1. `src/content/grades/index.ts` dosyasına yeni kazanım tanımı ekle
+2. Uygun `topic` tipini seç (counting, addition, geometry, vb.)
+3. Fabrika otomatik olarak aktiviteleri üretir
 4. `npm run typecheck` çalıştır
 5. Uygulamada test et

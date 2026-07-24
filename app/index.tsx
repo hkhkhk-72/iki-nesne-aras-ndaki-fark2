@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -24,6 +24,12 @@ export default function HomeScreen() {
   useEffect(() => {
     loadStudentProfile().then(setProfile);
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadStudentProfile().then(setProfile);
+    }, []),
+  );
 
   return (
     <LinearGradient colors={['#E8F4FD', '#F0F7FF', '#FFFFFF']} style={styles.gradient}>

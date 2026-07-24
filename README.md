@@ -4,6 +4,21 @@ Dünyanın en iyi ilkokul matematik öğrenme platformu. React Native + Expo + T
 
 ## Başlangıç
 
+### MiniBilge OS — Canlı Web Arayüzü
+
+Proje kökündeki `index.html` dosyası, tam ekran responsive web arayüzünü sunar:
+
+```bash
+# Basit HTTP sunucusu ile
+npx serve . -p 3000
+# veya
+python3 -m http.server 3000
+```
+
+Tarayıcıda `http://localhost:3000` adresini açın.
+
+### Expo Mobil Uygulama
+
 ```bash
 npm install
 npm start

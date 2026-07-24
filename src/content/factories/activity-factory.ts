@@ -8,6 +8,7 @@ import type {
   MatchingPayload,
   Unit,
 } from '@/core/types';
+import { buildLesson } from './lesson-factory';
 
 export type TopicType =
   | 'counting'
@@ -122,6 +123,7 @@ function dragDrop(
 
 function modeIcon(mode: ActivityConfig['mode']): string {
   const icons: Record<string, string> = {
+    learn: '📖',
     play: '🎮',
     explore: '🔍',
     experiment: '🧪',
@@ -254,7 +256,14 @@ export function buildActivities(def: OutcomeDef): ActivityConfig[] {
           ],
           hint: 'Parmaklarını kullanarak say!',
         }),
-        comparison(id, 'explore', 'Toplama ile Karşılaştır', 'Toplamı bul', comparePayload(`${a} elma + ${b} elma = ?`, a, b, '🍎')),
+        comparison(
+          id,
+          'explore',
+          'Toplamı Keşfet',
+          'Grupları birleştirerek toplamı bul',
+          comparePayload(`${a} + ${b} = ?`, a, b, '🔵', 'Grup A', 'Grup B'),
+          6,
+        ),
         dragDrop(id, 'experiment', 'Toplama Dene', 'Grupları birleştir', {
           instruction: 'İki grubu birleştirerek toplamı bul!',
           items: [
@@ -524,6 +533,7 @@ export function buildActivities(def: OutcomeDef): ActivityConfig[] {
           correctMapping: { next: 'slot' },
         }),
         comparison(id, 'real_life', 'Fayans Deseni', 'Gerçek hayat örüntü', comparePayload('Hangi desen devam ediyor?', 4, 4, '🧱'), 10),
+        comparison(id, 'smartboard', 'Örüntü Düellosu', 'Sınıf yarışması', comparePayload('4 ve 4 eşit mi?', 4, 4, '🔴'), 10),
       );
       break;
     }
@@ -541,6 +551,19 @@ export function buildActivities(def: OutcomeDef): ActivityConfig[] {
 }
 
 export function buildOutcome(def: OutcomeDef): LearningOutcome {
+  const lesson = buildLesson(def);
+  const lessonActivity: ActivityConfig = {
+    id: `act-${def.id.replace('out-', '')}-learn`,
+    mode: 'learn',
+    engineId: 'lesson',
+    title: 'Konuyu Öğren',
+    description: `${lesson.slides.length} slaytlık anlatım`,
+    icon: '📖',
+    estimatedMinutes: lesson.durationMinutes,
+    unlocked: true,
+    payload: lesson,
+  };
+
   return {
     id: def.id,
     code: def.code,
@@ -553,7 +576,8 @@ export function buildOutcome(def: OutcomeDef): LearningOutcome {
     color: def.color,
     realLifeContexts: def.realLifeContexts,
     prerequisites: def.prerequisites,
-    activities: buildActivities(def),
+    lesson,
+    activities: [lessonActivity, ...buildActivities(def)],
   };
 }
 

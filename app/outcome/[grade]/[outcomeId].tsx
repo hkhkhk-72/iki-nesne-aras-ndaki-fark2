@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScreenHeader } from '@/components/ui';
+import { ScreenHeader, Button, ProgressBar } from '@/components/ui';
 import { getOutcome } from '@/core/content-loader';
+import { loadAllProgress } from '@/core/progress-store';
+import { getUnlockedActivities, calculateOutcomeProgress, isLessonCompleted } from '@/core/unlock-logic';
 import { colors, spacing, typography, activityModeLabels, radius } from '@/theme';
-import type { ActivityMode } from '@/core/types';
+import type { ActivityConfig, ActivityMode, StudentProgress } from '@/core/types';
+
+const MODE_ORDER: ActivityMode[] = [
+  'learn', 'play', 'explore', 'experiment', 'real_life', 'home',
+  'classroom', 'smartboard', 'challenge', 'ai_reinforcement', 'pdf', 'collection', 'teacher',
+];
 
 export default function OutcomeScreen() {
   const { grade, outcomeId } = useLocalSearchParams<{ grade: string; outcomeId: string }>();
   const router = useRouter();
   const gradeNum = Number(grade);
   const outcome = getOutcome(gradeNum, outcomeId);
+  const [progress, setProgress] = useState<StudentProgress[]>([]);
+
+  useEffect(() => {
+    loadAllProgress().then(setProgress);
+  }, []);
 
   if (!outcome) {
     return (
@@ -21,7 +33,19 @@ export default function OutcomeScreen() {
     );
   }
 
-  const groupedActivities = groupByMode(outcome.activities);
+  const activities = getUnlockedActivities(outcome, progress);
+  const progressPct = calculateOutcomeProgress(outcome, progress);
+  const lessonDone = isLessonCompleted(outcome.id, progress);
+  const grouped = groupByModeOrdered(activities);
+
+  const openActivity = (activity: ActivityConfig) => {
+    if (!activity.unlocked) return;
+    if (activity.mode === 'smartboard') {
+      router.push(`/smartboard/${gradeNum}/${outcomeId}`);
+      return;
+    }
+    router.push(`/activity/${gradeNum}/${outcomeId}/${activity.id}`);
+  };
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -34,7 +58,34 @@ export default function OutcomeScreen() {
         <View style={[styles.hero, { backgroundColor: outcome.color + '20' }]}>
           <Text style={styles.heroIcon}>{outcome.icon}</Text>
           <Text style={styles.heroDesc}>{outcome.description}</Text>
+          <ProgressBar progress={progressPct} label="İlerleme" color={outcome.color} />
         </View>
+
+        {!lessonDone ? (
+          <TouchableOpacity
+            style={[styles.lessonCta, { backgroundColor: outcome.color }]}
+            onPress={() => openActivity(activities[0])}
+          >
+            <Text style={styles.lessonCtaIcon}>📖</Text>
+            <View style={styles.lessonCtaText}>
+              <Text style={styles.lessonCtaTitle}>Önce Konuyu Öğren</Text>
+              <Text style={styles.lessonCtaDesc}>
+                {outcome.lesson.slides.length} slayt · {outcome.lesson.durationMinutes} dk
+              </Text>
+            </View>
+            <Text style={styles.lessonCtaArrow}>→</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.lessonDone}>
+            <Text style={styles.lessonDoneText}>✅ Konu anlatımı tamamlandı</Text>
+            <Button
+              title="Tekrar Oku"
+              variant="outline"
+              size="sm"
+              onPress={() => openActivity(activities.find((a) => a.mode === 'learn')!)}
+            />
+          </View>
+        )}
 
         <View style={styles.contexts}>
           <Text style={styles.contextTitle}>🌍 Gerçek Hayat</Text>
@@ -49,8 +100,10 @@ export default function OutcomeScreen() {
 
         <Text style={styles.sectionTitle}>Öğrenme Merkezi</Text>
 
-        {Object.entries(groupedActivities).map(([mode, activities]) => {
-          const modeInfo = activityModeLabels[mode as ActivityMode];
+        {MODE_ORDER.map((mode) => {
+          const modeActivities = grouped[mode];
+          if (!modeActivities?.length) return null;
+          const modeInfo = activityModeLabels[mode];
           if (!modeInfo) return null;
           return (
             <View key={mode} style={styles.modeSection}>
@@ -58,18 +111,11 @@ export default function OutcomeScreen() {
                 <Text style={styles.modeIcon}>{modeInfo.icon}</Text>
                 <Text style={[styles.modeTitle, { color: modeInfo.color }]}>{modeInfo.label}</Text>
               </View>
-              {activities.map((activity) => (
+              {modeActivities.map((activity) => (
                 <TouchableOpacity
                   key={activity.id}
                   style={[styles.activityCard, !activity.unlocked && styles.locked]}
-                  onPress={() => {
-                    if (!activity.unlocked) return;
-                    if (activity.mode === 'smartboard') {
-                      router.push(`/smartboard/${gradeNum}/${outcomeId}`);
-                    } else {
-                      router.push(`/activity/${gradeNum}/${outcomeId}/${activity.id}`);
-                    }
-                  }}
+                  onPress={() => openActivity(activity)}
                   disabled={!activity.unlocked}
                 >
                   <Text style={styles.activityIcon}>{activity.icon}</Text>
@@ -77,8 +123,13 @@ export default function OutcomeScreen() {
                     <Text style={styles.activityTitle}>{activity.title}</Text>
                     <Text style={styles.activityDesc}>{activity.description}</Text>
                     <Text style={styles.activityMeta}>⏱ {activity.estimatedMinutes} dk</Text>
+                    {activity.mode === 'challenge' && !activity.unlocked ? (
+                      <Text style={styles.lockHint}>Konu + Oyna tamamla</Text>
+                    ) : null}
                   </View>
-                  <Text style={styles.chevron}>{activity.unlocked ? '→' : '🔒'}</Text>
+                  <Text style={styles.chevron}>
+                    {activity.unlocked ? '→' : '🔒'}
+                  </Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -89,12 +140,13 @@ export default function OutcomeScreen() {
   );
 }
 
-function groupByMode<T extends { mode: string }>(items: T[]): Record<string, T[]> {
-  return items.reduce<Record<string, T[]>>((acc, item) => {
-    if (!acc[item.mode]) acc[item.mode] = [];
-    acc[item.mode].push(item);
-    return acc;
-  }, {});
+function groupByModeOrdered(activities: ActivityConfig[]): Record<string, ActivityConfig[]> {
+  const map: Record<string, ActivityConfig[]> = {};
+  for (const a of activities) {
+    if (!map[a.mode]) map[a.mode] = [];
+    map[a.mode].push(a);
+  }
+  return map;
 }
 
 const styles = StyleSheet.create({
@@ -103,6 +155,27 @@ const styles = StyleSheet.create({
   hero: { borderRadius: radius.lg, padding: spacing.lg, alignItems: 'center', gap: spacing.sm },
   heroIcon: { fontSize: 48 },
   heroDesc: { ...typography.body, color: colors.text, textAlign: 'center' },
+  lessonCta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: radius.lg,
+    padding: spacing.lg,
+    gap: spacing.md,
+  },
+  lessonCtaIcon: { fontSize: 36 },
+  lessonCtaText: { flex: 1 },
+  lessonCtaTitle: { ...typography.subheading, color: colors.textLight },
+  lessonCtaDesc: { ...typography.caption, color: 'rgba(255,255,255,0.85)' },
+  lessonCtaArrow: { fontSize: 24, color: colors.textLight, fontWeight: '700' },
+  lessonDone: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.successLight,
+    borderRadius: radius.md,
+    padding: spacing.md,
+  },
+  lessonDoneText: { ...typography.bodyBold, color: colors.success },
   contexts: { gap: spacing.sm },
   contextTitle: { ...typography.subheading, color: colors.text },
   contextTags: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.xs },
@@ -136,5 +209,6 @@ const styles = StyleSheet.create({
   activityTitle: { ...typography.bodyBold, color: colors.text },
   activityDesc: { ...typography.caption, color: colors.textSecondary },
   activityMeta: { ...typography.caption, color: colors.primary, marginTop: 2 },
+  lockHint: { ...typography.caption, color: colors.warning, marginTop: 2 },
   chevron: { fontSize: 20, color: colors.primary, fontWeight: '700' },
 });

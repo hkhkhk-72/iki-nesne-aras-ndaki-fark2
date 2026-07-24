@@ -21,7 +21,8 @@ export default function SmartboardScreen() {
   const router = useRouter();
   const outcome = getOutcome(Number(grade), outcomeId);
   const smartboardActivity = outcome?.activities.find((a) => a.mode === 'smartboard');
-  const payload = smartboardActivity?.payload as ComparisonPayload | undefined;
+  const fallbackComparison = outcome?.activities.find((a) => a.engineId === 'comparison');
+  const payload = (smartboardActivity?.payload ?? fallbackComparison?.payload) as ComparisonPayload | undefined;
 
   const [scores, setScores] = useState({ left: 0, right: 0 });
   const [round, setRound] = useState(1);

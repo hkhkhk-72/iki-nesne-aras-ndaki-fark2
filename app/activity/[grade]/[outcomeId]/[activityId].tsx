@@ -55,6 +55,8 @@ export default function ActivityScreen() {
 
   const EngineComponent = engine.Component;
 
+  const isLesson = activity.mode === 'learn';
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScreenHeader
@@ -73,29 +75,35 @@ export default function ActivityScreen() {
       <Modal visible={result !== null} transparent animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.resultEmoji}>
-              {result && result.score >= 70 ? '🎉' : '💪'}
-            </Text>
+            <Text style={styles.resultEmoji}>{isLesson ? '📖' : result && result.score >= 70 ? '🎉' : '💪'}</Text>
             <Text style={styles.resultTitle}>
-              {result && result.score >= 70 ? 'Harika İş!' : 'Tekrar Dene!'}
+              {isLesson ? 'Konuyu Öğrendin!' : result && result.score >= 70 ? 'Harika İş!' : 'Tekrar Dene!'}
             </Text>
-            <Text style={styles.resultScore}>Puan: {result?.score}</Text>
-            <Text style={styles.resultDetail}>
-              {result?.correct}/{result?.total} doğru
-            </Text>
+            {!isLesson ? (
+              <>
+                <Text style={styles.resultScore}>Puan: {result?.score}</Text>
+                <Text style={styles.resultDetail}>
+                  {result?.correct}/{result?.total} doğru
+                </Text>
+              </>
+            ) : (
+              <Text style={styles.resultDetail}>Şimdi oyunlarla pekiştirebilirsin!</Text>
+            )}
             <View style={styles.modalActions}>
               <Button
-                title="Devam Et"
+                title={isLesson ? 'Oyunlara Geç' : 'Devam Et'}
                 variant="success"
                 onPress={() => router.back()}
                 fullWidth
               />
-              <Button
-                title="Tekrar Oyna"
-                variant="outline"
-                onPress={() => setResult(null)}
-                fullWidth
-              />
+              {!isLesson ? (
+                <Button
+                  title="Tekrar Oyna"
+                  variant="outline"
+                  onPress={() => setResult(null)}
+                  fullWidth
+                />
+              ) : null}
             </View>
           </View>
         </View>

@@ -8,6 +8,7 @@ import type React from 'react';
 export type Grade = 1 | 2 | 3 | 4;
 
 export type ActivityMode =
+  | 'learn'
   | 'play'
   | 'explore'
   | 'experiment'
@@ -22,6 +23,7 @@ export type ActivityMode =
   | 'collection';
 
 export type EngineId =
+  | 'lesson'
   | 'matching'
   | 'drag_drop'
   | 'comparison'
@@ -66,6 +68,24 @@ export interface ActivityConfig {
   unlocked: boolean;
 }
 
+export interface LessonSlide {
+  title: string;
+  body: string;
+  visual: string;
+  tip?: string;
+}
+
+export interface LessonPayload {
+  title: string;
+  code: string;
+  grade: Grade;
+  durationMinutes: number;
+  slides: LessonSlide[];
+  keyPoints: string[];
+  realLifeExample: string;
+  practicePrompt: string;
+}
+
 export interface LearningOutcome {
   id: string;
   code: string;
@@ -79,6 +99,7 @@ export interface LearningOutcome {
   realLifeContexts: string[];
   activities: ActivityConfig[];
   prerequisites: string[];
+  lesson: LessonPayload;
 }
 
 export interface Unit {

@@ -63,15 +63,15 @@ Format: `M.{sınıf}.{ünite}.{sıra}`
 
 ## Müfredat Durumu (Tüm Sınıflar)
 
-| Sınıf | Ünite | Kazanım | Etkinlik |
-|-------|-------|---------|----------|
-| 1. Sınıf | 6 | 14 | ~70 |
-| 2. Sınıf | 6 | 14 | ~70 |
-| 3. Sınıf | 6 | 15 | ~75 |
-| 4. Sınıf | 6 | 16 | ~80 |
-| **Toplam** | **24** | **59** | **~295** |
+| Sınıf | Ünite | Kazanım | Konu Anlatım | Etkinlik |
+|-------|-------|---------|--------------|----------|
+| 1. Sınıf | 6 | 14 | 14 ders | ~84 |
+| 2. Sınıf | 6 | 14 | 14 ders | ~84 |
+| 3. Sınıf | 6 | 15 | 15 ders | ~90 |
+| 4. Sınıf | 6 | 16 | 16 ders | ~96 |
+| **Toplam** | **24** | **59** | **59 ders** | **~354** |
 
-İçerik `src/content/grades/index.ts` ve `src/content/factories/activity-factory.ts` ile üretilir.
+Her kazanımda önce **Konu Anlatım** (slayt), sonra oyun etkinlikleri gelir.
 
 ## İçerik Ekleme Adımları
 

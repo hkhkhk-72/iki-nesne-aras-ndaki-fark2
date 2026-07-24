@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { StudentProfile, StudentProgress } from './types';
+import { isLessonActivity } from './unlock-logic';
 
 const PROFILE_KEY = '@minibilge/student_profile';
 const PROGRESS_KEY = '@minibilge/progress';
@@ -34,12 +35,28 @@ export async function saveActivityProgress(progress: StudentProgress): Promise<v
   const idx = all.findIndex(
     (p) => p.outcomeId === progress.outcomeId && p.activityId === progress.activityId,
   );
+  const isNew = idx < 0;
   if (idx >= 0) {
     all[idx] = progress;
   } else {
     all.push(progress);
   }
   await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(all));
+
+  if (progress.completed && isNew) {
+    await awardStars(progress);
+  }
+}
+
+async function awardStars(progress: StudentProgress): Promise<void> {
+  const profile = await loadStudentProfile();
+  let stars = 1;
+  if (progress.score >= 90) stars = 3;
+  else if (progress.score >= 70) stars = 2;
+  if (isLessonActivity(progress.activityId)) stars = 2;
+
+  profile.totalStars += stars;
+  await saveStudentProfile(profile);
 }
 
 export async function loadAllProgress(): Promise<StudentProgress[]> {
@@ -51,14 +68,4 @@ export async function loadAllProgress(): Promise<StudentProgress[]> {
   }
 }
 
-export function calculateOutcomeProgress(
-  outcomeId: string,
-  activityIds: string[],
-  progress: StudentProgress[],
-): number {
-  if (activityIds.length === 0) return 0;
-  const completed = activityIds.filter((id) =>
-    progress.some((p) => p.outcomeId === outcomeId && p.activityId === id && p.completed),
-  ).length;
-  return Math.round((completed / activityIds.length) * 100);
-}
+export { calculateOutcomeProgress } from './unlock-logic';

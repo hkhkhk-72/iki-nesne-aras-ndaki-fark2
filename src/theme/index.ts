@@ -77,6 +77,7 @@ export const shadows = {
 };
 
 export const activityModeLabels: Record<string, { label: string; icon: string; color: string }> = {
+  learn: { label: 'Konu Anlatım', icon: '📖', color: '#5C6BC0' },
   play: { label: 'Oyna', icon: '🎮', color: '#4A90D9' },
   explore: { label: 'Keşfet', icon: '🔍', color: '#2ECC71' },
   experiment: { label: 'Deney Yap', icon: '🧪', color: '#9B59B6' },

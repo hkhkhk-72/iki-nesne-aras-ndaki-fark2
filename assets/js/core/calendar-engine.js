@@ -2,14 +2,24 @@
   'use strict';
 
   let calendarData = null;
+  let calendarYear = '2025-2026';
 
   function getBase() {
     return window.MINIBILGE_BASE || '';
   }
 
-  async function loadCalendar() {
+  function setYear(year) {
+    calendarYear = year || '2025-2026';
+    calendarData = null;
+  }
+
+  async function loadCalendar(year) {
+    if (year) setYear(year);
     if (calendarData) return calendarData;
-    const res = await fetch(getBase() + 'assets/data/calendar-2025-2026.json');
+    const file = calendarYear === '2026-2027'
+      ? 'calendar-2026-2027.json'
+      : 'calendar-2025-2026.json';
+    const res = await fetch(getBase() + 'assets/data/' + file);
     calendarData = await res.json();
     return calendarData;
   }
@@ -124,6 +134,8 @@
 
   window.CalendarEngine = {
     loadCalendar,
+    setYear,
+    getYear: () => calendarYear,
     parseDate,
     fmtDate,
     getTeachingWeeks,

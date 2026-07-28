@@ -1,103 +1,68 @@
 # MİNİBİLGE ÖĞRETMEN PLATFORMU
 
-## Gelişim Raporu v1.0
+## Gelişim Raporu v1.1
 
-Bu belge, projenin amacını, vizyonunu, mimari kararlarını ve yol haritasını özetler.
-
----
-
-## 1. Projenin Amacı
-
-MiniBilge Öğretmen; Türkiye'de görev yapan ilkokul öğretmenlerinin eğitim-öğretim yılı boyunca ihtiyaç duyduğu bütün resmî planları, evrakları ve öğretmen dokümanlarını **Türkiye Yüzyılı Maarif Modeli** ve **MEB mevzuatına** uygun şekilde tek platform üzerinden hazırlayabilmesini sağlayan yapay zekâ destekli dijital öğretmen platformudur.
-
-**Temel amaçlar:**
-- Öğretmenin zamanını kazanmak
-- Evrak hazırlama yükünü azaltmak
-- MEB mevzuatına uygun belge üretmek
-- Güncel öğretim programlarını tek merkezde toplamak
-- Resmî belgeleri standartlaştırmak
+**Güncelleme:** 29 Temmuz 2026 — Strateji raporu ile uyumlu
 
 ---
 
-## 2. Proje Vizyonu
+## Proje Felsefesi
 
-MiniBilge Öğretmen, hazır plan indiren bir sistem değil; **TYMM'yi anlayan, çalışma takvimini yorumlayan ve öğretmenin girdiğine göre kendi planlarını üreten akıllı bir öğretmen platformu** olacaktır.
-
----
-
-## 3. Temel Tasarım Kararı
-
-> MiniBilge hiçbir zaman internetten bulunan hazır yıllık planları kopyalamayacaktır.
-
-Bunun yerine TYMM, resmî öğretim programları, MEB çalışma takvimi, resmî tatiller, belirli gün ve haftalar ile öğretmen/okul bilgileri birleştirilerek otomatik plan üretilecektir.
+> *"Önce Güvenilir Bilgi Motoru, Sonra Akıllı Algoritma, En Son Arayüz."*
 
 ---
 
-## 4. Hedef Kitle
+## Dört Ana Motor
 
-Yalnızca ilkokul öğretmenleri, sınıf öğretmenleri ve ilkokul düzeyi branş öğretmenleri. **Öğrenci modülü bulunmaz.**
+| # | Motor | Görev | Durum |
+|---|-------|-------|-------|
+| 1 | **Öğretim Programı Motoru** | TYMM öğrenme çıktıları, süreç bileşenleri, içerik çerçeveleri | 1. sınıf 3 ders |
+| 2 | **Takvim Motoru** | MEB takvimi, tatiller, belirli gün/haftalar | 2025-26, 2026-27 |
+| 3 | **Plan Motoru** | Yıllık + günlük plan otomasyonu (sistemin beyni) | Aktif |
+| 4 | **Evrak Motoru** | Word/PDF/HTML resmî belge çıktısı | HTML/Word aktif |
 
----
-
-## 5. Ana Menü Yapısı
-
-- Ana Sayfa
-- Yıllık Plan
-- Günlük Plan
-- Okul Evrakları
-- Belirli Gün ve Haftalar
-- Kulüp Evrakları
-- Destek Eğitim
-- İYEP
-- Egzersiz Planları
-- Zümre Evrakları
-- Rehberlik Evrakları
-- Ölçme ve Değerlendirme
-- Hesabım
-- Ayarlar
+Destek: **Kontrol Motoru** — eksik bilgi ve plan doğrulama
 
 ---
 
-## 6. Geliştirilen Motorlar (v1.0)
+## UX Akışı
 
-| Motor | Durum | Dosya |
-|-------|-------|-------|
-| Takvim Motoru | ✅ Aktif | `assets/js/core/calendar-engine.js` |
-| Öğretim Programı Motoru | ✅ 1. Sınıf (3 ders) | `assets/js/core/curriculum-engine.js` |
-| Yıllık Plan Motoru | ✅ Aktif | `assets/js/core/annual-plan-engine.js` |
-| Günlük Plan Motoru | ✅ Aktif | `assets/js/core/daily-plan-engine.js` |
-| Belge Motoru | ✅ 31 şablon | `assets/js/documents.js` |
-| Kontrol Motoru | ✅ Aktif | `assets/js/core/validation-engine.js` |
+**Ana Sayfa → Sınıf → Ders → Bilgiler → Üret**
+
+Yıllık plan modülünde 4 adımlı sihirbaz uygulanmıştır.
 
 ---
 
-## 7. Veri Kaynakları
+## Evrak Envanteri
 
-- `assets/data/calendar-2025-2026.json` — MEB çalışma takvimi
-- `assets/data/curriculum/sinif1-turkce.json` — 1. Sınıf Türkçe TYMM verisi
-- `assets/data/curriculum/sinif1-matematik.json`
-- `assets/data/curriculum/sinif1-hayat-bilgisi.json`
+38 resmî evrak tanımlı (`assets/data/evrak-envanteri.json`):
+- 22 aktif
+- 2 kısmi
+- 14 yakında
 
----
-
-## 8. Sonraki Aşamalar
-
-1. 1. Sınıf Türkçe yıllık plan motorunun TYMM verisiyle doğrulanması
-2. 2., 3. ve 4. sınıf derslerinin eklenmesi
-3. Word/PDF profesyonel çıktı formatları
-4. Destek Eğitim ve İYEP plan motorları
-5. Gerçek öğretmenlerle kullanılabilirlik testi
+Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İdare, Sınıf Evrakları
 
 ---
 
-## 9. Teknik Mimari
+## Yol Haritası
+
+1. Ders bazlı veri tabanı tamamlama (1-4. sınıf)
+2. Takvim ve plan algoritması (2026-2027 senkronizasyonu)
+3. Evrak şablon motoru Word/PDF MEB formatı
+4. Sahada test ve kalite kontrol
+
+Detay: `docs/STRATEJI-RAPORU.md`
+
+---
+
+## Teknik Mimari
 
 ```
-index.html                    → Öğretmen kontrol paneli (Ana Sayfa)
-modules/                      → Plan ve evrak modülleri
-documents/                    → Okul Evrakları (Belge Merkezi)
-assets/js/core/               → Motorlar (takvim, müfredat, plan, kontrol)
-assets/data/                  → Takvim ve öğretim programı verileri
+assets/js/core/
+  curriculum-engine.js   → Öğretim Programı Motoru
+  calendar-engine.js     → Takvim Motoru
+  plan-engine.js         → Plan Motoru (yıllık + günlük)
+  evrak-engine.js        → Evrak Motoru
+  validation-engine.js   → Kontrol Motoru
+  wizard.js              → Üretim sihirbazı UX
 ```
-
-Modüler mimari sayesinde aynı motor farklı derslerde yeniden kullanılabilir.

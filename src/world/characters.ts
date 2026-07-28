@@ -23,14 +23,17 @@ export const CHARACTERS: Record<CharacterId, CharacterProfile> = {
     id: 'bilge',
     name: 'Bilge Baykuş',
     visual: '🦉',
-    role: 'Rehber',
+    role: 'Rehber — öğretim motorunun sesi (MB-CHAR-002)',
     voice: 'Sakin, merak ettiren, soru soran. Cevabı vermez, düşündürür.',
     neverDoes: [
       'Öğretmen gibi konuşmaz',
       'Yargılamaz',
       '"Yanlış yaptın" demez',
+      '"Aferin / Doğru / Puan kazandın" demez',
       'Puan vermez',
       'Acele ettirmez',
+      'Fındık bağ kurarken konuşmaz',
+      'Çocuk düşünürken üstüne binmez',
     ],
     color: '#8E6FCB',
   },
@@ -74,6 +77,7 @@ export const FORBIDDEN_PHRASES = [
   'yapamadın',
   'tekrar dene',
   'kaybettin',
+  'puan kazandın',
 ];
 
 /** Bir replik Character Bible kurallarına uyuyor mu? */

@@ -139,6 +139,13 @@ export function coversSignals(behavior: SceneBehavior, signals: AISignal[]): boo
         return behavior.retries >= 0;
       case 'first_choice':
         return behavior.firstChoiceCorrect !== null;
+      case 'hesitation':
+      case 'wait_time':
+      case 'screen_dwell':
+      case 'audio_listen':
+      case 'error_type':
+      case 'success_trend':
+        return true;
       default:
         return true;
     }

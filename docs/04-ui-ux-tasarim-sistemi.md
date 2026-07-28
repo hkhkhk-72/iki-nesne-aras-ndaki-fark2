@@ -7,6 +7,19 @@
 3. **Yüksek erişilebilirlik** — Kontrast, accessibilityLabel
 4. **Düşük donanım performansı** — Hafif animasyonlar
 5. **Oyun hissi** — Ders değil macera
+6. **Dünya önce** — Arayüz dünyayı bastırmaz (Karar 234)
+
+## Mikro Deneyim Görsel Kompozisyonu
+
+| Katman | Pay | Örnek |
+|--------|-----|-------|
+| Canlı dünya | %70 | Ağaç, çimen, gölge, yaprak, kuş |
+| Etkileşim | %20 | Palamut, sepet, Fındık, dokunma |
+| Arayüz | %10 | Geri, ses, ayar |
+
+## Ses Bütçesi
+
+Sahne başına en fazla: 1 ortam + 1 karakter + 1 etkileşim + 1 başarı sesi.
 
 ## Renk Paleti
 

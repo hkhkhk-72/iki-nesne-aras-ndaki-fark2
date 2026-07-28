@@ -65,3 +65,15 @@ Doğru-yanlış kontrolü değil; kavram analizi, öğrenme yolu önerisi, öğr
 ## Son Kural
 
 Amaç çok oyun yapmak değil; **çocukların matematiği sevmesini sağlamak**.
+
+## Mavi Kitap — Güncel Kararlar (özet)
+
+| No | Karar |
+|----|--------|
+| 231 | Sezgisel matematik önceliği — önce gör, sonra say |
+| 234 | Dünya önce, arayüz sonra (%70/%20/%10) |
+| 235 | İlk 60 saniyede matematik kelimesi yok |
+| 236 | Her mikro deneyim tek öğrenme hedefi |
+
+Ayrıntı: [docs/09-mavi-kitap-kararlari-234-236.md](./09-mavi-kitap-kararlari-234-236.md)
+· Bilge rehberlik: [docs/10-mb-char-002-bilge-rehberlik-sistemi.md](./10-mb-char-002-bilge-rehberlik-sistemi.md)

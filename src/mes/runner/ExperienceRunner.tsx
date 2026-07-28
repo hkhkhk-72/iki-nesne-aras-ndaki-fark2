@@ -130,28 +130,89 @@ type SceneProps = {
   onAdvance: () => void;
 };
 
-// ─── Sahne 1 tipi: hikâye / tanışma ──────────────────────────
+// ─── Sahne 1 tipi: hikâye / tanışma / İlk Bakış ──────────────
 function NarrativeScene({ scene, settings, observer, onAdvance }: SceneProps) {
   const i = scene.interaction as Extract<SceneSpec['interaction'], { kind: 'narrative' }>;
   const [lineIndex, setLineIndex] = useState(0);
-  const isLast = lineIndex >= i.lines.length - 1;
+  const [phase, setPhase] = useState<'story' | 'bond'>('story');
+  const enteredAt = useRef(Date.now());
+  const dwellRecorded = useRef(false);
+
+  const isSingle = Boolean(i.singleCta);
+  const isLast = isSingle || lineIndex >= i.lines.length - 1;
+  const visibleLines = isSingle ? i.lines : i.lines.slice(0, lineIndex + 1);
+
+  useEffect(() => {
+    // Ekranı inceleme / ses dinleme sinyali — görünmez telemetri
+    const dwellTimer = setTimeout(() => {
+      if (!dwellRecorded.current) {
+        dwellRecorded.current = true;
+        observer.record(scene.id, 'idle', 'screen_dwell');
+      }
+    }, 2500);
+    return () => clearTimeout(dwellTimer);
+  }, [observer, scene.id]);
+
+  const acceptHelp = () => {
+    const latency = Date.now() - enteredAt.current;
+    observer.record(scene.id, 'touch', `help_${latency}`);
+    if (!settings.reduceMotion) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    }
+    if (i.bondMoment && scene.feedback.positive) {
+      setPhase('bond');
+      return;
+    }
+    onAdvance();
+  };
 
   const next = () => {
     observer.record(scene.id, 'touch');
     if (isLast) {
-      onAdvance();
+      acceptHelp();
       return;
     }
     setLineIndex((n) => n + 1);
   };
 
+  if (phase === 'bond') {
+    return (
+      <SceneStage
+        scene={scene}
+        settings={settings}
+        footer={<Button title="Devam" onPress={onAdvance} fullWidth size="lg" variant="success" />}
+      >
+        <View style={styles.bondBox}>
+          <Text style={styles.bondStars}>✨🍂✨</Text>
+          <Text style={styles.bondBasket}>🐿️🧺↑</Text>
+          <Text style={styles.bondCaption}>Fındık sepetini yukarı kaldırıyor...</Text>
+        </View>
+        <SpeechBubble
+          speaker={scene.feedback.speaker}
+          line={scene.feedback.positive}
+          settings={settings}
+        />
+      </SceneStage>
+    );
+  }
+
   return (
     <SceneStage
       scene={scene}
       settings={settings}
-      footer={<Button title={isLast ? i.continueLabel : 'Devam'} onPress={next} fullWidth size="lg" />}
+      footer={
+        <Button
+          title={isLast ? i.continueLabel : 'Devam'}
+          onPress={isSingle ? acceptHelp : next}
+          fullWidth
+          size="lg"
+        />
+      }
     >
-      {i.lines.slice(0, lineIndex + 1).map((line, idx) => (
+      {scene.atmosphere?.worldCue ? (
+        <Text style={styles.worldCue}>{scene.atmosphere.worldCue}</Text>
+      ) : null}
+      {visibleLines.map((line, idx) => (
         <SpeechBubble key={idx} speaker={i.speaker} line={line} settings={settings} />
       ))}
     </SceneStage>
@@ -339,6 +400,11 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
     setAttempts((a) => a + 1);
   };
 
+  const countVisibility = i.countVisibility ?? 'after_attempt';
+  const showCount =
+    countVisibility === 'always' ||
+    (countVisibility === 'after_attempt' && (attempts > 0 || solved));
+
   return (
     <SceneStage
       scene={scene}
@@ -358,7 +424,7 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
             label={g.label}
             emoji={g.emoji}
             count={g.count}
-            showCount={attempts > 0 || solved}
+            showCount={showCount}
             settings={settings}
           />
         ))}
@@ -509,4 +575,16 @@ const styles = StyleSheet.create({
   celebrateTitle: { color: colors.text, fontWeight: '800', textAlign: 'center' },
   celebrateMessage: { color: colors.textSecondary, textAlign: 'center', lineHeight: 24 },
   celebrateCharacter: { fontSize: 44, marginTop: spacing.sm },
+
+  bondBox: { alignItems: 'center', gap: spacing.sm, paddingVertical: spacing.md },
+  bondStars: { fontSize: 28 },
+  bondBasket: { fontSize: 48 },
+  bondCaption: { ...typography.caption, color: colors.textSecondary, textAlign: 'center' },
+  worldCue: {
+    ...typography.caption,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    marginBottom: spacing.xs,
+  },
 });

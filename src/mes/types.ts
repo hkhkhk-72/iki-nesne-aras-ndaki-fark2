@@ -66,6 +66,16 @@ export type SceneInteraction =
       speaker: CharacterId;
       lines: string[];
       continueLabel: string;
+      /**
+       * true ise satırlar tek CTA ile birlikte gösterilir;
+       * "Devam" ile adım adım ilerlenmez (İlk Bakış).
+       */
+      singleCta?: boolean;
+      /**
+       * CTA sonrası bağ anı: kutlama animasyonu + feedback.speaker repliği
+       * (genelde Bilge'nin ilk konuşması).
+       */
+      bondMoment?: boolean;
     }
   | {
       kind: 'discover';
@@ -96,6 +106,11 @@ export type SceneInteraction =
       answerId: string;
       /** Yanlışta sahne değişmez, ipucu güçlenir. */
       hints: string[];
+      /**
+       * Sayı görünürlüğü.
+       * `never` = sezgisel matematik (Karar 231); sayılar asla gösterilmez.
+       */
+      countVisibility?: 'never' | 'after_attempt' | 'always';
     }
   | {
       kind: 'celebrate';
@@ -124,7 +139,11 @@ export type AISignal =
   | 'retry_count'
   | 'first_choice'
   | 'error_type'
-  | 'success_trend';
+  | 'success_trend'
+  /** Ekranı inceleme süresi — İlk Bakış telemetrisi. */
+  | 'screen_dwell'
+  /** Karakter/ortam sesini dinleme süresi. */
+  | 'audio_listen';
 
 // ─── Geri bildirim ───────────────────────────────────────────
 export interface SceneFeedback {
@@ -172,6 +191,34 @@ export interface PdfSpec {
   concept: string;
 }
 
+// ─── Atmosfer / Ses / Görsel kompozisyon ─────────────────────
+/** Karar 234 — Dünya önce, arayüz sonra. */
+export interface VisualComposition {
+  /** Yaşayan dünya payı — hedef %70. */
+  world: number;
+  /** Etkileşim nesneleri — hedef %20. */
+  interaction: number;
+  /** UI (geri, ses, ayar) — hedef %10. */
+  ui: number;
+}
+
+/**
+ * Ses bütçesi — sahnede en fazla 4 katman.
+ * Aynı anda onlarca efekt çalmaz; dikkat dağınıklığını azaltır.
+ */
+export interface SoundBudget {
+  ambient: string;
+  character: string;
+  interaction: string;
+  success: string;
+}
+
+export interface SceneAtmosphere {
+  season?: 'ilkbahar' | 'yaz' | 'sonbahar' | 'kis';
+  /** Sahne yönetmenine not: dünya nasıl hissedilir. */
+  worldCue?: string;
+}
+
 // ─── Sahne ───────────────────────────────────────────────────
 export interface SceneSpec {
   id: string;
@@ -186,7 +233,10 @@ export interface SceneSpec {
   aiObservation: AIObservationSpec;
   feedback: SceneFeedback;
 
-  /** 20-60 saniye kuralı. */
+  /**
+   * Süre kuralı: bağ/kutlama sahneleri 15-60 sn,
+   * öğrenme sahneleri 20-60 sn.
+   */
   estimatedSeconds: number;
   /** 3 dokunuş kuralı: ilk deneyimde sahne başına üst sınır. */
   maxTouches: number;
@@ -194,6 +244,10 @@ export interface SceneSpec {
   replay?: ReplayVariation;
   /** Ekran okuyucu ve düşük görüş için sahne özeti. */
   accessibilityLabel: string;
+
+  atmosphere?: SceneAtmosphere;
+  soundBudget?: SoundBudget;
+  visualComposition?: VisualComposition;
 }
 
 // ─── Mikro deneyim (ders) ────────────────────────────────────

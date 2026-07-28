@@ -2,30 +2,29 @@ import type { SceneSpec } from '@/mes/types';
 
 /**
  * MB-MAT-1.1.01 — Fındık Sincap'ın Kış Hazırlığı
- * Sahne dosyası.
  *
- * Görünmez matematik ilkesi: çocuk "az/çok/eşit çalışıyorum" demez,
- * "Fındık'a yardım ediyorum" der. Kavram hikâyenin içinde saklıdır.
+ * Mikro Deneyim 01 "İlk Bakış": bağ kurar, matematik yoktur.
+ * Mikro Deneyim 02 "İki Ağaç": sezgisel "daha fazla" (Karar 231).
  *
- * 60 saniye kuralı: ilk üç sahne toplam 60 saniyenin altında ve
- * çocuk ilk sahnede hiçbir şeyi "bilmek" zorunda değildir.
- * 3 dokunuş kuralı: sahne başına maxTouches ≤ 3.
+ * Karar 235: ilk 60 saniyede matematik kelimesi kullanılmaz.
+ * Karar 236: her sahne tek öğrenme hedefi taşır.
  */
 
 const PALAMUT_POOL = ['🌰', '🥜', '🌰'];
 
 export const scenes: SceneSpec[] = [
-  // ── SAHNE 1 — Tanışma ──────────────────────────────────────
+  // ── MİKRO DENEYİM 01 — İlk Bakış ───────────────────────────
   {
     id: 'scene01',
     order: 1,
-    title: 'Fındık ile Tanışma',
+    title: 'İlk Bakış',
     pedagogicalGoal:
-      'Duygusal bağ kurmak. Bu sahnede matematik yoktur; çocuk yalnızca bir arkadaş edinir.',
+      'Güven, merak ve duygusal bağ kurmak. Matematik yoktur; çocuk yalnızca ' +
+      '"Fındık\'ın bana ihtiyacı var" hissini yaşar.',
     targetEmotion: 'sicaklik',
     opening: {
-      visual: '🐿️',
-      line: 'Merhaba! Ben Fındık. Keşif Ormanı\'nda yaşıyorum.',
+      visual: '🍂🐿️🧺',
+      line: 'Merhaba!',
       speaker: 'findik',
       animation: 'rise',
     },
@@ -33,38 +32,115 @@ export const scenes: SceneSpec[] = [
       kind: 'narrative',
       speaker: 'findik',
       lines: [
-        'Kış geliyor ve benim bir sorunum var.',
-        'Kışın yiyecek bulamıyorum. Şimdiden hazırlık yapmam gerek.',
-        'Bana yardım eder misin?',
+        'Kış yaklaşıyor...',
+        'Ama galiba tek başıma yetişemeyeceğim.',
       ],
-      continueLabel: 'Sana yardım ederim!',
+      continueLabel: 'Bana Yardım Et',
+      /** Tek CTA; satırlar otomatik akar, çocuk yalnızca bağ kurar. */
+      singleCta: true,
+      /** Dokunuştan sonra Bilge ilk kez konuşur — puan/aferin yok. */
+      bondMoment: true,
     },
     aiObservation: {
-      concept: 'katilim',
-      signals: ['touch_latency', 'wait_time'],
+      concept: 'duygusal_bag',
+      signals: ['touch_latency', 'wait_time', 'hesitation', 'screen_dwell', 'audio_listen'],
       misconceptions: [],
     },
     feedback: {
-      positive: 'Teşekkür ederim! Artık iyi bir ekibiz.',
-      guidance: 'Acele etme, ben buradayım.',
-      speaker: 'findik',
+      positive: 'Harika... Birlikte çok güzel işler başaracağız.',
+      guidance: 'Ben buradayım. Acele etme.',
+      speaker: 'bilge',
     },
-    estimatedSeconds: 25,
-    maxTouches: 3,
+    estimatedSeconds: 20,
+    maxTouches: 1,
+    atmosphere: {
+      season: 'sonbahar',
+      worldCue: 'Yapraklar sallanıyor, kuş ve rüzgar sesi; Fındık yarı dolu sepetle nefes nefese gelir. Bilge dalda sessizce gülümser.',
+    },
+    soundBudget: {
+      ambient: 'ruzgar_yaprak',
+      character: 'findik_nefes_selam',
+      interaction: 'yardim_dokunus',
+      success: 'yaprak_yildiz',
+    },
+    visualComposition: { world: 70, interaction: 20, ui: 10 },
     replay: {
       greetings: [
-        'Merhaba! Ben Fındık. Keşif Ormanı\'nda yaşıyorum.',
-        'Selam! Adım Fındık. Şu ağaçta oturuyorum.',
-        'Hoş geldin! Ben Fındık, ormanın en meraklı sincabı.',
+        'Merhaba!',
+        'Selam! Seni gördüğüme sevindim.',
+        'Hoş geldin... Biraz telaşlıyım.',
       ],
     },
-    accessibilityLabel: 'Fındık Sincap kendini tanıtıyor ve yardım istiyor.',
+    accessibilityLabel:
+      'Sonbahar ormanı. Fındık Sincap yarı dolu sepetiyle yardım istiyor. Bilge Baykuş dalda sessizce gülümsüyor.',
   },
 
-  // ── SAHNE 2 — Palamutları keşfetme ─────────────────────────
+  // ── MİKRO DENEYİM 02 — Sezgisel karşılaştırma ──────────────
   {
     id: 'scene02',
     order: 2,
+    title: 'İki Ağaç',
+    pedagogicalGoal:
+      'Sayı saymadan sezgisel karşılaştırma: "hangisinde daha fazla?" ' +
+      '(Karar 231 — Sezgisel Matematik Önceliği). Sayma dili kullanılmaz.',
+    targetEmotion: 'merak',
+    opening: {
+      visual: '🌳🌳',
+      line: 'Sence hangisinde daha fazla olabilir?',
+      speaker: 'findik',
+      animation: 'fade',
+    },
+    interaction: {
+      kind: 'choose',
+      prompt: 'Hangisinde daha fazla palamut var?',
+      groups: [
+        { id: 'agac_az', label: 'Sol Ağaç', emoji: '🌰', count: 3 },
+        { id: 'agac_cok', label: 'Sağ Ağaç', emoji: '🌰', count: 6 },
+      ],
+      options: [
+        { id: 'agac_az', label: 'Sol Ağaç', visual: '🌳' },
+        { id: 'agac_cok', label: 'Sağ Ağaç', visual: '🌳' },
+      ],
+      answerId: 'agac_cok',
+      hints: [
+        'İki ağaca bir daha bak. Hangisinin altında daha büyük bir yığın duruyor?',
+        'Sol taraftaki yığın daha küçük görünüyor. Diğerine bir bak.',
+      ],
+      /** Sezgisel: sayılar asla görünmez. */
+      countVisibility: 'never',
+    },
+    aiObservation: {
+      concept: 'sezgisel_daha_fazla',
+      signals: ['first_choice', 'hesitation', 'touch_latency', 'retry_count', 'error_type'],
+      misconceptions: ['kucuk_yigini_secme', 'rastgele_dokunma'],
+    },
+    feedback: {
+      positive: 'Evet... Sağdaki ağacın altında daha fazla palamut var.',
+      guidance: 'Birlikte tekrar bakalım. Hangisinin yığını daha büyük görünüyor?',
+      speaker: 'findik',
+    },
+    estimatedSeconds: 30,
+    maxTouches: 2,
+    atmosphere: {
+      season: 'sonbahar',
+      worldCue: 'Fındık iki ağacın önünde durur; yalnızca bakar, saymaz.',
+    },
+    soundBudget: {
+      ambient: 'orman_sessiz',
+      character: 'findik_merak',
+      interaction: 'agac_dokunus',
+      success: 'hafif_yildiz',
+    },
+    visualComposition: { world: 70, interaction: 20, ui: 10 },
+    replay: { countJitter: 1 },
+    accessibilityLabel:
+      'İki ağaç. Birinin altında az, diğerinin altında daha fazla palamut var. Hangisinde daha fazla olduğunu seçiyorsun.',
+  },
+
+  // ── SAHNE 3 — Palamutları keşfetme ─────────────────────────
+  {
+    id: 'scene03',
+    order: 3,
     title: 'Palamutları Keşfet',
     pedagogicalGoal:
       'Birebir sayma becerisini dokunarak deneyimletmek. Sayı söylenmez, çocuk kendi sayar.',
@@ -97,14 +173,21 @@ export const scenes: SceneSpec[] = [
     },
     estimatedSeconds: 30,
     maxTouches: 3,
+    soundBudget: {
+      ambient: 'orman_hafif',
+      character: 'findik_tesvik',
+      interaction: 'palamut_topla',
+      success: 'sepet_doluyor',
+    },
+    visualComposition: { world: 70, interaction: 20, ui: 10 },
     replay: { emojiPool: PALAMUT_POOL },
     accessibilityLabel: 'Üç palamut var. Her birine dokunarak topluyorsun.',
   },
 
-  // ── SAHNE 3 — İki grubu inceleme ───────────────────────────
+  // ── SAHNE 4 — İki grubu inceleme ───────────────────────────
   {
-    id: 'scene03',
-    order: 3,
+    id: 'scene04',
+    order: 4,
     title: 'İki Kovayı İncele',
     pedagogicalGoal:
       'Karşılaştırma öncesi gözlem. Bu sahnede doğru cevap yoktur; amaç iki grubu fark etmek.',
@@ -136,13 +219,20 @@ export const scenes: SceneSpec[] = [
     },
     estimatedSeconds: 30,
     maxTouches: 3,
+    soundBudget: {
+      ambient: 'orman_hafif',
+      character: 'bilge_merak',
+      interaction: 'kova_bak',
+      success: 'gozlem_tik',
+    },
+    visualComposition: { world: 70, interaction: 20, ui: 10 },
     accessibilityLabel: 'Kırmızı kovada beş, mavi kovada üç palamut var.',
   },
 
-  // ── SAHNE 4 — Birebir eşleştirme ───────────────────────────
+  // ── SAHNE 5 — Birebir eşleştirme ───────────────────────────
   {
-    id: 'scene04',
-    order: 4,
+    id: 'scene05',
+    order: 5,
     title: 'Birebir Eşleştir',
     pedagogicalGoal:
       'Sayı saymadan karşılaştırma: birebir eşleştirme sonucu artan taraf kavramı sezdirir. ' +
@@ -161,7 +251,8 @@ export const scenes: SceneSpec[] = [
         { id: 'kova_a', label: 'Kırmızı Kova', emoji: '🌰', count: 5 },
         { id: 'kova_b', label: 'Mavi Kova', emoji: '🌰', count: 3 },
       ],
-      leftoverLine: 'Bak! Kırmızı kovada eşi olmayan palamutlar kaldı. Demek ki orada daha çok var.',
+      leftoverLine:
+        'Bak! Kırmızı kovada eşi olmayan palamutlar kaldı. Demek ki orada daha çok var.',
     },
     aiObservation: {
       concept: 'birebir_eslestirme',
@@ -175,15 +266,25 @@ export const scenes: SceneSpec[] = [
     },
     estimatedSeconds: 45,
     maxTouches: 3,
-    accessibilityLabel: 'Palamutları birebir eşleştiriyorsun; kırmızı kovada artan palamutlar kalıyor.',
+    soundBudget: {
+      ambient: 'sessiz_bahce',
+      character: 'bilge_yonlendir',
+      interaction: 'eslestirme_tik',
+      success: 'artan_isik',
+    },
+    visualComposition: { world: 70, interaction: 20, ui: 10 },
+    accessibilityLabel:
+      'Palamutları birebir eşleştiriyorsun; kırmızı kovada artan palamutlar kalıyor.',
   },
 
-  // ── SAHNE 5 — Daha fazla ───────────────────────────────────
+  // ── SAHNE 6 — Daha fazla (eşleştirme sonrası doğrulama) ────
   {
-    id: 'scene05',
-    order: 5,
+    id: 'scene06',
+    order: 6,
     title: 'Daha Çok Olan',
-    pedagogicalGoal: '"Daha çok" kavramını eşleştirme deneyiminin üzerine oturtmak.',
+    pedagogicalGoal:
+      '"Daha çok" kavramını eşleştirme deneyiminin üzerine oturtmak. ' +
+      'Tek hedef: artan tarafın "daha çok" olduğunu adlandırmak.',
     targetEmotion: 'basari',
     opening: {
       visual: '🐿️',
@@ -207,6 +308,7 @@ export const scenes: SceneSpec[] = [
         'Az önce eşleştirmiştik. Hangi kovada eşi olmayan palamutlar kalmıştı?',
         'Kırmızı kovadaki palamutları tek tek sayalım, sonra mavi kovadakileri.',
       ],
+      countVisibility: 'after_attempt',
     },
     aiObservation: {
       concept: 'daha_cok',
@@ -220,13 +322,20 @@ export const scenes: SceneSpec[] = [
     },
     estimatedSeconds: 40,
     maxTouches: 3,
+    soundBudget: {
+      ambient: 'orman_hafif',
+      character: 'findik_soru',
+      interaction: 'secim_tik',
+      success: 'basari_yildiz',
+    },
+    visualComposition: { world: 70, interaction: 20, ui: 10 },
     accessibilityLabel: 'Daha çok palamut olan kovayı seçiyorsun.',
   },
 
-  // ── SAHNE 6 — Daha az ──────────────────────────────────────
+  // ── SAHNE 7 — Daha az ──────────────────────────────────────
   {
-    id: 'scene06',
-    order: 6,
+    id: 'scene07',
+    order: 7,
     title: 'Daha Az Olan',
     pedagogicalGoal:
       '"Daha az" kavramını "daha çok"un karşıtı olarak kurmak. Aynı görsel bağlam korunur.',
@@ -253,6 +362,7 @@ export const scenes: SceneSpec[] = [
         'Daha az demek, daha küçük miktar demek. Hangi kovada daha küçük bir yığın var?',
         'Kırmızı kovada 5, mavi kovada 3 palamut var. 3, 5\'ten küçüktür.',
       ],
+      countVisibility: 'after_attempt',
     },
     aiObservation: {
       concept: 'daha_az',
@@ -260,19 +370,26 @@ export const scenes: SceneSpec[] = [
       misconceptions: ['az_ile_cok_ters_cevirme'],
     },
     feedback: {
-      positive: 'Doğru! Mavi kovada daha az palamut var.',
+      positive: 'Evet... Mavi kovada daha az palamut var.',
       guidance: 'Bu kez daha küçük olanı arıyoruz. Hangisi daha küçük?',
       speaker: 'bilge',
     },
     estimatedSeconds: 40,
     maxTouches: 3,
+    soundBudget: {
+      ambient: 'orman_hafif',
+      character: 'bilge_soru',
+      interaction: 'secim_tik',
+      success: 'basari_yildiz',
+    },
+    visualComposition: { world: 70, interaction: 20, ui: 10 },
     accessibilityLabel: 'Daha az palamut olan kovayı seçiyorsun.',
   },
 
-  // ── SAHNE 7 — Eşit ─────────────────────────────────────────
+  // ── SAHNE 8 — Eşit ─────────────────────────────────────────
   {
-    id: 'scene07',
-    order: 7,
+    id: 'scene08',
+    order: 8,
     title: 'Eşit Olunca',
     pedagogicalGoal:
       '"Eşit" kavramını birebir eşleştirmede artan olmaması olarak kurmak.',
@@ -300,6 +417,7 @@ export const scenes: SceneSpec[] = [
         'Birebir eşleştirsek artan palamut kalır mıydı?',
         'Her kırmızı palamutun bir mavi eşi var. Hiç artan yok.',
       ],
+      countVisibility: 'after_attempt',
     },
     aiObservation: {
       concept: 'esit',
@@ -313,13 +431,20 @@ export const scenes: SceneSpec[] = [
     },
     estimatedSeconds: 40,
     maxTouches: 3,
+    soundBudget: {
+      ambient: 'orman_hafif',
+      character: 'findik_merak',
+      interaction: 'secim_tik',
+      success: 'esit_isik',
+    },
+    visualComposition: { world: 70, interaction: 20, ui: 10 },
     accessibilityLabel: 'İki kovada da beş palamut var; eşit olduğunu seçiyorsun.',
   },
 
-  // ── SAHNE 8 — Kutlama ──────────────────────────────────────
+  // ── SAHNE 9 — Kutlama ──────────────────────────────────────
   {
-    id: 'scene08',
-    order: 8,
+    id: 'scene09',
+    order: 9,
     title: 'Kış Hazır!',
     pedagogicalGoal:
       'Emeği görünür kılmak ve tekrar gelme isteği oluşturmak. Puan gösterilmez, hikâye kapanır.',
@@ -332,9 +457,9 @@ export const scenes: SceneSpec[] = [
     },
     interaction: {
       kind: 'celebrate',
-      title: 'Fındık\'ın kışı güvende!',
+      title: "Fındık'ın kışı güvende!",
       message:
-        'Palamutları saydın, eşleştirdin ve kovaları karşılaştırdın. Fındık artık kışa hazır.',
+        'Birlikte baktın, topladın, eşleştirdin ve karşılaştırdın. Fındık artık kışa hazır.',
       reward: '🏅',
     },
     aiObservation: {
@@ -349,6 +474,13 @@ export const scenes: SceneSpec[] = [
     },
     estimatedSeconds: 20,
     maxTouches: 1,
+    soundBudget: {
+      ambient: 'kis_isik',
+      character: 'findik_tesekkur',
+      interaction: 'tamamla_dokunus',
+      success: 'kutlama_yildiz',
+    },
+    visualComposition: { world: 70, interaction: 20, ui: 10 },
     accessibilityLabel: 'Macera tamamlandı. Fındık kışa hazır ve sana teşekkür ediyor.',
   },
 ];

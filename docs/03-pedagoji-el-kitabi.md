@@ -48,3 +48,11 @@ MiniBilge'de her kazanım **yaşanır**, ezberletilmez.
 - Puan değil, **ilerleme** odaklı
 - Yıldız sistemi motivasyon için, sıralama için değil
 - Öğretmen panelinde kavram bazlı analiz
+
+## Görünmez Matematik & İlk Bakış
+
+Çocuk "matematik çalışacağım" demez; "Fındık'ın bana ihtiyacı var" hisseder.
+
+- İlk sahne: bağ, merak, güven — soru/sayı/matematik yok
+- İkinci sahne: sezgisel "daha fazla" — "say" denmez (Karar 231)
+- Bilge: yargılamaz, puan vermez; AI ile birlikte rehberlik eder (MB-CHAR-002)

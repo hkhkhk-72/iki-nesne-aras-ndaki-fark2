@@ -7,6 +7,9 @@ import { scenes } from './scenes';
  * MiniBilge'nin referans mikro deneyimidir. Sonraki tüm dersler bu kalite
  * çıtasına göre üretilir.
  *
+ * Mikro Deneyim 01 "İlk Bakış" — bağ (matematik yok).
+ * Mikro Deneyim 02 "İki Ağaç" — sezgisel "daha fazla" (Karar 231).
+ *
  * Kazanım köprüsü: MAT.1.1.1 — Nesne gruplarını azlık-çokluk ve eşitlik
  * bakımından karşılaştırır (out-1-1-1).
  */

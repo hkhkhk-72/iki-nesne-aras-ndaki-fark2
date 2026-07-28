@@ -33,6 +33,15 @@ tekrar gelmek istemeli.
 Kod karşılığı: ilk üç sahnenin toplamı 90 saniyeyi geçemez ve **ilk sahnede
 çocuğun hiçbir şeyi bilmesi gerekmez** (sahne 1 daima `narrative`).
 
+**Karar 235:** İlk 60 saniye boyunca matematik kelimesi kullanılmaz.
+
+## Görsel & Ses Standartları
+
+- **%70 / %20 / %10** — dünya / etkileşim / arayüz (Karar 234)
+- Ses bütçesi: ortam + karakter + etkileşim + başarı (en fazla 4 katman)
+
+Ayrıntı: [docs/09-mavi-kitap-kararlari-234-236.md](./09-mavi-kitap-kararlari-234-236.md)
+
 ## 3 Dokunuş Kuralı
 
 İlk deneyimde sahne başına en fazla 3 dokunuş. `narrative` ve `celebrate`
@@ -95,17 +104,21 @@ Her mikro deneyim bağımsız klasörde yaşar.
 
 **MB-MAT-1.1.01 — Fındık Sincap'ın Kış Hazırlığı**
 
-| Sahne | Ad | Süre | Etkileşim |
-|-------|-----|------|-----------|
-| 1 | Fındık ile Tanışma | 25s | narrative |
-| 2 | Palamutları Keşfet | 30s | discover |
-| 3 | İki Kovayı İncele | 30s | observe |
-| 4 | Birebir Eşleştir | 45s | pair |
-| 5 | Daha Çok Olan | 40s | choose |
-| 6 | Daha Az Olan | 40s | choose |
-| 7 | Eşit Olunca | 40s | choose |
-| 8 | Kış Hazır! | 20s | celebrate |
+| Sahne | Ad | Süre | Etkileşim | Tek hedef |
+|-------|-----|------|-----------|-----------|
+| 1 | İlk Bakış | 20s | narrative | Duygusal bağ |
+| 2 | İki Ağaç | 30s | choose (sezgisel) | Daha fazla |
+| 3 | Palamutları Keşfet | 30s | discover | Birebir sayma |
+| 4 | İki Kovayı İncele | 30s | observe | Grup farkındalığı |
+| 5 | Birebir Eşleştir | 45s | pair | Artan taraf |
+| 6 | Daha Çok Olan | 40s | choose | Daha çok |
+| 7 | Daha Az Olan | 40s | choose | Daha az |
+| 8 | Eşit Olunca | 40s | choose | Eşit |
+| 9 | Kış Hazır! | 20s | celebrate | Tekrar isteği |
 
-Toplam: 270 saniye (~4,5 dakika)
+Toplam: 295 saniye (~5 dakika)
 
 Bu ders, sonraki tüm içeriklerin kalite çıtasıdır.
+
+İlgili kararlar: [Karar 234–236](./09-mavi-kitap-kararlari-234-236.md) ·
+[MB-CHAR-002](./10-mb-char-002-bilge-rehberlik-sistemi.md)

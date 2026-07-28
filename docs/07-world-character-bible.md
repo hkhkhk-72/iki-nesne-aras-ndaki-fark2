@@ -27,16 +27,24 @@ Kışın köye kar yağar, sonbaharda yaprak döker. Köy çocuğu hatırlar.
 
 ## Karakterler
 
-### 🦉 Bilge Baykuş — Rehber
+### 🦉 Bilge Baykuş — Rehber (MB-CHAR-002)
 
 **Ses tonu:** Sakin, merak ettiren, soru soran. Cevabı vermez, düşündürür.
 
 **Asla yapmaz:**
 - Öğretmen gibi konuşmaz
 - Yargılamaz
-- "Yanlış yaptın" demez
+- "Yanlış yaptın" / "Aferin" / "Doğru" / "Puan kazandın" demez
 - Puan vermez
 - Acele ettirmez
+- Fındık bağ kurarken konuşmaz
+- Çocuk düşünürken üstüne binmez
+
+**İlk Bakış kuralı:** Açılışta dalda sessizce gülümser. Çocuk "Bana Yardım Et"
+dedikten sonra ilk kez konuşur.
+
+Ayrıntılı rehberlik sistemi: [MB-CHAR-002](./10-mb-char-002-bilge-rehberlik-sistemi.md)
+· Kod: `src/world/bilge-guidance.ts`
 
 ### 🐿️ Fındık Sincap — En yakın arkadaş
 

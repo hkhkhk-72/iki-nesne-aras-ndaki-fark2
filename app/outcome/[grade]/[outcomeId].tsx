@@ -6,6 +6,7 @@ import { ScreenHeader, Button, ProgressBar } from '@/components/ui';
 import { getOutcome } from '@/core/content-loader';
 import { loadAllProgress } from '@/core/progress-store';
 import { getUnlockedActivities, calculateOutcomeProgress, isLessonCompleted } from '@/core/unlock-logic';
+import { getExperiencesForOutcome } from '@/mes/experience-registry';
 import { colors, spacing, typography, activityModeLabels, radius } from '@/theme';
 import type { ActivityConfig, ActivityMode, StudentProgress } from '@/core/types';
 
@@ -37,6 +38,7 @@ export default function OutcomeScreen() {
   const progressPct = calculateOutcomeProgress(outcome, progress);
   const lessonDone = isLessonCompleted(outcome.id, progress);
   const grouped = groupByModeOrdered(activities);
+  const experiences = getExperiencesForOutcome(outcome.id, outcome.subject);
 
   const openActivity = (activity: ActivityConfig) => {
     if (!activity.unlocked) return;
@@ -60,6 +62,24 @@ export default function OutcomeScreen() {
           <Text style={styles.heroDesc}>{outcome.description}</Text>
           <ProgressBar progress={progressPct} label="İlerleme" color={outcome.color} />
         </View>
+
+        {experiences.map((exp) => (
+          <TouchableOpacity
+            key={exp.code}
+            style={styles.experienceCard}
+            onPress={() => router.push(`/experience/${exp.code}`)}
+          >
+            <View style={styles.experienceBadge}>
+              <Text style={styles.experienceBadgeText}>MACERA</Text>
+            </View>
+            <Text style={styles.experienceVisual}>🐿️</Text>
+            <Text style={styles.experienceTitle}>{exp.title}</Text>
+            <Text style={styles.experienceGoal}>{exp.storyGoal}</Text>
+            <Text style={styles.experienceMeta}>
+              {exp.scenes.length} sahne · {Math.round(exp.totalSeconds / 60)} dk
+            </Text>
+          </TouchableOpacity>
+        ))}
 
         {!lessonDone ? (
           <TouchableOpacity
@@ -167,6 +187,31 @@ const styles = StyleSheet.create({
   lessonCtaTitle: { ...typography.subheading, color: colors.textLight },
   lessonCtaDesc: { ...typography.caption, color: 'rgba(255,255,255,0.85)' },
   lessonCtaArrow: { fontSize: 24, color: colors.textLight, fontWeight: '700' },
+  experienceCard: {
+    backgroundColor: '#FFF4E6',
+    borderRadius: radius.lg,
+    borderWidth: 2,
+    borderColor: '#E67E22',
+    padding: spacing.lg,
+    alignItems: 'center',
+    gap: spacing.xs,
+  },
+  experienceBadge: {
+    backgroundColor: '#E67E22',
+    borderRadius: radius.full,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+  },
+  experienceBadgeText: {
+    ...typography.caption,
+    color: colors.textLight,
+    fontWeight: '800',
+    fontSize: 11,
+  },
+  experienceVisual: { fontSize: 44 },
+  experienceTitle: { ...typography.subheading, color: colors.text, textAlign: 'center' },
+  experienceGoal: { ...typography.caption, color: colors.textSecondary, textAlign: 'center' },
+  experienceMeta: { ...typography.caption, color: '#E67E22', fontWeight: '700' },
   lessonDone: {
     flexDirection: 'row',
     alignItems: 'center',

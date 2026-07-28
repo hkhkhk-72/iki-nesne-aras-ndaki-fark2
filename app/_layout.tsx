@@ -28,6 +28,7 @@ export default function RootLayout() {
         <Stack.Screen name="unit/[grade]/[unitId]" />
         <Stack.Screen name="outcome/[grade]/[outcomeId]" />
         <Stack.Screen name="activity/[grade]/[outcomeId]/[activityId]" />
+        <Stack.Screen name="experience/[code]" />
         <Stack.Screen name="teacher/index" />
         <Stack.Screen name="smartboard/[grade]/[outcomeId]" />
       </Stack>

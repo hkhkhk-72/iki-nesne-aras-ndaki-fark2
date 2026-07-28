@@ -36,13 +36,27 @@ Platformlar:
 ```
 app/                    # Expo Router ekranları
 src/
-  core/                 # Tip tanımları, motor kaydı, içerik yükleyici
+  core/                 # OS çekirdeği: tipler, motor/ders kaydı, ayarlar
+  mes/                  # MES-002 mikro deneyim sistemi + sahne çalıştırıcı
+  modules/math/         # Mikro deneyimler (MB-MAT-1.1.01 ...)
+  world/                # Matematik Köyü + karakterler
+  ai/                   # Davranış gözlemi ve yorum katmanı
   engines/              # Yeniden kullanılabilir oyun motorları
-  content/              # JSON tabanlı müfredat ve etkinlik verileri
+  subjects/             # Ders modülleri
+  content/              # Müfredat verileri ve içerik fabrikaları
   components/ui/        # Tasarım sistemi bileşenleri
   theme/                # Renkler, tipografi, spacing
 docs/                   # Yaşayan dokümanlar
 ```
+
+## İki Katmanlı İçerik
+
+| Katman | Amaç | Durum |
+|--------|------|-------|
+| **Kazanım/Etkinlik** | Genişlik — 1-4. sınıf tüm müfredat | 59 kazanım, ~354 etkinlik |
+| **MES-002 Mikro Deneyim** | Derinlik — sinematik, AI gözlemli macera | 1 referans ders (MB-MAT-1.1.01) |
+
+MES-002 kalite çıtasıdır; müfredat bu standarda kademeli taşınır.
 
 ## Oyun Motorları
 
@@ -84,6 +98,8 @@ Karşılaştırma Motoru
 - [Pedagoji El Kitabı](docs/03-pedagoji-el-kitabi.md)
 - [UI/UX Tasarım Sistemi](docs/04-ui-ux-tasarim-sistemi.md)
 - [Matematik İçerik Fabrikası](docs/05-matematik-icerik-fabrikasi.md)
+- [MES-002 Mikro Deneyim Standardı](docs/06-mes-002-mikro-deneyim-standardi.md)
+- [World & Character Bible](docs/07-world-character-bible.md)
 
 ## Kapsam
 

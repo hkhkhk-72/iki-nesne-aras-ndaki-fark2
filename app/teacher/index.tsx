@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScreenHeader, Card, Button } from '@/components/ui';
 import { getAllCurricula, getTotalStats } from '@/core/content-loader';
+import { loadExperienceRecords, type StoredExperienceRecord } from '@/ai/insights-store';
+import { filterByAudience, LEVEL_LABELS } from '@/ai/insights';
+import { hasHesitation } from '@/ai/observer';
+import { hasExperience } from '@/mes/experience-registry';
 import { colors, spacing, typography, radius } from '@/theme';
 
 export default function TeacherScreen() {
   const router = useRouter();
   const [selectedGrade, setSelectedGrade] = useState(1);
+  const [records, setRecords] = useState<StoredExperienceRecord[]>([]);
   const stats = getTotalStats();
   const curricula = getAllCurricula();
   const curriculum = curricula.find((c) => c.grade === selectedGrade);
+
+  useEffect(() => {
+    loadExperienceRecords().then(setRecords);
+  }, []);
+
+  const latest = records[records.length - 1];
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -73,7 +84,7 @@ export default function TeacherScreen() {
                   subtitle={`${outcome.code} · ${outcome.activities.length} etkinlik`}
                   icon={outcome.icon}
                   color={outcome.color}
-                  progress={Math.floor(Math.random() * 40 + 30)}
+                  badge={hasExperience(outcome.id, outcome.subject) ? 'Macera' : undefined}
                   onPress={() => router.push(`/outcome/${selectedGrade}/${outcome.id}`)}
                   style={styles.outcomeCard}
                 />
@@ -83,26 +94,82 @@ export default function TeacherScreen() {
         })}
 
         <View style={styles.aiSection}>
-          <Text style={styles.sectionTitle}>🤖 AI Önerileri</Text>
-          <View style={styles.aiCard}>
-            <Text style={styles.aiText}>
-              1. sınıfta 3 öğrenci "Daha Fazla – Daha Az" kazanımında zorlanıyor.
-            </Text>
-          </View>
-          <View style={styles.aiCard}>
-            <Text style={styles.aiText}>
-              3. sınıfta çarpım tablosu pekiştirmesi önerilir. 7 ve 8'ler zayıf.
-            </Text>
-          </View>
-          <View style={styles.aiCard}>
-            <Text style={styles.aiText}>
-              4. sınıf kesir toplama konusunda sınıf ortalaması %45. Akıllı tahta etkinliği önerilir.
-            </Text>
-          </View>
+          <Text style={styles.sectionTitle}>🤖 Davranış Analizi</Text>
+          <Text style={styles.sectionNote}>
+            Puan gösterilmez. Kavramın oturup oturmadığı davranıştan okunur.
+          </Text>
+
+          {latest ? (
+            <>
+              <View style={styles.behaviorHeader}>
+                <Text style={styles.behaviorCode}>{latest.code}</Text>
+                <View style={[styles.levelChip, levelChipStyle(latest.insights.level)]}>
+                  <Text style={styles.levelChipText}>
+                    {LEVEL_LABELS[latest.insights.level]}
+                  </Text>
+                </View>
+              </View>
+
+              <View style={styles.behaviorGrid}>
+                <BehaviorStat
+                  label="Tekrar"
+                  value={latest.behaviors.reduce((s, b) => s + b.retries, 0)}
+                />
+                <BehaviorStat
+                  label="İpucu"
+                  value={latest.behaviors.reduce((s, b) => s + b.hintsShown, 0)}
+                />
+                <BehaviorStat
+                  label="Kararsızlık"
+                  value={latest.behaviors.filter(hasHesitation).length}
+                />
+                <BehaviorStat
+                  label="Süre"
+                  value={`${Math.round(latest.durationMs / 1000)}s`}
+                />
+              </View>
+
+              {filterByAudience(latest.insights, 'teacher').map((insight, idx) => (
+                <View key={idx} style={styles.aiCard}>
+                  <Text style={styles.aiText}>{insight.message}</Text>
+                  {insight.nextStep ? (
+                    <Text style={styles.aiNext}>→ {insight.nextStep}</Text>
+                  ) : null}
+                </View>
+              ))}
+            </>
+          ) : (
+            <View style={styles.aiCard}>
+              <Text style={styles.aiText}>
+                Henüz mikro deneyim verisi yok. Bir öğrenci "Fındık Sincap'ın Kış Hazırlığı"
+                macerasını tamamladığında kavram bazlı davranış analizi burada görünecek.
+              </Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
   );
+}
+
+function BehaviorStat({ label, value }: { label: string; value: number | string }) {
+  return (
+    <View style={styles.behaviorStat}>
+      <Text style={styles.behaviorValue}>{value}</Text>
+      <Text style={styles.behaviorLabel}>{label}</Text>
+    </View>
+  );
+}
+
+function levelChipStyle(level: 'guclu' | 'gelisiyor' | 'destek_gerekli') {
+  switch (level) {
+    case 'guclu':
+      return { backgroundColor: colors.success };
+    case 'gelisiyor':
+      return { backgroundColor: colors.warning };
+    default:
+      return { backgroundColor: colors.error };
+  }
 }
 
 const styles = StyleSheet.create({
@@ -143,4 +210,20 @@ const styles = StyleSheet.create({
     borderLeftColor: colors.primary,
   },
   aiText: { ...typography.body, color: colors.text },
+  aiNext: { ...typography.caption, color: colors.primary, marginTop: 4, fontWeight: '600' },
+  sectionNote: { ...typography.caption, color: colors.textSecondary },
+  behaviorHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  behaviorCode: { ...typography.bodyBold, color: colors.text },
+  levelChip: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.full },
+  levelChipText: { ...typography.caption, color: colors.textLight, fontWeight: '700' },
+  behaviorGrid: { flexDirection: 'row', gap: spacing.sm },
+  behaviorStat: {
+    flex: 1,
+    backgroundColor: colors.surface,
+    borderRadius: radius.md,
+    padding: spacing.sm,
+    alignItems: 'center',
+  },
+  behaviorValue: { ...typography.subheading, color: colors.primary },
+  behaviorLabel: { ...typography.caption, color: colors.textSecondary },
 });

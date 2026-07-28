@@ -3,70 +3,116 @@
   "dersId": "matematik",
   "sinif": 1,
   "model": "Türkiye Yüzyılı Maarif Modeli",
-  "programYili": "2025-2026",
-  "toplamHafta": 36,
+  "programYili": "2024",
+  "kaynak": "MEB TYMM İlkokul Matematik Dersi Öğretim Programı (1-4) 2024 — onaylı PDF",
+  "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programmat1234Onayli.pdf",
+  "toplamDersSaati": 180,
+  "haftalikDersSaati": 5,
   "temalar": [
     {
       "id": "m1",
-      "ad": "Nesne Sayısı",
-      "hafta": 5,
+      "ad": "Sayılar ve Nicelikler (1)",
+      "dersSaati": 57,
+      "hafta": 11,
       "ogrenmeCiktilari": [
-        { "kod": "M.1.1.1", "aciklama": "20'ye kadar olan nesneleri sayar." },
-        { "kod": "M.1.1.2", "aciklama": "Sayıları okur ve yazar." },
-        { "kod": "M.1.1.3", "aciklama": "Sayıları karşılaştırır ve sıralar." }
+        { "kod": "MAT.1.1.1", "aciklama": "Nesnelerin çokluğunu sayabilme / sayı kavramını oluşturabilme" },
+        { "kod": "MAT.1.1.2", "aciklama": "Sayıları okuyabilme, yazabilme ve karşılaştırabilme" },
+        { "kod": "MAT.1.1.3", "aciklama": "Nesnelerin sıra sayısını gösterebilme" }
       ],
-      "icerikCercevesi": "Sayma, okuma-yazma, karşılaştırma",
-      "surecBilesenleri": ["Sayma", "Modelleme", "Problem çözme"],
-      "olcmeDegerlendirme": "Gözlem, yazılı çalışma"
+      "alanBecerileri": ["MAB3. Matematiksel Temsil"],
+      "kavramsalBeceriler": ["KB2.8. Sorgulama", "KB2.10. Çıkarım Yapma", "KB2.12. Tahmin"],
+      "icerikCercevesi": "Sayılar — Sayılar çoklukları temsil eder",
+      "surecBilesenleri": ["Sayma", "Temsil", "Karşılaştırma"],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen planlar",
+      "olcmeDegerlendirme": "Öğrenme kanıtları — gözlem, çalışma yaprağı, performans"
     },
     {
       "id": "m2",
-      "ad": "Toplama ve Çıkarma",
-      "hafta": 6,
+      "ad": "Sayılar ve Nicelikler (2)",
+      "dersSaati": 18,
+      "hafta": 4,
       "ogrenmeCiktilari": [
-        { "kod": "M.1.2.1", "aciklama": "20'ye kadar toplama işlemi yapar." },
-        { "kod": "M.1.2.2", "aciklama": "20'ye kadar çıkarma işlemi yapar." },
-        { "kod": "M.1.2.3", "aciklama": "Günlük hayat problemlerini çözer." }
+        { "kod": "MAT.1.2.1", "aciklama": "Nesnelerin uzunluk ve kütlelerini standart olmayan araçlarla ölçebilme / tahmin edebilme" }
       ],
-      "icerikCercevesi": "Toplama-çıkarma, problem çözme",
-      "surecBilesenleri": ["İşlem", "Problem çözme", "Tahmin"],
-      "olcmeDegerlendirme": "Yazılı sınav, performans görevi"
+      "alanBecerileri": ["MAB5. Matematiksel Araç ve Teknoloji ile Çalışma"],
+      "icerikCercevesi": "Uzunluk ve kütle ölçme (standart olmayan araçlar)",
+      "surecBilesenleri": ["Ölçme", "Tahmin", "Karşılaştırma"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
     },
     {
       "id": "m3",
-      "ad": "Geometrik Şekiller",
-      "hafta": 4,
+      "ad": "Sayılar ve Nicelikler (3)",
+      "dersSaati": 7,
+      "hafta": 2,
       "ogrenmeCiktilari": [
-        { "kod": "M.1.3.1", "aciklama": "Temel geometrik şekilleri tanır." },
-        { "kod": "M.1.3.2", "aciklama": "Şekillerin özelliklerini açıklar." }
+        { "kod": "MAT.1.3.1", "aciklama": "Paraları tanıyabilme ve değerlerine göre sıralayabilme" }
       ],
-      "icerikCercevesi": "Üçgen, kare, dikdörtgen, daire",
-      "surecBilesenleri": ["Gözlem", "Sınıflandırma"],
-      "olcmeDegerlendirme": "Performans görevi"
+      "alanBecerileri": ["MAB3. Matematiksel Temsil", "MAB5. Matematiksel Araç ve Teknoloji"],
+      "icerikCercevesi": "Para (TL) — değer ve sıralama",
+      "surecBilesenleri": ["Tanıma", "Sıralama"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
     },
     {
       "id": "m4",
-      "ad": "Ölçme",
-      "hafta": 4,
+      "ad": "İşlemlerden Cebirsel Düşünmeye",
+      "dersSaati": 50,
+      "hafta": 10,
       "ogrenmeCiktilari": [
-        { "kod": "M.1.4.1", "aciklama": "Uzunluk ve ağırlık kavramlarını kullanır." },
-        { "kod": "M.1.4.2", "aciklama": "Zamanı okur ve kullanır." }
+        { "kod": "MAT.1.4.1", "aciklama": "Toplama işlemini anlamlandırabilme ve yapabilme" },
+        { "kod": "MAT.1.4.2", "aciklama": "Çıkarma işlemini anlamlandırabilme ve yapabilme" },
+        { "kod": "MAT.1.4.3", "aciklama": "Toplama ve çıkarma ilişkilerini kurabilme" },
+        { "kod": "MAT.1.4.4", "aciklama": "Günlük hayat problemlerini çözebilme" }
       ],
-      "icerikCercevesi": "Uzunluk, ağırlık, zaman",
-      "surecBilesenleri": ["Ölçme", "Karşılaştırma"],
-      "olcmeDegerlendirme": "Gözlem, yazılı çalışma"
+      "alanBecerileri": ["MAB1. Matematiksel Muhakeme"],
+      "kavramsalBeceriler": ["KB2.4. Çözümleme", "KB2.14. Yorumlama"],
+      "icerikCercevesi": "Toplama, çıkarma, işlem ilişkileri, problem çözme",
+      "surecBilesenleri": ["İşlem", "Muhakeme", "Problem çözme"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
     },
     {
       "id": "m5",
-      "ad": "Veri Toplama",
+      "ad": "Nesnelerin Geometrisi (1)",
+      "dersSaati": 15,
       "hafta": 3,
       "ogrenmeCiktilari": [
-        { "kod": "M.1.5.1", "aciklama": "Basit veri toplar ve düzenler." },
-        { "kod": "M.1.5.2", "aciklama": "Şekil ve nesne grafiği oluşturur." }
+        { "kod": "MAT.1.5.1", "aciklama": "Geometrik şekilleri tanıyabilme ve sınıflandırabilme" },
+        { "kod": "MAT.1.5.2", "aciklama": "Nesnelerin eşliğini değerlendirebilme" }
       ],
-      "icerikCercevesi": "Veri toplama, grafik",
-      "surecBilesenleri": ["Toplama", "Düzenleme", "Yorumlama"],
-      "olcmeDegerlendirme": "Proje çalışması"
+      "alanBecerileri": ["MAB2. Matematiksel Problem Çözme"],
+      "icerikCercevesi": "Geometrik şekiller, eşlik, biçimsel özellikler",
+      "surecBilesenleri": ["Tanıma", "Sınıflandırma", "Değerlendirme"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
+    },
+    {
+      "id": "m6",
+      "ad": "Nesnelerin Geometrisi (2)",
+      "dersSaati": 15,
+      "hafta": 3,
+      "ogrenmeCiktilari": [
+        { "kod": "MAT.1.6.1", "aciklama": "Geometrik yapı modellerini inceleyebilme" },
+        { "kod": "MAT.1.6.2", "aciklama": "Uzamsal ilişkileri fark edebilme" },
+        { "kod": "MAT.1.6.3", "aciklama": "Basit geometrik örüntüleri oluşturabilme" }
+      ],
+      "alanBecerileri": ["MAB2", "MAB3"],
+      "icerikCercevesi": "Geometrik yapılar, uzamsal düşünme, örüntü",
+      "surecBilesenleri": ["Gözlem", "Modelleme", "Örüntü"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
+    },
+    {
+      "id": "m7",
+      "ad": "Veriye Dayalı Araştırma",
+      "dersSaati": 10,
+      "hafta": 2,
+      "ogrenmeCiktilari": [
+        { "kod": "MAT.1.7.1", "aciklama": "Basit veri toplayabilme, düzenleyebilme ve görselleştirebilme" }
+      ],
+      "alanBecerileri": ["MAB4. Veri ile Çalışma ve Veriye Dayalı Karar Verme", "MAB3. Matematiksel Temsil"],
+      "icerikCercevesi": "Veri toplama, nesne/şekil grafiği",
+      "surecBilesenleri": ["Toplama", "Düzenleme", "Görselleştirme"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
     }
+  ],
+  "ekSureler": [
+    { "ad": "Okul Temelli Planlama", "dersSaati": 8 }
   ]
 }

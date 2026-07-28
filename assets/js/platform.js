@@ -236,7 +236,7 @@
     const heroDesc = document.getElementById('heroDesc');
     if (role === 'teacher') {
       if (heroTitle) heroTitle.textContent = 'Öğretmen Paneli';
-      if (heroDesc) heroDesc.textContent = 'Öğrenci ilerlemesini takip edin, etkinlikleri yönetin ve sınıfınıza uygun içerikleri seçin.';
+      if (heroDesc) heroDesc.textContent = 'Belge Merkezi ile yıl boyunca ihtiyacınız olan tüm belgeleri oluşturun. Öğrenci ilerlemesini takip edin ve etkinlikleri yönetin.';
       renderTeacherPanel();
     } else {
       if (heroTitle) heroTitle.textContent = 'Eğlenerek Öğren!';

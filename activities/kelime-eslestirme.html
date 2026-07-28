@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Kelime Eşleştirme — Dijital Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <style>
+    .match-app { max-width: 520px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 1; }
+    .match-board { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .match-col { display: flex; flex-direction: column; gap: 8px; }
+    .match-item {
+      padding: 14px 12px; border: 2px solid rgba(255,255,255,0.3); border-radius: 12px;
+      background: rgba(255,255,255,0.12); color: #fff; font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s ease; text-align: center;
+    }
+    .match-item:hover { background: rgba(255,255,255,0.22); }
+    .match-item.selected { border-color: #fff; background: rgba(255,255,255,0.35); transform: scale(1.03); }
+    .match-item.matched { background: rgba(76,175,80,0.4); border-color: #81c784; opacity: 0.7; pointer-events: none; }
+    .match-item.wrong { animation: shake 0.4s ease; background: rgba(229,57,53,0.4); }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+    .round-info { text-align: center; font-weight: 600; color: var(--text-soft); }
+  </style>
+</head>
+<body>
+  <div class="match-app">
+    <a href="../index.html" class="back-link">← Platforma Dön</a>
+    <header class="hero" style="padding:8px 0;">
+      <h2>📝 Kelime Eşleştirme</h2>
+      <p>Kelimeleri anlamlarıyla eşleştir!</p>
+    </header>
+
+    <div class="panel">
+      <p class="round-info" id="roundInfo">Tur 1 / 8</p>
+      <div class="match-board">
+        <div class="match-col" id="wordsCol"></div>
+        <div class="match-col" id="meaningsCol"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    const PAIRS = [
+      { word: 'Güneş', meaning: 'Gökyüzündeki parlak yıldız' },
+      { word: 'Kitap', meaning: 'Okunan sayfalı eser' },
+      { word: 'Deniz', meaning: 'Tuzlu su kütlesi' },
+      { word: 'Ağaç', meaning: 'Gövdesi olan bitki' },
+      { word: 'Kuş', meaning: 'Kanatlı hayvan' },
+      { word: 'Ev', meaning: 'İnsanların yaşadığı yapı' },
+      { word: 'Su', meaning: 'İçilen sıvı' },
+      { word: 'Yıldız', meaning: 'Gece parlayan gök cismi' }
+    ];
+
+    let round = 0;
+    let selectedWord = null;
+    let selectedMeaning = null;
+    let matched = 0;
+
+    function saveProgress() {
+      try {
+        const p = JSON.parse(localStorage.getItem('dijitalOgretmenProgress') || '{}');
+        if (!p['kelime-eslestirme']) p['kelime-eslestirme'] = { completed: 0, total: 8, levels: [] };
+        for (let i = 1; i <= 8; i++) {
+          if (!p['kelime-eslestirme'].levels.includes(i)) p['kelime-eslestirme'].levels.push(i);
+        }
+        p['kelime-eslestirme'].completed = p['kelime-eslestirme'].levels.length;
+        localStorage.setItem('dijitalOgretmenProgress', JSON.stringify(p));
+      } catch (_) {}
+    }
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function renderRound() {
+      const pair = PAIRS[round];
+      document.getElementById('roundInfo').textContent = `Tur ${round + 1} / ${PAIRS.length}`;
+
+      const wordsCol = document.getElementById('wordsCol');
+      const meaningsCol = document.getElementById('meaningsCol');
+      selectedWord = null;
+      selectedMeaning = null;
+
+      const decoys = shuffle(PAIRS.filter((_, i) => i !== round)).slice(0, 2);
+      const words = shuffle([pair, ...decoys].map(p => p.word));
+      const meanings = shuffle([pair, ...decoys].map(p => p.meaning));
+
+      wordsCol.innerHTML = words.map(w =>
+        `<button class="match-item" data-word="${w}" type="button">${w}</button>`
+      ).join('');
+      meaningsCol.innerHTML = meanings.map(m =>
+        `<button class="match-item" data-meaning="${m}" type="button">${m}</button>`
+      ).join('');
+
+      wordsCol.querySelectorAll('.match-item').forEach(btn => {
+        btn.addEventListener('click', () => selectWord(btn));
+      });
+      meaningsCol.querySelectorAll('.match-item').forEach(btn => {
+        btn.addEventListener('click', () => selectMeaning(btn));
+      });
+    }
+
+    function selectWord(btn) {
+      document.querySelectorAll('#wordsCol .match-item').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedWord = btn.dataset.word;
+      tryMatch();
+    }
+
+    function selectMeaning(btn) {
+      document.querySelectorAll('#meaningsCol .match-item').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedMeaning = btn.dataset.meaning;
+      tryMatch();
+    }
+
+    function tryMatch() {
+      if (!selectedWord || !selectedMeaning) return;
+      const pair = PAIRS[round];
+      const correct = pair.word === selectedWord && pair.meaning === selectedMeaning;
+
+      if (correct) {
+        document.querySelectorAll('.match-item.selected').forEach(b => b.classList.add('matched'));
+        matched++;
+        setTimeout(() => {
+          round++;
+          if (round >= PAIRS.length) {
+            saveProgress();
+            document.getElementById('roundInfo').textContent = '🎉 Tüm turlar tamamlandı!';
+            document.getElementById('wordsCol').innerHTML = '';
+            document.getElementById('meaningsCol').innerHTML =
+              '<button class="match-item" style="grid-column:span 2" type="button" onclick="location.reload()">🔄 Yeniden Başla</button>';
+          } else {
+            renderRound();
+          }
+        }, 600);
+      } else {
+        document.querySelectorAll('.match-item.selected').forEach(b => {
+          b.classList.add('wrong');
+          setTimeout(() => b.classList.remove('wrong', 'selected'), 500);
+        });
+        selectedWord = null;
+        selectedMeaning = null;
+      }
+    }
+
+    renderRound();
+  })();
+  </script>
+</body>
+</html>

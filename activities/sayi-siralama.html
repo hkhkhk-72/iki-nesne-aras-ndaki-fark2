@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Sayı Sıralama — Dijital Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <style>
+    .sort-app { max-width: 480px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 1; }
+    .sort-area { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; min-height: 80px; padding: 16px; }
+    .num-chip {
+      width: 56px; height: 56px; border: 2px solid rgba(255,255,255,0.35); border-radius: 14px;
+      background: rgba(255,255,255,0.18); color: #fff; font-size: 1.4rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; cursor: grab;
+      transition: all 0.2s ease; touch-action: none; user-select: none;
+    }
+    .num-chip:active { cursor: grabbing; transform: scale(1.08); }
+    .num-chip.placed { background: rgba(146,254,157,0.35); border-color: #92fe9d; }
+    .slots { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .slot {
+      width: 56px; height: 56px; border: 2px dashed rgba(255,255,255,0.4); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 800;
+      background: rgba(255,255,255,0.08);
+    }
+    .slot.filled { border-style: solid; background: rgba(255,255,255,0.2); }
+    .slot.correct { border-color: #92fe9d; background: rgba(146,254,157,0.3); }
+    .slot.wrong { border-color: #ef9a9a; background: rgba(229,57,53,0.25); }
+    .hint { text-align: center; font-size: 0.9rem; color: var(--text-soft); }
+    .actions-row { display: flex; gap: 10px; }
+    .actions-row .btn { flex: 1; padding: 14px; }
+    .btn-primary { background: linear-gradient(135deg, #00c9ff, #92fe9d); color: #1a3a2a; border: none; }
+  </style>
+</head>
+<body>
+  <div class="sort-app">
+    <a href="../index.html" class="back-link">← Platforma Dön</a>
+    <header class="hero" style="padding:8px 0;">
+      <h2>🎯 Sayı Sıralama</h2>
+      <p>Sayıları küçükten büyüğe sırala!</p>
+    </header>
+
+    <div class="panel">
+      <p class="hint" id="levelInfo">Seviye 1 / 6</p>
+      <p class="hint">Sayıları sürükleyerek kutulara yerleştir</p>
+      <div class="sort-area" id="pool"></div>
+      <div class="slots" id="slots"></div>
+      <div class="actions-row" style="margin-top:16px;">
+        <button class="btn btn-secondary" id="btnReset" type="button">🔄 Sıfırla</button>
+        <button class="btn btn-primary" id="btnCheck" type="button">✅ Kontrol Et</button>
+      </div>
+      <p class="hint" id="feedback" style="margin-top:12px;font-weight:600;"></p>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    const LEVELS = [
+      { count: 3, max: 10 },
+      { count: 4, max: 20 },
+      { count: 5, max: 30 },
+      { count: 5, max: 50 },
+      { count: 6, max: 60 },
+      { count: 6, max: 99 }
+    ];
+
+    let currentLevel = 0;
+    let numbers = [];
+    let sorted = [];
+    let slots = [];
+
+    function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+    function saveProgress(level) {
+      try {
+        const p = JSON.parse(localStorage.getItem('dijitalOgretmenProgress') || '{}');
+        if (!p['sayi-siralama']) p['sayi-siralama'] = { completed: 0, total: 6, levels: [] };
+        if (!p['sayi-siralama'].levels.includes(level + 1)) {
+          p['sayi-siralama'].levels.push(level + 1);
+          p['sayi-siralama'].completed = p['sayi-siralama'].levels.length;
+        }
+        localStorage.setItem('dijitalOgretmenProgress', JSON.stringify(p));
+      } catch (_) {}
+    }
+
+    function generateLevel() {
+      const lvl = LEVELS[currentLevel];
+      const set = new Set();
+      while (set.size < lvl.count) set.add(rand(1, lvl.max));
+      numbers = [...set];
+      sorted = [...numbers].sort((a, b) => a - b);
+      slots = new Array(lvl.count).fill(null);
+      document.getElementById('levelInfo').textContent = `Seviye ${currentLevel + 1} / ${LEVELS.length}`;
+      document.getElementById('feedback').textContent = '';
+      render();
+    }
+
+    function render() {
+      const pool = document.getElementById('pool');
+      const slotsEl = document.getElementById('slots');
+      const used = slots.filter(s => s !== null);
+
+      pool.innerHTML = numbers.filter(n => !used.includes(n)).map(n =>
+        `<div class="num-chip" draggable="true" data-num="${n}">${n}</div>`
+      ).join('');
+
+      slotsEl.innerHTML = slots.map((s, i) =>
+        `<div class="slot${s !== null ? ' filled' : ''}" data-idx="${i}">${s ?? ''}</div>`
+      ).join('');
+
+      pool.querySelectorAll('.num-chip').forEach(chip => {
+        chip.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('text/plain', chip.dataset.num);
+        });
+        chip.addEventListener('click', () => {
+          const idx = slots.findIndex(s => s === null);
+          if (idx !== -1) {
+            slots[idx] = parseInt(chip.dataset.num, 10);
+            render();
+          }
+        });
+      });
+
+      slotsEl.querySelectorAll('.slot').forEach(slot => {
+        slot.addEventListener('dragover', e => e.preventDefault());
+        slot.addEventListener('drop', e => {
+          e.preventDefault();
+          const num = parseInt(e.dataTransfer.getData('text/plain'), 10);
+          const idx = parseInt(slot.dataset.idx, 10);
+          if (slots[idx] !== null) return;
+          slots[idx] = num;
+          render();
+        });
+        slot.addEventListener('click', () => {
+          const idx = parseInt(slot.dataset.idx, 10);
+          if (slots[idx] !== null) {
+            slots[idx] = null;
+            render();
+          }
+        });
+      });
+    }
+
+    document.getElementById('btnReset').addEventListener('click', () => {
+      slots = new Array(LEVELS[currentLevel].count).fill(null);
+      document.getElementById('feedback').textContent = '';
+      render();
+    });
+
+    document.getElementById('btnCheck').addEventListener('click', () => {
+      const fb = document.getElementById('feedback');
+      if (slots.some(s => s === null)) {
+        fb.textContent = '⚠️ Tüm kutuları doldur!';
+        fb.style.color = '#ffe082';
+        return;
+      }
+      const correct = slots.every((s, i) => s === sorted[i]);
+      document.querySelectorAll('.slot').forEach((el, i) => {
+        el.classList.toggle('correct', slots[i] === sorted[i]);
+        el.classList.toggle('wrong', slots[i] !== sorted[i]);
+      });
+      if (correct) {
+        fb.textContent = '✅ Doğru sıralama!';
+        fb.style.color = '#a5d6a7';
+        saveProgress(currentLevel);
+        setTimeout(() => {
+          currentLevel++;
+          if (currentLevel >= LEVELS.length) {
+            fb.textContent = '🎉 Tüm seviyeler tamamlandı!';
+            document.getElementById('btnCheck').disabled = true;
+          } else {
+            generateLevel();
+          }
+        }, 1500);
+      } else {
+        fb.textContent = '❌ Yanlış sıralama, tekrar dene!';
+        fb.style.color = '#ef9a9a';
+      }
+    });
+
+    generateLevel();
+  })();
+  </script>
+</body>
+</html>

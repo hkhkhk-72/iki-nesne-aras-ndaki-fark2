@@ -14,6 +14,8 @@
 | İlkokul Türkçe (1–4) 2024 | 228 | `2024programtur1234Onayli.pdf` |
 | İlkokul Matematik (1–4) 2024 | 160 | `2024programmat1234Onayli.pdf` |
 | Hayat Bilgisi (1–3) 2024 | 88 | `2024programhay123Onayli.pdf` |
+| Fen Bilimleri (3–8) 2024 | 234 | `2024programfen345678Onayli.pdf` |
+| Sosyal Bilgiler (4–7) 2024 | 116 | `2024programsos4567Onayli.pdf` |
 
 ---
 
@@ -40,79 +42,221 @@ Her tema / öğrenme alanı şu bloklardan oluşur:
 
 ---
 
-## 2. 1. Sınıf Türkçe — Resmi Temalar
+## 2. Türkçe — Sınıf Temaları (Resmi)
 
-| # | Tema | Saat | % |
-|---|------|-----:|--:|
-| — | İlk Okuma Yazmaya Hazırlık | 10 | 2 |
-| 1 | Güzel Davranışlarımız | 38 | 11 |
-| 2 | Mustafa Kemal'den Atatürk'e | 38 | 11 |
-| 3 | Çevremizdeki Yaşam | 38 | 11 |
-| 4 | Yol Arkadaşımız Kitaplar | 38 | 11 |
-| 5 | Yeteneklerimizi Keşfediyoruz | 38 | 11 |
-| 6 | Minik Kâşifler | 38 | 11 |
-| 7 | Atalarımızın İzleri | 38 | 11 |
-| 8 | Sorumluluklarımızın Farkındayız | 38 | 11 |
-| — | Pekiştirme / Hatırlatma / OTP | 46 | 13 |
-| | **TOPLAM** | **360** | 100 |
+**Kodlama:** `T.D.1.2` → Türkçe · Dinleme · sınıf · çıktı  
+(D=Dinleme/İzleme, K=Konuşma, O=Okuma, Y=Yazma)
 
-**İlk okuma yazma:** Ses esaslı; tırnaksız dik temel harfler.  
-**Kodlama:** `T.D.1.2` → Türkçe · Dinleme · 1. sınıf · çıktı 2  
-(D=Dinleme, K=Konuşma, O=Okuma, Y=Yazma)
+### 1. Sınıf — 360 saat (10/hafta)
 
-**2. sınıf temaları:** Değerlerimizle Varız, Atatürk ve Çocuk, Doğada Neler Oluyor?, Okuma Serüvenimiz, Yeteneklerimizi Tanıyoruz, Mucit Çocuk, Kültür Hazinemiz, Haklarımızı Biliyoruz
+| # | Tema | Saat |
+|---|------|-----:|
+| — | İlk Okuma Yazmaya Hazırlık | 10 |
+| 1 | Güzel Davranışlarımız | 38 |
+| 2 | Mustafa Kemal'den Atatürk'e | 38 |
+| 3 | Çevremizdeki Yaşam | 38 |
+| 4 | Yol Arkadaşımız Kitaplar | 38 |
+| — | Pekiştirme / Hatırlatma | 20 |
+| 5 | Yeteneklerimizi Keşfediyoruz | 38 |
+| 6 | Minik Kâşifler | 38 |
+| 7 | Atalarımızın İzleri | 38 |
+| 8 | Sorumluluklarımızın Farkındayız | 38 |
+| — | Pekiştirme / OTP | 26 |
+
+**İlk okuma yazma:** Ses esaslı; tırnaksız dik temel harfler.
+
+### 2. Sınıf — 360 saat (10/hafta) · 108 çıktı
+
+| # | Tema | Saat | Çıktı |
+|---|------|-----:|------:|
+| — | Hatırlatma | 10 | — |
+| 1 | Değerlerimizle Varız | 38 | 12 |
+| 2 | Atatürk ve Çocuk | 38 | 12 |
+| 3 | Doğada Neler Oluyor? | 38 | 13 |
+| 4 | Okuma Serüvenimiz | 38 | 16 |
+| — | Pekiştirme / Hatırlatma | 20 | — |
+| 5 | Yeteneklerimizi Tanıyoruz | 38 | 13 |
+| 6 | Mucit Çocuk | 38 | 13 |
+| 7 | Kültür Hazinemiz | 38 | 13 |
+| 8 | Haklarımızı Biliyoruz | 38 | 16 |
+| — | Pekiştirme / OTP | 26 | — |
+
+### 3. Sınıf — 288 saat (8/hafta) · 111 çıktı
+
+| # | Tema | Saat |
+|---|------|-----:|
+| 1 | Değerlerimizle Yaşıyoruz | 31 |
+| 2 | Atatürk ve Kahramanlarımız | 31 |
+| 3 | Doğayı Tanıyoruz | 31 |
+| 4 | Bilgi Hazinemiz | 31 |
+| 5 | Yeteneklerimizi Kullanıyoruz | 30 |
+| 6 | Bilim Yolculuğu | 30 |
+| 7 | Millî Kültürümüz | 30 |
+| 8 | Hak ve Sorumluluklarımız | 30 |
+| — | Hatırlatma / Pekiştirme / OTP | 44 |
+
+### 4. Sınıf — 288 saat (8/hafta) · 114 çıktı
+
+| # | Tema | Saat |
+|---|------|-----:|
+| 1 | Erdemler | 31 |
+| 2 | Millî Mücadele ve Atatürk | 31 |
+| 3 | Doğa ve İnsan | 31 |
+| 4 | Kütüphanemiz | 31 |
+| 5 | Kendimizi Geliştiriyoruz | 30 |
+| 6 | Bilim ve Teknoloji | 30 |
+| 7 | Geçmişten Geleceğe Mirasımız | 30 |
+| 8 | Demokratik Yaşam | 30 |
+| — | Hatırlatma / Pekiştirme / OTP | 44 |
+
+**Metin kuralı (2–4):** Her temada 5 metin (4 okuma + 1 dinleme); bilgilendirici + öyküleyici + şiir dengesi.
 
 ---
 
-## 3. 1. Sınıf Matematik — Resmi Temalar
+## 3. Matematik — Sınıf Temaları (Resmi İşleniş Sırası)
 
-| # | Tema | Saat | % |
-|---|------|-----:|--:|
-| 1 | Sayılar ve Nicelikler (1) | 57 | 31 |
-| 2 | Sayılar ve Nicelikler (2) | 18 | 10 |
-| 3 | Sayılar ve Nicelikler (3) | 7 | 4 |
-| 4 | İşlemlerden Cebirsel Düşünmeye | 50 | 28 |
-| 5 | Nesnelerin Geometrisi (1) | 15 | 8 |
-| 6 | Nesnelerin Geometrisi (2) | 15 | 9 |
-| 7 | Veriye Dayalı Araştırma | 10 | 6 |
-| — | Okul Temelli Planlama | 8 | 4 |
-| | **TOPLAM** | **180** | 100 |
+Haftalık **5** saat · yıllık **180** saat (tüm sınıflar).  
+Alan becerileri (MAB): Muhakeme, Problem Çözme, Temsil, Veri, Araç/Teknoloji.
 
-**Alan becerileri (MAB):** Matematiksel Muhakeme, Problem Çözme, Temsil, Veri, Araç/Teknoloji
+### 1. Sınıf (19 çıktı)
+
+1. Nesnelerin Geometrisi (1) — 15  
+2. Sayılar ve Nicelikler (1) — 57  
+3. Sayılar ve Nicelikler (2) — 18  
+4. İşlemlerden Cebirsel Düşünmeye — 50  
+5. Sayılar ve Nicelikler (3) — 7  
+6. Nesnelerin Geometrisi (2) — 15  
+7. Veriye Dayalı Araştırma — 10  
++ OTP — 8
+
+### 2. Sınıf (25 çıktı)
+
+1. Nesnelerin Geometrisi (1) — 25  
+2. Sayılar ve Nicelikler (1) — 41  
+3. İşlemlerden Cebirsel Düşünmeye — 55  
+4. Sayılar ve Nicelikler (2) — 30  
+5. Nesnelerin Geometrisi (2) — 11  
+6. Veriye Dayalı Araştırma — 10  
++ OTP — 8
+
+### 3. Sınıf (33 çıktı)
+
+1. Sayılar ve Nicelikler (1) — 26  
+2. Sayılar ve Nicelikler (2) — 45  
+3. İşlemlerden Cebirsel Düşünmeye — 55  
+4. Nesnelerin Geometrisi (1) — 21  
+5. Nesnelerin Geometrisi (2) — 10  
+6. Veriye Dayalı Araştırma — 15  
++ OTP — 8
+
+### 4. Sınıf (34 çıktı)
+
+1. Sayılar ve Nicelikler (1) — 23  
+2. Sayılar ve Nicelikler (2) — 43  
+3. İşlemlerden Cebirsel Düşünmeye — 50  
+4. Nesnelerin Geometrisi (1) — 17  
+5. Nesnelerin Geometrisi (2) — 11  
+6. Nesnelerin Geometrisi (3) — 13  
+7. Olayların Olasılığı ve Veriye Dayalı Araştırma — 15  
++ OTP — 8
+
+**Not:** 4. sınıfta “Veriye Dayalı Araştırma” teması **“Olayların Olasılığı ve Veriye Dayalı Araştırma”** olarak genişler.
 
 ---
 
-## 4. 1. Sınıf Hayat Bilgisi — Öğrenme Alanları
+## 4. Hayat Bilgisi — Öğrenme Alanları (1–3)
+
+Aynı 6 öğrenme alanı tüm sınıflarda:
+
+1. Ben ve Okulum  
+2. Sağlığım ve Güvenliğim  
+3. Ailem ve Toplum  
+4. Yaşadığım Yer ve Ülkem  
+5. Doğa ve Çevre  
+6. Bilim, Teknoloji ve Sanat  
+
+| Sınıf | Toplam saat | Haftalık | Çıktı | OTP |
+|------:|------------:|---------:|------:|----:|
+| 1 | 144 | 4 | 23 | 6 |
+| 2 | 144 | 4 | 23 | 6 |
+| 3 | 108 | 3 | 20 | 5 |
+
+**3. sınıf saatleri:** alan 1–5 → 18’er saat; alan 6 → 13 saat.
+
+---
+
+## 5. Fen Bilimleri — Üniteler (3–4)
+
+Haftalık **3** saat · yıllık **108** saat.
+
+### 3. Sınıf (20 çıktı)
+
+1. Bilimsel Keşif Yolculuğu — 9  
+2. Canlılar Dünyasına Yolculuk — 15  
+3. Yer Bilimciler İş Başında — 12  
+4. Maddeyi Tanıyalım, Karıştırıp Ayıralım — 15  
+5. Hareketi Keşfediyorum — 12  
+6. Yaşamımızı Kolaylaştıran Elektrik — 12  
+7. Toprağı Tanıyorum, Tarımı Keşfediyorum — 12  
+8. Canlıların Yaşam Alanlarına Yolculuk — 15  
++ OTP — 6  
+
+**Kod:** `FB.3.x.y`
+
+### 4. Sınıf (19 çıktı)
+
+1. Bilime Yolculuk — 12  
+2. Sağlıklı Besleniyorum — 15  
+3. Dünya'mızı Keşfedelim — 15  
+4. Maddenin Değişimi — 12  
+5. Mıknatısı Keşfediyorum — 12  
+6. Enerji Dedektifleri — 12  
+7. Işığın Peşinde — 12  
+8. Sürdürülebilir Şehirler ve Topluluklar — 12  
++ OTP — 6  
+
+**Kod:** `FB.4.x.y`
+
+---
+
+## 6. Sosyal Bilgiler — 4. Sınıf Öğrenme Alanları
+
+Haftalık **3** saat · yıllık **108** saat · **17** çıktı · kod `SB.4.x.y`
 
 | # | Öğrenme Alanı | Saat | Çıktı |
 |---|---------------|-----:|------:|
-| 1 | Ben ve Okulum | 24 | 4 |
-| 2 | Sağlığım ve Güvenliğim | 24 | 4 |
-| 3 | Ailem ve Toplum | 20 | 3 |
-| 4 | Yaşadığım Yer ve Ülkem | 28 | 5 |
-| 5 | Doğa ve Çevre | 24 | 4 |
-| 6 | Bilim, Teknoloji ve Sanat | 18 | 3 |
-| — | Okul Temelli Planlama | 6 | — |
-| | **TOPLAM** | **144** | 23 |
-
-**Not:** "Bilim, Teknoloji ve Sanat" TYMM'de ilk kez ayrı öğrenme alanı olarak yer alıyor.
+| 1 | Birlikte Yaşamak | 18 | 3 |
+| 2 | Evimiz Dünya | 19 | 3 |
+| 3 | Ortak Mirasımız | 19 | 3 |
+| 4 | Yaşayan Demokrasimiz | 18 | 3 |
+| 5 | Hayatımızdaki Ekonomi | 17 | 3 |
+| 6 | Teknoloji ve Sosyal Bilimler | 12 | 2 |
+| — | Okul Temelli Planlama | 5 | — |
 
 ---
 
-## 5. MiniBilge'ye Yansıyan Düzeltmeler
+## 7. MiniBilge'ye Yansıyan Düzeltmeler
 
-1. Uydurma tema adları kaldırıldı → resmi temalar yazıldı
-2. Öğrenme çıktı kodları resmi formata çekildi (`T.D.1.x`, `MAT.1.x`, `HB.1.x`)
-3. 1. sınıf Hayat Bilgisi haftalık saat: 3 → **4** (144/36)
-4. Her dosyaya `kaynak` + `kaynakUrl` eklendi
+1. Uydurma tema adları kaldırıldı → resmi temalar (1–4 Türkçe/Mat, 1–3 HB, 3–4 Fen, 4 Sosyal)
+2. Öğrenme çıktı kodları resmi formata çekildi (`T.*`, `MAT.*`, `HB.*`, `FB.*`, `SB.*`)
+3. Matematik işleniş sırası resmi tabloya göre düzeltildi (1. sınıfta Geometri önce)
+4. Takvim haftalık saatleri resmi programla hizalandı:
+   - 2. sınıf Türkçe 8 → **10**, HB 3 → **4**
+   - 3. sınıf Türkçe 6 → **8**, HB 2 → **3**
+   - 4. sınıf Türkçe 6 → **8**
+5. Her dosyada `kaynak` + `kaynakUrl` (tymm.meb.gov.tr)
 
 ---
 
-## 6. Sonraki Okuma Sırası
+## 8. Okuma Durumu / Sonraki Sıra
 
-- [ ] Türkçe 2–4. sınıf temalarının tam öğrenme çıktıları
-- [ ] Matematik 2–4. sınıf
-- [ ] Hayat Bilgisi 2–3. sınıf
-- [ ] Fen Bilimleri (3–4), Sosyal Bilgiler (4)
-- [ ] Görsel Sanatlar, Müzik, Beden Eğitimi ve Oyun (1–4) resmi PDF
+- [x] Ortak Metin yapı ve kavramlar
+- [x] Türkçe 1–4 tema + süre + öğrenme çıktıları
+- [x] Matematik 1–4 tema + süre + öğrenme çıktıları
+- [x] Hayat Bilgisi 1–3 öğrenme alanları + süre + çıktılar
+- [x] Fen Bilimleri 3–4 ünite + süre + çıktılar
+- [x] Sosyal Bilgiler 4 öğrenme alanları + süre + çıktılar
+- [ ] Görsel Sanatlar, Müzik, Beden Eğitimi ve Oyun (1–4)
 - [ ] İngilizce (2–8) — 1. sınıfta yok (doğrulandı)
+- [ ] İnsan Hakları, Vatandaşlık ve Demokrasi (4)
+- [ ] Süreç bileşenlerinin (`a)`, `b)`…) tam gövdesi yıllık plana işlensin

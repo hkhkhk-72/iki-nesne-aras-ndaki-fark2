@@ -1,0 +1,274 @@
+{
+  "ders": "Fen Bilimleri",
+  "dersId": "fen",
+  "sinif": 3,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2024",
+  "kaynak": "MEB TYMM Fen Bilimleri Dersi Öğretim Programı (3-8) 2024 — onaylı PDF",
+  "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programfen345678Onayli.pdf",
+  "toplamDersSaati": 108,
+  "haftalikDersSaati": 3,
+  "toplamHafta": 36,
+  "ogrenmeCiktisiSayisi": 20,
+  "yapi": "ünite",
+  "temalar": [
+    {
+      "id": "u1",
+      "ad": "Bilimsel Keşif Yolculuğu",
+      "dersSaati": 9,
+      "hafta": 3,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.3.1.1",
+          "aciklama": "Bilimsel bilgiye ulaşma yollarını sorgulayabilme"
+        },
+        {
+          "kod": "FB.3.1.2",
+          "aciklama": "Bilim insanlarının özelliklerine ilişkin genelleme yapabilme"
+        }
+      ],
+      "icerikCercevesi": "Bilimsel Bilgiye Ulaşma Yolları Bilim İnsanlarının Özellikleri",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u2",
+      "ad": "Canlılar Dünyasına Yolculuk",
+      "dersSaati": 15,
+      "hafta": 5,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.3.2.1",
+          "aciklama": "Canlıları; mikroskopla görülebilen canlılar, mantarlar, bitkiler ve hayvanlar ola -"
+        },
+        {
+          "kod": "FB.3.2.2",
+          "aciklama": "Canlıların çevrelerini farklı yollarla algılamaları konusunda bilimsel çıkarım ya -"
+        },
+        {
+          "kod": "FB.3.2.3",
+          "aciklama": "Canlıların yaşam döngülerini açıklamada tümevarımsal akıl yürütebilme"
+        }
+      ],
+      "icerikCercevesi": "Canlıların Sınıflandırılması Duyu Organlarının İşlevleri Canlıların Yaşam Döngüleri",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u3",
+      "ad": "Yer Bilimciler İş Başında",
+      "dersSaati": 12,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.3.3.1",
+          "aciklama": "Kayaçlar, madenler ve mineraller ile ilgili tümdengelimsel akıl yürütebilme"
+        },
+        {
+          "kod": "FB.3.3.2",
+          "aciklama": "Fosil oluşumu ile ilgili sentez yapabilme"
+        }
+      ],
+      "icerikCercevesi": "Kayaçlar, Madenler ve Mineraller Fosil Oluşumu",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u4",
+      "ad": "Maddeyi Tanıyalım, Karıştırıp Ayıralım",
+      "dersSaati": 15,
+      "hafta": 5,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.3.4.1",
+          "aciklama": "Çevresindeki maddeleri hâllerine göre sınıflandırabilme"
+        },
+        {
+          "kod": "FB.3.4.2",
+          "aciklama": "Günlük yaşamda karşılaştığı karışımların ayrılmasında kullanılabilecek uygun"
+        },
+        {
+          "kod": "FB.3.4.3",
+          "aciklama": "Atıkların ayrıştırılmasına ilişkin problem çözebilme"
+        }
+      ],
+      "icerikCercevesi": "Maddenin Katı, Sıvı ve Gaz Hâli Karışımlar ve Karışımların Ayrılması Atıkların Ayrıştırılması",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u5",
+      "ad": "Hareketi Keşfediyorum",
+      "dersSaati": 12,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.3.5.1",
+          "aciklama": "Varlıkların hareket durumlarını gözleme dayalı tahmin edebilme"
+        },
+        {
+          "kod": "FB.3.5.2",
+          "aciklama": "Kuvvetin varlıklar üzerindeki etkilerini bilimsel gözleme dayalı tahmin edebilme"
+        }
+      ],
+      "icerikCercevesi": "Varlıkların Hareketleri Kuvvet ve Etkileri",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u6",
+      "ad": "Yaşamımızı Kolaylaştıran Elektrik",
+      "dersSaati": 12,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.3.6.1",
+          "aciklama": "Bazı araç gereçlerin elektrikli olduğuna ilişkin bilimsel çıkarım yapabilme"
+        },
+        {
+          "kod": "FB.3.6.2",
+          "aciklama": "Elektrikli araç gereçlerin güvenli kullanımı ile ilgili eleştirel düşünebilme"
+        },
+        {
+          "kod": "FB.3.6.3",
+          "aciklama": "Elektriği tasarruflu kullanma konusunda bilimsel veriye dayalı tahmin edebilme"
+        }
+      ],
+      "icerikCercevesi": "Elektrikli Araç Gereçler Elektrikli Araç Gereçlerin Güvenli Kullanımı Elektriğin Tasarruflu Kullanımı",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u7",
+      "ad": "Toprağı Tanıyorum, Tarımı Keşfediyorum",
+      "dersSaati": 12,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.3.7.1",
+          "aciklama": "Toprak oluşumuna ve yapısına ilişkin bilimsel gözlem yapabilme"
+        },
+        {
+          "kod": "FB.3.7.2",
+          "aciklama": "Bir bitkinin yetişmesi için gerekenlere ilişkin genelleme yapabilme"
+        }
+      ],
+      "icerikCercevesi": "Toprak Oluşumu ve Yapısı Bitki Yetiştirme",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u8",
+      "ad": "Canlıların Yaşam Alanlarına Yolculuk",
+      "dersSaati": 15,
+      "hafta": 5,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.3.8.1",
+          "aciklama": "Canlıların yaşam alanlarının özelliklerini belirlemeye yönelik kanıt kullanabilme"
+        },
+        {
+          "kod": "FB.3.8.2",
+          "aciklama": "Yaşam alanındaki canlı çeşitliliğini operasyonel olarak tanımlayabilme"
+        },
+        {
+          "kod": "FB.3.8.3",
+          "aciklama": "Yaşam alanlarının korunması için yapılacakları sorgulayabilme"
+        }
+      ],
+      "icerikCercevesi": "Yaşam Alanları Canlı Çeşitliliği Yaşam Alanlarının Korunmasının Canlı Çeşitliliğine Etkisi",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "otp",
+      "ad": "Okul Temelli Planlama",
+      "dersSaati": 6,
+      "hafta": 2,
+      "ogrenmeCiktilari": [],
+      "icerikCercevesi": "Zümre kararlarıyla planlanır",
+      "surecBilesenleri": [],
+      "alanBecerileri": []
+    }
+  ]
+}

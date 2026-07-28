@@ -14,6 +14,18 @@
       "matematik": "sinif2-matematik.json",
       "hayatBilgisi": "sinif2-hayat-bilgisi.json",
       "ingilizce": "sinif2-ingilizce.json"
+    },
+    "3": {
+      "turkce": "sinif3-turkce.json",
+      "matematik": "sinif3-matematik.json",
+      "hayatBilgisi": "sinif3-hayat-bilgisi.json",
+      "fen": "sinif3-fen.json"
+    },
+    "4": {
+      "turkce": "sinif4-turkce.json",
+      "matematik": "sinif4-matematik.json",
+      "fen": "sinif4-fen.json",
+      "sosyal": "sinif4-sosyal.json"
     }
   },
   "dersAdlari": {
@@ -27,5 +39,6 @@
     "muzik": "Müzik",
     "bedenEgitimi": "Beden Eğitimi",
     "rehberlik": "Rehberlik ve Kariyer Bilgisi"
-  }
+  },
+  "kaynakNotu": "1–4 Türkçe/Matematik, 1–3 Hayat Bilgisi, 3–4 Fen, 4 Sosyal: MEB TYMM onaylı PDF'lerden sayfa sayfa okunarak üretilmiştir."
 }

@@ -1,20 +1,20 @@
 {
   "ders": "Türkçe",
   "dersId": "turkce",
-  "sinif": 2,
+  "sinif": 4,
   "model": "Türkiye Yüzyılı Maarif Modeli",
   "programYili": "2024",
   "kaynak": "MEB TYMM İlkokul Türkçe Dersi Öğretim Programı (1-4) 2024 — onaylı PDF",
   "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programtur1234Onayli.pdf",
-  "toplamDersSaati": 360,
-  "haftalikDersSaati": 10,
+  "toplamDersSaati": 288,
+  "haftalikDersSaati": 8,
   "toplamHafta": 36,
-  "ogrenmeCiktisiSayisi": 108,
+  "ogrenmeCiktisiSayisi": 114,
   "temalar": [
     {
       "id": "hatirlatma1",
       "ad": "Hatırlatma Haftası",
-      "dersSaati": 10,
+      "dersSaati": 8,
       "hafta": 1,
       "ogrenmeCiktilari": [],
       "icerikCercevesi": "Zümre kararlarıyla planlanır",
@@ -24,57 +24,61 @@
     },
     {
       "id": "t1",
-      "ad": "Değerlerimizle Varız",
-      "dersSaati": 38,
+      "ad": "Erdemler",
+      "dersSaati": 31,
       "hafta": 4,
       "ogrenmeCiktilari": [
         {
-          "kod": "T.D.2.1",
+          "kod": "T.D.4.1",
           "aciklama": "Dinleme/izlemeyi yönetebilme"
         },
         {
-          "kod": "T.D.2.2",
+          "kod": "T.D.4.2",
           "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.D.2.3",
+          "kod": "T.D.4.3",
           "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme"
         },
         {
-          "kod": "T.K.2.1",
+          "kod": "T.K.4.1",
           "aciklama": "Konuşmalarını yönetebilme"
         },
         {
-          "kod": "T.K.2.2",
+          "kod": "T.K.4.2",
           "aciklama": "Konuşmalarında içerik oluşturabilme"
         },
         {
-          "kod": "T.K.2.3",
+          "kod": "T.K.4.3",
           "aciklama": "Konuşma kurallarını uygulayabilme"
         },
         {
-          "kod": "T.O.2.1",
+          "kod": "T.O.4.1",
           "aciklama": "Okuma sürecini yönetebilme"
         },
         {
-          "kod": "T.O.2.2",
+          "kod": "T.O.4.2",
           "aciklama": "Okudukları ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.O.2.3",
+          "kod": "T.O.4.3",
           "aciklama": "Okuduklarını çözümleyebilme"
         },
         {
-          "kod": "T.Y.2.1",
+          "kod": "T.Y.4.1",
           "aciklama": "Yazılı anlatım becerilerini yönetebilme"
         },
         {
-          "kod": "T.Y.2.2",
-          "aciklama": "Yazılarında içerik oluşturabilme"
+          "kod": "T.Y.4.3",
+          "aciklama": "Yazma kurallarını uygulayabilme"
         },
         {
-          "kod": "T.Y.2.3",
-          "aciklama": "Yazma kurallarını uygulayabilme"
+          "kod": "T.Y.4.4",
+          "aciklama": "Yazma sürecine etki eden durumları gözden geçirebilme"
+        },
+        {
+          "kod": "T.Y.4.5",
+          "aciklama": "Yazma sürecini değerlendirebilme"
         }
       ],
       "icerikCercevesi": "Etik, ahlak, nezaket, dürüstlük, ailede sorumluluk, çalışkanlık, dostluk, saygı, sevgi, paylaşma, yardımseverlik",
@@ -95,57 +99,61 @@
     },
     {
       "id": "t2",
-      "ad": "Atatürk ve Çocuk",
-      "dersSaati": 38,
+      "ad": "Millî Mücadele ve Atatürk",
+      "dersSaati": 31,
       "hafta": 4,
       "ogrenmeCiktilari": [
         {
-          "kod": "T.D.2.1",
+          "kod": "T.D.4.1",
           "aciklama": "Dinleme/izlemeyi yönetebilme"
         },
         {
-          "kod": "T.D.2.2",
+          "kod": "T.D.4.2",
           "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.D.2.3",
+          "kod": "T.D.4.3",
           "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme"
         },
         {
-          "kod": "T.K.2.1",
+          "kod": "T.K.4.1",
           "aciklama": "Konuşmalarını yönetebilme"
         },
         {
-          "kod": "T.K.2.2",
+          "kod": "T.K.4.2",
           "aciklama": "Konuşmalarında içerik oluşturabilme"
         },
         {
-          "kod": "T.K.2.3",
+          "kod": "T.K.4.3",
           "aciklama": "Konuşma kurallarını uygulayabilme"
         },
         {
-          "kod": "T.O.2.1",
+          "kod": "T.O.4.1",
           "aciklama": "Okuma sürecini yönetebilme"
         },
         {
-          "kod": "T.O.2.2",
+          "kod": "T.O.4.2",
           "aciklama": "Okudukları ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.O.2.3",
+          "kod": "T.O.4.3",
           "aciklama": "Okuduklarını çözümleyebilme"
         },
         {
-          "kod": "T.Y.2.1",
+          "kod": "T.Y.4.1",
           "aciklama": "Yazılı anlatım becerilerini yönetebilme"
         },
         {
-          "kod": "T.Y.2.2",
+          "kod": "T.Y.4.2",
           "aciklama": "Yazılarında içerik oluşturabilme"
         },
         {
-          "kod": "T.Y.2.3",
+          "kod": "T.Y.4.3",
           "aciklama": "Yazma kurallarını uygulayabilme"
+        },
+        {
+          "kod": "T.Y.4.5",
+          "aciklama": "Yazma sürecini değerlendirebilme"
         }
       ],
       "icerikCercevesi": "Mustafa Kemal Atatürk, millî bayramlar, Cumhuriyet, İstiklâl Marşı, Millî Mücadele, vatanseverlik, kahramanlık",
@@ -166,60 +174,60 @@
     },
     {
       "id": "t3",
-      "ad": "Doğada Neler Oluyor?",
-      "dersSaati": 38,
+      "ad": "Doğa ve İnsan",
+      "dersSaati": 31,
       "hafta": 4,
       "ogrenmeCiktilari": [
         {
-          "kod": "T.D.2.1",
+          "kod": "T.D.4.1",
           "aciklama": "Dinleme/izlemeyi yönetebilme"
         },
         {
-          "kod": "T.D.2.2",
+          "kod": "T.D.4.2",
           "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.D.2.3",
+          "kod": "T.D.4.3",
           "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme"
         },
         {
-          "kod": "T.K.2.1",
+          "kod": "T.K.4.1",
           "aciklama": "Konuşmalarını yönetebilme"
         },
         {
-          "kod": "T.K.2.2",
+          "kod": "T.K.4.2",
           "aciklama": "Konuşmalarında içerik oluşturabilme"
         },
         {
-          "kod": "T.K.2.3",
+          "kod": "T.K.4.3",
           "aciklama": "Konuşma kurallarını uygulayabilme"
         },
         {
-          "kod": "T.K.2.5",
-          "aciklama": "Konuşma sürecini değerlendirebilme"
-        },
-        {
-          "kod": "T.O.2.1",
+          "kod": "T.O.4.1",
           "aciklama": "Okuma sürecini yönetebilme"
         },
         {
-          "kod": "T.O.2.2",
+          "kod": "T.O.4.2",
           "aciklama": "Okudukları ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.O.2.3",
+          "kod": "T.O.4.3",
           "aciklama": "Okuduklarını çözümleyebilme"
         },
         {
-          "kod": "T.Y.2.1",
+          "kod": "T.O.4.5",
+          "aciklama": "Okuma sürecini değerlendirebilme"
+        },
+        {
+          "kod": "T.Y.4.1",
           "aciklama": "Yazılı anlatım becerilerini yönetebilme"
         },
         {
-          "kod": "T.Y.2.2",
+          "kod": "T.Y.4.2",
           "aciklama": "Yazılarında içerik oluşturabilme"
         },
         {
-          "kod": "T.Y.2.3",
+          "kod": "T.Y.4.3",
           "aciklama": "Yazma kurallarını uygulayabilme"
         }
       ],
@@ -241,73 +249,65 @@
     },
     {
       "id": "t4",
-      "ad": "Okuma Serüvenimiz",
-      "dersSaati": 38,
+      "ad": "Kütüphanemiz",
+      "dersSaati": 31,
       "hafta": 4,
       "ogrenmeCiktilari": [
         {
-          "kod": "T.D.2.1",
+          "kod": "T.D.4.1",
           "aciklama": "Dinleme/izlemeyi yönetebilme"
         },
         {
-          "kod": "T.D.2.2",
+          "kod": "T.D.4.2",
           "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.D.2.3",
-          "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme"
-        },
-        {
-          "kod": "T.D.2.4",
-          "aciklama": "Dinleme/izleme sürecine etki eden durumları gözden geçirebilme"
-        },
-        {
-          "kod": "T.D.2.5",
+          "kod": "T.D.4.5",
           "aciklama": "Dinleme/izleme sürecini değerlendirebilme"
         },
         {
-          "kod": "T.K.2.1",
+          "kod": "T.K.4.1",
           "aciklama": "Konuşmalarını yönetebilme"
         },
         {
-          "kod": "T.K.2.2",
+          "kod": "T.K.4.2",
           "aciklama": "Konuşmalarında içerik oluşturabilme"
         },
         {
-          "kod": "T.K.2.3",
+          "kod": "T.K.4.3",
           "aciklama": "Konuşma kurallarını uygulayabilme"
         },
         {
-          "kod": "T.O.2.1",
+          "kod": "T.K.4.5",
+          "aciklama": "Konuşma sürecini değerlendirebilme"
+        },
+        {
+          "kod": "T.O.4.1",
           "aciklama": "Okuma sürecini yönetebilme"
         },
         {
-          "kod": "T.O.2.2",
+          "kod": "T.O.4.2",
           "aciklama": "Okudukları ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.O.2.3",
+          "kod": "T.O.4.3",
           "aciklama": "Okuduklarını çözümleyebilme"
         },
         {
-          "kod": "T.O.2.4",
-          "aciklama": "Okuma sürecine etki eden durumları gözden geçirebilme"
+          "kod": "T.O.4.5",
+          "aciklama": "Okuma sürecini değerlendirebilme"
         },
         {
-          "kod": "T.Y.2.1",
+          "kod": "T.Y.4.1",
           "aciklama": "Yazılı anlatım becerilerini yönetebilme"
         },
         {
-          "kod": "T.Y.2.2",
+          "kod": "T.Y.4.2",
           "aciklama": "Yazılarında içerik oluşturabilme"
         },
         {
-          "kod": "T.Y.2.3",
+          "kod": "T.Y.4.3",
           "aciklama": "Yazma kurallarını uygulayabilme"
-        },
-        {
-          "kod": "T.Y.2.5",
-          "aciklama": "Yazma sürecini değerlendirebilme"
         }
       ],
       "icerikCercevesi": "Okuma alışkanlığı, kitaplar, kütüphaneler, okuryazarlık türleri, dil sevgisi, sözlük kültürü",
@@ -329,7 +329,7 @@
     {
       "id": "pekistirme1",
       "ad": "Pekiştirme Haftası",
-      "dersSaati": 10,
+      "dersSaati": 8,
       "hafta": 1,
       "ogrenmeCiktilari": [],
       "icerikCercevesi": "Zümre kararlarıyla planlanır",
@@ -340,7 +340,7 @@
     {
       "id": "hatirlatma2",
       "ad": "Hatırlatma Haftası",
-      "dersSaati": 10,
+      "dersSaati": 8,
       "hafta": 1,
       "ogrenmeCiktilari": [],
       "icerikCercevesi": "Zümre kararlarıyla planlanır",
@@ -350,61 +350,61 @@
     },
     {
       "id": "t5",
-      "ad": "Yeteneklerimizi Tanıyoruz",
-      "dersSaati": 38,
+      "ad": "Kendimizi Geliştiriyoruz",
+      "dersSaati": 30,
       "hafta": 4,
       "ogrenmeCiktilari": [
         {
-          "kod": "T.D.2.1",
+          "kod": "T.D.4.1",
           "aciklama": "Dinleme/izlemeyi yönetebilme"
         },
         {
-          "kod": "T.D.2.2",
-          "aciklama": "Dinledikleri ile ilgili anlam oluşturabilme"
+          "kod": "T.D.4.2",
+          "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.D.2.3",
-          "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme"
+          "kod": "T.D.4.5",
+          "aciklama": "Dinleme/izleme sürecini değerlendirebilme"
         },
         {
-          "kod": "T.K.2.1",
-          "aciklama": "Konuşmalarını yönetebilme"
-        },
-        {
-          "kod": "T.K.2.2",
+          "kod": "T.K.4.2",
           "aciklama": "Konuşmalarında içerik oluşturabilme"
         },
         {
-          "kod": "T.K.2.3",
+          "kod": "T.K.4.3",
           "aciklama": "Konuşma kurallarını uygulayabilme"
         },
         {
-          "kod": "T.O.2.1",
+          "kod": "T.O.4.1",
           "aciklama": "Okuma sürecini yönetebilme"
         },
         {
-          "kod": "T.O.2.2",
-          "aciklama": "Okumaları ile ilgili anlam oluşturabilme"
+          "kod": "T.O.4.2",
+          "aciklama": "Okudukları ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.O.2.3",
+          "kod": "T.O.4.3",
           "aciklama": "Okuduklarını çözümleyebilme"
         },
         {
-          "kod": "T.Y.2.1",
+          "kod": "T.O.4.5",
+          "aciklama": "Okuma sürecini değerlendirebilme"
+        },
+        {
+          "kod": "T.Y.4.1",
           "aciklama": "Yazılı anlatım becerilerini yönetebilme"
         },
         {
-          "kod": "T.Y.2.2",
+          "kod": "T.Y.4.2",
           "aciklama": "Yazılarında içerik oluşturabilme"
         },
         {
-          "kod": "T.Y.2.3",
+          "kod": "T.Y.4.3",
           "aciklama": "Yazma kurallarını uygulayabilme"
         },
         {
-          "kod": "T.Y.2.4",
-          "aciklama": "Yazma sürecine etki eden durumları gözden geçirebilme"
+          "kod": "T.Y.4.5",
+          "aciklama": "Yazma sürecini değerlendirebilme"
         }
       ],
       "icerikCercevesi": "Sanat, spor, hobiler, geleneksel oyunlar, estetik, keşif, merak, çocuk kültürü",
@@ -425,61 +425,77 @@
     },
     {
       "id": "t6",
-      "ad": "Mucit Çocuk",
-      "dersSaati": 38,
+      "ad": "Bilim ve Teknoloji",
+      "dersSaati": 30,
       "hafta": 4,
       "ogrenmeCiktilari": [
         {
-          "kod": "T.D.2.1",
+          "kod": "T.D.4.1",
           "aciklama": "Dinleme/izlemeyi yönetebilme"
         },
         {
-          "kod": "T.D.2.2",
+          "kod": "T.D.4.2",
           "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.D.2.3",
+          "kod": "T.D.4.3",
           "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme"
         },
         {
-          "kod": "T.K.2.1",
+          "kod": "T.D.4.4",
+          "aciklama": "Dinleme/izleme sürecine etki eden durumları gözden geçirebilme"
+        },
+        {
+          "kod": "T.K.4.1",
           "aciklama": "Konuşmalarını yönetebilme"
         },
         {
-          "kod": "T.K.2.2",
+          "kod": "T.K.4.2",
           "aciklama": "Konuşmalarında içerik oluşturabilme"
         },
         {
-          "kod": "T.K.2.3",
+          "kod": "T.K.4.3",
           "aciklama": "Konuşma kurallarını uygulayabilme"
         },
         {
-          "kod": "T.K.2.4",
+          "kod": "T.K.4.4",
           "aciklama": "Konuşma sürecine etki eden durumları gözden geçirebilme"
         },
         {
-          "kod": "T.O.2.1",
-          "aciklama": "Okuma sürecini yönetebilme"
+          "kod": "T.K.4.5",
+          "aciklama": "Konuşma sürecini değerlendirebilme"
         },
         {
-          "kod": "T.O.2.2",
+          "kod": "T.O.4.2",
           "aciklama": "Okudukları ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.O.2.3",
+          "kod": "T.O.4.3",
           "aciklama": "Okuduklarını çözümleyebilme"
         },
         {
-          "kod": "T.Y.2.1",
+          "kod": "T.O.4.4",
+          "aciklama": "Okuma sürecine etki eden durumları gözden geçirebilme"
+        },
+        {
+          "kod": "T.O.4.5",
+          "aciklama": "Okuma sürecini değerlendirebilme"
+        },
+        {
+          "kod": "T.Y.4.1",
           "aciklama": "Yazılı anlatım becerilerini yönetebilme"
         },
         {
-          "kod": "T.Y.2.2",
+          "kod": "T.Y.4.2",
           "aciklama": "Yazılarında içerik oluşturabilme"
         },
         {
-          "kod": "T.Y.2.3",
+          "kod": "T.Y.4.3",
           "aciklama": "Yazma kurallarını uygulayabilme"
+        },
+        {
+          "kod": "T.Y.4.5",
+          "aciklama": "Yazma sürecini değerlendirebilme"
         }
       ],
       "icerikCercevesi": "Bilim, araştırma, icat, mucit, uzay, teknoloji, keşif, merak",
@@ -500,60 +516,60 @@
     },
     {
       "id": "t7",
-      "ad": "Kültür Hazinemiz",
-      "dersSaati": 38,
+      "ad": "Geçmişten Geleceğe Mirasımız",
+      "dersSaati": 30,
       "hafta": 4,
       "ogrenmeCiktilari": [
         {
-          "kod": "T.D.2.1",
+          "kod": "T.D.4.1",
           "aciklama": "Dinleme/izlemeyi yönetebilme"
         },
         {
-          "kod": "T.D.2.2",
+          "kod": "T.D.4.2",
           "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.D.2.3",
-          "aciklama": "Dinledikleri/izlediklerini çözümleyebilme"
+          "kod": "T.D.4.3",
+          "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme"
         },
         {
-          "kod": "T.K.2.1",
+          "kod": "T.K.4.1",
           "aciklama": "Konuşmalarını yönetebilme"
         },
         {
-          "kod": "T.K.2.2",
+          "kod": "T.K.4.2",
           "aciklama": "Konuşmalarında içerik oluşturabilme"
         },
         {
-          "kod": "T.K.2.3",
+          "kod": "T.K.4.3",
           "aciklama": "Konuşma kurallarını uygulayabilme"
         },
         {
-          "kod": "T.O.2.1",
+          "kod": "T.O.4.1",
           "aciklama": "Okuma sürecini yönetebilme"
         },
         {
-          "kod": "T.O.2.2",
+          "kod": "T.O.4.2",
           "aciklama": "Okudukları ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.O.2.3",
+          "kod": "T.O.4.3",
           "aciklama": "Okuduklarını çözümleyebilme"
         },
         {
-          "kod": "T.O.2.5",
+          "kod": "T.O.4.5",
           "aciklama": "Okuma sürecini değerlendirebilme"
         },
         {
-          "kod": "T.Y.2.1",
+          "kod": "T.Y.4.1",
           "aciklama": "Yazılı anlatım becerilerini yönetebilme"
         },
         {
-          "kod": "T.Y.2.2",
+          "kod": "T.Y.4.2",
           "aciklama": "Yazılarında içerik oluşturabilme"
         },
         {
-          "kod": "T.Y.2.3",
+          "kod": "T.Y.4.3",
           "aciklama": "Yazma kurallarını uygulayabilme"
         }
       ],
@@ -575,73 +591,69 @@
     },
     {
       "id": "t8",
-      "ad": "Haklarımızı Biliyoruz",
-      "dersSaati": 38,
+      "ad": "Demokratik Yaşam",
+      "dersSaati": 30,
       "hafta": 4,
       "ogrenmeCiktilari": [
         {
-          "kod": "T.D.2.1",
+          "kod": "T.D.4.1",
           "aciklama": "Dinleme/izlemeyi yönetebilme"
         },
         {
-          "kod": "T.D.2.2",
+          "kod": "T.D.4.2",
           "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.D.2.3",
+          "kod": "T.D.4.3",
           "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme"
         },
         {
-          "kod": "T.D.2.5",
+          "kod": "T.D.4.5",
           "aciklama": "Dinleme/izleme sürecini değerlendirebilme"
         },
         {
-          "kod": "T.K.2.1",
+          "kod": "T.K.4.1",
           "aciklama": "Konuşmalarını yönetebilme"
         },
         {
-          "kod": "T.K.2.2",
+          "kod": "T.K.4.2",
           "aciklama": "Konuşmalarında içerik oluşturabilme"
         },
         {
-          "kod": "T.K.2.3",
+          "kod": "T.K.4.3",
           "aciklama": "Konuşma kurallarını uygulayabilme"
         },
         {
-          "kod": "T.K.2.5",
+          "kod": "T.K.4.5",
           "aciklama": "Konuşma sürecini değerlendirebilme"
         },
         {
-          "kod": "T.O.2.1",
+          "kod": "T.O.4.1",
           "aciklama": "Okuma sürecini yönetebilme"
         },
         {
-          "kod": "T.O.2.2",
+          "kod": "T.O.4.2",
           "aciklama": "Okudukları ile ilgili anlam oluşturabilme"
         },
         {
-          "kod": "T.O.2.3",
+          "kod": "T.O.4.3",
           "aciklama": "Okuduklarını çözümleyebilme"
         },
         {
-          "kod": "T.O.2.4",
-          "aciklama": "Okuma sürecine etki eden durumları gözden geçirebilme"
-        },
-        {
-          "kod": "T.O.2.5",
-          "aciklama": "Okuma sürecini değerlendirebilme"
-        },
-        {
-          "kod": "T.Y.2.1",
+          "kod": "T.Y.4.1",
           "aciklama": "Yazılı anlatım becerilerini yönetebilme"
         },
         {
-          "kod": "T.Y.2.2",
+          "kod": "T.Y.4.2",
           "aciklama": "Yazılarında içerik oluşturabilme"
         },
         {
-          "kod": "T.Y.2.3",
+          "kod": "T.Y.4.3",
           "aciklama": "Yazma kurallarını uygulayabilme"
+        },
+        {
+          "kod": "T.Y.4.5",
+          "aciklama": "Yazma sürecini değerlendirebilme"
         }
       ],
       "icerikCercevesi": "Demokrasi, çocuk hakları, eşitlik, sorumluluk, mahremiyet, ifade özgürlüğü",
@@ -663,7 +675,7 @@
     {
       "id": "pekistirme2",
       "ad": "Pekiştirme Haftası",
-      "dersSaati": 10,
+      "dersSaati": 8,
       "hafta": 1,
       "ogrenmeCiktilari": [],
       "icerikCercevesi": "Zümre kararlarıyla planlanır",
@@ -674,7 +686,7 @@
     {
       "id": "otp",
       "ad": "Okul Temelli Planlama",
-      "dersSaati": 16,
+      "dersSaati": 12,
       "hafta": 2,
       "ogrenmeCiktilari": [],
       "icerikCercevesi": "Zümre kararlarıyla planlanır",

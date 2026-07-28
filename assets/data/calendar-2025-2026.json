@@ -29,8 +29,8 @@
   ],
   "haftalikDersSaati": {
     "1": { "turkce": 10, "matematik": 5, "hayatBilgisi": 4, "gorselSanatlar": 2, "muzik": 2, "bedenEgitimi": 2, "rehberlik": 1 },
-    "2": { "turkce": 8, "matematik": 5, "hayatBilgisi": 3, "gorselSanatlar": 2, "muzik": 2, "bedenEgitimi": 2, "ingilizce": 2, "rehberlik": 1 },
-    "3": { "turkce": 6, "matematik": 5, "fen": 3, "hayatBilgisi": 2, "gorselSanatlar": 2, "muzik": 2, "bedenEgitimi": 2, "ingilizce": 2, "rehberlik": 1 },
-    "4": { "turkce": 6, "matematik": 5, "fen": 3, "sosyal": 3, "gorselSanatlar": 2, "muzik": 2, "bedenEgitimi": 2, "ingilizce": 2, "rehberlik": 1 }
+    "2": { "turkce": 10, "matematik": 5, "hayatBilgisi": 4, "gorselSanatlar": 2, "muzik": 2, "bedenEgitimi": 2, "ingilizce": 2, "rehberlik": 1 },
+    "3": { "turkce": 8, "matematik": 5, "fen": 3, "hayatBilgisi": 3, "gorselSanatlar": 2, "muzik": 2, "bedenEgitimi": 2, "ingilizce": 2, "rehberlik": 1 },
+    "4": { "turkce": 8, "matematik": 5, "fen": 3, "sosyal": 3, "gorselSanatlar": 2, "muzik": 2, "bedenEgitimi": 2, "ingilizce": 2, "rehberlik": 1 }
   }
 }

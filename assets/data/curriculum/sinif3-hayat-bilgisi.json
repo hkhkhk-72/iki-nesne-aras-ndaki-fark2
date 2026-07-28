@@ -1,0 +1,226 @@
+{
+  "ders": "Hayat Bilgisi",
+  "dersId": "hayatBilgisi",
+  "sinif": 3,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2024",
+  "kaynak": "MEB TYMM Hayat Bilgisi Dersi Öğretim Programı (1-3) 2024 — onaylı PDF",
+  "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programhay123Onayli.pdf",
+  "toplamDersSaati": 108,
+  "haftalikDersSaati": 3,
+  "toplamHafta": 36,
+  "ogrenmeCiktisiSayisi": 20,
+  "yapi": "öğrenme alanları (tema değil)",
+  "temalar": [
+    {
+      "id": "hb1",
+      "ad": "Ben ve Okulum",
+      "dersSaati": 18,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "HB.3.1.1",
+          "aciklama": "Kendini geliştirmek istediği alana ilişkin plan yapabilme"
+        },
+        {
+          "kod": "HB.3.1.2",
+          "aciklama": "Okuldaki hak ve sorumluluklarına uygun davranabilme"
+        },
+        {
+          "kod": "HB.3.1.3",
+          "aciklama": "Çocuk haklarını tanıtmak için fikirlerini eyleme dönüştürebilme"
+        }
+      ],
+      "icerikCercevesi": "Kişisel Gelişim Okuldaki Hak ve Sorumluluklar Çocuk Hakları; ÖĞRENME KANITLARI (Ölçme ve Değerlendirme)",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Tartışma",
+        "Uygulama"
+      ],
+      "alanBecerileri": [
+        "Yaşam becerileri",
+        "Sosyal-duygusal öğrenme"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Gözlem, performans görevi, kontrol listesi"
+    },
+    {
+      "id": "hb2",
+      "ad": "Sağlığım ve Güvenliğim",
+      "dersSaati": 18,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "HB.3.2.1",
+          "aciklama": "Sağlığını korumaya yönelik davranışlarını düzenleyebilme"
+        },
+        {
+          "kod": "HB.3.2.2",
+          "aciklama": "Güvenliğini tehdit eden bir durumla karşılaştığında yapması gerekenleri sorgu-"
+        },
+        {
+          "kod": "HB.3.2.3",
+          "aciklama": "Trafik kurallarına uymanın önemine ilişkin özgün ürünler oluşturabilme"
+        }
+      ],
+      "icerikCercevesi": "Sağlığı Koruma Güvenliği Tehdit Eden Durumlar Trafik Kuralları; ÖĞRENME KANITLARI (Ölçme ve Değerlendirme)",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Tartışma",
+        "Uygulama"
+      ],
+      "alanBecerileri": [
+        "Yaşam becerileri",
+        "Sosyal-duygusal öğrenme"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Gözlem, performans görevi, kontrol listesi"
+    },
+    {
+      "id": "hb3",
+      "ad": "Ailem ve Toplum",
+      "dersSaati": 18,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "HB.3.3.1",
+          "aciklama": "Aile ve toplum arasındaki ilişkiyi çözümleyebilme"
+        },
+        {
+          "kod": "HB.3.3.2",
+          "aciklama": "Yardıma ihtiyacı olan bireylerin yaşamını kolaylaştırmak için fikirlerini eyleme"
+        },
+        {
+          "kod": "HB.3.3.3",
+          "aciklama": "Mesleklerin toplumsal yaşamdaki önemini yorumlayabilme"
+        }
+      ],
+      "icerikCercevesi": "Aile ve Toplum Yardımlaşma Toplumsal Yaşamda Meslekler; ÖĞRENME KANITLARI (Ölçme ve Değerlendirme)",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Tartışma",
+        "Uygulama"
+      ],
+      "alanBecerileri": [
+        "Yaşam becerileri",
+        "Sosyal-duygusal öğrenme"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Gözlem, performans görevi, kontrol listesi"
+    },
+    {
+      "id": "hb4",
+      "ad": "Yaşadığım Yer ve Ülkem",
+      "dersSaati": 18,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "HB.3.4.1",
+          "aciklama": "Yakın çevresindeki tarihî mekân ve doğal güzelliklerin korunmasının önemini"
+        },
+        {
+          "kod": "HB.3.4.2",
+          "aciklama": "Ülkemizin yönetim şekli ile ilgili kaynaklardan bilgi toplayabilme"
+        },
+        {
+          "kod": "HB.3.4.3",
+          "aciklama": "Mustafa Kemal Atatürk’ün kişilik özelliklerini çözümleyebilme"
+        },
+        {
+          "kod": "HB.3.4.4",
+          "aciklama": "Millî birlik ve beraberliğimizin toplum hayatına katkılarını açıklayabilme"
+        }
+      ],
+      "icerikCercevesi": "Tarihî Mekân ve Doğal Güzellikler Ülkemizin Yönetim Şekli Mustafa Kemal Atatürk’ün Kişilik Özellikleri Millî Birlik ve Beraberlik; ÖĞRENME KANITLARI (Ölçme ve Değerlendirme)",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Tartışma",
+        "Uygulama"
+      ],
+      "alanBecerileri": [
+        "Yaşam becerileri",
+        "Sosyal-duygusal öğrenme"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Gözlem, performans görevi, kontrol listesi"
+    },
+    {
+      "id": "hb5",
+      "ad": "Doğa ve Çevre",
+      "dersSaati": 18,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "HB.3.5.1",
+          "aciklama": "Doğadaki varlıkların insan yaşamı için önemini yorumlayabilme"
+        },
+        {
+          "kod": "HB.3.5.2",
+          "aciklama": "Krokiyi kullanarak bulunduğu yerin konumunu algılayabilme"
+        },
+        {
+          "kod": "HB.3.5.3",
+          "aciklama": "Afetlere yönelik yapılması gerekenleri sınıflandırabilme"
+        },
+        {
+          "kod": "HB.3.5.4",
+          "aciklama": "Çevresel sürdürülebilirliğe yönelik kaynaklardan bilgi toplayabilme"
+        }
+      ],
+      "icerikCercevesi": "Doğadaki Varlıkların İnsan Yaşamındaki Önemi Kroki Kullanma Afet Öncesi, Sırası ve Sonrasında Yapılması Gerekenler Çevresel Sürdürülebilirlik; ÖĞRENME KANITLARI (Ölçme ve Değerlendirme)",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Tartışma",
+        "Uygulama"
+      ],
+      "alanBecerileri": [
+        "Yaşam becerileri",
+        "Sosyal-duygusal öğrenme"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Gözlem, performans görevi, kontrol listesi"
+    },
+    {
+      "id": "hb6",
+      "ad": "Bilim, Teknoloji ve Sanat",
+      "dersSaati": 13,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "HB.3.6.1",
+          "aciklama": "Bilimsel gelişmelerin günlük yaşama etkisini yorumlayabilme"
+        },
+        {
+          "kod": "HB.3.6.2",
+          "aciklama": "Teknolojik gelişmelerin günlük yaşama etkisini çözümleyebilme"
+        },
+        {
+          "kod": "HB.3.6.3",
+          "aciklama": "Sanatçıların sanata katkılarına yönelik verilen kaynaklardan bilgi toplayabilme"
+        }
+      ],
+      "icerikCercevesi": "Bilimsel Gelişmelerin Günlük Yaşama Etkisi Teknolojik Gelişmelerin Günlük Yaşama Etkisi Sanatçıların Sanata Katkıları; ÖĞRENME KANITLARI (Ölçme ve Değerlendirme)",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Tartışma",
+        "Uygulama"
+      ],
+      "alanBecerileri": [
+        "Yaşam becerileri",
+        "Sosyal-duygusal öğrenme"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Gözlem, performans görevi, kontrol listesi"
+    },
+    {
+      "id": "otp",
+      "ad": "Okul Temelli Planlama",
+      "dersSaati": 5,
+      "hafta": 1,
+      "ogrenmeCiktilari": [],
+      "icerikCercevesi": "Zümre kararlarıyla planlanır",
+      "surecBilesenleri": [],
+      "alanBecerileri": []
+    }
+  ]
+}

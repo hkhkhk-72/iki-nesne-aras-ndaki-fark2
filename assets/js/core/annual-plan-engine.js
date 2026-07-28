@@ -20,6 +20,8 @@
         icerikCercevesi: wp.icerikCercevesi,
         surecBilesenleri: (wp.surecBilesenleri || []).join(', '),
         olcmeDegerlendirme: wp.olcmeDegerlendirme || '',
+        alanBecerileri: (wp.alanBecerileri || []).join(', '),
+        farklilastirma: wp.farklilastirma || '',
         etkinlik: '',
         materyal: ''
       };
@@ -76,7 +78,7 @@
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>
-      <p class="doc-footer">Öğretmen: ${esc(plan.ogretmenAdi)} &nbsp;|&nbsp; İmza: _______________</p>`;
+        <p class="doc-footer">Öğretmen: ${esc(plan.ogretmenAdi)} &nbsp;|&nbsp; İmza: _______________</p>`;
   }
 
   function esc(s) {
@@ -84,8 +86,24 @@
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
+  function renderAnnualPlanHTMLExtended(plan) {
+    const base = renderAnnualPlanHTML(plan);
+    const hasExtra = plan.satirlar.some(r => r.alanBecerileri || r.farklilastirma);
+    if (!hasExtra) return base;
+    const rows = plan.satirlar.map(r => `
+      <tr>
+        <td>${r.hafta}</td><td>${esc(r.tarihAraligi)}</td><td>${esc(r.tema)}</td>
+        <td style="font-size:8pt">${esc(r.ogrenmeCiktilari)}</td>
+        <td>${esc(r.alanBecerileri)}</td><td style="font-size:8pt">${esc(r.farklilastirma)}</td>
+      </tr>`).join('');
+    return base.replace(/<table class="doc-table compact">[\s\S]*<\/table>/,
+      `<table class="doc-table compact"><thead><tr>
+        <th>Hafta</th><th>Tarih</th><th>Tema</th><th>Öğrenme Çıktıları</th><th>Alan Becerileri</th><th>Farklılaştırma</th>
+      </tr></thead><tbody>${rows}</tbody></table>`);
+  }
+
   window.AnnualPlanEngine = {
     generateAnnualPlan,
-    renderAnnualPlanHTML
+    renderAnnualPlanHTML: renderAnnualPlanHTMLExtended
   };
 })();

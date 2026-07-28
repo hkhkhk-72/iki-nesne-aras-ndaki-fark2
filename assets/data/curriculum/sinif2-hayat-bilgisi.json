@@ -1,0 +1,31 @@
+{
+  "ders": "Hayat Bilgisi",
+  "dersId": "hayatBilgisi",
+  "sinif": 2,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2025-2026",
+  "toplamHafta": 36,
+  "temalar": [
+    {
+      "id": "h2-1", "ad": "Atatürk ve Cumhuriyet", "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "HB.2.1.1", "aciklama": "Atatürk'ün hayatından örnekler verir." },
+        { "kod": "HB.2.1.2", "aciklama": "Cumhuriyetin önemini açıklar." }
+      ],
+      "icerikCercevesi": "Atatürk, bayrak, İstiklal Marşı",
+      "surecBilesenleri": ["Dinleme", "Tartışma", "Etkinlik"],
+      "alanBecerileri": ["Vatandaşlık"],
+      "farklilastirma": "Proje çalışması"
+    },
+    {
+      "id": "h2-2", "ad": "Doğa ve Çevre", "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "HB.2.2.1", "aciklama": "Çevreyi koruma bilinci geliştirir." }
+      ],
+      "icerikCercevesi": "Doğa, çevre kirliliği, geri dönüşüm",
+      "surecBilesenleri": ["Gözlem", "Uygulama"],
+      "alanBecerileri": ["Çevre"],
+      "farklilastirma": "Sınıf içi geri dönüşüm projesi"
+    }
+  ]
+}

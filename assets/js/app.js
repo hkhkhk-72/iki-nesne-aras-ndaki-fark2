@@ -40,7 +40,7 @@
 
         <div class="dashboard-card">
           <h3>4 Ana Motor Durumu</h3>
-          <div class="list-item"><span>📚 Öğretim Programı</span><span class="status-badge kismi">1. Sınıf 3 Ders</span></div>
+          <div class="list-item"><span>📚 Öğretim Programı</span><span class="status-badge aktif">1. sınıf 8 ders · 2. sınıf 3 ders</span></div>
           <div class="list-item"><span>📅 Takvim</span><span class="status-badge aktif">2025-26 / 2026-27</span></div>
           <div class="list-item"><span>🧠 Plan Motoru</span><span class="status-badge aktif">Aktif</span></div>
           <div class="list-item"><span>📄 Evrak Motoru</span><span class="status-badge kismi">HTML/Word</span></div>

@@ -1,0 +1,52 @@
+{
+  "ders": "Türkçe",
+  "dersId": "turkce",
+  "sinif": 2,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2025-2026",
+  "toplamHafta": 36,
+  "temalar": [
+    {
+      "id": "t2-1", "ad": "Okuma ve Anlama", "hafta": 5,
+      "ogrenmeCiktilari": [
+        { "kod": "T.2.1.1", "aciklama": "Okuduğu metindeki ana fikri ve yardımcı fikirleri belirler." },
+        { "kod": "T.2.1.2", "aciklama": "Metindeki olayları sırasıyla anlatır." }
+      ],
+      "icerikCercevesi": "Kısa metinler, hikâye, masal okuma",
+      "surecBilesenleri": ["Okuma", "Konuşma", "Yazma"],
+      "alanBecerileri": ["Okuma", "Anlama"],
+      "farklilastirma": "Seviyeye uygun metin seçimi"
+    },
+    {
+      "id": "t2-2", "ad": "Yazma Becerileri", "hafta": 5,
+      "ogrenmeCiktilari": [
+        { "kod": "T.2.2.1", "aciklama": "Düşüncelerini düzenli paragraflarla yazar." },
+        { "kod": "T.2.2.2", "aciklama": "Yazım kurallarına dikkat eder." }
+      ],
+      "icerikCercevesi": "Paragraf yazma, günlük, mektup",
+      "surecBilesenleri": ["Yazma", "Düzenleme"],
+      "alanBecerileri": ["Yazma"],
+      "farklilastirma": "Taslak oluşturma desteği"
+    },
+    {
+      "id": "t2-3", "ad": "Dil Bilgisi", "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.2.3.1", "aciklama": "İsim, sıfat ve fiilleri ayırt eder." }
+      ],
+      "icerikCercevesi": "Kelime türleri, cümle öğeleri",
+      "surecBilesenleri": ["Okuma", "Uygulama"],
+      "alanBecerileri": ["Dil bilgisi"],
+      "farklilastirma": "Oyun tabanlı öğrenme"
+    },
+    {
+      "id": "t2-4", "ad": "Şiir ve Edebiyat", "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.2.4.1", "aciklama": "Şiir okur ve yorumlar." }
+      ],
+      "icerikCercevesi": "Çocuk şiirleri, tekerlemeler",
+      "surecBilesenleri": ["Dinleme", "Okuma", "Konuşma"],
+      "alanBecerileri": ["Estetik"],
+      "farklilastirma": "Ezber ve serbest okuma"
+    }
+  ]
+}

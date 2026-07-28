@@ -1,0 +1,31 @@
+{
+  "ders": "Beden Eğitimi",
+  "dersId": "bedenEgitimi",
+  "sinif": 1,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2025-2026",
+  "toplamHafta": 36,
+  "temalar": [
+    {
+      "id": "be1", "ad": "Temel Hareket Becerileri", "hafta": 6,
+      "ogrenmeCiktilari": [
+        { "kod": "BE.1.1.1", "aciklama": "Koşma, zıplama, atma hareketlerini uygular." },
+        { "kod": "BE.1.1.2", "aciklama": "Denge ve esneklik çalışmaları yapar." }
+      ],
+      "icerikCercevesi": "Isınma, temel hareketler, oyunlar",
+      "surecBilesenleri": ["Uygulama", "Gözlem"],
+      "alanBecerileri": ["Motor", "Sağlık"],
+      "farklilastirma": "Bireysel gelişim düzeyine göre aktivite"
+    },
+    {
+      "id": "be2", "ad": "Oyun ve Takım Çalışması", "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "BE.1.2.1", "aciklama": "Kurallı oyunlara katılır." }
+      ],
+      "icerikCercevesi": "Geleneksel çocuk oyunları, takım oyunları",
+      "surecBilesenleri": ["Uygulama", "Değerlendirme"],
+      "alanBecerileri": ["Sosyal", "Motor"],
+      "farklilastirma": "Rol değişimi ile katılım"
+    }
+  ]
+}

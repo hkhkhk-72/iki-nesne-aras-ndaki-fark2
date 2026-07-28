@@ -1,0 +1,42 @@
+{
+  "ders": "Matematik",
+  "dersId": "matematik",
+  "sinif": 2,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2025-2026",
+  "toplamHafta": 36,
+  "temalar": [
+    {
+      "id": "m2-1", "ad": "Sayılar ve İşlemler (100'e kadar)", "hafta": 6,
+      "ogrenmeCiktilari": [
+        { "kod": "M.2.1.1", "aciklama": "100'e kadar sayıları okur, yazar ve karşılaştırır." },
+        { "kod": "M.2.1.2", "aciklama": "İki basamaklı sayılarla toplama ve çıkarma yapar." }
+      ],
+      "icerikCercevesi": "Sayı kavramı, toplama-çıkarma, problem çözme",
+      "surecBilesenleri": ["Sayma", "İşlem", "Problem çözme"],
+      "alanBecerileri": ["Sayısal"],
+      "farklilastirma": "Somut materyal kullanımı"
+    },
+    {
+      "id": "m2-2", "ad": "Çarpma ve Bölme Giriş", "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "M.2.2.1", "aciklama": "Tekrarlı toplama ile çarpma ilişkisini kurar." }
+      ],
+      "icerikCercevesi": "Çarpma kavramı, gruplama",
+      "surecBilesenleri": ["Modelleme", "Uygulama"],
+      "alanBecerileri": ["Sayısal"],
+      "farklilastirma": "Görsel modeller"
+    },
+    {
+      "id": "m2-3", "ad": "Geometri ve Ölçme", "hafta": 5,
+      "ogrenmeCiktilari": [
+        { "kod": "M.2.3.1", "aciklama": "Geometrik şekilleri sınıflandırır." },
+        { "kod": "M.2.3.2", "aciklama": "Uzunluk ve zaman ölçer." }
+      ],
+      "icerikCercevesi": "Şekiller, cetvel, saat",
+      "surecBilesenleri": ["Gözlem", "Ölçme"],
+      "alanBecerileri": ["Uzamsal"],
+      "farklilastirma": "Günlük hayat problemleri"
+    }
+  ]
+}

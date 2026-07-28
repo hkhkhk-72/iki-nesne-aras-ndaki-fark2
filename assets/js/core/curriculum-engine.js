@@ -2,29 +2,30 @@
   'use strict';
 
   const cache = {};
+  let manifest = null;
 
   function getBase() {
     return window.MINIBILGE_BASE || '';
   }
 
-  const DERSLER = {
-    turkce: { ad: 'Türkçe', dosya: 'sinif1-turkce.json' },
-    matematik: { ad: 'Matematik', dosya: 'sinif1-matematik.json' },
-    hayatBilgisi: { ad: 'Hayat Bilgisi', dosya: 'sinif1-hayat-bilgisi.json' }
-  };
+  async function loadManifest() {
+    if (manifest) return manifest;
+    const res = await fetch(getBase() + 'assets/data/curriculum/index.json');
+    manifest = await res.json();
+    return manifest;
+  }
 
   async function loadCurriculum(dersId, sinif) {
     const key = `${sinif}_${dersId}`;
     if (cache[key]) return cache[key];
 
-    const meta = DERSLER[dersId];
-    if (!meta) throw new Error('Ders bulunamadı: ' + dersId);
+    const m = await loadManifest();
+    const sinifKey = String(sinif);
+    const dosya = m.siniflar[sinifKey]?.[dersId];
+    if (!dosya) throw new Error(`${sinifKey}. sınıf için ders bulunamadı: ${dersId}`);
 
-    const res = await fetch(getBase() + `assets/data/curriculum/${meta.dosya}`);
+    const res = await fetch(getBase() + `assets/data/curriculum/${dosya}`);
     const data = await res.json();
-    if (data.sinif !== parseInt(sinif, 10)) {
-      throw new Error('Sınıf uyumsuz');
-    }
     cache[key] = data;
     return data;
   }
@@ -56,7 +57,11 @@
           ogrenmeCiktilari: tema.ogrenmeCiktilari,
           icerikCercevesi: tema.icerikCercevesi,
           surecBilesenleri: tema.surecBilesenleri,
-          olcmeDegerlendirme: tema.olcmeDegerlendirme
+          olcmeDegerlendirme: tema.olcmeDegerlendirme || '',
+          alanBecerileri: tema.alanBecerileri || [],
+          kavramsalBeceriler: tema.kavramsalBeceriler || [],
+          egilimler: tema.egilimler || [],
+          farklilastirma: tema.farklilastirma || ''
         });
         week++;
       }
@@ -69,18 +74,33 @@
     return plan;
   }
 
-  function listAvailableCourses(sinif) {
-    if (sinif === '1' || sinif === 1) {
-      return Object.entries(DERSLER).map(([id, m]) => ({ id, ad: m.ad }));
-    }
-    return [];
+  async function listAvailableCourses(sinif) {
+    const m = await loadManifest();
+    const sinifKey = String(sinif);
+    const dersler = m.siniflar[sinifKey];
+    if (!dersler) return [];
+    return Object.keys(dersler).map(id => ({
+      id,
+      ad: m.dersAdlari[id] || id
+    }));
+  }
+
+  async function listAvailableGrades() {
+    const m = await loadManifest();
+    return Object.keys(m.siniflar).sort();
+  }
+
+  function getDersAdi(dersId) {
+    return manifest?.dersAdlari?.[dersId] || dersId;
   }
 
   window.CurriculumEngine = {
-    DERSLER,
+    loadManifest,
     loadCurriculum,
     getAllLearningOutcomes,
     distributeThemesToWeeks,
-    listAvailableCourses
+    listAvailableCourses,
+    listAvailableGrades,
+    getDersAdi
   };
 })();

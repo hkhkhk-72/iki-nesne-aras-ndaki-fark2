@@ -703,6 +703,163 @@
           </tbody>
         </table>
         <p class="doc-footer">Öğretmen: ${esc(d.ogretmenAdi)} &nbsp;|&nbsp; ${fmtDate(d.tarih)}</p>`
+    },
+    {
+      id: 'zumre-sene-basi',
+      title: 'Sene Başı Zümre Tutanağı',
+      icon: '📋',
+      period: 'yil-basi',
+      desc: 'Eğitim-öğretim yılı sene başı zümre toplantı tutanağı.',
+      fields: [
+        ...COMMON_FIELDS,
+        { id: 'zumre', label: 'Zümre/Alan Adı', type: 'text', default: '1. Sınıf Zümresi' },
+        { id: 'toplantiTarihi', label: 'Toplantı Tarihi', type: 'date', default: () => new Date().toISOString().slice(0, 10) }
+      ],
+      render: (d) => docHeader(d, 'SENE BAŞI ZÜMRE TOPLANTI TUTANAĞI') + `
+        <p class="doc-meta">Zümre: <strong>${esc(d.zumre)}</strong> &nbsp;|&nbsp; Tarih: ${fmtDate(d.toplantiTarihi)}</p>
+        <h3 class="doc-sub">Katılımcılar</h3>
+        <div class="line tall"></div>
+        <h3 class="doc-sub">Yıllık Plan Hazırlık Durumu</h3>
+        <div class="line tall"></div>
+        <h3 class="doc-sub">Görüşülen Konular</h3>
+        <div class="line tall"></div><div class="line tall"></div>
+        <h3 class="doc-sub">Alınan Kararlar</h3>
+        <div class="line tall"></div>
+        <div class="sign-row"><span>Zümre Başkanı: _______________</span><span>Tutanak Yazmanı: _______________</span></div>`
+    },
+    {
+      id: 'zumre-ara-degerlendirme',
+      title: 'Ara Değerlendirme Zümre Tutanağı',
+      icon: '📊',
+      period: 'donem-ici',
+      desc: '1. dönem ara değerlendirme zümre toplantı tutanağı.',
+      fields: [
+        ...COMMON_FIELDS,
+        { id: 'zumre', label: 'Zümre Adı', type: 'text', default: '' },
+        { id: 'toplantiTarihi', label: 'Toplantı Tarihi', type: 'date', default: () => new Date().toISOString().slice(0, 10) }
+      ],
+      render: (d) => docHeader(d, 'ARA DEĞERLENDİRME ZÜMRE TUTANAĞI') + `
+        <p class="doc-meta">Zümre: <strong>${esc(d.zumre) || '—'}</strong></p>
+        <h3 class="doc-sub">1. Dönem Başarı Analizi</h3>
+        <div class="line tall"></div>
+        <h3 class="doc-sub">Eksik Kazanımlar ve Telafi Çalışmaları</h3>
+        <div class="line tall"></div>
+        <h3 class="doc-sub">Alınan Kararlar</h3>
+        <div class="line tall"></div>
+        <div class="sign-row"><span>Toplantı Başkanı: _______________</span><span>Tarih: ${fmtDate(d.toplantiTarihi)}</span></div>`
+    },
+    {
+      id: 'zumre-sene-sonu',
+      title: 'Sene Sonu Zümre Tutanağı',
+      icon: '🎓',
+      period: 'yil-sonu',
+      desc: 'Eğitim-öğretim yılı sene sonu zümre değerlendirme tutanağı.',
+      fields: [...COMMON_FIELDS, { id: 'zumre', label: 'Zümre Adı', type: 'text', default: '' }],
+      render: (d) => docHeader(d, 'SENE SONU ZÜMRE TUTANAĞI') + `
+        <h3 class="doc-sub">Yıl Sonu Başarı Değerlendirmesi</h3>
+        <div class="line tall"></div>
+        <h3 class="doc-sub">Genel Değerlendirme ve Öneriler</h3>
+        <div class="line tall"></div>
+        <div class="sign-row"><span>Zümre Başkanı: _______________</span><span>Öğretmen: ${esc(d.ogretmenAdi)}</span></div>`
+    },
+    {
+      id: 'imza-sirkuleri',
+      title: 'Veli İmza Sirküleri',
+      icon: '✍️',
+      period: 'veli',
+      desc: 'Veli toplantısı veya etkinlik için imza sirküleri.',
+      fields: [
+        ...COMMON_FIELDS,
+        { id: 'konu', label: 'Konu', type: 'text', default: 'Veli Toplantısı' },
+        { id: 'ogrenciSayisi', label: 'Öğrenci Sayısı', type: 'number', default: 24, min: 1, max: 40 }
+      ],
+      render: (d) => {
+        const n = parseInt(d.ogrenciSayisi, 10) || 24;
+        const rows = Array.from({length: n}, (_, i) =>
+          `<tr><td>${i+1}</td><td></td><td></td><td></td></tr>`).join('');
+        return docHeader(d, 'VELİ İMZA SİRKÜLERİ') + `
+          <p class="doc-meta">Konu: <strong>${esc(d.konu)}</strong></p>
+          <table class="doc-table"><thead><tr><th>No</th><th>Öğrenci Adı</th><th>Veli Adı</th><th>İmza</th></tr></thead><tbody>${rows}</tbody></table>`;
+      }
+    },
+    {
+      id: 'bep',
+      title: 'Bireyselleştirilmiş Eğitim Planı (BEP)',
+      icon: '📘',
+      period: 'idari',
+      desc: 'Özel gereksinimli öğrenci için BEP formu.',
+      fields: COMMON_FIELDS,
+      render: (d) => docHeader(d, 'BİREYSELLEŞTİRİLMİŞ EĞİTİM PLANI (BEP)') + `
+        <div class="form-grid">
+          <div class="form-field"><label>Öğrenci Adı Soyadı</label><div class="line"></div></div>
+          <div class="form-field"><label>Doğum Tarihi</label><div class="line"></div></div>
+          <div class="form-field full"><label>Özel Gereksinim / Tanı</label><div class="line tall"></div></div>
+          <div class="form-field full"><label>Güçlü Yönler</label><div class="line tall"></div></div>
+          <div class="form-field full"><label>Desteklenmesi Gereken Alanlar</label><div class="line tall"></div></div>
+          <div class="form-field full"><label>Hedefler ve Yöntemler</label><div class="line tall"></div><div class="line tall"></div></div>
+          <div class="form-field full"><label>Değerlendirme Ölçütleri</label><div class="line tall"></div></div>
+        </div>
+        <div class="sign-row"><span>Hazırlayan: ${esc(d.ogretmenAdi)}</span><span>Veli: _______________</span><span>Rehber Öğretmen: _______________</span></div>`
+    },
+    {
+      id: 'kulup-uye-listesi',
+      title: 'Kulüp Üye Listesi',
+      icon: '👥',
+      period: 'idari',
+      desc: 'Kulüp kayıt ve üye listesi.',
+      fields: [
+        ...COMMON_FIELDS,
+        { id: 'kulupAdi', label: 'Kulüp Adı', type: 'text', default: '' },
+        { id: 'ogrenciSayisi', label: 'Üye Sayısı', type: 'number', default: 20, min: 1, max: 40 }
+      ],
+      render: (d) => {
+        const n = parseInt(d.ogrenciSayisi, 10) || 20;
+        const rows = Array.from({length: n}, (_, i) =>
+          `<tr><td>${i+1}</td><td></td><td></td><td></td></tr>`).join('');
+        return docHeader(d, 'KULÜP ÜYE LİSTESİ') + `
+          <p class="doc-meta">Kulüp: <strong>${esc(d.kulupAdi) || '—'}</strong></p>
+          <table class="doc-table"><thead><tr><th>No</th><th>Adı Soyadı</th><th>Sınıf</th><th>Veli Tel.</th></tr></thead><tbody>${rows}</tbody></table>
+          <p class="doc-footer">Sorumlu Öğretmen: ${esc(d.ogretmenAdi)}</p>`;
+      }
+    },
+    {
+      id: 'kontrol-listesi',
+      title: 'Kontrol Listesi',
+      icon: '☑️',
+      period: 'olcme',
+      desc: 'Süreç odaklı gözlem kontrol listesi.',
+      fields: [
+        ...COMMON_FIELDS,
+        { id: 'konu', label: 'Değerlendirme Konusu', type: 'text', default: '' },
+        { id: 'ogrenciSayisi', label: 'Öğrenci Sayısı', type: 'number', default: 24, min: 1, max: 40 }
+      ],
+      render: (d) => {
+        const n = parseInt(d.ogrenciSayisi, 10) || 24;
+        const kriterler = ['Kazanımı anladı', 'Etkinliğe katıldı', 'Ödevini tamamladı', 'İş birliği yaptı', 'Zamanında teslim etti'];
+        const rows = Array.from({length: n}, (_, i) =>
+          `<tr><td>${i+1}</td><td></td>${kriterler.map(() => '<td></td>').join('')}</tr>`).join('');
+        return docHeader(d, 'KONTROL LİSTESİ') + `
+          <p class="doc-meta">Konu: <strong>${esc(d.konu) || '—'}</strong></p>
+          <table class="doc-table compact"><thead><tr><th>No</th><th>Öğrenci</th>${kriterler.map(k => `<th>${k}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>
+          <p class="doc-note">✓ = Evet &nbsp; ✗ = Hayır &nbsp; K = Kısmen</p>`;
+      }
+    },
+    {
+      id: 'ram-yonlendirme',
+      title: 'RAM Yönlendirme Evrakı',
+      icon: '🏥',
+      period: 'veli',
+      desc: 'Rehberlik araştırma merkezine yönlendirme formu.',
+      fields: COMMON_FIELDS,
+      render: (d) => docHeader(d, 'RAM YÖNLENDİRME EVRAKI') + `
+        <div class="form-grid">
+          <div class="form-field"><label>Öğrenci</label><div class="line"></div></div>
+          <div class="form-field"><label>Sınıf</label><p>${esc(d.sinif)}</p></div>
+          <div class="form-field full"><label>Yönlendirme Gerekçesi</label><div class="line tall"></div></div>
+          <div class="form-field full"><label>Yapılan Gözlemler</label><div class="line tall"></div></div>
+          <div class="form-field full"><label>Öneriler</label><div class="line tall"></div></div>
+        </div>
+        <div class="sign-row"><span>Öğretmen: ${esc(d.ogretmenAdi)}</span><span>Müdür Onayı: _______________</span></div>`
     }
   ];
 

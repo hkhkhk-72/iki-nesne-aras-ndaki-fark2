@@ -1,0 +1,31 @@
+{
+  "ders": "Rehberlik ve Kariyer Bilgisi",
+  "dersId": "rehberlik",
+  "sinif": 1,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2025-2026",
+  "toplamHafta": 36,
+  "temalar": [
+    {
+      "id": "r1", "ad": "Ben Tanıyorum", "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "R.1.1.1", "aciklama": "Kendini tanıtan özelliklerini ifade eder." },
+        { "kod": "R.1.1.2", "aciklama": "Duygularını uygun şekilde ifade eder." }
+      ],
+      "icerikCercevesi": "Benlik, duygular, arkadaşlık",
+      "surecBilesenleri": ["Tartışma", "Drama", "Gözlem"],
+      "alanBecerileri": ["Sosyal-duygusal", "İletişim"],
+      "farklilastirma": "Bireysel paylaşım fırsatları"
+    },
+    {
+      "id": "r2", "ad": "Okul Kuralları ve Uyum", "hafta": 3,
+      "ogrenmeCiktilari": [
+        { "kod": "R.1.2.1", "aciklama": "Okul kurallarına uyum gösterir." }
+      ],
+      "icerikCercevesi": "Kurallar, sorumluluk, iş birliği",
+      "surecBilesenleri": ["Tartışma", "Rol oynama"],
+      "alanBecerileri": ["Sosyal"],
+      "farklilastirma": "Olumlu davranış pekiştirme"
+    }
+  ]
+}

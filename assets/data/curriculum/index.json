@@ -1,0 +1,31 @@
+{
+  "siniflar": {
+    "1": {
+      "turkce": "sinif1-turkce.json",
+      "matematik": "sinif1-matematik.json",
+      "hayatBilgisi": "sinif1-hayat-bilgisi.json",
+      "ingilizce": "sinif1-ingilizce.json",
+      "gorselSanatlar": "sinif1-gorsel-sanatlar.json",
+      "muzik": "sinif1-muzik.json",
+      "bedenEgitimi": "sinif1-beden-egitimi.json",
+      "rehberlik": "sinif1-rehberlik.json"
+    },
+    "2": {
+      "turkce": "sinif2-turkce.json",
+      "matematik": "sinif2-matematik.json",
+      "hayatBilgisi": "sinif2-hayat-bilgisi.json"
+    }
+  },
+  "dersAdlari": {
+    "turkce": "Türkçe",
+    "matematik": "Matematik",
+    "hayatBilgisi": "Hayat Bilgisi",
+    "fen": "Fen Bilimleri",
+    "sosyal": "Sosyal Bilgiler",
+    "ingilizce": "İngilizce",
+    "gorselSanatlar": "Görsel Sanatlar",
+    "muzik": "Müzik",
+    "bedenEgitimi": "Beden Eğitimi",
+    "rehberlik": "Rehberlik ve Kariyer Bilgisi"
+  }
+}

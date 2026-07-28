@@ -1,0 +1,31 @@
+{
+  "ders": "Görsel Sanatlar",
+  "dersId": "gorselSanatlar",
+  "sinif": 1,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2025-2026",
+  "toplamHafta": 36,
+  "temalar": [
+    {
+      "id": "gs1", "ad": "Renkler ve Çizgi", "hafta": 5,
+      "ogrenmeCiktilari": [
+        { "kod": "GS.1.1.1", "aciklama": "Temel renkleri tanır ve eserlerinde kullanır." },
+        { "kod": "GS.1.1.2", "aciklama": "Farklı çizgi türlerini uygular." }
+      ],
+      "icerikCercevesi": "Ana renkler, çizgi çalışmaları, serbest boyama",
+      "surecBilesenleri": ["Gözlem", "Uygulama", "Sunum"],
+      "alanBecerileri": ["Estetik", "Yaratıcılık"],
+      "farklilastirma": "Farklı malzeme seçenekleri"
+    },
+    {
+      "id": "gs2", "ad": "Doğa ve Çevre", "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "GS.1.2.1", "aciklama": "Doğadan esinlenerek görsel ürün oluşturur." }
+      ],
+      "icerikCercevesi": "Yaprak baskı, doğa kolajı",
+      "surecBilesenleri": ["Uygulama", "Değerlendirme"],
+      "alanBecerileri": ["Estetik", "Çevre bilinci"],
+      "farklilastirma": "Grup ve bireysel çalışma"
+    }
+  ]
+}

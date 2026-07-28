@@ -26,9 +26,16 @@
     const profile = MiniBilgeStorage.getProfile();
     const school = MiniBilgeStorage.getSchool();
     const settings = MiniBilgeStorage.getSettings();
-    const courses = CurriculumEngine.listAvailableCourses(settings.varsayilanSinif || '1');
+    const grades = await CurriculumEngine.listAvailableGrades();
     let step = 1;
     let currentPlan = null;
+    const state = { sinif: settings.varsayilanSinif || '1', dersId: 'turkce' };
+    let courseList = [];
+
+    async function loadCourses() {
+      courseList = await CurriculumEngine.listAvailableCourses(state.sinif);
+      if (!courseList.find(c => c.id === state.dersId)) state.dersId = courseList[0]?.id || 'turkce';
+    }
 
     function render() {
       const content = `
@@ -58,18 +65,19 @@
     function stepSinif() {
       return `<div class="form-field"><label>Sınıf Seçin</label>
         <select id="sinif">
-          <option value="1" selected>1. Sınıf</option>
-          <option value="2" disabled>2. Sınıf (yakında)</option>
-          <option value="3" disabled>3. Sınıf (yakında)</option>
-          <option value="4" disabled>4. Sınıf (yakında)</option>
-        </select></div>`;
+          ${['1','2','3','4'].map(g => {
+            const avail = grades.includes(g);
+            return `<option value="${g}" ${state.sinif === g ? 'selected' : ''} ${avail ? '' : 'disabled'}>${g}. Sınıf${avail ? '' : ' (yakında)'}</option>`;
+          }).join('')}
+        </select>
+        <p class="empty-state" style="text-align:left;margin-top:8px;">1. sınıf: 8 ders · 2. sınıf: 3 ders veri tabanında</p></div>`;
     }
 
     function stepDers() {
-      const sinif = document.getElementById('sinif')?.value || settings.varsayilanSinif || '1';
-      const list = CurriculumEngine.listAvailableCourses(sinif);
-      return `<div class="form-field"><label>Ders Seçin</label>
-        <select id="ders">${list.map(c => `<option value="${c.id}">${c.ad}</option>`).join('')}</select></div>`;
+      return `<div class="form-field"><label>Ders Seçin (${state.sinif}. Sınıf)</label>
+        <select id="ders">${courseList.map(c =>
+          `<option value="${c.id}" ${state.dersId === c.id ? 'selected' : ''}>${c.ad}</option>`).join('')}
+        </select></div>`;
     }
 
     function stepBilgiler() {
@@ -97,15 +105,22 @@
 
     function getCtx() {
       return {
-        sinif: document.getElementById('sinif')?.value || '1',
-        dersId: document.getElementById('ders')?.value || 'turkce',
+        sinif: state.sinif,
+        dersId: state.dersId,
         okul: { okulAdi: document.getElementById('okulAdi')?.value || school.okulAdi, egitimYili: document.getElementById('egitimYili')?.value || school.egitimYili },
         ogretmen: { adSoyad: document.getElementById('ogretmenAdi')?.value || profile.adSoyad }
       };
     }
 
     function bindEvents() {
-      document.getElementById('btnNext')?.addEventListener('click', () => { if (step < 4) { step++; render(); } });
+      document.getElementById('btnNext')?.addEventListener('click', async () => {
+        if (step === 1) {
+          state.sinif = document.getElementById('sinif')?.value || state.sinif;
+          await loadCourses();
+        }
+        if (step === 2) state.dersId = document.getElementById('ders')?.value || state.dersId;
+        if (step < 4) { step++; render(); }
+      });
       document.getElementById('btnPrev')?.addEventListener('click', () => { if (step > 1) { step--; render(); } });
 
       document.getElementById('btnGenerate')?.addEventListener('click', async () => {

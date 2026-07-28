@@ -19,9 +19,9 @@
       "id": "zumre",
       "ad": "Zümre Evrakları",
       "evraklar": [
-        { "id": "zumre-sene-basi", "ad": "Sene Başı Zümre Tutanağı", "durum": "yakinda", "modul": "modules/zumre.html" },
-        { "id": "zumre-ara", "ad": "Ara Değerlendirme Zümre Tutanağı", "durum": "yakinda", "modul": "modules/zumre.html" },
-        { "id": "zumre-sene-sonu", "ad": "Sene Sonu Zümre Tutanağı", "durum": "yakinda", "modul": "modules/zumre.html" },
+        { "id": "zumre-sene-basi", "ad": "Sene Başı Zümre Tutanağı", "durum": "aktif", "modul": "documents/olustur.html?id=zumre-sene-basi" },
+        { "id": "zumre-ara", "ad": "Ara Değerlendirme Zümre Tutanağı", "durum": "aktif", "modul": "documents/olustur.html?id=zumre-ara-degerlendirme" },
+        { "id": "zumre-sene-sonu", "ad": "Sene Sonu Zümre Tutanağı", "durum": "aktif", "modul": "documents/olustur.html?id=zumre-sene-sonu" },
         { "id": "zumre-toplanti", "ad": "Zümre Toplantı Tutanağı", "durum": "aktif", "modul": "documents/olustur.html?id=zumre-toplanti" },
         { "id": "okul-zumre-baskanlari", "ad": "Okul Zümre Başkanları Kurulu Tutanağı", "durum": "yakinda", "modul": "modules/zumre.html" }
       ]
@@ -30,9 +30,9 @@
       "id": "ozel-egitim-rehberlik",
       "ad": "Özel Eğitim ve Rehberlik",
       "evraklar": [
-        { "id": "bep", "ad": "Bireyselleştirilmiş Eğitim Planı (BEP)", "durum": "yakinda", "modul": "modules/destek-egitim.html" },
+        { "id": "bep", "ad": "Bireyselleştirilmiş Eğitim Planı (BEP)", "durum": "aktif", "modul": "documents/olustur.html?id=bep" },
         { "id": "destek-oda-takip", "ad": "Destek Eğitim Odası Takip Formu", "durum": "yakinda", "modul": "modules/destek-egitim.html" },
-        { "id": "ram-yonlendirme", "ad": "RAM Yönlendirme Evrakı", "durum": "yakinda", "modul": "modules/rehberlik.html" },
+        { "id": "ram-yonlendirme", "ad": "RAM Yönlendirme Evrakı", "durum": "aktif", "modul": "documents/olustur.html?id=ram-yonlendirme" },
         { "id": "risk-takip", "ad": "Risk Altındaki Öğrenci Takip Formu", "durum": "yakinda", "modul": "modules/rehberlik.html" },
         { "id": "rehberlik-gorusme", "ad": "Rehberlik Görüşme Formu", "durum": "aktif", "modul": "documents/olustur.html?id=rehberlik-gorusme" },
         { "id": "ogrenci-gozlem", "ad": "Öğrenci Gözlem Formu", "durum": "aktif", "modul": "documents/olustur.html?id=ogrenci-gozlem" }
@@ -42,7 +42,7 @@
       "id": "kulup-sosyal",
       "ad": "Kulüpler ve Sosyal Etkinlikler",
       "evraklar": [
-        { "id": "kulup-uye-listesi", "ad": "Kulüp Üye Listesi", "durum": "yakinda", "modul": "modules/kulup.html" },
+        { "id": "kulup-uye-listesi", "ad": "Kulüp Üye Listesi", "durum": "aktif", "modul": "documents/olustur.html?id=kulup-uye-listesi" },
         { "id": "kulup-faaliyet-raporu", "ad": "Kulüp Faaliyet Raporu", "durum": "aktif", "modul": "documents/olustur.html?id=kulup-faaliyet-raporu" },
         { "id": "toplum-hizmeti", "ad": "Toplum Hizmeti Çalışma Raporu", "durum": "yakinda", "modul": "modules/kulup.html" },
         { "id": "belirli-gun-metinleri", "ad": "Belirli Gün Sunucu Metinleri", "durum": "yakinda", "modul": "modules/belirli-gun.html" }
@@ -56,7 +56,7 @@
         { "id": "performans-degerlendirme", "ad": "Dereceli Puanlama Anahtarı (Rubrik)", "durum": "aktif", "modul": "documents/olustur.html?id=performans-degerlendirme" },
         { "id": "sinav-kagidi", "ad": "Yazılı Sınav Kağıdı", "durum": "aktif", "modul": "documents/olustur.html?id=sinav-kagidi" },
         { "id": "not-cizelgesi", "ad": "Not/Puan Çizelgesi", "durum": "aktif", "modul": "documents/olustur.html?id=not-cizelgesi" },
-        { "id": "kontrol-listesi", "ad": "Kontrol Listesi", "durum": "yakinda", "modul": "modules/olcme.html" },
+        { "id": "kontrol-listesi", "ad": "Kontrol Listesi", "durum": "aktif", "modul": "documents/olustur.html?id=kontrol-listesi" },
         { "id": "ortak-sinav-analiz", "ad": "Ortak Sınav Analiz Raporu", "durum": "yakinda", "modul": "modules/olcme.html" }
       ]
     },
@@ -65,7 +65,7 @@
       "ad": "Veli ve İdare Evrakları",
       "evraklar": [
         { "id": "veli-toplanti-tutanagi", "ad": "Veli Toplantı Tutanağı", "durum": "aktif", "modul": "documents/olustur.html?id=veli-toplanti-tutanagi" },
-        { "id": "imza-sirkuleri", "ad": "Veli İmza Sirküleri", "durum": "yakinda", "modul": "documents/index.html" },
+        { "id": "imza-sirkuleri", "ad": "Veli İmza Sirküleri", "durum": "aktif", "modul": "documents/olustur.html?id=imza-sirkuleri" },
         { "id": "gezi-izin", "ad": "Gezi/Etkinlik İzin Belgesi", "durum": "aktif", "modul": "documents/olustur.html?id=gezi-izin-formu" },
         { "id": "veli-gorusme", "ad": "Veli Görüşme Formu", "durum": "aktif", "modul": "documents/olustur.html?id=veli-gorusme" },
         { "id": "sinif-listesi", "ad": "Sınıf Listesi", "durum": "aktif", "modul": "documents/olustur.html?id=sinif-listesi" }
@@ -83,9 +83,9 @@
     }
   ],
   "ozet": {
-    "toplam": 38,
-    "aktif": 22,
+    "toplam": 39,
+    "aktif": 30,
     "kismi": 2,
-    "yakinda": 14
+    "yakinda": 7
   }
 }

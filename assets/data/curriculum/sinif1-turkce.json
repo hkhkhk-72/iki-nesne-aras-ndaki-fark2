@@ -17,7 +17,11 @@
       ],
       "icerikCercevesi": "Harf-hece çalışmaları, ses temelli okuma yazma, kısa metinler",
       "surecBilesenleri": ["Dinleme", "Konuşma", "Okuma", "Yazma"],
-      "olcmeDegerlendirme": "Gözlem formu, performans görevi, sözlü değerlendirme"
+      "olcmeDegerlendirme": "Gözlem formu, performans görevi, sözlü değerlendirme",
+      "alanBecerileri": ["Okuma", "Yazma", "İletişim"],
+      "kavramsalBeceriler": ["Anlama", "Çözümleme"],
+      "egilimler": ["Merak", "Sorumluluk"],
+      "farklilastirma": "Zenginleştirme: ek okuma metinleri; Destekleme: görsel ipuçları ve tekrar"
     },
     {
       "id": "t2",

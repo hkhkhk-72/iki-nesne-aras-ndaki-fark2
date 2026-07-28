@@ -8,7 +8,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
-    "mes:check": "tsx scripts/mes-check.ts"
+    "mes:check": "tsx scripts/mes-check.ts",
+    "curriculum:check": "tsx scripts/curriculum-check.ts",
+    "check": "npm run typecheck && npm run curriculum:check && npm run mes:check"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",

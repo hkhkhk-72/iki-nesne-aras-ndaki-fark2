@@ -100,9 +100,18 @@ Karşılaştırma Motoru
 - [Matematik İçerik Fabrikası](docs/05-matematik-icerik-fabrikasi.md)
 - [MES-002 Mikro Deneyim Standardı](docs/06-mes-002-mikro-deneyim-standardi.md)
 - [World & Character Bible](docs/07-world-character-bible.md)
+- [Maarif Modeli Hizalaması](docs/08-maarif-modeli-hizalama.md)
 
 ## Kapsam
 
-- **1-4. Sınıf Matematik** — 24 ünite, 59 kazanım, 59 konu anlatımı, ~354 etkinlik
+- **1. Sınıf** — Türkiye Yüzyılı Maarif Modeli ile hizalı: 4 öğrenme alanı, **19 öğrenme çıktısı**, 105 etkinlik
+- **2-4. Sınıf** — 18 ünite, 45 kazanım, 274 etkinlik (hizalama sırada)
+- **Toplam** — 64 kazanım, 64 konu anlatımı, 379 etkinlik
+
+### Doğrulama
+
+```bash
+npm run check   # typecheck + müfredat bütünlüğü + MES-002
+```
 - **Odak:** Her kazanım bir Öğrenme Merkezi
 - **İçerik Fabrikası:** TypeScript tabanlı otomatik aktivite üretimi

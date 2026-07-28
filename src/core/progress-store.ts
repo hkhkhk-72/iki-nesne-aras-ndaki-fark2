@@ -4,7 +4,14 @@ import { isLessonActivity } from './unlock-logic';
 import { DEFAULT_SUBJECT } from './subject-registry';
 
 const PROFILE_KEY = '@minibilge/student_profile';
-const PROGRESS_KEY = '@minibilge/progress';
+
+/**
+ * Kazanım kimlikleri Maarif Modeli hizalamasıyla yeniden yapılandırıldığı için
+ * (örn. out-1-2-1 artık karşılaştırma değil uzamsal ilişkiler) eski kayıtların
+ * sessizce yanlış kazanıma atanmaması gerekir. Sürümlü anahtar, eski verinin
+ * yorumlanmak yerine devre dışı kalmasını sağlar.
+ */
+const PROGRESS_KEY = '@minibilge/progress/v2';
 
 const defaultProfile: StudentProfile = {
   id: 'student-1',

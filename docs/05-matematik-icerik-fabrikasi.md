@@ -63,13 +63,16 @@ Format: `M.{sınıf}.{ünite}.{sıra}`
 
 ## Müfredat Durumu (Tüm Sınıflar)
 
-| Sınıf | Ünite | Kazanım | Konu Anlatım | Etkinlik |
-|-------|-------|---------|--------------|----------|
-| 1. Sınıf | 6 | 14 | 14 ders | ~84 |
-| 2. Sınıf | 6 | 14 | 14 ders | ~84 |
-| 3. Sınıf | 6 | 15 | 15 ders | ~90 |
-| 4. Sınıf | 6 | 16 | 16 ders | ~96 |
-| **Toplam** | **24** | **59** | **59 ders** | **~354** |
+| Sınıf | Ünite | Kazanım | Konu Anlatım | Etkinlik | Hizalama |
+|-------|-------|---------|--------------|----------|----------|
+| 1. Sınıf | 4 | 19 | 19 ders | 105 | ✅ Maarif Modeli |
+| 2. Sınıf | 6 | 14 | 14 ders | 90 | Sırada |
+| 3. Sınıf | 6 | 15 | 15 ders | 89 | Sırada |
+| 4. Sınıf | 6 | 16 | 16 ders | 95 | Sırada |
+| **Toplam** | **22** | **64** | **64 ders** | **379** | |
+
+1. sınıf üniteleri resmî **öğrenme alanlarıdır**: Sayılar ve İşlemler,
+Geometri, Ölçme, Veri. Ayrıntı: [Maarif Modeli Hizalaması](08-maarif-modeli-hizalama.md).
 
 Her kazanımda önce **Konu Anlatım** (slayt), sonra oyun etkinlikleri gelir.
 

@@ -12,19 +12,40 @@ import type {
 } from '@/core/types';
 import { buildLesson } from './lesson-factory';
 
-/** Matematiğe özgü konu tipleri. Her ders kendi konu tiplerini tanımlar. */
+/**
+ * Matematiğe özgü konu tipleri.
+ *
+ * Türkiye Yüzyılı Maarif Modeli öğrenme alanlarıyla hizalıdır:
+ * Sayılar ve İşlemler, Geometri, Ölçme, Veri.
+ */
 export type TopicType =
+  // Sayılar ve İşlemler
   | 'counting'
+  | 'rhythmic'
+  | 'digits'
+  | 'ordinal'
+  | 'place_value'
   | 'comparison'
   | 'addition'
   | 'subtraction'
+  | 'mental_math'
   | 'multiplication'
   | 'division'
   | 'fractions'
+  // Geometri
+  | 'spatial'
   | 'geometry'
+  | 'solids'
+  | 'patterns'
+  // Ölçme
+  | 'nonstandard_length'
+  | 'time'
+  | 'money'
+  | 'liquid'
   | 'measurement'
+  // Veri
   | 'data'
-  | 'patterns';
+  | 'data_create';
 
 export interface OutcomeDef {
   id: string;
@@ -537,6 +558,503 @@ export function buildActivities(def: OutcomeDef): ActivityConfig[] {
         }),
         comparison(id, 'real_life', 'Fayans Deseni', 'Gerçek hayat örüntü', comparePayload('Hangi desen devam ediyor?', 4, 4, '🧱'), 10),
         comparison(id, 'smartboard', 'Örüntü Düellosu', 'Sınıf yarışması', comparePayload('4 ve 4 eşit mi?', 4, 4, '🔴'), 10),
+      );
+      break;
+    }
+
+    // ── Ritmik sayma: ikişer, beşer, onar ──────────────────────
+    case 'rhythmic': {
+      const step = (params.step as number) ?? 2;
+      const seq = [1, 2, 3, 4].map((n) => step * n);
+      activities.push(
+        dragDrop(id, 'play', `${step}'şer Say`, 'Eksik sayıyı yerine koy', {
+          instruction: `${step}'şer sayarken eksik kalan sayıyı bul!`,
+          items: [{ id: 'miss', content: String(seq[2]) }],
+          zones: [
+            { id: 'slot', label: `${seq[0]}, ${seq[1]}, ?, ${seq[3]}`, accepts: ['miss'] },
+            { id: 'wrong', label: 'Buraya değil', accepts: [] },
+          ],
+          correctMapping: { miss: 'slot' },
+          hint: `Her seferinde ${step} artıyor.`,
+        }),
+        matching(id, 'explore', 'Ritmik Diziler', 'Dizileri kuralıyla eşleştir', {
+          instruction: 'Sayı dizisini kuralıyla eşleştir!',
+          pairs: [
+            { id: 'p1', left: { text: '2, 4, 6, 8' }, right: { text: "İkişer" } },
+            { id: 'p2', left: { text: '5, 10, 15, 20' }, right: { text: "Beşer" } },
+            { id: 'p3', left: { text: '10, 20, 30, 40' }, right: { text: "Onar" } },
+          ],
+          hint: 'Sayılar arasındaki farka bak.',
+        }),
+        matching(id, 'real_life', 'Çift Çift Say', 'Günlük hayatta ritmik sayma', {
+          instruction: 'Ritmik sayma günlük hayatta nerede işe yarar?',
+          pairs: [
+            { id: 'p1', left: { emoji: '🧦' }, right: { text: 'Çorap çiftleri: ikişer' } },
+            { id: 'p2', left: { emoji: '🖐️' }, right: { text: 'Parmaklar: beşer' } },
+          ],
+        }, 10),
+        comparison(id, 'smartboard', 'Ritmik Sayma Yarışı', 'Sınıf düellosu',
+          comparePayload(`${step * 3} mü ${step * 2} mi daha büyük?`, step * 3, step * 2, '🔢'), 10),
+      );
+      break;
+    }
+
+    // ── Rakam okuma ve yazma ───────────────────────────────────
+    case 'digits': {
+      activities.push(
+        matching(id, 'play', 'Rakamı Bul', 'Rakam ile nesne sayısını eşleştir', {
+          instruction: 'Rakamı doğru nesne grubuyla eşleştir!',
+          pairs: [
+            { id: 'p1', left: { text: '3' }, right: { emoji: '🐤🐤🐤' } },
+            { id: 'p2', left: { text: '5' }, right: { emoji: '🌼🌼🌼🌼🌼' } },
+            { id: 'p3', left: { text: '2' }, right: { emoji: '🐞🐞' } },
+          ],
+          hint: 'Nesneleri tek tek say, sonra rakama bak.',
+        }),
+        matching(id, 'explore', 'Rakam ve Adı', 'Rakamı okunuşuyla eşleştir', {
+          instruction: 'Rakamı okunuşuyla eşleştir!',
+          pairs: [
+            { id: 'p1', left: { text: '4' }, right: { text: 'dört' } },
+            { id: 'p2', left: { text: '7' }, right: { text: 'yedi' } },
+            { id: 'p3', left: { text: '9' }, right: { text: 'dokuz' } },
+          ],
+        }),
+        dragDrop(id, 'experiment', 'Rakamı Yerleştir', 'Grubun sayısını yaz', {
+          instruction: 'Her grubun sayısını gösteren rakamı yerleştir!',
+          items: [
+            { id: 'r2', content: '2' },
+            { id: 'r4', content: '4' },
+          ],
+          zones: [
+            { id: 'g2', label: '🍎🍎', accepts: ['r2'] },
+            { id: 'g4', label: '🍐🍐🍐🍐', accepts: ['r4'] },
+          ],
+          correctMapping: { r2: 'g2', r4: 'g4' },
+        }),
+        matching(id, 'home', 'Evde Rakam Avı', 'Ev etkinliği', {
+          instruction: 'Evde rakam gördüğün yerleri eşleştir!',
+          pairs: [
+            { id: 'p1', left: { emoji: '🕐' }, right: { text: 'Saat' } },
+            { id: 'p2', left: { emoji: '📞' }, right: { text: 'Telefon' } },
+          ],
+        }, 15),
+      );
+      break;
+    }
+
+    // ── Sıra bildiren sayılar ──────────────────────────────────
+    case 'ordinal': {
+      activities.push(
+        dragDrop(id, 'play', 'Yarışta Sıralama', 'Kim kaçıncı oldu?', {
+          instruction: 'Koşucuları sıraya yerleştir!',
+          items: [
+            { id: 'tavsan', content: 'Tavşan', emoji: '🐰' },
+            { id: 'kaplumbaga', content: 'Kaplumbağa', emoji: '🐢' },
+            { id: 'sincap', content: 'Sincap', emoji: '🐿️' },
+          ],
+          zones: [
+            { id: 'z1', label: '1.', accepts: ['tavsan'] },
+            { id: 'z2', label: '2.', accepts: ['sincap'] },
+            { id: 'z3', label: '3.', accepts: ['kaplumbaga'] },
+          ],
+          correctMapping: { tavsan: 'z1', sincap: 'z2', kaplumbaga: 'z3' },
+          hint: 'En hızlı olan birinci olur.',
+        }),
+        matching(id, 'explore', 'Kaçıncı?', 'Sıra sayısını adıyla eşleştir', {
+          instruction: 'Sıra sayısını okunuşuyla eşleştir!',
+          pairs: [
+            { id: 'p1', left: { text: '1.' }, right: { text: 'birinci' } },
+            { id: 'p2', left: { text: '3.' }, right: { text: 'üçüncü' } },
+            { id: 'p3', left: { text: '5.' }, right: { text: 'beşinci' } },
+          ],
+        }),
+        matching(id, 'real_life', 'Sırada Bekle', 'Gerçek hayatta sıra', {
+          instruction: 'Sıra bildiren sayıları nerede kullanırız?',
+          pairs: [
+            { id: 'p1', left: { emoji: '🏢' }, right: { text: '3. kat' } },
+            { id: 'p2', left: { emoji: '🥇' }, right: { text: '1. oldu' } },
+          ],
+        }, 10),
+        comparison(id, 'smartboard', 'Sıralama Düellosu', 'Sınıf yarışması',
+          comparePayload('Hangi sırada daha çok kişi var?', 5, 3, '🧑'), 10),
+      );
+      break;
+    }
+
+    // ── Onluk ve birlik gruplama ───────────────────────────────
+    case 'place_value': {
+      const value = (params.value as number) ?? 14;
+      const tens = Math.floor(value / 10);
+      const ones = value % 10;
+      activities.push(
+        dragDrop(id, 'play', 'Onluk ve Birlik', 'Sayıyı gruplara ayır', {
+          instruction: `${value} sayısını onluk ve birlik gruplarına ayır!`,
+          items: [
+            { id: 'onluk', content: `${tens} onluk`, emoji: '🟦' },
+            { id: 'birlik', content: `${ones} birlik`, emoji: '🟨' },
+          ],
+          zones: [
+            { id: 'z_onluk', label: 'Onluklar', accepts: ['onluk'] },
+            { id: 'z_birlik', label: 'Birlikler', accepts: ['birlik'] },
+          ],
+          correctMapping: { onluk: 'z_onluk', birlik: 'z_birlik' },
+          hint: 'Onluk demek 10 tane bir arada demek.',
+        }),
+        matching(id, 'explore', 'Sayı ve Gruplar', 'Sayıyı gösterimiyle eşleştir', {
+          instruction: 'Sayıyı onluk-birlik gösterimiyle eşleştir!',
+          pairs: [
+            { id: 'p1', left: { text: '13' }, right: { text: '1 onluk 3 birlik' } },
+            { id: 'p2', left: { text: '17' }, right: { text: '1 onluk 7 birlik' } },
+            { id: 'p3', left: { text: '20' }, right: { text: '2 onluk 0 birlik' } },
+          ],
+        }),
+        dragDrop(id, 'experiment', 'Onluk Yap', 'On tane birleştir', {
+          instruction: '10 çubuğu bir araya getirip onluk yap!',
+          items: [{ id: 'demet', content: '10 çubuk', emoji: '🟩' }],
+          zones: [
+            { id: 'onluk_kutu', label: '1 Onluk', accepts: ['demet'] },
+            { id: 'bos', label: 'Birlikler', accepts: [] },
+          ],
+          correctMapping: { demet: 'onluk_kutu' },
+        }),
+        matching(id, 'real_life', 'Onluk Paketler', 'Gerçek hayatta onluk', {
+          instruction: 'Onluk gruplar günlük hayatta nerede var?',
+          pairs: [
+            { id: 'p1', left: { emoji: '🥚' }, right: { text: '10\'luk yumurta kolisi' } },
+            { id: 'p2', left: { emoji: '✏️' }, right: { text: '10\'luk kalem paketi' } },
+          ],
+        }, 10),
+      );
+      break;
+    }
+
+    // ── Zihinden toplama ve çıkarma ────────────────────────────
+    case 'mental_math': {
+      activities.push(
+        matching(id, 'play', 'Zihinden Çöz', 'Parmak kullanmadan dene', {
+          instruction: 'Zihinden çöz ve sonucu eşleştir!',
+          pairs: [
+            { id: 'p1', left: { text: '10 + 5' }, right: { text: '15' } },
+            { id: 'p2', left: { text: '20 - 10' }, right: { text: '10' } },
+            { id: 'p3', left: { text: '9 + 1' }, right: { text: '10' } },
+          ],
+          hint: 'Önce onluğu düşün.',
+        }),
+        matching(id, 'explore', 'Kolay Yollar', 'Zihinden hesap stratejileri', {
+          instruction: 'Kolay hesap yolunu eşleştir!',
+          pairs: [
+            { id: 'p1', left: { text: '9 + 3' }, right: { text: '10 + 2 gibi düşün' } },
+            { id: 'p2', left: { text: '5 + 5' }, right: { text: 'Eşit ikili: 10' } },
+          ],
+        }),
+        comparison(id, 'real_life', 'Kasada Hesap', 'Gerçek hayatta zihinden', 
+          comparePayload('10 TL ile 6 TL harcadın; kalan mı harcanan mı çok?', 4, 6, '💰'), 10),
+        matching(id, 'challenge', 'Zihin Şampiyonu', 'Hızlı zihinden işlem', {
+          instruction: 'Hızlı ol, zihinden çöz!',
+          pairs: [
+            { id: 'p1', left: { text: '15 + 4' }, right: { text: '19' } },
+            { id: 'p2', left: { text: '18 - 6' }, right: { text: '12' } },
+          ],
+        }, 5, false),
+      );
+      break;
+    }
+
+    // ── Uzamsal ilişkiler: yer, yön, konum ─────────────────────
+    case 'spatial': {
+      activities.push(
+        dragDrop(id, 'play', 'Nereye Koyalım?', 'Nesneyi doğru konuma yerleştir', {
+          instruction: 'Kediyi söylenen yere yerleştir!',
+          items: [
+            { id: 'ust', content: 'Masanın üstünde', emoji: '🐱' },
+            { id: 'alt', content: 'Masanın altında', emoji: '🐶' },
+          ],
+          zones: [
+            { id: 'z_ust', label: 'Üstünde ⬆️', accepts: ['ust'] },
+            { id: 'z_alt', label: 'Altında ⬇️', accepts: ['alt'] },
+          ],
+          correctMapping: { ust: 'z_ust', alt: 'z_alt' },
+          hint: 'Üstünde demek yukarıda demek.',
+        }),
+        matching(id, 'explore', 'Konum Sözcükleri', 'Konumu ifadesiyle eşleştir', {
+          instruction: 'Konumu doğru sözcükle eşleştir!',
+          pairs: [
+            { id: 'p1', left: { emoji: '⬆️' }, right: { text: 'Üstünde' } },
+            { id: 'p2', left: { emoji: '⬇️' }, right: { text: 'Altında' } },
+            { id: 'p3', left: { emoji: '↔️' }, right: { text: 'Arasında' } },
+            { id: 'p4', left: { emoji: '➡️' }, right: { text: 'Sağında' } },
+          ],
+        }),
+        dragDrop(id, 'experiment', 'Sağ mı Sol mu?', 'Yön bulma denemesi', {
+          instruction: 'Nesneleri sağa ve sola yerleştir!',
+          items: [
+            { id: 'sag', content: 'Sağ el', emoji: '🤚' },
+            { id: 'sol', content: 'Sol el', emoji: '✋' },
+          ],
+          zones: [
+            { id: 'z_sag', label: 'Sağ', accepts: ['sag'] },
+            { id: 'z_sol', label: 'Sol', accepts: ['sol'] },
+          ],
+          correctMapping: { sag: 'z_sag', sol: 'z_sol' },
+        }),
+        matching(id, 'real_life', 'Sınıfta Konum', 'Çevrende konum bul', {
+          instruction: 'Sınıfta nesnelerin konumunu eşleştir!',
+          pairs: [
+            { id: 'p1', left: { emoji: '🪟' }, right: { text: 'Tahtanın yanında' } },
+            { id: 'p2', left: { emoji: '🎒' }, right: { text: 'Sıranın altında' } },
+          ],
+        }, 12),
+        matching(id, 'home', 'Evde Konum Oyunu', 'Ev etkinliği', {
+          instruction: 'Evde bir nesne seç ve konumunu anlat!',
+          pairs: [
+            { id: 'p1', left: { emoji: '🛏️' }, right: { text: 'Yatağın üstünde' } },
+            { id: 'p2', left: { emoji: '🚪' }, right: { text: 'Kapının arkasında' } },
+          ],
+        }, 15),
+      );
+      break;
+    }
+
+    // ── Geometrik cisimler ─────────────────────────────────────
+    case 'solids': {
+      activities.push(
+        matching(id, 'play', 'Cisim Benzet', 'Nesneyi cisme benzet', {
+          instruction: 'Günlük nesneleri geometrik cisimlerle eşleştir!',
+          pairs: [
+            { id: 'p1', left: { emoji: '⚽' }, right: { text: 'Küre' } },
+            { id: 'p2', left: { emoji: '📦' }, right: { text: 'Küp' } },
+            { id: 'p3', left: { emoji: '🥫' }, right: { text: 'Silindir' } },
+            { id: 'p4', left: { emoji: '🎂' }, right: { text: 'Prizma' } },
+          ],
+          hint: 'Yuvarlanan cisimler küre veya silindirdir.',
+        }),
+        dragDrop(id, 'explore', 'Yuvarlanır mı?', 'Cisimleri özelliklerine göre grupla', {
+          instruction: 'Cisimleri yuvarlanma özelliğine göre ayır!',
+          items: [
+            { id: 'top', content: 'Top', emoji: '⚽' },
+            { id: 'kutu', content: 'Kutu', emoji: '📦' },
+          ],
+          zones: [
+            { id: 'yuvarlanir', label: 'Yuvarlanır', accepts: ['top'] },
+            { id: 'yuvarlanmaz', label: 'Yuvarlanmaz', accepts: ['kutu'] },
+          ],
+          correctMapping: { top: 'yuvarlanir', kutu: 'yuvarlanmaz' },
+        }),
+        matching(id, 'real_life', 'Etrafındaki Cisimler', 'Çevrende cisim bul', {
+          instruction: 'Evdeki nesneleri cisimlerle eşleştir!',
+          pairs: [
+            { id: 'p1', left: { emoji: '🧴' }, right: { text: 'Silindir' } },
+            { id: 'p2', left: { emoji: '🎁' }, right: { text: 'Küp' } },
+          ],
+        }, 12),
+        comparison(id, 'smartboard', 'Cisim Düellosu', 'Sınıf yarışması',
+          comparePayload('Hangisinde daha çok köşe var?', 8, 0, '📦'), 10),
+      );
+      break;
+    }
+
+    // ── Standart olmayan uzunluk ölçme ─────────────────────────
+    case 'nonstandard_length': {
+      activities.push(
+        comparison(id, 'play', 'Karışla Ölç', 'Hangisi daha çok karış?',
+          comparePayload('Hangi nesne daha çok karış uzunlukta?', 5, 3, '🖐️', 'Masa', 'Kitap')),
+        dragDrop(id, 'explore', 'Ölçme Birimleri', 'Birimleri tanı', {
+          instruction: 'Ölçme birimlerini doğru gruba koy!',
+          items: [
+            { id: 'karis', content: 'Karış', emoji: '🖐️' },
+            { id: 'adim', content: 'Adım', emoji: '👣' },
+          ],
+          zones: [
+            { id: 'kisa', label: 'Kısa mesafe', accepts: ['karis'] },
+            { id: 'uzun', label: 'Uzun mesafe', accepts: ['adim'] },
+          ],
+          correctMapping: { karis: 'kisa', adim: 'uzun' },
+          hint: 'Sınıfı adımla, kitabı karışla ölçeriz.',
+        }),
+        dragDrop(id, 'experiment', 'Sırala', 'Kısadan uzuna diz', {
+          instruction: 'Nesneleri kısadan uzuna sırala!',
+          items: [
+            { id: 'silgi', content: 'Silgi', emoji: '🧽' },
+            { id: 'kalem', content: 'Kalem', emoji: '✏️' },
+            { id: 'masa', content: 'Masa', emoji: '🪑' },
+          ],
+          zones: [
+            { id: 'z1', label: 'En Kısa', accepts: ['silgi'] },
+            { id: 'z2', label: 'Orta', accepts: ['kalem'] },
+            { id: 'z3', label: 'En Uzun', accepts: ['masa'] },
+          ],
+          correctMapping: { silgi: 'z1', kalem: 'z2', masa: 'z3' },
+        }),
+        matching(id, 'home', 'Evde Karışla Ölç', 'Ev etkinliği', {
+          instruction: 'Evde eşyaları karışla ölç ve eşleştir!',
+          pairs: [
+            { id: 'p1', left: { emoji: '🛋️' }, right: { text: 'Çok karış' } },
+            { id: 'p2', left: { emoji: '📱' }, right: { text: 'Az karış' } },
+          ],
+        }, 15),
+      );
+      break;
+    }
+
+    // ── Zaman: saat, gün, hafta, ay, mevsim ────────────────────
+    case 'time': {
+      activities.push(
+        matching(id, 'play', 'Saati Oku', 'Tam ve yarım saatler', {
+          instruction: 'Saatleri okunuşuyla eşleştir!',
+          pairs: [
+            { id: 'p1', left: { emoji: '🕒' }, right: { text: 'Saat 3' } },
+            { id: 'p2', left: { emoji: '🕡' }, right: { text: 'Altı buçuk' } },
+            { id: 'p3', left: { emoji: '🕘' }, right: { text: 'Saat 9' } },
+          ],
+          hint: 'Uzun kol 12\'de ise tam saattir.',
+        }),
+        dragDrop(id, 'explore', 'Günleri Sırala', 'Haftanın günleri', {
+          instruction: 'Günleri sıraya koy!',
+          items: [
+            { id: 'pzt', content: 'Pazartesi' },
+            { id: 'sal', content: 'Salı' },
+            { id: 'car', content: 'Çarşamba' },
+          ],
+          zones: [
+            { id: 'z1', label: '1. gün', accepts: ['pzt'] },
+            { id: 'z2', label: '2. gün', accepts: ['sal'] },
+            { id: 'z3', label: '3. gün', accepts: ['car'] },
+          ],
+          correctMapping: { pzt: 'z1', sal: 'z2', car: 'z3' },
+        }),
+        matching(id, 'experiment', 'Mevsimler', 'Mevsimleri tanı', {
+          instruction: 'Mevsimleri özellikleriyle eşleştir!',
+          pairs: [
+            { id: 'p1', left: { emoji: '❄️' }, right: { text: 'Kış' } },
+            { id: 'p2', left: { emoji: '🌸' }, right: { text: 'İlkbahar' } },
+            { id: 'p3', left: { emoji: '☀️' }, right: { text: 'Yaz' } },
+            { id: 'p4', left: { emoji: '🍂' }, right: { text: 'Sonbahar' } },
+          ],
+        }),
+        matching(id, 'real_life', 'Günlük Rutin', 'Zamanı hayatla ilişkilendir', {
+          instruction: 'Etkinlikleri zamanıyla eşleştir!',
+          pairs: [
+            { id: 'p1', left: { text: 'Kahvaltı' }, right: { emoji: '🌅' } },
+            { id: 'p2', left: { text: 'Okul' }, right: { emoji: '🏫' } },
+            { id: 'p3', left: { text: 'Uyku' }, right: { emoji: '🌙' } },
+          ],
+        }, 12),
+        matching(id, 'home', 'Evde Takvim', 'Ev etkinliği', {
+          instruction: 'Takvimde özel günleri bul ve eşleştir!',
+          pairs: [
+            { id: 'p1', left: { emoji: '🎂' }, right: { text: 'Doğum günüm' } },
+            { id: 'p2', left: { emoji: '🎉' }, right: { text: 'Bayram' } },
+          ],
+        }, 15),
+      );
+      break;
+    }
+
+    // ── Paralarımız ────────────────────────────────────────────
+    case 'money': {
+      activities.push(
+        matching(id, 'play', 'Paramızı Tanı', 'Kâğıt ve madeni paralar', {
+          instruction: 'Paraları değerleriyle eşleştir!',
+          pairs: [
+            { id: 'p1', left: { text: '1 ₺' }, right: { emoji: '🪙' } },
+            { id: 'p2', left: { text: '10 ₺' }, right: { emoji: '💵' } },
+            { id: 'p3', left: { text: '50 kuruş' }, right: { emoji: '🥉' } },
+          ],
+          hint: 'Madeni paralar metaldir, kâğıt paralar katlanır.',
+        }),
+        dragDrop(id, 'explore', 'Madeni mi Kâğıt mı?', 'Paraları grupla', {
+          instruction: 'Paraları türüne göre ayır!',
+          items: [
+            { id: 'madeni', content: '1 ₺', emoji: '🪙' },
+            { id: 'kagit', content: '20 ₺', emoji: '💵' },
+          ],
+          zones: [
+            { id: 'z_madeni', label: 'Madeni Para', accepts: ['madeni'] },
+            { id: 'z_kagit', label: 'Kâğıt Para', accepts: ['kagit'] },
+          ],
+          correctMapping: { madeni: 'z_madeni', kagit: 'z_kagit' },
+        }),
+        comparison(id, 'real_life', 'Kantinde Alışveriş', 'Gerçek hayatta para',
+          comparePayload('Hangi tarafta daha çok para var?', 5, 2, '🪙', 'Cebim', 'Kumbaram'), 12),
+        matching(id, 'home', 'Kumbara Oyunu', 'Ev etkinliği', {
+          instruction: 'Kumbaradaki paraları ayır ve eşleştir!',
+          pairs: [
+            { id: 'p1', left: { emoji: '🪙' }, right: { text: 'Madeni' } },
+            { id: 'p2', left: { emoji: '💵' }, right: { text: 'Kâğıt' } },
+          ],
+        }, 15),
+      );
+      break;
+    }
+
+    // ── Sıvı miktarı ───────────────────────────────────────────
+    case 'liquid': {
+      activities.push(
+        comparison(id, 'play', 'Hangi Kapta Çok?', 'Sıvı miktarını karşılaştır',
+          comparePayload('Hangi kapta daha çok su var?', 4, 2, '🥛', 'Sürahi', 'Bardak')),
+        dragDrop(id, 'explore', 'Kapları Sırala', 'Az sudan çok suya', {
+          instruction: 'Kapları su miktarına göre sırala!',
+          items: [
+            { id: 'fincan', content: 'Fincan', emoji: '☕' },
+            { id: 'bardak', content: 'Bardak', emoji: '🥛' },
+            { id: 'surahi', content: 'Sürahi', emoji: '🏺' },
+          ],
+          zones: [
+            { id: 'z1', label: 'En Az', accepts: ['fincan'] },
+            { id: 'z2', label: 'Orta', accepts: ['bardak'] },
+            { id: 'z3', label: 'En Çok', accepts: ['surahi'] },
+          ],
+          correctMapping: { fincan: 'z1', bardak: 'z2', surahi: 'z3' },
+          hint: 'Büyük kap daha çok sıvı alır.',
+        }),
+        comparison(id, 'experiment', 'Kaç Bardak?', 'Bardakla ölçme deneyi',
+          comparePayload('Sürahiyi doldurmak için kaç bardak gerekir?', 4, 1, '🥛')),
+        matching(id, 'home', 'Mutfakta Ölç', 'Ev etkinliği', {
+          instruction: 'Mutfakta kapları bardakla ölç ve eşleştir!',
+          pairs: [
+            { id: 'p1', left: { emoji: '🏺' }, right: { text: 'Çok bardak' } },
+            { id: 'p2', left: { emoji: '☕' }, right: { text: 'Az bardak' } },
+          ],
+        }, 15),
+      );
+      break;
+    }
+
+    // ── Grafik oluşturma ───────────────────────────────────────
+    case 'data_create': {
+      activities.push(
+        dragDrop(id, 'play', 'Grafik Oluştur', 'Veriyi grafiğe taşı', {
+          instruction: 'Meyveleri sayısına göre grafiğe yerleştir!',
+          items: [
+            { id: 'elma', content: 'Elma (5)', emoji: '🍎' },
+            { id: 'muz', content: 'Muz (3)', emoji: '🍌' },
+            { id: 'armut', content: 'Armut (1)', emoji: '🍐' },
+          ],
+          zones: [
+            { id: 'yuksek', label: 'En Yüksek Sütun', accepts: ['elma'] },
+            { id: 'orta', label: 'Orta Sütun', accepts: ['muz'] },
+            { id: 'alcak', label: 'En Kısa Sütun', accepts: ['armut'] },
+          ],
+          correctMapping: { elma: 'yuksek', muz: 'orta', armut: 'alcak' },
+          hint: 'Çok olan sütun daha yüksek olur.',
+        }),
+        matching(id, 'explore', 'Çeteleyi Say', 'Çetele ve sayı', {
+          instruction: 'Çetele işaretlerini sayıyla eşleştir!',
+          pairs: [
+            { id: 'p1', left: { text: '|||' }, right: { text: '3' } },
+            { id: 'p2', left: { text: '|||||' }, right: { text: '5' } },
+            { id: 'p3', left: { text: '||' }, right: { text: '2' } },
+          ],
+        }),
+        matching(id, 'real_life', 'Sınıf Anketi', 'Kendi grafiğini yap', {
+          instruction: 'Sınıfta anket yap ve sonucu eşleştir!',
+          pairs: [
+            { id: 'p1', left: { text: 'En sevilen renk' }, right: { emoji: '🎨' } },
+            { id: 'p2', left: { text: 'En sevilen meyve' }, right: { emoji: '🍓' } },
+          ],
+        }, 15),
+        comparison(id, 'smartboard', 'Grafik Düellosu', 'Sınıf yarışması',
+          comparePayload('Hangi sütun daha yüksek?', 6, 4, '📊'), 10),
       );
       break;
     }

@@ -7,15 +7,16 @@ import { scenes } from './scenes';
  * MiniBilge'nin referans mikro deneyimidir. Sonraki tüm dersler bu kalite
  * çıtasına göre üretilir.
  *
- * Kazanım köprüsü: out-1-2-1 (Daha Fazla – Daha Az – Eşit)
+ * Kazanım köprüsü: MAT.1.1.1 — Nesne gruplarını azlık-çokluk ve eşitlik
+ * bakımından karşılaştırır (out-1-1-1).
  */
 export const MB_MAT_1_1_01: MicroExperience = {
   code: 'MB-MAT-1.1.01',
   title: "Fındık Sincap'ın Kış Hazırlığı",
   subject: 'math',
   grade: 1,
-  unitId: 'unit-1-2',
-  outcomeId: 'out-1-2-1',
+  unitId: 'unit-1-1',
+  outcomeId: 'out-1-1-1',
 
   storyGoal: "Fındık'ın kışa hazırlanmasına yardım etmek",
   learningGoal: 'Az, çok ve eşit kavramlarını birebir eşleştirme üzerinden kazandırmak',

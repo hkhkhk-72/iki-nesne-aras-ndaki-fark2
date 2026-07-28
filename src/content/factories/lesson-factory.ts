@@ -200,6 +200,214 @@ const TOPIC_LESSONS: Record<TopicType, (def: OutcomeDef) => LessonBuild> = {
     practicePrompt: 'Grafik eşleştirme oyununa başla!',
   }),
 
+  rhythmic: (def) => {
+    const step = (def.params?.step as number) ?? 2;
+    return {
+      durationMinutes: 6,
+      keyPoints: [
+        'Ritmik sayma belirli aralıklarla saymaktır',
+        `${step}'şer sayarken her seferinde ${step} eklenir`,
+        'Ritmik sayma hızlı saymayı sağlar',
+      ],
+      slides: [
+        slide('Ritmik Sayma Nedir?', 'Birer birer saymak yerine ikişer, beşer veya onar sayabiliriz. Bu daha hızlıdır.', '🔢'),
+        slide(`${step}'şer Sayalım`, `${step}, ${step * 2}, ${step * 3}, ${step * 4}... Her seferinde ${step} artıyor.`, '👣', 'Sayılar arasındaki fark her zaman aynı.'),
+        slide('Neden İşe Yarar?', 'Çorapları ikişer, parmakları beşer, paraları onar sayarız. Böylece daha çabuk sayarız.', '🧦'),
+        slide('Geriye Sayma', 'İleriye saydığımız gibi geriye de sayabiliriz: 20, 19, 18... Roket sayımı gibi!', '🚀'),
+        slide(def.title, def.description, def.icon),
+        slide('Hazır!', 'Ritmik sayma oyunlarıyla pratik yap!', '🎮'),
+      ],
+      practicePrompt: 'Eksik sayıyı bulma oyununa geç!',
+    };
+  },
+
+  digits: (def) => ({
+    durationMinutes: 5,
+    keyPoints: ['Rakam 10 tanedir: 0-9', 'Rakamlar birleşerek sayı olur', 'Her sayı bir miktarı gösterir'],
+    slides: [
+      slide('Rakam Nedir?', 'Rakamlar sayıları yazmak için kullandığımız işaretlerdir: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.', '🔤'),
+      slide('Rakam ve Sayı Farkı', 'Rakam bir işarettir, sayı ise miktarı anlatır. 1 ve 5 rakamları birleşince 15 sayısı olur.', '🔢', 'Harf ve kelime gibi düşün.'),
+      slide('Nasıl Yazarız?', 'Her rakamın kendine özgü bir yazımı var. Havada parmağınla dene, sonra deftere yaz.', '✏️'),
+      slide('Gerçek Hayat', 'Saatte, telefonda, ev numarasında, fiyat etiketinde rakamlar var. Etrafına bak!', '🕐'),
+      slide('Pratik', 'Rakam eşleştirme oyunlarıyla pekiştir!', '🎯'),
+    ],
+    practicePrompt: 'Rakamı bulma oyununa başla!',
+  }),
+
+  ordinal: (def) => ({
+    durationMinutes: 5,
+    keyPoints: ['Sıra sayıları yeri gösterir', '1. birinci, 2. ikinci, 3. üçüncü', 'Sayma sayısı miktar, sıra sayısı yer bildirir'],
+    slides: [
+      slide('Sıra Bildiren Sayılar', 'Bir yarışta kimin önde olduğunu söylerken "birinci", "ikinci" deriz. Bunlar sıra sayılarıdır.', '🥇'),
+      slide('Nasıl Yazılır?', 'Sıra sayıları rakamdan sonra nokta ile yazılır: 1., 2., 3. Okunuşu birinci, ikinci, üçüncüdür.', '📝', 'Noktayı unutma!'),
+      slide('Miktar mı Sıra mı?', '"3 elma" miktarı anlatır. "3. sırada" ise yeri anlatır. İkisi farklıdır.', '🍎'),
+      slide('Gerçek Hayat', 'Asansörde 3. kat, sırada 5. kişi, yarışta 1. olmak. Sıra sayıları her yerde.', '🏢'),
+      slide(def.title, def.description, def.icon),
+      slide('Pratik', 'Sıralama oyunlarıyla dene!', '🎮'),
+    ],
+    practicePrompt: 'Yarışta sıralama oyununa geç!',
+  }),
+
+  place_value: (def) => {
+    const value = (def.params?.value as number) ?? 14;
+    const tens = Math.floor(value / 10);
+    const ones = value % 10;
+    return {
+      durationMinutes: 7,
+      keyPoints: [
+        'Onluk 10 tane bir arada demektir',
+        `${value} = ${tens} onluk + ${ones} birlik`,
+        'Basamak, rakamın yerine göre değerini değiştirir',
+      ],
+      slides: [
+        slide('Onluk Nedir?', '10 tane nesneyi bir demet yaparsak buna onluk deriz. Onluk saymayı kolaylaştırır.', '🟦'),
+        slide('Onluk ve Birlik', `${value} sayısında ${tens} onluk ve ${ones} birlik var. Yani ${tens} demet ve ${ones} tek nesne.`, '🧮', 'Önce demetleri, sonra tekleri say.'),
+        slide('Neden Gruplarız?', '17 çubuğu tek tek saymak zor. 1 onluk ve 7 birlik olarak görmek daha kolay.', '💡'),
+        slide('Gerçek Hayat', 'Yumurta kolisi 10\'luk, kalem paketi 10\'luk gelir. Hayatta onluk gruplar çok kullanılır.', '🥚'),
+        slide(def.title, def.description, def.icon),
+        slide('Pratik', 'Onluk-birlik ayırma oyununa geç!', '🎯'),
+      ],
+      practicePrompt: 'Sayıyı gruplara ayırma oyununu dene!',
+    };
+  },
+
+  mental_math: (def) => ({
+    durationMinutes: 6,
+    keyPoints: ['Zihinden hesap parmak kullanmadan yapılır', 'Onluğa tamamlama kolaylık sağlar', 'Eşit ikilileri bilmek hızlandırır'],
+    slides: [
+      slide('Zihinden Hesap', 'Bazı işlemleri kâğıt kalem olmadan, aklımızdan yapabiliriz. Bu bir beceridir ve pratikle gelişir.', '🧠'),
+      slide('Onluğa Tamamla', '9 + 3 işleminde 9\'u 10 yapmak için 1 alırız, kalan 2\'yi ekleriz: 10 + 2 = 12.', '💡', 'Onluklar hesabı kolaylaştırır.'),
+      slide('Eşit İkililer', '5 + 5 = 10, 3 + 3 = 6. Bu eşit ikilileri ezberlemek çok işe yarar.', '🤝'),
+      slide('Gerçek Hayat', 'Kasada para üstü hesaplarken, oyunda puan toplarken zihinden hesap yaparız.', '💰'),
+      slide('Pratik', 'Zihinden hesap oyunlarıyla hızlan!', '⚡'),
+    ],
+    practicePrompt: 'Zihinden çözme oyununa başla!',
+  }),
+
+  spatial: (def) => ({
+    durationMinutes: 6,
+    keyPoints: [
+      'Konum sözcükleri nesnenin yerini anlatır',
+      'Üstünde, altında, arasında, önünde, arkasında',
+      'Sağ ve sol bakış yönüne göre değişir',
+    ],
+    slides: [
+      slide('Nerede?', 'Bir nesnenin yerini anlatırken konum sözcükleri kullanırız: üstünde, altında, yanında.', '📍'),
+      slide('Üstünde ve Altında', 'Kitap masanın üstünde. Top masanın altında. Üstünde yukarıyı, altında aşağıyı gösterir.', '⬆️'),
+      slide('Arasında ve Yanında', 'İki nesnenin ortasındaysa "arasında" deriz. Hemen bitişikse "yanında" deriz.', '↔️', 'Arasında olmak için iki şey gerekir.'),
+      slide('Sağ ve Sol', 'Sağ ve sol senin bakış yönüne göre değişir. Karşındaki kişinin sağı senin solundadır.', '🤚'),
+      slide('Gerçek Hayat', 'Yol tarifi verirken, eşya bulurken, oyun oynarken konum sözcükleri kullanırız.', '🗺️'),
+      slide(def.title, def.description, def.icon),
+      slide('Keşfet', 'Konum oyunlarıyla pratik yap!', '🎮'),
+    ],
+    practicePrompt: 'Nesneyi doğru yere koyma oyununa geç!',
+  }),
+
+  solids: (def) => ({
+    durationMinutes: 6,
+    keyPoints: ['Cisimler üç boyutludur', 'Küre yuvarlanır, küp yuvarlanmaz', 'Günlük nesneler cisimlere benzer'],
+    slides: [
+      slide('Geometrik Cisimler', 'Şekiller düzdür, cisimler ise kalınlığı olan gerçek nesnelerdir. Top bir cisimdir.', '📦'),
+      slide('Küre ve Silindir', 'Top küreye benzer, teneke kutu silindire benzer. İkisi de yuvarlanabilir.', '⚽'),
+      slide('Küp ve Prizma', 'Zar küpe benzer, kutu prizmaya benzer. Köşeleri ve düz yüzeyleri vardır, yuvarlanmazlar.', '🎲', 'Köşesi olan cisim yuvarlanmaz.'),
+      slide('Gerçek Hayat', 'Evde bak: bardak silindir, top küre, kutu prizma. Cisimler her yerde.', '🏠'),
+      slide(def.title, def.description, def.icon),
+      slide('Pratik', 'Cisim eşleştirme oyununa geç!', '🎯'),
+    ],
+    practicePrompt: 'Nesneyi cisme benzetme oyununu dene!',
+  }),
+
+  nonstandard_length: (def) => ({
+    durationMinutes: 6,
+    keyPoints: [
+      'Karış, adım, ayak birer ölçme birimidir',
+      'Aynı nesne farklı birimlerle farklı sayı verir',
+      'Ölçerken birim değişmemelidir',
+    ],
+    slides: [
+      slide('Cetvel Olmadan Ölçme', 'Cetvel yoksa da ölçebiliriz. Karışımızı, adımımızı, ayağımızı kullanırız.', '🖐️'),
+      slide('Karış ve Adım', 'Kısa şeyleri karışla, uzun mesafeleri adımla ölçeriz. Masayı karışla, sınıfı adımla.', '👣', 'Kısa için karış, uzun için adım.'),
+      slide('Dikkat!', 'Ölçerken aynı birimi kullanmalıyız. Yarısını karışla, yarısını adımla ölçersek sonuç şaşar.', '⚠️'),
+      slide('Herkesin Karışı Farklı', 'Senin karışın öğretmeninkinden küçük. Bu yüzden sayılar farklı çıkar. İşte bu yüzden cetvel icat edilmiş!', '📏'),
+      slide(def.title, def.description, def.icon),
+      slide('Ölç', 'Ölçme oyunlarıyla pratik yap!', '🎮'),
+    ],
+    practicePrompt: 'Karışla ölçme oyununa geç!',
+  }),
+
+  time: (def) => ({
+    durationMinutes: 7,
+    keyPoints: [
+      'Kısa kol saati, uzun kol dakikayı gösterir',
+      'Uzun kol 12\'de ise tam saat, 6\'da ise buçuktur',
+      'Gün, hafta, ay ve mevsimler sırayla gelir',
+    ],
+    slides: [
+      slide('Saat Nedir?', 'Saat zamanı gösterir. İki kolu var: kısa kol saati, uzun kol dakikayı gösterir.', '🕐'),
+      slide('Tam Saat', 'Uzun kol 12\'yi gösteriyorsa tam saattir. Kısa kol 3\'te ise "saat 3" deriz.', '🕒', 'Uzun kol yukarıda ise tam saat.'),
+      slide('Buçuk', 'Uzun kol 6\'yı gösteriyorsa yarım saat geçmiştir. "Üç buçuk" deriz.', '🕞'),
+      slide('Gün ve Hafta', 'Bir haftada 7 gün var: Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar.', '📅'),
+      slide('Ay ve Mevsim', 'Bir yılda 12 ay ve 4 mevsim var: ilkbahar, yaz, sonbahar, kış.', '🍂'),
+      slide(def.title, def.description, def.icon),
+      slide('Pratik', 'Saat okuma oyunlarıyla dene!', '🎯'),
+    ],
+    practicePrompt: 'Saati okuma oyununa geç!',
+  }),
+
+  money: (def) => ({
+    durationMinutes: 6,
+    keyPoints: [
+      'Paramız Türk Lirası (₺) ve kuruştur',
+      'Madeni ve kâğıt para olmak üzere iki tür vardır',
+      '100 kuruş 1 lira eder',
+    ],
+    slides: [
+      slide('Paramız', 'Ülkemizin parası Türk Lirasıdır ve ₺ ile gösterilir. Küçük birimi kuruştur.', '💰'),
+      slide('Madeni ve Kâğıt', 'Metalden yapılan paralara madeni para, kâğıttan olanlara kâğıt para deriz.', '🪙', 'Madeni paralar yuvarlaktır.'),
+      slide('Kuruş ve Lira', '100 kuruş 1 lira eder. 50 kuruş yarım lira demektir.', '🧮'),
+      slide('Gerçek Hayat', 'Kantinde, markette, otobüste para kullanırız. Parayı doğru saymak önemlidir.', '🛒'),
+      slide(def.title, def.description, def.icon),
+      slide('Pratik', 'Para tanıma oyunlarıyla dene!', '🎮'),
+    ],
+    practicePrompt: 'Para eşleştirme oyununa geç!',
+  }),
+
+  liquid: (def) => ({
+    durationMinutes: 6,
+    keyPoints: [
+      'Sıvılar kabın şeklini alır',
+      'Büyük kap daha çok sıvı alır',
+      'Bardak ve fincanla ölçüm yapabiliriz',
+    ],
+    slides: [
+      slide('Sıvı Ölçme', 'Su, süt gibi sıvıların miktarını ölçebiliriz. Sıvılar konuldukları kabın şeklini alır.', '🥛'),
+      slide('Hangi Kap Daha Çok Alır?', 'Sürahi bardaktan, bardak fincandan daha çok sıvı alır. Büyüklük önemlidir.', '🏺', 'Büyük kap çok alır.'),
+      slide('Bardakla Ölçelim', 'Sürahiyi doldurmak için kaç bardak su gerekiyor? Sayarak ölçebiliriz.', '🔢'),
+      slide('Dikkat', 'İnce uzun bardak ile geniş kısa bardak aynı miktarda su alabilir. Şekle değil miktara bakalım.', '⚠️'),
+      slide(def.title, def.description, def.icon),
+      slide('Deney', 'Sıvı ölçme oyunlarıyla dene!', '🧪'),
+    ],
+    practicePrompt: 'Hangi kapta çok oyununa geç!',
+  }),
+
+  data_create: (def) => ({
+    durationMinutes: 6,
+    keyPoints: [
+      'Çetele işaretleri sayarken kullanılır',
+      'Grafikte çok olan sütun daha yüksektir',
+      'Grafik veriyi bir bakışta anlatır',
+    ],
+    slides: [
+      slide('Veri Toplama', 'Bir soru sorup cevapları toplarsak veri elde ederiz. Örneğin sınıfın en sevdiği meyve.', '📋'),
+      slide('Çetele Tutma', 'Sayarken her cevap için bir çizgi çizeriz: ||| üç demektir. Böylece karışmaz.', '✏️', 'Beşincide çizgileri çaprazla.'),
+      slide('Grafik Yapma', 'Topladığımız veriyi sütunlarla gösterebiliriz. Çok olan sütun daha yüksek olur.', '📊'),
+      slide('Grafiği Okuma', 'En yüksek sütun en çok seçileni, en kısa sütun en az seçileni gösterir.', '📈'),
+      slide(def.title, def.description, def.icon),
+      slide('Pratik', 'Grafik oluşturma oyununa geç!', '🎯'),
+    ],
+    practicePrompt: 'Kendi grafiğini yapma oyununa başla!',
+  }),
+
   patterns: (def) => ({
     durationMinutes: 5,
     keyPoints: ['Örüntü tekrar eden dizidir', 'Deseni tanı ve devam ettir', 'Sayı ve şekil örüntüleri'],

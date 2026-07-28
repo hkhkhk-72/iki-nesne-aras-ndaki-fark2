@@ -49,7 +49,7 @@ export default function TeacherScreen() {
 
         <Text style={styles.sectionTitle}>Hızlı İşlemler</Text>
         <View style={styles.actions}>
-          <Button title="Akıllı Tahta Modu" icon="📺" onPress={() => router.push('/smartboard/1/out-1-2-1')} fullWidth />
+          <Button title="Akıllı Tahta Modu" icon="📺" onPress={() => router.push('/smartboard/1/out-1-1-1')} fullWidth />
           <Button title="Sınıf Yarışması Başlat" icon="🏆" variant="secondary" onPress={() => {}} fullWidth />
           <Button title="Yazdırılabilir Etkinlik" icon="📄" variant="outline" onPress={() => {}} fullWidth />
         </View>

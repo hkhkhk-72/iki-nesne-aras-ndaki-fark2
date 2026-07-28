@@ -17,6 +17,8 @@ python3 -m http.server 3000
 
 Tarayıcıda `http://localhost:3000` adresini açın.
 
+> **Not:** `main` dalından gelen ABC Bağlamaca oyunu `games/abc-baglamaca/` altında korunmuştur.
+
 ### Expo Mobil Uygulama
 
 ```bash

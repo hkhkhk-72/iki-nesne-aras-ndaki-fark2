@@ -37,7 +37,9 @@
       align-items: center;
       padding: 0 10px 26px;
       -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
       user-select: none;
+      overscroll-behavior-y: contain;
     }
 
     .app { width: 100%; max-width: 540px; }
@@ -124,7 +126,9 @@
       opacity: 0.72;
       margin-top: 2px;
     }
+    .chip { touch-action: manipulation; }
     .chip:hover { background: var(--blue-pale); }
+    .chip:active { transform: scale(0.97); }
     .chip.active {
       background: var(--blue);
       color: #fff;
@@ -141,13 +145,21 @@
       padding: 12px;
       box-shadow: 0 8px 26px rgba(0,0,0,0.12);
       touch-action: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     .board-frame.hint-armed {
       border-color: var(--hint);
       box-shadow: 0 0 0 4px rgba(239,108,0,0.18), 0 8px 26px rgba(0,0,0,0.12);
     }
-    .board-svg { display: block; overflow: visible; }
+    .board-svg {
+      display: block;
+      overflow: visible;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
     .path-line {
       fill: none;
       stroke-linecap: round;
@@ -213,7 +225,7 @@
     .actions .wide { grid-column: 1 / -1; }
 
     .btn {
-      padding: 11px 8px;
+      padding: 13px 8px;
       border: 2px solid #37474f;
       border-radius: 10px;
       background: #fff;
@@ -222,8 +234,11 @@
       font-weight: 800;
       cursor: pointer;
       transition: 0.15s;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
     .btn:hover:not(:disabled) { background: #f5f5f5; }
+    .btn:active:not(:disabled) { transform: scale(0.97); }
     .btn:disabled { opacity: 0.45; cursor: not-allowed; }
     .btn-check { background: var(--blue); border-color: var(--blue); color: #fff; }
     .btn-check:hover:not(:disabled) { background: #1a237e; }
@@ -386,6 +401,8 @@
         <li>Bitişte <strong>tek bir nokta bile açıkta kalmamalıdır</strong>.</li>
         <li>Her harf çifti <strong>en az bir viraj</strong> yaparak bağlanır; düz çizgi çözüm olmaz.</li>
         <li>Kendi yolunun üzerine geri gidersen çizgi <strong>kısalır</strong>.</li>
+        <li>Dokunmatik ekranda iki şekilde oynanır: harfe <strong>dokunup sürükle</strong>
+            ya da harfe <strong>bir kez dokun</strong>, sonra noktalara sırayla dokun.</li>
         <li>Her seviyede <strong>sonsuz soru</strong> vardır ve her çözdüğünde bir sonraki <strong>daha zor</strong> olur.</li>
         <li>Her soruda <strong>bir kez</strong> ipucu alabilirsin.</li>
       </ul>
@@ -418,7 +435,7 @@
       <button class="btn btn-pdf wide" id="btnPdf">📄 PDF olarak çıkar</button>
     </div>
 
-    <p class="hint-text">Harfe dokunup sürükle · Çapraz yasak · Tüm noktaları doldur · Diğer harfin üzerinden geçme</p>
+    <p class="hint-text">Harfe dokunup sürükle veya dokun-dokun ile ilerle · Çapraz yasak · Tüm noktaları doldur · Diğer harfin üzerinden geçme</p>
     <p class="footer">ABC Bağlamaca Etkinliği · 4 sınıf × 5 seviye × sonsuz soru</p>
   </div>
 
@@ -743,8 +760,11 @@
     let puzzleScore = 0;
 
     let activeLetter = null;
+    let tapLetter = null;
     let isDrawing = false;
     let lastCell = null;
+    let lastDir = null;
+    let lastSvgPt = null;
     let cellGap = 48;
     let pad = 10;
 
@@ -917,6 +937,7 @@
 
       rebuildPaths();
       activeLetter = null;
+      tapLetter = null;
       isDrawing = false;
       lastCell = null;
       hintUsed = false;
@@ -975,7 +996,24 @@
       }
     }
 
-    /* ── Çizim (PDF görünümü: noktalar çizgilerin üstünde) ── */
+    /* ─────────────────────────────────────────────
+       Çizim (PDF görünümü: noktalar çizgilerin üstünde)
+
+       Tahta soru başına bir kez kurulur. Parmak/fare
+       hareketinde yalnızca yol çizgileri güncellenir;
+       böylece dokunmatik ekranda gecikme olmaz.
+       ───────────────────────────────────────────── */
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    let polyByLetter = {};
+    let haloEls = [];
+    let headMarker = null;
+
+    function svgEl(name, attrs) {
+      const el = document.createElementNS(SVG_NS, name);
+      for (const k in attrs) el.setAttribute(k, attrs[k]);
+      return el;
+    }
+
     function render() {
       const W = pad * 2 + (size - 1) * cellGap;
       boardSvg.setAttribute('width', W);
@@ -983,83 +1021,107 @@
       boardSvg.setAttribute('viewBox', `0 0 ${W} ${W}`);
       boardSvg.innerHTML = '';
 
-      const SVG = 'http://www.w3.org/2000/svg';
       const strokeW = Math.max(5, cellGap * 0.3);
       const dotR = Math.max(2.6, cellGap * 0.075);
       const fontSize = Math.round(cellGap * (size >= 8 ? 0.5 : 0.54));
 
-      /* 1) Yollar */
-      const pathGroup = document.createElementNS(SVG, 'g');
+      /* 1) Yollar – her harf için tek polyline, sonradan güncellenir */
+      polyByLetter = {};
+      const pathGroup = svgEl('g');
       letters.forEach(letter => {
-        const path = paths[letter];
-        if (!path || path.length < 2) return;
-        const pts = path.map(([r, c]) => {
-          const p = nodeXY(r, c);
-          return p.x + ',' + p.y;
-        }).join(' ');
-        const poly = document.createElementNS(SVG, 'polyline');
-        poly.setAttribute('class', 'path-line');
-        poly.setAttribute('points', pts);
-        poly.setAttribute('stroke', PATH_COLORS[letter]);
-        poly.setAttribute('stroke-width', strokeW);
+        const poly = svgEl('polyline', {
+          class: 'path-line',
+          points: '',
+          stroke: PATH_COLORS[letter],
+          'stroke-width': strokeW
+        });
+        polyByLetter[letter] = poly;
         pathGroup.appendChild(poly);
       });
       boardSvg.appendChild(pathGroup);
 
+      /* Aktif yolun ucunu gösteren imleç */
+      headMarker = svgEl('circle', {
+        r: strokeW * 0.62,
+        fill: 'none',
+        opacity: '0'
+      });
+      boardSvg.appendChild(headMarker);
+
       /* 2) Noktalar – çizgilerin üzerinde kalır (PDF'teki gibi) */
-      const dotGroup = document.createElementNS(SVG, 'g');
+      const dotGroup = svgEl('g');
       for (let r = 0; r < size; r++) {
         for (let c = 0; c < size; c++) {
           if (getEndpointLetter(r, c)) continue;
           const { x, y } = nodeXY(r, c);
-          const dot = document.createElementNS(SVG, 'circle');
-          dot.setAttribute('class', 'node-dot');
-          dot.setAttribute('cx', x);
-          dot.setAttribute('cy', y);
-          dot.setAttribute('r', dotR);
-          dotGroup.appendChild(dot);
+          dotGroup.appendChild(svgEl('circle', { class: 'node-dot', cx: x, cy: y, r: dotR }));
         }
       }
       boardSvg.appendChild(dotGroup);
 
-      /* 3) Harfler */
-      const letterGroup = document.createElementNS(SVG, 'g');
+      /* 3) Harfler ve ipucu haleleri */
+      haloEls = [];
+      const letterGroup = svgEl('g');
       letters.forEach(letter => {
         endpoints[letter].forEach(([r, c]) => {
           const { x, y } = nodeXY(r, c);
-          if (hintArmed) {
-            const halo = document.createElementNS(SVG, 'circle');
-            halo.setAttribute('class', 'hint-halo');
-            halo.setAttribute('cx', x);
-            halo.setAttribute('cy', y);
-            halo.setAttribute('r', cellGap * 0.36);
-            letterGroup.appendChild(halo);
-          }
-          const text = document.createElementNS(SVG, 'text');
-          text.setAttribute('class', 'node-letter');
-          text.setAttribute('x', x);
-          text.setAttribute('y', y);
-          text.setAttribute('font-size', fontSize);
+          const halo = svgEl('circle', {
+            class: 'hint-halo', cx: x, cy: y, r: cellGap * 0.36, opacity: '0'
+          });
+          haloEls.push(halo);
+          letterGroup.appendChild(halo);
+
+          const text = svgEl('text', {
+            class: 'node-letter', x, y, 'font-size': fontSize
+          });
           text.textContent = letter;
           letterGroup.appendChild(text);
         });
       });
       boardSvg.appendChild(letterGroup);
 
-      /* 4) Dokunma alanları */
-      const hitGroup = document.createElementNS(SVG, 'g');
-      for (let r = 0; r < size; r++) {
-        for (let c = 0; c < size; c++) {
-          const { x, y } = nodeXY(r, c);
-          const hit = document.createElementNS(SVG, 'circle');
-          hit.setAttribute('cx', x);
-          hit.setAttribute('cy', y);
-          hit.setAttribute('r', cellGap * 0.42);
-          hit.setAttribute('fill', 'transparent');
-          hitGroup.appendChild(hit);
+      updatePaths();
+      updateHalos();
+    }
+
+    function updatePaths() {
+      letters.forEach(letter => {
+        const poly = polyByLetter[letter];
+        if (!poly) return;
+        const path = paths[letter];
+        if (!path || path.length < 2) {
+          poly.setAttribute('points', '');
+          return;
         }
+        let pts = '';
+        for (let i = 0; i < path.length; i++) {
+          const p = nodeXY(path[i][0], path[i][1]);
+          pts += (i ? ' ' : '') + p.x + ',' + p.y;
+        }
+        poly.setAttribute('points', pts);
+      });
+      updateHead();
+    }
+
+    function updateHead() {
+      if (!headMarker) return;
+      const letter = activeLetter || tapLetter;
+      const path = letter ? paths[letter] : null;
+      if (!letter || !path || !path.length) {
+        headMarker.setAttribute('opacity', '0');
+        return;
       }
-      boardSvg.appendChild(hitGroup);
+      const [r, c] = path[path.length - 1];
+      const { x, y } = nodeXY(r, c);
+      headMarker.setAttribute('cx', x);
+      headMarker.setAttribute('cy', y);
+      headMarker.setAttribute('stroke', PATH_COLORS[letter]);
+      headMarker.setAttribute('stroke-width', Math.max(2, cellGap * 0.06));
+      headMarker.setAttribute('opacity', '0.9');
+    }
+
+    function updateHalos() {
+      haloEls.forEach(el => el.setAttribute('opacity', hintArmed ? '1' : '0'));
     }
 
     /* ── İpucu ── */
@@ -1087,7 +1149,8 @@
       noteEl.className = 'note';
       noteEl.textContent = `${letter} harfi eşiyle birleştirildi.`;
       playHint();
-      render();
+      updatePaths();
+      updateHalos();
     }
 
     btnHint.addEventListener('click', () => {
@@ -1096,36 +1159,67 @@
       hintArmed = !hintArmed;
       updateHintUI();
       if (!hintArmed) updateStatus();
-      render();
+      updateHalos();
     });
 
     /* ── Kural motoru ── */
-    function startDraw(r, c) {
-      const ep = getEndpointLetter(r, c);
-      if (hintArmed) {
-        if (ep) applyHint(ep);
-        return;
-      }
-      if (!ep) return;
-
-      playClick();
-      activeLetter = ep;
-      isDrawing = true;
-      lastCell = [r, c];
-      const path = paths[activeLetter];
-      const idx = path.findIndex(([pr, pc]) => pr === r && pc === c);
-      if (idx !== -1) paths[activeLetter] = path.slice(0, idx + 1);
-      else {
-        clearOtherPathsFromCell(r, c, activeLetter);
-        paths[activeLetter] = [[r, c]];
-      }
-      render();
+    function buzz(ms) {
+      try { if (navigator.vibrate) navigator.vibrate(ms); } catch (_) {}
     }
 
-    function continueDraw(r, c) {
-      if (!isDrawing || !activeLetter) return;
-      if (lastCell && lastCell[0] === r && lastCell[1] === c) return;
-      if (!isAdjacent(lastCell[0], lastCell[1], r, c)) return;
+    /* Bir harfin yolunu belirtilen hücreden başlatır ya da o hücreye kadar kısaltır */
+    function grabPath(letter, r, c) {
+      activeLetter = letter;
+      lastCell = [r, c];
+      lastDir = null;
+      const path = paths[letter];
+      const idx = path.findIndex(([pr, pc]) => pr === r && pc === c);
+      if (idx !== -1) {
+        paths[letter] = path.slice(0, idx + 1);
+      } else {
+        clearOtherPathsFromCell(r, c, letter);
+        paths[letter] = [[r, c]];
+      }
+    }
+
+    function startDraw(r, c) {
+      const ep = getEndpointLetter(r, c);
+
+      if (hintArmed) {
+        if (ep) applyHint(ep);
+        return false;
+      }
+
+      /* Harf ucundan başla */
+      if (ep) {
+        playClick();
+        buzz(8);
+        isDrawing = true;
+        tapLetter = ep;
+        grabPath(ep, r, c);
+        updatePaths();
+        return true;
+      }
+
+      /* Çizili bir yolun üzerinden tutup devam et */
+      const owner = getCellOwner(r, c);
+      if (owner) {
+        playClick();
+        isDrawing = true;
+        tapLetter = owner;
+        grabPath(owner, r, c);
+        updatePaths();
+        return true;
+      }
+      return false;
+    }
+
+    /* Tek komşu hücreye adım. Kabul edilirse true döner. */
+    function stepTo(r, c) {
+      if (r < 0 || c < 0 || r >= size || c >= size) return false;
+      if (!activeLetter || !lastCell) return false;
+      if (lastCell[0] === r && lastCell[1] === c) return false;
+      if (!isAdjacent(lastCell[0], lastCell[1], r, c)) return false;
 
       const path = paths[activeLetter];
       const existingIdx = path.findIndex(([pr, pc]) => pr === r && pc === c);
@@ -1133,81 +1227,391 @@
       /* Geri dönüşte çizgi kısalır */
       if (existingIdx !== -1) {
         paths[activeLetter] = path.slice(0, existingIdx + 1);
+        lastDir = [r - lastCell[0], c - lastCell[1]];
         lastCell = [r, c];
-        render();
-        return;
+        return true;
       }
 
       const ep = getEndpointLetter(r, c);
-      if (ep && ep !== activeLetter) return;
+      if (ep && ep !== activeLetter) return false;
       const owner = getCellOwner(r, c);
-      if (owner && owner !== activeLetter) return;
+      if (owner && owner !== activeLetter) return false;
 
       clearOtherPathsFromCell(r, c, activeLetter);
       paths[activeLetter].push([r, c]);
+      lastDir = [r - lastCell[0], c - lastCell[1]];
       lastCell = [r, c];
-      render();
 
+      /* Eşine ulaşıldıysa çizim tamamlanır */
       if (ep === activeLetter) {
         const start = paths[activeLetter][0];
-        if (!(start[0] === r && start[1] === c)) isDrawing = false;
+        if (!(start[0] === r && start[1] === c)) {
+          isDrawing = false;
+          buzz(14);
+        }
       }
+      return true;
     }
 
-    function endDraw() {
+    /*
+     * Parmak hızlı kaydırıldığında iki olay arasında hücre atlanabilir.
+     * Aradaki hücreler yatay/dikey adımlarla tek tek doldurulur.
+     */
+    function traceTo(tr, tc) {
+      let changed = false;
+      let guard = 0;
+      const limit = size * size + 8;
+      const maxBridge = Math.max(6, size + 2);
+
+      if (lastCell && (Math.abs(tr - lastCell[0]) + Math.abs(tc - lastCell[1])) > maxBridge) {
+        return false;
+      }
+
+      while (lastCell && guard++ < limit) {
+        const [r, c] = lastCell;
+        if (r === tr && c === tc) break;
+
+        const dr = Math.sign(tr - r);
+        const dc = Math.sign(tc - c);
+        const order = Math.abs(tr - r) >= Math.abs(tc - c)
+          ? [[dr, 0], [0, dc]]
+          : [[0, dc], [dr, 0]];
+
+        /* Parmak önce mevcut yönde devam etmiş olma olasılığı yüksektir */
+        if (lastDir) {
+          if (lastDir[0] && dr === lastDir[0]) order.unshift([dr, 0]);
+          else if (lastDir[1] && dc === lastDir[1]) order.unshift([0, dc]);
+        }
+
+        let moved = false;
+        for (const [sr, sc] of order) {
+          if (!sr && !sc) continue;
+          if (stepTo(r + sr, c + sc)) { moved = true; break; }
+        }
+        if (!moved) break;
+        changed = true;
+        if (!isDrawing) break;
+      }
+
+      return changed;
+    }
+
+    function pauseStroke() {
+      /* Parmak kalktı: seçili harf (tapLetter) korunur, sürükleme biter */
       isDrawing = false;
       activeLetter = null;
       lastCell = null;
+      lastDir = null;
+      lastSvgPt = null;
+      updateHead();
     }
 
-    function coordsFromEvent(clientX, clientY) {
+    function endDraw() {
+      pauseStroke();
+      tapLetter = null;
+      updateHead();
+    }
+
+    function boardSizeSvg() {
+      return pad * 2 + (size - 1) * cellGap;
+    }
+
+    /* Ekran → SVG koordinatı (viewBox.baseVal bazı mobil tarayıcılarda 0 gelebilir) */
+    function clientToSvg(clientX, clientY) {
       const rect = boardSvg.getBoundingClientRect();
-      const scaleX = boardSvg.viewBox.baseVal.width / rect.width;
-      const scaleY = boardSvg.viewBox.baseVal.height / rect.height;
-      const x = (clientX - rect.left) * scaleX;
-      const y = (clientY - rect.top) * scaleY;
-      let best = null, bestDist = Infinity;
-      for (let r = 0; r < size; r++) {
-        for (let c = 0; c < size; c++) {
-          const p = nodeXY(r, c);
-          const d = (p.x - x) ** 2 + (p.y - y) ** 2;
-          if (d < bestDist) { bestDist = d; best = [r, c]; }
+      if (!rect.width || !rect.height) return null;
+      const W = boardSizeSvg();
+      return {
+        x: ((clientX - rect.left) / rect.width) * W,
+        y: ((clientY - rect.top) / rect.height) * W
+      };
+    }
+
+    function nearestCellFromSvg(x, y, tolerance) {
+      const W = boardSizeSvg();
+      const margin = cellGap * 0.85;
+      if (x < -margin || y < -margin || x > W + margin || y > W + margin) return null;
+
+      let c = Math.round((x - pad) / cellGap);
+      let r = Math.round((y - pad) / cellGap);
+      c = Math.max(0, Math.min(size - 1, c));
+      r = Math.max(0, Math.min(size - 1, r));
+      const p = nodeXY(r, c);
+      const dist2 = (p.x - x) ** 2 + (p.y - y) ** 2;
+      if (tolerance != null && dist2 > (cellGap * tolerance) ** 2) return null;
+      return [r, c];
+    }
+
+    function nodeAt(clientX, clientY, tolerance) {
+      const pt = clientToSvg(clientX, clientY);
+      if (!pt) return null;
+      return nearestCellFromSvg(pt.x, pt.y, tolerance);
+    }
+
+    /*
+     * Sürüklerken parmak her zaman lastCell'in kendisi veya 4 komşusundan
+     * birine yapışır. Böylece noktaların arasında kaldığında çizgi donmaz.
+     * Uzak hedefler için en yakın hücreye köprü kurulur.
+     */
+    function dragTargetFromSvg(x, y) {
+      if (!lastCell) return nearestCellFromSvg(x, y, null);
+
+      const [lr, lc] = lastCell;
+      const candidates = [
+        [lr, lc],
+        [lr - 1, lc], [lr + 1, lc], [lr, lc - 1], [lr, lc + 1]
+      ];
+
+      let best = null;
+      let bestD = Infinity;
+      for (const [r, c] of candidates) {
+        if (r < 0 || c < 0 || r >= size || c >= size) continue;
+        const p = nodeXY(r, c);
+        const d = (p.x - x) ** 2 + (p.y - y) ** 2;
+        if (d < bestD) {
+          bestD = d;
+          best = [r, c];
         }
       }
-      if (bestDist > (cellGap * 0.5) ** 2) return null;
+
+      const nearest = nearestCellFromSvg(x, y, null);
+      if (nearest) {
+        const p = nodeXY(nearest[0], nearest[1]);
+        const dn = (p.x - x) ** 2 + (p.y - y) ** 2;
+        const man = Math.abs(nearest[0] - lr) + Math.abs(nearest[1] - lc);
+        /* Parmak net biçimde başka bir hücreye geçmişse oraya yönel */
+        if (man > 1 && dn + (cellGap * 0.12) ** 2 < bestD) return nearest;
+        if (man === 1 && dn < bestD) return nearest;
+      }
       return best;
     }
 
-    boardFrame.addEventListener('mousedown', (e) => {
-      e.preventDefault();
-      const pos = coordsFromEvent(e.clientX, e.clientY);
-      if (pos) startDraw(pos[0], pos[1]);
-    });
-    boardFrame.addEventListener('mousemove', (e) => {
-      if (!isDrawing) return;
-      e.preventDefault();
-      const pos = coordsFromEvent(e.clientX, e.clientY);
-      if (pos) continueDraw(pos[0], pos[1]);
-    });
-    document.addEventListener('mouseup', endDraw);
+    /* İki SVG noktası arasında örnekleyerek hızlı kaydırmada hücre atlamayı önle */
+    function sampleSvgSegment(x0, y0, x1, y1) {
+      const dx = x1 - x0;
+      const dy = y1 - y0;
+      const dist = Math.hypot(dx, dy);
+      const step = Math.max(4, cellGap * 0.22);
+      const n = Math.max(1, Math.ceil(dist / step));
+      const out = [];
+      for (let i = 1; i <= n; i++) {
+        const t = i / n;
+        out.push([x0 + dx * t, y0 + dy * t]);
+      }
+      return out;
+    }
 
-    boardFrame.addEventListener('touchstart', (e) => {
-      e.preventDefault();
+    /* ── Girdi: dokunma (birincil) + fare/kalem ── */
+    let pointerId = null;
+    let activeTouchId = null;
+    let usingTouch = false;
+    let pathsDirty = false;
+    let frameQueued = false;
+
+    function schedulePathPaint() {
+      if (frameQueued) return;
+      frameQueued = true;
+      requestAnimationFrame(() => {
+        frameQueued = false;
+        if (pathsDirty) {
+          pathsDirty = false;
+          updatePaths();
+        }
+      });
+    }
+
+    function markPathsDirty() {
+      pathsDirty = true;
+      schedulePathPaint();
+    }
+
+    function processDragSvg(x, y) {
+      if (!isDrawing || !lastCell) return;
+      const samples = lastSvgPt
+        ? sampleSvgSegment(lastSvgPt.x, lastSvgPt.y, x, y)
+        : [[x, y]];
+      lastSvgPt = { x, y };
+
+      let changed = false;
+      for (let i = 0; i < samples.length; i++) {
+        const target = dragTargetFromSvg(samples[i][0], samples[i][1]);
+        if (!target) continue;
+        if (target[0] === lastCell[0] && target[1] === lastCell[1]) continue;
+        if (traceTo(target[0], target[1])) changed = true;
+        if (!isDrawing) break;
+      }
+      if (changed) markPathsDirty();
+    }
+
+    function processDragClient(clientX, clientY) {
+      const pt = clientToSvg(clientX, clientY);
+      if (!pt) return;
+      processDragSvg(pt.x, pt.y);
+    }
+
+    /*
+     * Dokunma/tıklama başlangıcı.
+     * Seçili harfin ucuna komşu bir noktaya dokunmak çizgiyi uzatır;
+     * böylece oyun sürüklemeden, tek tek dokunarak da oynanabilir.
+     */
+    function handleDown(r, c) {
+      if (hintArmed) {
+        const ep = getEndpointLetter(r, c);
+        if (ep) applyHint(ep);
+        return false;
+      }
+
+      if (tapLetter) {
+        const path = paths[tapLetter];
+        if (path && path.length) {
+          const head = path[path.length - 1];
+          const ep = getEndpointLetter(r, c);
+          if (isAdjacent(head[0], head[1], r, c) && (!ep || ep === tapLetter)) {
+            activeLetter = tapLetter;
+            lastCell = head;
+            lastDir = null;
+            isDrawing = true;
+            if (stepTo(r, c)) {
+              playClick();
+              buzz(6);
+              updatePaths();
+            }
+            return true;
+          }
+        }
+      }
+
+      return startDraw(r, c);
+    }
+
+    function beginAtClient(clientX, clientY) {
+      lastSvgPt = clientToSvg(clientX, clientY);
+      /* Başlangıçta geniş tolerans: parmak harfin biraz yanına bassa da tutar */
+      const pos = nodeAt(clientX, clientY, 0.92);
+      if (!pos) {
+        isDrawing = false;
+        return false;
+      }
+      return handleDown(pos[0], pos[1]);
+    }
+
+    /* —— Touch: mobil için asıl yol (pointercancel sürüklemeyi kesmesin) —— */
+    function onTouchStart(e) {
+      if (e.touches.length !== 1) return;
       const t = e.touches[0];
-      const pos = coordsFromEvent(t.clientX, t.clientY);
-      if (pos) startDraw(pos[0], pos[1]);
-    }, { passive: false });
-    boardFrame.addEventListener('touchmove', (e) => {
-      if (!isDrawing) return;
+      usingTouch = true;
+      activeTouchId = t.identifier;
+      pointerId = null;
       e.preventDefault();
-      const t = e.touches[0];
-      const pos = coordsFromEvent(t.clientX, t.clientY);
-      if (pos) continueDraw(pos[0], pos[1]);
-    }, { passive: false });
-    boardFrame.addEventListener('touchend', (e) => {
+      beginAtClient(t.clientX, t.clientY);
+    }
+
+    function onTouchMove(e) {
+      if (!usingTouch || !isDrawing) return;
+      let t = null;
+      for (let i = 0; i < e.touches.length; i++) {
+        if (e.touches[i].identifier === activeTouchId) {
+          t = e.touches[i];
+          break;
+        }
+      }
+      if (!t && e.touches.length) t = e.touches[0];
+      if (!t) return;
       e.preventDefault();
-      endDraw();
+      processDragClient(t.clientX, t.clientY);
+    }
+
+    function onTouchEnd(e) {
+      if (!usingTouch) return;
+      if (activeTouchId !== null) {
+        for (let i = 0; i < e.touches.length; i++) {
+          if (e.touches[i].identifier === activeTouchId) return; /* başka parmak hâlâ basılı */
+        }
+      }
+      e.preventDefault();
+      if (pathsDirty) {
+        pathsDirty = false;
+        updatePaths();
+      }
+      usingTouch = false;
+      activeTouchId = null;
+      pauseStroke();
+    }
+
+    function onTouchCancel() {
+      if (!usingTouch) return;
+      usingTouch = false;
+      activeTouchId = null;
+      pauseStroke();
+    }
+
+    boardFrame.addEventListener('touchstart', onTouchStart, { passive: false });
+    boardFrame.addEventListener('touchmove', onTouchMove, { passive: false });
+    boardFrame.addEventListener('touchend', onTouchEnd, { passive: false });
+    boardFrame.addEventListener('touchcancel', onTouchCancel, { passive: false });
+    /* Parmak tahta dışına çıksa da çizgi devam etsin */
+    document.addEventListener('touchmove', onTouchMove, { passive: false });
+    document.addEventListener('touchend', onTouchEnd, { passive: false });
+    document.addEventListener('touchcancel', onTouchCancel, { passive: false });
+
+    /* —— Pointer: fare ve kalem (dokunmayı çifte işlemesin) —— */
+    function onPointerDown(e) {
+      if (e.pointerType === 'touch') return; /* touch* olayları yönetir */
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      usingTouch = false;
+      activeTouchId = null;
+      pointerId = e.pointerId;
+      e.preventDefault();
+      try { boardFrame.setPointerCapture(e.pointerId); } catch (_) {}
+      beginAtClient(e.clientX, e.clientY);
+    }
+
+    function onPointerMove(e) {
+      if (e.pointerType === 'touch') return;
+      if (e.pointerId !== pointerId || !isDrawing) return;
+      e.preventDefault();
+
+      if (e.getCoalescedEvents) {
+        const list = e.getCoalescedEvents();
+        if (list && list.length) {
+          for (const ev of list) processDragClient(ev.clientX, ev.clientY);
+          return;
+        }
+      }
+      processDragClient(e.clientX, e.clientY);
+    }
+
+    function onPointerUp(e) {
+      if (e.pointerType === 'touch') return;
+      if (e.pointerId !== pointerId) return;
+      pointerId = null;
+      if (pathsDirty) {
+        pathsDirty = false;
+        updatePaths();
+      }
+      pauseStroke();
+    }
+
+    function onPointerCancel(e) {
+      if (e.pointerType === 'touch') return;
+      if (e.pointerId !== pointerId) return;
+      pointerId = null;
+      pauseStroke();
+    }
+
+    boardFrame.addEventListener('pointerdown', onPointerDown);
+    boardFrame.addEventListener('pointermove', onPointerMove);
+    boardFrame.addEventListener('pointerup', onPointerUp);
+    boardFrame.addEventListener('pointercancel', onPointerCancel);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('blur', () => {
+      pointerId = null;
+      usingTouch = false;
+      activeTouchId = null;
+      pauseStroke();
     });
+
+    boardFrame.addEventListener('contextmenu', (e) => e.preventDefault());
 
     /* ── Doğrulama ── */
     function validate() {
@@ -1304,9 +1708,14 @@
     btnClear.addEventListener('click', () => {
       playClick();
       rebuildPaths();
+      activeLetter = null;
+      tapLetter = null;
+      isDrawing = false;
+      lastCell = null;
       hintArmed = false;
       updateHintUI();
-      render();
+      updatePaths();
+      updateHalos();
     });
 
     btnNew.addEventListener('click', () => {
@@ -1603,6 +2012,12 @@
         percentile: percentileFor(gradeIdx, levelIdx, solvedCount(gradeIdx, levelIdx)),
         solved: solvedCount(gradeIdx, levelIdx)
       }),
+      input: () => ({
+        pointerId, tapLetter, activeLetter, isDrawing,
+        pathLens: letters.map(l => paths[l].length)
+      }),
+      geo: () => ({ pad, cellGap, size }),
+      paths: () => letters.map(l => paths[l].map(([r, c]) => [r, c])),
       generate: (s, pairs, p) => generatePuzzle(s, pairs, p, null),
       config: () => GRADES,
       newPuzzle

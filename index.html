@@ -8,512 +8,303 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg1: #667eea;
-      --bg2: #764ba2;
-      --bg3: #f093fb;
-      --glass: rgba(255, 255, 255, 0.18);
-      --glass-border: rgba(255, 255, 255, 0.35);
-      --glass-strong: rgba(255, 255, 255, 0.28);
-      --text: #ffffff;
-      --text-soft: rgba(255, 255, 255, 0.85);
-      --shadow: 0 8px 32px rgba(31, 38, 135, 0.25);
-      --radius: 18px;
-      --cell-size: clamp(44px, 12vw, 64px);
-      --color-a: #e53935;
-      --color-b: #1e88e5;
-      --color-c: #43a047;
-      --color-d: #8e24aa;
-      --color-e: #f57c00;
-      --ink: #1a1a1a;
       --paper: #ffffff;
-      --grid-line: #222222;
+      --ink: #1a1a1a;
+      --header-bg: #2b2b2b;
+      --dot: #1a1a1a;
+      --path-a: #c62828;
+      --path-b: #1565c0;
+      --path-c: #2e7d32;
+      --path-d: #6a1b9a;
+      --path-e: #ef6c00;
+      --page-bg: #e8e4dc;
+      --accent: #2b2b2b;
     }
 
     html { font-size: 16px; }
 
     body {
-      font-family: 'Segoe UI', 'Nunito', system-ui, sans-serif;
+      font-family: 'Segoe UI', system-ui, sans-serif;
       min-height: 100dvh;
-      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
-      background-attachment: fixed;
-      color: var(--text);
+      background:
+        radial-gradient(ellipse at 30% 0%, #f5f2eb 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, #ddd8ce 0%, transparent 50%),
+        var(--page-bg);
+      color: var(--ink);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 16px;
-      overflow-x: hidden;
+      padding: 16px 12px 32px;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 40%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
     .app {
-      position: relative;
-      z-index: 1;
       width: 100%;
-      max-width: 560px;
+      max-width: 480px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
-    /* Header */
-    .header {
+    /* PDF tarzı çalışma kağıdı */
+    .worksheet {
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      box-shadow: 0 10px 36px rgba(0,0,0,0.18);
+      overflow: hidden;
+    }
+
+    .ws-header {
+      background: var(--header-bg);
+      color: #fff;
       text-align: center;
-      padding: 20px 16px 8px;
+      padding: 11px 14px;
+      font-family: 'Times New Roman', Times, Georgia, serif;
+      font-size: clamp(0.78rem, 2.8vw, 0.95rem);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
 
-    .header h1 {
-      font-size: clamp(1.8rem, 6vw, 2.4rem);
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.2);
-      margin-bottom: 4px;
+    .ws-header .sep { opacity: 0.55; margin: 0 8px; }
+
+    .ws-body {
+      padding: 18px 16px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
 
-    .header .subtitle {
-      font-size: 0.95rem;
-      color: var(--text-soft);
-      font-weight: 500;
+    .board-frame {
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      padding: 18px;
+      position: relative;
+      touch-action: none;
     }
 
-    /* Glass panels */
-    .panel {
-      background: var(--glass);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 16px;
+    .board {
+      position: relative;
+      display: block;
     }
 
-    /* Level selector */
-    .level-bar {
+    .board-svg {
+      display: block;
+      overflow: visible;
+    }
+
+    .node {
+      cursor: pointer;
+    }
+
+    .node-dot {
+      fill: var(--dot);
+    }
+
+    .node-letter {
+      font-family: 'Times New Roman', Times, Georgia, serif;
+      font-weight: 700;
+      fill: var(--ink);
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+    }
+
+    .path-line {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+    }
+
+    .ws-footer {
+      background: var(--header-bg);
+      color: rgba(255,255,255,0.75);
+      text-align: center;
+      padding: 8px 12px;
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    /* Kontroller */
+    .controls {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
-    .level-bar label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-soft);
-      text-align: center;
-    }
-
-    .level-buttons {
+    .level-row {
       display: flex;
-      gap: 8px;
-      justify-content: center;
+      gap: 6px;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     .level-btn {
       flex: 1;
-      min-width: 56px;
-      max-width: 80px;
+      min-width: 52px;
       padding: 10px 6px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-radius: 14px;
-      background: rgba(255,255,255,0.12);
-      color: var(--text);
-      font-size: 0.85rem;
+      border: 2px solid #3a3a3a;
+      background: #fff;
+      color: var(--ink);
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: center;
-      line-height: 1.2;
+      transition: background 0.15s, color 0.15s;
+      line-height: 1.15;
     }
 
-    .level-btn:hover {
-      background: rgba(255,255,255,0.22);
-      transform: translateY(-2px);
-    }
-
-    .level-btn.active {
-      background: rgba(255,255,255,0.38);
-      border-color: #fff;
-      box-shadow: 0 4px 16px rgba(255,255,255,0.25);
-      transform: scale(1.05);
-    }
-
-    .level-btn .grade {
+    .level-btn .sub {
       display: block;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 500;
-      opacity: 0.8;
+      opacity: 0.7;
       margin-top: 2px;
     }
 
-    .level-info {
-      text-align: center;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-soft);
-      padding: 4px 0;
-    }
+    .level-btn:hover { background: #f0f0f0; }
 
-    .level-info strong {
+    .level-btn.active {
+      background: var(--header-bg);
       color: #fff;
+      border-color: var(--header-bg);
     }
 
-    /* Worksheet board – PDF referans stili */
-    .grid-wrap {
-      display: flex;
-      justify-content: center;
-      padding: 8px 0;
-    }
-
-    .worksheet-board {
-      background: var(--paper);
-      border: 3px solid var(--ink);
-      border-radius: 4px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-      overflow: hidden;
-      max-width: 100%;
-    }
-
-    .worksheet-header {
-      background: #2b2b2b;
-      color: #fff;
+    .info {
       text-align: center;
-      padding: 10px 16px;
-      font-family: 'Times New Roman', Times, serif;
-      font-size: clamp(0.85rem, 3vw, 1rem);
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      border-bottom: 2px solid var(--ink);
+      font-size: 0.88rem;
+      color: #444;
     }
 
-    .worksheet-header span {
-      opacity: 0.7;
-      margin: 0 6px;
-    }
+    .info strong { color: var(--ink); }
 
-    .grid-container {
-      position: relative;
-      padding: 16px;
-      background: var(--paper);
-      touch-action: none;
-    }
-
-    .path-svg {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .grid {
-      display: grid;
-      gap: 0;
-      border: 2.5px solid var(--grid-line);
-      background: var(--paper);
-      position: relative;
-      z-index: 1;
-    }
-
-    .cell {
-      width: var(--cell-size);
-      height: var(--cell-size);
-      background: var(--paper);
-      border-right: 1.5px solid var(--grid-line);
-      border-bottom: 1.5px solid var(--grid-line);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Times New Roman', Times, serif;
-      font-size: clamp(1.4rem, 4.5vw, 1.9rem);
-      font-weight: 700;
-      color: var(--ink);
-      cursor: pointer;
-      position: relative;
-      transition: background 0.12s;
-    }
-
-    .cell.no-right { border-right: none; }
-    .cell.no-bottom { border-bottom: none; }
-
-    /* Boş hücrelerde nokta (PDF'deki gibi) */
-    .cell.empty::after {
-      content: '';
-      width: 7px;
-      height: 7px;
-      background: var(--grid-line);
-      border-radius: 50%;
-      position: absolute;
-    }
-
-    .cell .letter {
-      position: relative;
-      z-index: 4;
-      line-height: 1;
-    }
-
-    .cell.endpoint {
-      font-size: clamp(1.6rem, 5vw, 2.2rem);
-      font-weight: 700;
-    }
-
-    .cell.path-a { background: color-mix(in srgb, var(--color-a) 22%, white); }
-    .cell.path-b { background: color-mix(in srgb, var(--color-b) 22%, white); }
-    .cell.path-c { background: color-mix(in srgb, var(--color-c) 22%, white); }
-    .cell.path-d { background: color-mix(in srgb, var(--color-d) 22%, white); }
-    .cell.path-e { background: color-mix(in srgb, var(--color-e) 22%, white); }
-
-    .cell.endpoint.color-a { color: var(--color-a); }
-    .cell.endpoint.color-b { color: var(--color-b); }
-    .cell.endpoint.color-c { color: var(--color-c); }
-    .cell.endpoint.color-d { color: var(--color-d); }
-    .cell.endpoint.color-e { color: var(--color-e); }
-
-  /* Yol çizgileri – hücre içi bağlantılar */
-    .cell .pipe {
-      position: absolute;
-      background: currentColor;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .cell.color-a, .cell.path-a { color: var(--color-a); }
-    .cell.color-b, .cell.path-b { color: var(--color-b); }
-    .cell.color-c, .cell.path-c { color: var(--color-c); }
-    .cell.color-d, .cell.path-d { color: var(--color-d); }
-    .cell.color-e, .cell.path-e { color: var(--color-e); }
-
-    .pipe-h {
-      width: 100%;
-      height: 34%;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-    }
-
-    .pipe-v {
-      width: 34%;
-      height: 100%;
-      left: 50%;
-      top: 0;
-      transform: translateX(-50%);
-    }
-
-    .pipe-t { width: 34%; height: 50%; top: 0; left: 50%; transform: translateX(-50%); }
-    .pipe-b { width: 34%; height: 50%; bottom: 0; top: auto; left: 50%; transform: translateX(-50%); }
-    .pipe-l { width: 50%; height: 34%; left: 0; top: 50%; transform: translateY(-50%); }
-    .pipe-r { width: 50%; height: 34%; right: 0; left: auto; top: 50%; transform: translateY(-50%); }
-
-    /* Action buttons */
     .actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
 
     .btn {
       flex: 1;
-      padding: 14px 12px;
-      border: none;
-      border-radius: 14px;
-      font-size: 0.95rem;
+      padding: 12px 10px;
+      border: 2px solid var(--ink);
+      background: #fff;
+      color: var(--ink);
+      font-size: 0.9rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      transition: background 0.15s, transform 0.1s;
     }
 
-    .btn-restart {
-      background: rgba(255,255,255,0.2);
-      color: #fff;
-      border: 2px solid rgba(255,255,255,0.35);
-    }
-
-    .btn-restart:hover {
-      background: rgba(255,255,255,0.32);
-      transform: translateY(-2px);
-    }
+    .btn:hover { background: #f5f5f5; transform: translateY(-1px); }
 
     .btn-check {
-      background: linear-gradient(135deg, #00c9ff, #92fe9d);
-      color: #1a3a2a;
-      box-shadow: 0 4px 16px rgba(0,201,255,0.35);
+      background: var(--header-bg);
+      color: #fff;
+      border-color: var(--header-bg);
     }
 
-    .btn-check:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,201,255,0.45);
+    .btn-check:hover { background: #111; }
+
+    .hint {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #666;
+      line-height: 1.45;
     }
 
-    /* Message toast */
+    /* Toast */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .overlay.show { opacity: 1; pointer-events: auto; }
+
     .toast {
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(0.8);
-      background: rgba(255,255,255,0.95);
-      color: #333;
-      padding: 28px 36px;
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      transform: translate(-50%, -50%) scale(0.9);
+      background: #fff;
+      border: 3px solid var(--ink);
+      padding: 24px 28px;
       text-align: center;
-      z-index: 1000;
+      z-index: 101;
       opacity: 0;
       pointer-events: none;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      max-width: 90vw;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-width: 88vw;
+      min-width: 240px;
     }
-
     .toast.show {
       opacity: 1;
       transform: translate(-50%, -50%) scale(1);
       pointer-events: auto;
     }
-
-    .toast.success {
-      background: linear-gradient(135deg, #fff9c4, #fff);
-      border: 3px solid #ffd54f;
-    }
-
-    .toast.error {
-      background: linear-gradient(135deg, #ffebee, #fff);
-      border: 3px solid #ef9a9a;
-    }
-
-    .toast .icon {
-      font-size: 3rem;
-      margin-bottom: 8px;
-      animation: bounce 0.6s ease infinite alternate;
-    }
-
-    .toast h2 {
-      font-size: 1.4rem;
-      margin-bottom: 6px;
-      color: #2e7d32;
-    }
-
+    .toast .icon { font-size: 2.4rem; margin-bottom: 6px; }
+    .toast h2 { font-size: 1.25rem; margin-bottom: 4px; }
+    .toast p { font-size: 0.9rem; color: #555; }
+    .toast.success { border-color: #2e7d32; }
+    .toast.success h2 { color: #2e7d32; }
+    .toast.error { border-color: #c62828; }
     .toast.error h2 { color: #c62828; }
 
-    .toast p {
-      font-size: 0.95rem;
-      color: #555;
-    }
-
-    @keyframes bounce {
-      from { transform: translateY(0); }
-      to { transform: translateY(-8px); }
-    }
-
-    /* Confetti */
-    .confetti-container {
+    .confetti-box {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 999;
+      z-index: 99;
       overflow: hidden;
     }
-
     .confetti {
       position: absolute;
-      width: 10px;
-      height: 10px;
-      top: -10px;
-      animation: confetti-fall linear forwards;
+      top: -12px;
+      width: 8px;
+      height: 8px;
+      animation: fall linear forwards;
     }
-
-    @keyframes confetti-fall {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-    }
-
-    /* Instructions */
-    .instructions {
-      font-size: 0.82rem;
-      color: var(--text-soft);
-      text-align: center;
-      line-height: 1.5;
-      padding: 0 8px;
-    }
-
-    .instructions span {
-      display: inline-block;
-      background: rgba(255,255,255,0.15);
-      padding: 2px 8px;
-      border-radius: 8px;
-      margin: 2px;
-      font-weight: 600;
-    }
-
-    /* Overlay backdrop */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.4);
-      z-index: 999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-
-    .overlay.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    @media (max-width: 380px) {
-      :root { --cell-size: 48px; }
-      .level-btn { min-width: 48px; font-size: 0.75rem; }
+    @keyframes fall {
+      to { transform: translateY(105vh) rotate(720deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <header class="header">
-      <h1>🔤 ABC Bağlamaca</h1>
-      <p class="subtitle">Harfleri birbirine bağla, tüm kareleri doldur!</p>
-    </header>
+    <div class="worksheet">
+      <div class="ws-header">ZEKA OYUNLARI <span class="sep">–</span> ABC BAĞLAMACA</div>
 
-    <div class="panel level-bar">
-      <label>Seviye Seç</label>
-      <div class="level-buttons" id="levelButtons"></div>
-      <div class="level-info" id="levelInfo"></div>
-    </div>
-
-    <div class="grid-wrap">
-      <div class="worksheet-board">
-        <div class="worksheet-header">ZEKA OYUNLARI <span>–</span> ABC BAĞLAMACA</div>
-        <div class="grid-container" id="gridContainer">
-          <svg class="path-svg" id="pathSvg"></svg>
-          <div class="grid" id="grid"></div>
+      <div class="ws-body">
+        <div class="board-frame" id="boardFrame">
+          <div class="board" id="board">
+            <svg class="board-svg" id="boardSvg"></svg>
+          </div>
         </div>
+        <p class="info" id="levelInfo"></p>
+      </div>
+
+      <div class="ws-footer">
+        <span>matematiksorubankasi.com</span>
+        <span>2012</span>
       </div>
     </div>
 
-    <div class="panel actions">
-      <button class="btn btn-restart" id="btnRestart">🔄 Yeniden Başlat</button>
-      <button class="btn btn-check" id="btnCheck">✅ Çözümü Kontrol Et</button>
+    <div class="controls">
+      <div class="level-row" id="levelButtons"></div>
+      <div class="actions">
+        <button class="btn" id="btnRestart">Yeniden Başlat</button>
+        <button class="btn btn-check" id="btnCheck">Çözümü Kontrol Et</button>
+      </div>
+      <p class="hint">Aynı harfleri noktalardan geçerek bağla · Çapraz yasak · Tüm noktaları doldur</p>
     </div>
-
-    <p class="instructions">
-      <span>Aynı harfleri bağla</span>
-      <span>Çapraz yasak</span>
-      <span>Tüm kareleri doldur</span>
-    </p>
   </div>
 
   <div class="overlay" id="overlay"></div>
@@ -522,19 +313,53 @@
     <h2 id="toastTitle"></h2>
     <p id="toastMsg"></p>
   </div>
-  <div class="confetti-container" id="confetti"></div>
+  <div class="confetti-box" id="confetti"></div>
 
   <script>
   (function () {
     'use strict';
 
-    const LETTER_COLORS = { A: 'a', B: 'b', C: 'c', D: 'd', E: 'e' };
-
     const PATH_COLORS = {
-      A: '#e53935', B: '#1e88e5', C: '#43a047', D: '#8e24aa', E: '#f57c00'
+      A: '#c62828', B: '#1565c0', C: '#2e7d32', D: '#6a1b9a', E: '#ef6c00'
     };
 
-    /* PDF referans bulmacaları + kademeli giriş seviyeleri */
+    /*
+     * PDF referans tabloları (6x6):
+     * · = nokta, harf = uç nokta
+     *
+     * Bulmaca 1 (Sol Üst):
+     *   · · · · · ·
+     *   · D · · C ·
+     *   · · C B · ·
+     *   · · · · · B
+     *   A · · A · ·
+     *   D · · · · ·
+     *
+     * Bulmaca 2 (Sağ Üst):
+     *   D · · · · C
+     *   · · · · · ·
+     *   · · · B · ·
+     *   · · A C · ·
+     *   · · · · · ·
+     *   · D B · · A
+     *
+     * Bulmaca 3 (Sol Alt):
+     *   D C B · · A
+     *   · · · C · ·
+     *   · B · · · A
+     *   · · · · · ·
+     *   · E · · D ·
+     *   · · · E · ·
+     *
+     * Bulmaca 4 (Sağ Alt):
+     *   · · · · A B
+     *   A D · · · ·
+     *   · · C · · E
+     *   · · · · · ·
+     *   · · B · · E
+     *   C · · · · D
+     */
+
     const LEVELS = [
       {
         id: 1,
@@ -542,11 +367,6 @@
         grade: '1. Sınıf',
         size: 3,
         pairs: ['A', 'B'],
-        puzzle: [
-          ['A', 'B', 'B'],
-          ['', '', ''],
-          ['', '', 'A']
-        ],
         endpoints: { A: [[0,0],[2,2]], B: [[0,1],[0,2]] }
       },
       {
@@ -555,61 +375,47 @@
         grade: '1. Sınıf+',
         size: 4,
         pairs: ['A', 'B'],
-        puzzle: [
-          ['A', '', '', 'B'],
-          ['', '', '', ''],
-          ['', '', '', ''],
-          ['A', '', '', 'B']
-        ],
         endpoints: { A: [[0,0],[3,0]], B: [[0,3],[3,3]] }
       },
       {
         id: 3,
         name: 'Orta',
-        grade: '2. Sınıf',
+        grade: 'PDF #1',
         size: 6,
         pairs: ['A', 'B', 'C', 'D'],
-        puzzle: [
-          ['', '', '', '', '', ''],
-          ['', 'D', '', '', 'C', ''],
-          ['', '', 'C', 'B', '', ''],
-          ['', '', '', '', '', 'B'],
-          ['A', '', '', 'A', '', ''],
-          ['D', '', '', '', '', '']
-        ],
-        endpoints: { A: [[4,0],[4,3]], B: [[2,3],[3,5]], C: [[2,2],[1,4]], D: [[1,1],[5,0]] }
+        endpoints: {
+          A: [[4,0],[4,3]],
+          B: [[2,3],[3,5]],
+          C: [[1,4],[2,2]],
+          D: [[1,1],[5,0]]
+        }
       },
       {
         id: 4,
         name: 'Zor',
-        grade: '3. Sınıf',
+        grade: 'PDF #2',
         size: 6,
         pairs: ['A', 'B', 'C', 'D'],
-        puzzle: [
-          ['D', '', '', '', '', 'C'],
-          ['', '', '', '', '', ''],
-          ['', '', '', 'B', '', ''],
-          ['', '', 'A', 'C', '', ''],
-          ['', '', '', '', '', ''],
-          ['', 'D', 'B', '', '', 'A']
-        ],
-        endpoints: { D: [[0,0],[5,1]], A: [[3,2],[5,5]], B: [[2,3],[5,2]], C: [[3,3],[0,5]] }
+        endpoints: {
+          D: [[0,0],[5,1]],
+          A: [[3,2],[5,5]],
+          B: [[2,3],[5,2]],
+          C: [[3,3],[0,5]]
+        }
       },
       {
         id: 5,
         name: 'Uzman',
-        grade: '4. Sınıf',
+        grade: 'PDF #3',
         size: 6,
         pairs: ['A', 'B', 'C', 'D', 'E'],
-        puzzle: [
-          ['D', 'C', 'B', '', '', 'A'],
-          ['', '', '', 'C', '', ''],
-          ['', 'B', '', '', '', 'A'],
-          ['', '', '', '', '', ''],
-          ['', 'E', '', '', 'D', ''],
-          ['', '', '', 'E', '', '']
-        ],
-        endpoints: { D: [[0,0],[4,4]], E: [[5,3],[4,1]], B: [[2,1],[0,2]], C: [[0,1],[1,3]], A: [[0,5],[2,5]] }
+        endpoints: {
+          D: [[0,0],[4,4]],
+          E: [[5,3],[4,1]],
+          B: [[2,1],[0,2]],
+          C: [[0,1],[1,3]],
+          A: [[0,5],[2,5]]
+        }
       }
     ];
 
@@ -621,10 +427,11 @@
     let activeLetter = null;
     let isDrawing = false;
     let lastCell = null;
+    let cellGap = 48;
+    let pad = 8;
 
-    const gridEl = document.getElementById('grid');
-    const gridContainer = document.getElementById('gridContainer');
-    const pathSvgEl = document.getElementById('pathSvg');
+    const boardSvg = document.getElementById('boardSvg');
+    const boardFrame = document.getElementById('boardFrame');
     const levelButtonsEl = document.getElementById('levelButtons');
     const levelInfoEl = document.getElementById('levelInfo');
     const btnRestart = document.getElementById('btnRestart');
@@ -636,16 +443,14 @@
     const overlay = document.getElementById('overlay');
     const confettiEl = document.getElementById('confetti');
 
-    /* ── Audio (Web Audio API celebration) ── */
+    /* Audio */
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
-
     function getAudio() {
       if (!audioCtx) audioCtx = new AudioCtx();
       return audioCtx;
     }
-
-    function playTone(freq, start, dur, type = 'sine', vol = 0.15) {
+    function playTone(freq, start, dur, type = 'sine', vol = 0.12) {
       try {
         const ctx = getAudio();
         const osc = ctx.createOscillator();
@@ -660,36 +465,20 @@
         osc.stop(ctx.currentTime + start + dur);
       } catch (_) {}
     }
-
-    function playSuccessSound() {
-      const notes = [523, 659, 784, 1047];
-      notes.forEach((n, i) => playTone(n, i * 0.12, 0.3, 'sine', 0.18));
-      setTimeout(() => playTone(1318, 0.5, 0.5, 'triangle', 0.12), 400);
+    function playSuccess() {
+      [523, 659, 784, 1047].forEach((n, i) => playTone(n, i * 0.12, 0.28, 'sine', 0.15));
     }
-
-    function playErrorSound() {
-      playTone(200, 0, 0.2, 'square', 0.1);
-      playTone(150, 0.15, 0.3, 'square', 0.08);
+    function playError() {
+      playTone(200, 0, 0.18, 'square', 0.08);
+      playTone(150, 0.14, 0.25, 'square', 0.06);
     }
+    function playClick() { playTone(480, 0, 0.06, 'sine', 0.05); }
 
-    function playClickSound() {
-      playTone(440, 0, 0.08, 'sine', 0.06);
-    }
-
-    /* ── Helpers ── */
+    /* Helpers */
     function key(r, c) { return r + ',' + c; }
 
-    function parseKey(k) {
-      const [r, c] = k.split(',').map(Number);
-      return [r, c];
-    }
-
     function isAdjacent(r1, c1, r2, c2) {
-      return (Math.abs(r1 - r2) + Math.abs(c1 - c2)) === 1;
-    }
-
-    function isEndpoint(r, c) {
-      return endpointSet.has(key(r, c));
+      return Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1;
     }
 
     function getEndpointLetter(r, c) {
@@ -702,7 +491,8 @@
     }
 
     function getCellOwner(r, c) {
-      if (isEndpoint(r, c)) return getEndpointLetter(r, c);
+      const ep = getEndpointLetter(r, c);
+      if (ep) return ep;
       for (const [letter, path] of Object.entries(paths)) {
         for (const [pr, pc] of path) {
           if (pr === r && pc === c) return letter;
@@ -711,30 +501,35 @@
       return null;
     }
 
-    function clearLetterPath(letter) {
-      paths[letter] = [];
+    function nodeXY(r, c) {
+      return { x: pad + c * cellGap, y: pad + r * cellGap };
     }
 
-    function rebuildPathsFromEndpoints() {
-      const level = LEVELS[currentLevel];
+    function rebuildPaths() {
       paths = {};
-      level.pairs.forEach(l => { paths[l] = []; });
+      LEVELS[currentLevel].pairs.forEach(l => { paths[l] = []; });
     }
 
-    /* ── Level setup ── */
+    function clearOtherPathsFromCell(r, c, exceptLetter) {
+      for (const letter of Object.keys(paths)) {
+        if (letter === exceptLetter) continue;
+        paths[letter] = paths[letter].filter(([pr, pc]) => pr !== r || pc !== c);
+      }
+    }
+
+    /* Level UI */
     function buildLevelButtons() {
       levelButtonsEl.innerHTML = '';
       LEVELS.forEach((lvl, idx) => {
         const btn = document.createElement('button');
         btn.className = 'level-btn' + (idx === currentLevel ? ' active' : '');
-        btn.innerHTML = `Level ${lvl.id}<span class="grade">${lvl.grade}</span>`;
+        btn.innerHTML = `Level ${lvl.id}<span class="sub">${lvl.grade}</span>`;
         btn.addEventListener('click', () => {
-          if (idx !== currentLevel) {
-            playClickSound();
-            currentLevel = idx;
-            loadLevel();
-            buildLevelButtons();
-          }
+          if (idx === currentLevel) return;
+          playClick();
+          currentLevel = idx;
+          loadLevel();
+          buildLevelButtons();
         });
         levelButtonsEl.appendChild(btn);
       });
@@ -746,236 +541,157 @@
       endpoints = level.endpoints;
       endpointSet = new Set();
       Object.values(endpoints).flat().forEach(([r, c]) => endpointSet.add(key(r, c)));
-      rebuildPathsFromEndpoints();
+      rebuildPaths();
       activeLetter = null;
       isDrawing = false;
       lastCell = null;
 
-      document.documentElement.style.setProperty(
-        '--cell-size',
-        size >= 6 ? 'clamp(38px, 10vw, 52px)' : size >= 5 ? 'clamp(40px, 11vw, 56px)' : 'clamp(44px, 12vw, 64px)'
-      );
+      const maxW = Math.min(window.innerWidth - 72, 400);
+      cellGap = Math.floor(maxW / (size - 1 + 0.35));
+      cellGap = Math.max(size >= 6 ? 36 : 44, Math.min(cellGap, size >= 6 ? 56 : 72));
+      pad = Math.round(cellGap * 0.35);
 
       levelInfoEl.innerHTML =
-        `<strong>Level ${level.id} – ${level.name}</strong> · ${size}×${size} ızgara · ${level.pairs.length} harf çifti (${level.pairs.join(', ')})`;
+        `<strong>Level ${level.id} – ${level.name}</strong> · ${size}×${size} · ${level.pairs.join(', ')}`;
 
-      renderGrid();
+      render();
     }
 
-    function getPathConnections(letter) {
-      const path = paths[letter];
-      const conn = new Map();
-      if (!path || path.length === 0) return conn;
+    /* Render – PDF nokta ızgarası */
+    function render() {
+      const W = pad * 2 + (size - 1) * cellGap;
+      const H = W;
+      boardSvg.setAttribute('width', W);
+      boardSvg.setAttribute('height', H);
+      boardSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      boardSvg.innerHTML = '';
 
-      for (let i = 0; i < path.length; i++) {
-        const [r, c] = path[i];
-        const k = key(r, c);
-        const dirs = { t: false, b: false, l: false, r: false };
+      const strokeW = Math.max(6, cellGap * 0.22);
 
-        if (i > 0) {
-          const [pr, pc] = path[i - 1];
-          if (pr < r) dirs.t = true;
-          if (pr > r) dirs.b = true;
-          if (pc < c) dirs.l = true;
-          if (pc > c) dirs.r = true;
-        }
-        if (i < path.length - 1) {
-          const [nr, nc] = path[i + 1];
-          if (nr < r) dirs.t = true;
-          if (nr > r) dirs.b = true;
-          if (nc < c) dirs.l = true;
-          if (nc > c) dirs.r = true;
-        }
-        conn.set(k, dirs);
-      }
-      return conn;
-    }
-
-    function addPipesToCell(cell, dirs) {
-      if (dirs.t && dirs.b) {
-        const p = document.createElement('div');
-        p.className = 'pipe pipe-v';
-        cell.appendChild(p);
-      } else if (dirs.l && dirs.r) {
-        const p = document.createElement('div');
-        p.className = 'pipe pipe-h';
-        cell.appendChild(p);
-      } else {
-        if (dirs.t) { const p = document.createElement('div'); p.className = 'pipe pipe-t'; cell.appendChild(p); }
-        if (dirs.b) { const p = document.createElement('div'); p.className = 'pipe pipe-b'; cell.appendChild(p); }
-        if (dirs.l) { const p = document.createElement('div'); p.className = 'pipe pipe-l'; cell.appendChild(p); }
-        if (dirs.r) { const p = document.createElement('div'); p.className = 'pipe pipe-r'; cell.appendChild(p); }
-      }
-    }
-
-    function renderPathSvg() {
-      const gridRect = gridEl.getBoundingClientRect();
-      const containerRect = gridContainer.getBoundingClientRect();
-      const offsetX = gridRect.left - containerRect.left;
-      const offsetY = gridRect.top - containerRect.top;
-
-      pathSvgEl.setAttribute('width', gridRect.width);
-      pathSvgEl.setAttribute('height', gridRect.height);
-      pathSvgEl.style.width = gridRect.width + 'px';
-      pathSvgEl.style.height = gridRect.height + 'px';
-      pathSvgEl.style.left = offsetX + 'px';
-      pathSvgEl.style.top = offsetY + 'px';
-      pathSvgEl.innerHTML = '';
-
-      const cells = gridEl.querySelectorAll('.cell');
-      if (!cells.length) return;
-
-      const cellW = gridRect.width / size;
-      const cellH = gridRect.height / size;
-
-      function center(r, c) {
-        return { x: c * cellW + cellW / 2, y: r * cellH + cellH / 2 };
-      }
-
-      const level = LEVELS[currentLevel];
-      level.pairs.forEach(letter => {
+      /* Paths first (under dots/letters) */
+      const pathGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      pathGroup.setAttribute('class', 'paths');
+      LEVELS[currentLevel].pairs.forEach(letter => {
         const path = paths[letter];
         if (!path || path.length < 2) return;
-        const color = PATH_COLORS[letter];
-
-        for (let i = 0; i < path.length - 1; i++) {
-          const a = center(path[i][0], path[i][1]);
-          const b = center(path[i + 1][0], path[i + 1][1]);
-          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-          line.setAttribute('x1', a.x);
-          line.setAttribute('y1', a.y);
-          line.setAttribute('x2', b.x);
-          line.setAttribute('y2', b.y);
-          line.setAttribute('stroke', color);
-          line.setAttribute('stroke-width', Math.min(cellW, cellH) * 0.38);
-          line.setAttribute('stroke-linecap', 'round');
-          pathSvgEl.appendChild(line);
-        }
+        const pts = path.map(([r, c]) => {
+          const p = nodeXY(r, c);
+          return p.x + ',' + p.y;
+        }).join(' ');
+        const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+        poly.setAttribute('class', 'path-line');
+        poly.setAttribute('points', pts);
+        poly.setAttribute('stroke', PATH_COLORS[letter]);
+        poly.setAttribute('stroke-width', strokeW);
+        pathGroup.appendChild(poly);
       });
-    }
+      boardSvg.appendChild(pathGroup);
 
-    /* ── Render ── */
-    function renderGrid() {
-      gridEl.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-      gridEl.innerHTML = '';
-
-      const allConnections = {};
-      LEVELS[currentLevel].pairs.forEach(letter => {
-        allConnections[letter] = getPathConnections(letter);
-      });
+      /* Nodes */
+      const nodeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      const fontSize = Math.round(cellGap * 0.55);
+      const dotR = Math.max(3.5, cellGap * 0.08);
 
       for (let r = 0; r < size; r++) {
         for (let c = 0; c < size; c++) {
-          const cell = document.createElement('div');
-          cell.className = 'cell';
-          cell.dataset.r = r;
-          cell.dataset.c = c;
-
-          if (c === size - 1) cell.classList.add('no-right');
-          if (r === size - 1) cell.classList.add('no-bottom');
-
-          const epLetter = getEndpointLetter(r, c);
+          const { x, y } = nodeXY(r, c);
+          const ep = getEndpointLetter(r, c);
           const owner = getCellOwner(r, c);
-          const letter = epLetter || owner;
+          const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          g.setAttribute('class', 'node');
+          g.dataset.r = r;
+          g.dataset.c = c;
 
-          if (epLetter) {
-            cell.classList.add('endpoint', 'color-' + LETTER_COLORS[epLetter]);
-            const dirs = allConnections[epLetter]?.get(key(r, c));
-            if (dirs) addPipesToCell(cell, dirs);
-            const span = document.createElement('span');
-            span.className = 'letter';
-            span.textContent = epLetter;
-            cell.appendChild(span);
-          } else if (owner) {
-            cell.classList.add('path-' + LETTER_COLORS[owner]);
-            const dirs = allConnections[owner]?.get(key(r, c));
-            if (dirs) addPipesToCell(cell, dirs);
+          /* Hit area */
+          const hit = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          hit.setAttribute('cx', x);
+          hit.setAttribute('cy', y);
+          hit.setAttribute('r', cellGap * 0.42);
+          hit.setAttribute('fill', 'transparent');
+          g.appendChild(hit);
+
+          if (ep) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('class', 'node-letter');
+            text.setAttribute('x', x);
+            text.setAttribute('y', y);
+            text.setAttribute('font-size', fontSize);
+            text.textContent = ep;
+            g.appendChild(text);
+          } else if (!owner) {
+            const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            dot.setAttribute('class', 'node-dot');
+            dot.setAttribute('cx', x);
+            dot.setAttribute('cy', y);
+            dot.setAttribute('r', dotR);
+            g.appendChild(dot);
           } else {
-            cell.classList.add('empty');
+            /* Path occupied: small colored nub so path continuity is clear */
+            const nub = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            nub.setAttribute('cx', x);
+            nub.setAttribute('cy', y);
+            nub.setAttribute('r', strokeW * 0.42);
+            nub.setAttribute('fill', PATH_COLORS[owner]);
+            g.appendChild(nub);
           }
 
-          gridEl.appendChild(cell);
+          nodeGroup.appendChild(g);
         }
       }
-
-      requestAnimationFrame(renderPathSvg);
+      boardSvg.appendChild(nodeGroup);
     }
 
-    function getCellFromEvent(e) {
-      const target = e.target.closest('.cell');
-      if (!target) return null;
-      return [parseInt(target.dataset.r, 10), parseInt(target.dataset.c, 10)];
-    }
-
-    /* ── Drawing / Rule Engine ── */
+    /* Drawing engine */
     function startDraw(r, c) {
-      const epLetter = getEndpointLetter(r, c);
-      if (!epLetter) return;
+      const ep = getEndpointLetter(r, c);
+      if (!ep) return;
 
-      playClickSound();
-      activeLetter = epLetter;
+      playClick();
+      activeLetter = ep;
       isDrawing = true;
       lastCell = [r, c];
 
       const path = paths[activeLetter];
       const idx = path.findIndex(([pr, pc]) => pr === r && pc === c);
-
       if (idx !== -1) {
         paths[activeLetter] = path.slice(0, idx + 1);
       } else {
         clearOtherPathsFromCell(r, c, activeLetter);
         paths[activeLetter] = [[r, c]];
       }
-
-      renderGrid();
-    }
-
-    function clearOtherPathsFromCell(r, c, exceptLetter) {
-      for (const letter of Object.keys(paths)) {
-        if (letter === exceptLetter) continue;
-        paths[letter] = paths[letter].filter(([pr, pc]) => pr !== r || pc !== c);
-      }
+      render();
     }
 
     function continueDraw(r, c) {
       if (!isDrawing || !activeLetter) return;
       if (lastCell && lastCell[0] === r && lastCell[1] === c) return;
-
       if (!isAdjacent(lastCell[0], lastCell[1], r, c)) return;
 
       const path = paths[activeLetter];
       const existingIdx = path.findIndex(([pr, pc]) => pr === r && pc === c);
 
-      /* Backtracking: returning on own path shortens it */
+      /* Backtracking */
       if (existingIdx !== -1) {
         paths[activeLetter] = path.slice(0, existingIdx + 1);
         lastCell = [r, c];
-        renderGrid();
+        render();
         return;
       }
 
-      /* Cannot enter other letter endpoints */
-      const epLetter = getEndpointLetter(r, c);
-      if (epLetter && epLetter !== activeLetter) return;
+      const ep = getEndpointLetter(r, c);
+      if (ep && ep !== activeLetter) return;
 
-      /* Cannot cross other paths */
       const owner = getCellOwner(r, c);
       if (owner && owner !== activeLetter) return;
 
-      /* Clear this cell from other paths */
       clearOtherPathsFromCell(r, c, activeLetter);
-
       paths[activeLetter].push([r, c]);
       lastCell = [r, c];
-      renderGrid();
+      render();
 
-      /* Auto-complete when reaching matching endpoint */
-      if (epLetter === activeLetter) {
-        const ep = endpoints[activeLetter];
-        const pathStart = path[0];
-        const isAtOtherEnd = ep.some(([er, ec]) => er === r && ec === c) &&
-          !(pathStart[0] === r && pathStart[1] === c);
-        if (isAtOtherEnd) {
+      if (ep === activeLetter) {
+        const start = paths[activeLetter][0];
+        if (!(start[0] === r && start[1] === c)) {
           isDrawing = false;
         }
       }
@@ -987,74 +703,81 @@
       lastCell = null;
     }
 
-    /* ── Pointer events ── */
-    gridEl.addEventListener('mousedown', (e) => {
+    function coordsFromEvent(clientX, clientY) {
+      const rect = boardSvg.getBoundingClientRect();
+      const scaleX = boardSvg.viewBox.baseVal.width / rect.width;
+      const scaleY = boardSvg.viewBox.baseVal.height / rect.height;
+      const x = (clientX - rect.left) * scaleX;
+      const y = (clientY - rect.top) * scaleY;
+
+      let best = null;
+      let bestDist = Infinity;
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          const p = nodeXY(r, c);
+          const d = (p.x - x) * (p.x - x) + (p.y - y) * (p.y - y);
+          if (d < bestDist) {
+            bestDist = d;
+            best = [r, c];
+          }
+        }
+      }
+      if (bestDist > (cellGap * 0.48) * (cellGap * 0.48)) return null;
+      return best;
+    }
+
+    boardFrame.addEventListener('mousedown', (e) => {
       e.preventDefault();
-      const pos = getCellFromEvent(e);
+      const pos = coordsFromEvent(e.clientX, e.clientY);
       if (pos) startDraw(pos[0], pos[1]);
     });
 
-    gridEl.addEventListener('mousemove', (e) => {
+    boardFrame.addEventListener('mousemove', (e) => {
       if (!isDrawing) return;
       e.preventDefault();
-      const pos = getCellFromEvent(e);
+      const pos = coordsFromEvent(e.clientX, e.clientY);
       if (pos) continueDraw(pos[0], pos[1]);
     });
 
     document.addEventListener('mouseup', endDraw);
 
-    gridEl.addEventListener('touchstart', (e) => {
+    boardFrame.addEventListener('touchstart', (e) => {
       e.preventDefault();
-      const touch = e.touches[0];
-      const target = document.elementFromPoint(touch.clientX, touch.clientY);
-      if (!target) return;
-      const cell = target.closest('.cell');
-      if (!cell) return;
-      const r = parseInt(cell.dataset.r, 10);
-      const c = parseInt(cell.dataset.c, 10);
-      startDraw(r, c);
+      const t = e.touches[0];
+      const pos = coordsFromEvent(t.clientX, t.clientY);
+      if (pos) startDraw(pos[0], pos[1]);
     }, { passive: false });
 
-    gridEl.addEventListener('touchmove', (e) => {
+    boardFrame.addEventListener('touchmove', (e) => {
       if (!isDrawing) return;
       e.preventDefault();
-      const touch = e.touches[0];
-      const target = document.elementFromPoint(touch.clientX, touch.clientY);
-      if (!target) return;
-      const cell = target.closest('.cell');
-      if (!cell) return;
-      const r = parseInt(cell.dataset.r, 10);
-      const c = parseInt(cell.dataset.c, 10);
-      continueDraw(r, c);
+      const t = e.touches[0];
+      const pos = coordsFromEvent(t.clientX, t.clientY);
+      if (pos) continueDraw(pos[0], pos[1]);
     }, { passive: false });
 
-    gridEl.addEventListener('touchend', (e) => {
+    boardFrame.addEventListener('touchend', (e) => {
       e.preventDefault();
       endDraw();
     });
 
-    /* ── Solution validation ── */
-    function validateSolution() {
+    /* Validation */
+    function validate() {
       const level = LEVELS[currentLevel];
       const issues = [];
 
       for (const letter of level.pairs) {
         const eps = endpoints[letter];
         const path = paths[letter];
-
         if (path.length < 2) {
           issues.push(`${letter} harfi henüz bağlanmadı.`);
           continue;
         }
-
-        const pathSet = new Set(path.map(([r,c]) => key(r,c)));
-        const hasEp1 = pathSet.has(key(eps[0][0], eps[0][1]));
-        const hasEp2 = pathSet.has(key(eps[1][0], eps[1][1]));
-        if (!hasEp1 || !hasEp2) {
-          issues.push(`${letter} harfinin iki ucu birbirine bağlı değil.`);
+        const set = new Set(path.map(([r, c]) => key(r, c)));
+        if (!set.has(key(eps[0][0], eps[0][1])) || !set.has(key(eps[1][0], eps[1][1]))) {
+          issues.push(`${letter} harfinin iki ucu bağlı değil.`);
           continue;
         }
-
         for (let i = 1; i < path.length; i++) {
           if (!isAdjacent(path[i-1][0], path[i-1][1], path[i][0], path[i][1])) {
             issues.push(`${letter} yolunda kopukluk var.`);
@@ -1075,28 +798,23 @@
         }
       }
 
-      let emptyCount = 0;
+      let empty = 0;
       for (let r = 0; r < size; r++) {
         for (let c = 0; c < size; c++) {
-          if (!occupied.has(key(r, c))) emptyCount++;
+          if (!occupied.has(key(r, c))) empty++;
         }
       }
-
-      if (emptyCount > 0) {
-        issues.push(`Henüz ${emptyCount} boş kare var. Tüm ızgarayı doldur!`);
-      }
+      if (empty > 0) issues.push(`Henüz ${empty} boş nokta var. Tüm ızgarayı doldur!`);
 
       return { valid: issues.length === 0, issues };
     }
 
-    /* ── UI feedback ── */
-    function showToast(type, icon, title, msg, duration = 3000) {
+    function showToast(type, icon, title, msg, duration = 3200) {
       toast.className = 'toast show ' + type;
       toastIcon.textContent = icon;
       toastTitle.textContent = title;
       toastMsg.textContent = msg;
       overlay.classList.add('show');
-
       setTimeout(() => {
         toast.classList.remove('show');
         overlay.classList.remove('show');
@@ -1105,39 +823,35 @@
 
     function spawnConfetti() {
       confettiEl.innerHTML = '';
-      const colors = ['#ff6b6b','#4ecdc4','#ffe66d','#a78bfa','#ff9ff3','#54a0ff','#5cd85a'];
-      for (let i = 0; i < 60; i++) {
-        const piece = document.createElement('div');
-        piece.className = 'confetti';
-        piece.style.left = Math.random() * 100 + '%';
-        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.animationDuration = (2 + Math.random() * 2) + 's';
-        piece.style.animationDelay = Math.random() * 0.5 + 's';
-        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-        piece.style.width = (6 + Math.random() * 8) + 'px';
-        piece.style.height = (6 + Math.random() * 8) + 'px';
-        confettiEl.appendChild(piece);
+      const colors = Object.values(PATH_COLORS);
+      for (let i = 0; i < 50; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.background = colors[i % colors.length];
+        p.style.animationDuration = (1.8 + Math.random() * 2) + 's';
+        p.style.animationDelay = Math.random() * 0.4 + 's';
+        confettiEl.appendChild(p);
       }
-      setTimeout(() => { confettiEl.innerHTML = ''; }, 4500);
+      setTimeout(() => { confettiEl.innerHTML = ''; }, 4200);
     }
 
-    /* ── Button handlers ── */
     btnRestart.addEventListener('click', () => {
-      playClickSound();
-      rebuildPathsFromEndpoints();
-      renderGrid();
+      playClick();
+      rebuildPaths();
+      render();
     });
 
     btnCheck.addEventListener('click', () => {
-      const result = validateSolution();
+      const result = validate();
       if (result.valid) {
-        playSuccessSound();
+        playSuccess();
         spawnConfetti();
         const lvl = LEVELS[currentLevel];
-        showToast('success', '🎉', 'Tebrikler!', `Level ${lvl.id} (${lvl.name}) başarıyla tamamlandı! Harika iş çıkardın!`, 4000);
+        showToast('success', '✓', 'Tebrikler!', `Level ${lvl.id} (${lvl.name}) tamamlandı!`, 4000);
       } else {
-        playErrorSound();
-        showToast('error', '🤔', 'Henüz Tamamlanmadı', result.issues[0], 2500);
+        playError();
+        showToast('error', '!', 'Henüz Tamamlanmadı', result.issues[0], 2500);
       }
     });
 
@@ -1147,10 +861,14 @@
     });
 
     window.addEventListener('resize', () => {
-      if (gridEl.children.length) renderPathSvg();
+      const level = LEVELS[currentLevel];
+      const maxW = Math.min(window.innerWidth - 72, 400);
+      cellGap = Math.floor(maxW / (level.size - 1 + 0.35));
+      cellGap = Math.max(level.size >= 6 ? 36 : 44, Math.min(cellGap, level.size >= 6 ? 56 : 72));
+      pad = Math.round(cellGap * 0.35);
+      render();
     });
 
-    /* ── Init ── */
     buildLevelButtons();
     loadLevel();
   })();

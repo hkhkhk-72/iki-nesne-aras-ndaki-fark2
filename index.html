@@ -362,6 +362,192 @@
     @media (max-width: 380px) {
       .questions { grid-template-columns: repeat(5, 1fr); }
     }
+
+    /* ── PDF seçenekleri penceresi ── */
+    .btn-pdf {
+      background: #00695c;
+      border-color: #00695c;
+      color: #fff;
+    }
+    .btn-pdf:hover:not(:disabled) { background: #004d40; }
+
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 200; opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-overlay.show { opacity: 1; pointer-events: auto; }
+
+    .modal {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.94);
+      width: min(92vw, 380px);
+      max-height: 88vh;
+      overflow-y: auto;
+      background: #fff;
+      border: 3px solid #00695c;
+      border-radius: 16px;
+      padding: 18px;
+      z-index: 201;
+      opacity: 0; pointer-events: none;
+      transition: all 0.22s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .modal.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+    .modal h3 {
+      font-size: 1.05rem;
+      color: #00695c;
+      margin-bottom: 6px;
+    }
+    .modal-note {
+      font-size: 0.76rem;
+      color: #546e7a;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+    .field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #37474f;
+    }
+    .field select {
+      flex: 1;
+      max-width: 190px;
+      padding: 8px;
+      border: 2px solid #b0bec5;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #263238;
+      background: #fff;
+    }
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #37474f;
+      margin: 4px 0 10px;
+      cursor: pointer;
+    }
+    .check input { width: 17px; height: 17px; accent-color: #00695c; }
+    .modal-summary {
+      font-size: 0.76rem;
+      color: #00695c;
+      background: #e0f2f1;
+      border-radius: 8px;
+      padding: 7px 9px;
+      margin-bottom: 12px;
+      text-align: center;
+      font-weight: 700;
+    }
+    .modal-actions { display: flex; gap: 8px; }
+    .modal-actions .btn { flex: 1; }
+
+    /* ── Baskı / PDF düzeni ── */
+    #printArea { display: none; }
+
+    .print-page {
+      background: #fff;
+      color: #000;
+    }
+    .print-banner {
+      background: #2e3a92;
+      color: #fff;
+      text-align: center;
+      padding: 7px 10px;
+      border-radius: 4px;
+      margin-bottom: 6mm;
+    }
+    .print-banner .t1 {
+      font-size: 8pt;
+      letter-spacing: 0.14em;
+      opacity: 0.9;
+    }
+    .print-banner .t2 {
+      font-size: 15pt;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+    .print-rules {
+      font-size: 8pt;
+      line-height: 1.4;
+      color: #222;
+      border: 1px solid #999;
+      border-radius: 3px;
+      padding: 5px 7px;
+      margin-bottom: 5mm;
+    }
+    .print-grid {
+      display: grid;
+      gap: 6mm 5mm;
+    }
+    .print-card {
+      break-inside: avoid;
+      text-align: center;
+    }
+    .print-card .cap {
+      font-size: 8pt;
+      font-weight: 700;
+      margin-bottom: 1.5mm;
+      color: #222;
+    }
+    .print-card .frame {
+      border: 2px solid #2e3a92;
+      border-radius: 3px;
+      padding: 2.5mm;
+      display: block;
+      margin: 0 auto;
+    }
+    .print-card svg { display: block; width: 100%; height: auto; }
+    .print-foot {
+      margin-top: 4mm;
+      font-size: 7pt;
+      color: #666;
+      display: flex;
+      justify-content: space-between;
+    }
+    .print-answer-tag {
+      display: inline-block;
+      background: #c62828;
+      color: #fff;
+      font-size: 8pt;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-bottom: 3mm;
+      letter-spacing: 0.08em;
+    }
+
+    @media print {
+      @page { size: A4 portrait; margin: 12mm 10mm; }
+
+      html, body {
+        background: #fff !important;
+        padding: 0 !important;
+      }
+      body > .app,
+      #overlay, #toast, #confetti,
+      #pdfOverlay, #pdfModal { display: none !important; }
+
+      #printArea { display: block !important; }
+
+      .print-page {
+        break-after: page;
+        page-break-after: always;
+      }
+      .print-page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -422,6 +608,10 @@
       <button class="btn" id="btnNext">Sonraki Soru →</button>
     </div>
 
+    <div class="actions">
+      <button class="btn btn-pdf wide" id="btnPdf">📄 PDF olarak çıkar</button>
+    </div>
+
     <p class="hint-text">Harfe dokunup sürükle · Çapraz yasak · Tüm noktaları doldur · Diğer harfin üzerinden geçme</p>
     <p class="footer">ABC Bağlamaca Etkinliği · 4 sınıf × 5 seviye × 10 soru</p>
   </div>
@@ -437,6 +627,49 @@
     </div>
   </div>
   <div class="confetti-box" id="confetti"></div>
+
+  <div class="modal-overlay" id="pdfOverlay"></div>
+  <div class="modal" id="pdfModal">
+    <h3>PDF olarak çıkar</h3>
+    <p class="modal-note">
+      Bulmacalar A4 çalışma kağıdı düzeninde hazırlanır. Açılan yazdırma
+      penceresinde hedef olarak <strong>“PDF olarak kaydet”</strong> seçeneğini seçin.
+    </p>
+
+    <label class="field">
+      <span>Kapsam</span>
+      <select id="pdfScope">
+        <option value="question">Bu soru</option>
+        <option value="level" selected>Bu seviye (10 soru)</option>
+        <option value="grade">Bu sınıf (50 soru)</option>
+        <option value="all">Tüm sorular (200 soru)</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Sayfada bulmaca</span>
+      <select id="pdfPerPage">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="4" selected>4</option>
+        <option value="6">6</option>
+      </select>
+    </label>
+
+    <label class="check">
+      <input type="checkbox" id="pdfAnswers">
+      <span>Cevap anahtarı ekle</span>
+    </label>
+
+    <p class="modal-summary" id="pdfSummary"></p>
+
+    <div class="modal-actions">
+      <button class="btn" id="pdfCancel">İptal</button>
+      <button class="btn btn-check" id="pdfCreate">Oluştur</button>
+    </div>
+  </div>
+
+  <div id="printArea"></div>
 
   <script>
   (function () {
@@ -1137,6 +1370,210 @@
         render();
       }, 120);
     });
+
+    /* ── PDF / yazdırma ── */
+    const btnPdf = document.getElementById('btnPdf');
+    const pdfOverlay = document.getElementById('pdfOverlay');
+    const pdfModal = document.getElementById('pdfModal');
+    const pdfScope = document.getElementById('pdfScope');
+    const pdfPerPage = document.getElementById('pdfPerPage');
+    const pdfAnswers = document.getElementById('pdfAnswers');
+    const pdfSummary = document.getElementById('pdfSummary');
+    const pdfCancel = document.getElementById('pdfCancel');
+    const pdfCreate = document.getElementById('pdfCreate');
+    const printArea = document.getElementById('printArea');
+
+    const PRINT_RULES =
+      'ABC Bağlamaca, zekâ oyunlarının uzamsal algı türlerindendir. Temel amaç tüm noktaları ' +
+      'kullanarak aynı harfleri birbirine bağlamaktır. Yalnızca yatay ve dikey çizgiler kullanılır, ' +
+      'çizgiler birbirini kesmez, başka bir harfin üzerinden geçmez ve bitişte tek bir nokta bile açıkta kalmaz.';
+
+    /* svgMax: A4 sayfasına taşmadan sığan kare kenar uzunluğu */
+    const LAYOUT = {
+      1: { cols: 1, svgMax: '115mm' },
+      2: { cols: 1, svgMax: '92mm' },
+      4: { cols: 2, svgMax: '76mm' },
+      6: { cols: 2, svgMax: '60mm' }
+    };
+
+    function puzzleSvgMarkup(puzzle, withSolution) {
+      const n = puzzle.s;
+      const gap = 10;
+      const padU = 7;
+      const W = padU * 2 + (n - 1) * gap;
+      const fontSize = gap * 0.62;
+      const strokeW = gap * 0.3;
+      const dotR = 0.8;
+
+      const xy = i => ({ x: padU + (i % n) * gap, y: padU + Math.floor(i / n) * gap });
+
+      let lines = '';
+      if (withSolution) {
+        puzzle.sol.forEach((cells, li) => {
+          const color = PATH_COLORS[LETTERS[li]];
+          const pts = cells.map(i => { const p = xy(i); return p.x + ',' + p.y; }).join(' ');
+          lines += `<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="${strokeW}"` +
+                   ` stroke-linecap="round" stroke-linejoin="round"/>`;
+        });
+      }
+
+      const epMap = new Map();
+      puzzle.sol.forEach((cells, li) => {
+        epMap.set(cells[0], LETTERS[li]);
+        epMap.set(cells[cells.length - 1], LETTERS[li]);
+      });
+
+      let nodes = '';
+      for (let i = 0; i < n * n; i++) {
+        const p = xy(i);
+        const letter = epMap.get(i);
+        if (letter) {
+          /* Cevap anahtarında harf, renkli yolun üzerinde beyaz konturla okunur kalır */
+          const outline = withSolution
+            ? ' stroke="#fff" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke"'
+            : '';
+          nodes += `<text x="${p.x}" y="${p.y}" font-size="${fontSize}"` +
+                   ` font-family="Arial, Helvetica, sans-serif" font-weight="bold" fill="#000"` +
+                   ` text-anchor="middle" dominant-baseline="central"${outline}>${letter}</text>`;
+        } else {
+          nodes += `<circle cx="${p.x}" cy="${p.y}" r="${dotR}" fill="#111"/>`;
+        }
+      }
+
+      return `<svg viewBox="0 0 ${W} ${W}" xmlns="http://www.w3.org/2000/svg">${lines}${nodes}</svg>`;
+    }
+
+    function collectPrintItems(scope) {
+      const items = [];
+      const push = (gi, li, qi) => {
+        const g = DATA[gi];
+        const lvl = g.levels[li];
+        items.push({
+          puzzle: lvl.puzzles[qi],
+          caption: `${g.grade}. Sınıf · Seviye ${lvl.level} · Soru ${qi + 1} (${lvl.size}×${lvl.size})`
+        });
+      };
+
+      if (scope === 'question') {
+        push(gradeIdx, levelIdx, questionIdx);
+      } else if (scope === 'level') {
+        currentLevelData().puzzles.forEach((_, qi) => push(gradeIdx, levelIdx, qi));
+      } else if (scope === 'grade') {
+        DATA[gradeIdx].levels.forEach((lvl, li) => lvl.puzzles.forEach((_, qi) => push(gradeIdx, li, qi)));
+      } else {
+        DATA.forEach((g, gi) => g.levels.forEach((lvl, li) => lvl.puzzles.forEach((_, qi) => push(gi, li, qi))));
+      }
+      return items;
+    }
+
+    function chunk(arr, n) {
+      const out = [];
+      for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+      return out;
+    }
+
+    function buildPrintPages(items, perPage, withAnswers) {
+      const layout = LAYOUT[perPage] || LAYOUT[4];
+      const pages = chunk(items, perPage);
+      const totalPages = pages.length * (withAnswers ? 2 : 1);
+      let pageNo = 0;
+      let html = '';
+
+      function renderSet(showSolution) {
+        pages.forEach((group, gi) => {
+          pageNo++;
+          html += '<section class="print-page">';
+          html += '<div class="print-banner">' +
+                  '<div class="t1">ZEKA VE AKIL OYUNLARI</div>' +
+                  '<div class="t2">ABC BAĞLAMACA</div></div>';
+
+          if (showSolution) {
+            html += '<div style="text-align:center">' +
+                    '<span class="print-answer-tag">CEVAP ANAHTARI</span></div>';
+          } else if (gi === 0) {
+            html += `<div class="print-rules">${PRINT_RULES}</div>`;
+          }
+
+          html += `<div class="print-grid" style="grid-template-columns:repeat(${layout.cols},1fr)">`;
+          group.forEach(item => {
+            html += '<div class="print-card">' +
+                    `<div class="cap">${item.caption}</div>` +
+                    `<div class="frame" style="max-width:${layout.svgMax}">` +
+                    puzzleSvgMarkup(item.puzzle, showSolution) +
+                    '</div></div>';
+          });
+          html += '</div>';
+
+          html += '<div class="print-foot">' +
+                  '<span>ABC Bağlamaca Etkinliği</span>' +
+                  `<span>Sayfa ${pageNo} / ${totalPages}</span></div>`;
+          html += '</section>';
+        });
+      }
+
+      renderSet(false);
+      if (withAnswers) renderSet(true);
+      return html;
+    }
+
+    function scopeLabel(scope) {
+      const lvl = currentLevelData();
+      const grade = DATA[gradeIdx].grade;
+      if (scope === 'question') return `${grade}. Sınıf · Seviye ${lvl.level} · Soru ${questionIdx + 1}`;
+      if (scope === 'level') return `${grade}. Sınıf · Seviye ${lvl.level}`;
+      if (scope === 'grade') return `${grade}. Sınıf`;
+      return 'Tüm sorular';
+    }
+
+    function updatePdfSummary() {
+      const scope = pdfScope.value;
+      const perPage = parseInt(pdfPerPage.value, 10);
+      const count = collectPrintItems(scope).length;
+      const pages = Math.ceil(count / perPage) * (pdfAnswers.checked ? 2 : 1);
+      pdfSummary.textContent = `${scopeLabel(scope)} · ${count} bulmaca · ${pages} sayfa`;
+    }
+
+    function openPdfModal() {
+      updatePdfSummary();
+      pdfOverlay.classList.add('show');
+      pdfModal.classList.add('show');
+    }
+    function closePdfModal() {
+      pdfOverlay.classList.remove('show');
+      pdfModal.classList.remove('show');
+    }
+
+    function createPdf() {
+      const scope = pdfScope.value;
+      const perPage = parseInt(pdfPerPage.value, 10);
+      const withAnswers = pdfAnswers.checked;
+
+      const items = collectPrintItems(scope);
+      printArea.innerHTML = buildPrintPages(items, perPage, withAnswers);
+
+      const safeTitle = ('ABC-Baglamaca-' + scopeLabel(scope) + (withAnswers ? '-cevapli' : ''))
+        .replace(/[^\w\sğüşıöçĞÜŞİÖÇ.-]/g, '')
+        .replace(/\s+/g, '-');
+
+      const prevTitle = document.title;
+      document.title = safeTitle;
+      closePdfModal();
+
+      setTimeout(() => {
+        window.print();
+        document.title = prevTitle;
+      }, 80);
+    }
+
+    btnPdf.addEventListener('click', () => { playClick(); openPdfModal(); });
+    pdfCancel.addEventListener('click', () => { playClick(); closePdfModal(); });
+    pdfOverlay.addEventListener('click', closePdfModal);
+    pdfCreate.addEventListener('click', createPdf);
+    pdfScope.addEventListener('change', updatePdfSummary);
+    pdfPerPage.addEventListener('change', updatePdfSummary);
+    pdfAnswers.addEventListener('change', updatePdfSummary);
+
+    window.addEventListener('afterprint', () => { printArea.innerHTML = ''; });
 
     /* ── Başlat ── */
     buildGradeButtons();

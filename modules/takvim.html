@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Takvim — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script>window.MINIBILGE_BASE = '../';</script>
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/core/calendar-engine.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+    (async function () {
+      const school = MiniBilgeStorage.getSchool();
+      const yil = school.egitimYili || '2025-2026';
+      CalendarEngine.setYear(yil);
+      const cal = await CalendarEngine.loadCalendar();
+      const today = new Date();
+      const week = CalendarEngine.getCurrentWeek(cal, today);
+      const upcoming = CalendarEngine.getUpcomingEvents(cal, today, 8);
+      const tatiller = (cal.tatiller || []).slice(0, 8);
+
+      document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('takvim', `
+        <header class="page-header">
+          <h1>Akademik Takvim</h1>
+          <p class="lead">${yil} · MB-TKM · Hafta ${week?.hafta || '—'}</p>
+        </header>
+        <section class="panel">
+          <h2>Yaklaşan Günler</h2>
+          ${upcoming.length ? upcoming.map(e => `
+            <div class="list-item"><span>${e.ad}</span><span class="meta">${e.tarih || (e.baslangic || '')}</span></div>
+          `).join('') : '<p class="empty-state">Yaklaşan kayıt yok.</p>'}
+        </section>
+        <section class="panel">
+          <h2>Tatiller</h2>
+          ${tatiller.map(t => `
+            <div class="list-item"><span>${t.ad}</span><span class="meta">${t.baslangic}${t.bitis && t.bitis !== t.baslangic ? ' – ' + t.bitis : ''}</span></div>
+          `).join('')}
+        </section>
+      `);
+    })();
+  </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Okul Evrakları — MiniBilge Öğretmen</title>
+  <title>Evrak Merkezi — MiniBilge Öğretmen</title>
   <link rel="stylesheet" href="../assets/css/platform.css">
   <link rel="stylesheet" href="../assets/css/belgeler.css">
 </head>
@@ -22,8 +22,8 @@
     const inner = `
       <div class="belge-platform" style="max-width:100%;padding:0;">
         <header class="belge-hero">
-          <h2>📁 Okul Evrakları</h2>
-          <p>İlkokul öğretmenlerinin eğitim-öğretim yılı boyunca ihtiyaç duyduğu tüm belgeleri oluşturun, yazdırın veya indirin.</p>
+          <h2>Evrak Merkezi</h2>
+          <p>Planlar, zümre, rehberlik, kulüp, belirli gün, ölçme, veli ve okul evrakları — tek merkez (MB-ARCH-001).</p>
           <span class="doc-count-badge" id="docCount"></span>
         </header>
         <div class="panel">
@@ -37,7 +37,7 @@
         </div>
       </div>`;
 
-    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('okul-evraklari', inner);
+    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('evrak-merkezi', inner);
 
     const params = new URLSearchParams(window.location.search);
     if (params.get('q')) {

@@ -1,21 +1,31 @@
 (function () {
   'use strict';
 
+  /**
+   * MB-ARCH-001 Freeze Menü — 8 üst seviye.
+   * Zümre / kulüp / İYEP vb. Evrak Merkezi altındadır.
+   */
   const MENU = [
-    { id: 'home', label: 'Ana Sayfa', icon: '🏠', path: 'index.html' },
-    { id: 'yillik-plan', label: 'Yıllık Plan', icon: '📆', path: 'modules/yillik-plan.html' },
-    { id: 'gunluk-plan', label: 'Günlük Plan', icon: '📖', path: 'modules/gunluk-plan.html' },
-    { id: 'okul-evraklari', label: 'Okul Evrakları', icon: '📁', path: 'documents/index.html' },
-    { id: 'belirli-gun', label: 'Belirli Gün ve Haftalar', icon: '🎉', path: 'modules/belirli-gun.html' },
-    { id: 'kulup', label: 'Kulüp Evrakları', icon: '🎭', path: 'modules/kulup.html' },
-    { id: 'destek-egitim', label: 'Destek Eğitim', icon: '🤝', path: 'modules/destek-egitim.html' },
-    { id: 'iyep', label: 'İYEP', icon: '📚', path: 'modules/iyep.html' },
-    { id: 'egzersiz', label: 'Egzersiz Planları', icon: '🏃', path: 'modules/egzersiz.html' },
-    { id: 'zumre', label: 'Zümre Evrakları', icon: '👥', path: 'modules/zumre.html' },
-    { id: 'rehberlik', label: 'Rehberlik Evrakları', icon: '🧭', path: 'modules/rehberlik.html' },
-    { id: 'olcme', label: 'Ölçme ve Değerlendirme', icon: '📊', path: 'modules/olcme.html' },
-    { id: 'hesabim', label: 'Hesabım', icon: '👤', path: 'modules/hesabim.html' },
-    { id: 'ayarlar', label: 'Ayarlar', icon: '⚙️', path: 'modules/ayarlar.html' }
+    { id: 'home', label: 'Ana Sayfa', icon: '⌂', path: 'index.html' },
+    { id: 'yillik-plan', label: 'Yıllık Plan', icon: '☰', path: 'modules/yillik-plan.html' },
+    { id: 'gunluk-plan', label: 'Günlük Plan', icon: '✎', path: 'modules/gunluk-plan.html' },
+    { id: 'evrak-merkezi', label: 'Evrak Merkezi', icon: '▤', path: 'documents/index.html' },
+    { id: 'ogretim-programi', label: 'Öğretim Programı', icon: '◎', path: 'modules/ogretim-programi.html' },
+    { id: 'takvim', label: 'Takvim', icon: '▦', path: 'modules/takvim.html' },
+    { id: 'hesabim', label: 'Hesabım', icon: '☺', path: 'modules/hesabim.html' },
+    { id: 'ayarlar', label: 'Ayarlar', icon: '⚙', path: 'modules/ayarlar.html' }
+  ];
+
+  /** Evrak Merkezi alt grupları (ARCH-001) — deep-link hedefleri */
+  const EVRAK_ALT = [
+    { id: 'planlar', label: 'Planlar', path: 'documents/index.html?grup=planlar' },
+    { id: 'zumre', label: 'Zümre Evrakları', path: 'modules/zumre.html' },
+    { id: 'rehberlik', label: 'Rehberlik', path: 'modules/rehberlik.html' },
+    { id: 'kulup', label: 'Kulüpler', path: 'modules/kulup.html' },
+    { id: 'belirli-gun', label: 'Belirli Gün ve Haftalar', path: 'modules/belirli-gun.html' },
+    { id: 'olcme', label: 'Ölçme Değerlendirme', path: 'modules/olcme.html' },
+    { id: 'destek', label: 'Destek Eğitim / İYEP', path: 'modules/destek-egitim.html' },
+    { id: 'envanter', label: 'Evrak Envanteri', path: 'modules/envanter.html' }
   ];
 
   function resolveHref(path) {
@@ -40,7 +50,7 @@
     return `
       <aside class="sidebar no-print">
         <div class="sidebar-brand">
-          <span class="brand-icon">🎓</span>
+          <span class="brand-mark">MB</span>
           <div>
             <strong>MiniBilge</strong>
             <small>Öğretmen</small>
@@ -49,7 +59,8 @@
         <nav class="sidebar-nav">
           ${MENU.map(item => {
             const href = resolveHref(item.path);
-            const active = activeId === item.id || path.endsWith(item.path.split('/').pop());
+            const file = item.path.split('?')[0].split('/').pop();
+            const active = activeId === item.id || path.endsWith(file);
             return `<a href="${href}" class="nav-item${active ? ' active' : ''}">
               <span class="nav-icon">${item.icon}</span>
               <span class="nav-label">${item.label}</span>
@@ -57,7 +68,7 @@
           }).join('')}
         </nav>
         <div class="sidebar-footer">
-          <small>Türkiye Yüzyılı Maarif Modeli</small>
+          <small>TYMM · Eğitim İşletim Sistemi</small>
         </div>
       </aside>`;
   }
@@ -70,5 +81,5 @@
       </div>`;
   }
 
-  window.MiniBilgeNav = { MENU, renderSidebar, renderLayout };
+  window.MiniBilgeNav = { MENU, EVRAK_ALT, renderSidebar, renderLayout, resolveHref };
 })();

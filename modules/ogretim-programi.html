@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Öğretim Programı — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script>window.MINIBILGE_BASE = '../';</script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('ogretim-programi', `
+      <header class="page-header">
+        <h1>Öğretim Programı</h1>
+        <p class="lead">Türkiye Yüzyılı Maarif Modeli — platformun kalbi. Program ≠ Plan ≠ Belge.</p>
+      </header>
+      <section class="panel">
+        <h2>Gezgin (MB-DM-001)</h2>
+        <p>Sınıf → Ders → Program Birimi (tema / öğrenme alanı / ünite) → Öğrenme Çıktısı → Beceri · Değer · Eğilim · İçerik · Süreç · Ölçme</p>
+        <p class="meta">Kanonik veri MB-DM-002 ve MB-JSON-001 sonrası bağlanacak. Mevcut curriculum JSON’ları geçici keşif verisidir.</p>
+        <div class="quick-actions" style="margin-top:1rem">
+          <a class="quick-btn primary" href="yillik-plan.html">Yıllık Plan Üret</a>
+          <a class="quick-btn" href="../documents/index.html">Evrak Merkezi</a>
+        </div>
+      </section>
+    `);
+  </script>
+</body>
+</html>

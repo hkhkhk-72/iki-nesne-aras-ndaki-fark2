@@ -58,12 +58,15 @@ Anayasa: `docs/MB-DM-001-OGRETIM-PROGRAMI-DOMAIN-MODELI.md`
 Bağlayıcı sıra:
 
 1. **MB-DM-001** — Öğretim Programı Domain Modeli *(anayasa — tamamlandı)* → `docs/MB-DM-001-OGRETIM-PROGRAMI-DOMAIN-MODELI.md`
-2. **MB-DM-002** — Entity Detay Spesifikasyonu
-3. **MB-TPM-001** — 1. Sınıf Türkçe domain uygulaması
-4. **MB-DB-001** — Fiziksel veri tabanı
-5. **MB-JSON-001** — Makine tarafından işlenebilir JSON şeması
-6. **MB-ALG-001** — Yıllık plan üretim algoritması
-7. **MB-APP-001** — Uygulama entegrasyonu
+2. **MB-ARCH-001** — Platform Mimari + Ana Ekran Freeze *(tamamlandı)* → `docs/MB-ARCH-001-PLATFORM-MIMARI-VE-ANA-EKRAN.md`
+3. **MB-DM-002** — Entity Detay Spesifikasyonu
+4. **MB-TPM-001** — 1. Sınıf Türkçe domain uygulaması
+5. **MB-DB-001** — Fiziksel veri tabanı
+6. **MB-JSON-001** — Makine tarafından işlenebilir JSON şeması
+7. **MB-ALG-001** — Yıllık plan üretim algoritması
+8. **MB-APP-001** — Uygulama entegrasyonu (freeze IA’ya göre)
+
+**Freeze menü (8):** Ana Sayfa · Yıllık Plan · Günlük Plan · Evrak Merkezi · Öğretim Programı · Takvim · Hesabım · Ayarlar
 
 Mevcut `assets/data/curriculum/*.json` dosyaları geçici keşif verisidir; kanonik şema değildir.
 

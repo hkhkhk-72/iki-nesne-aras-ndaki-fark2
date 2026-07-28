@@ -46,13 +46,36 @@ docs/                   # Yaşayan dokümanlar
 
 ## Oyun Motorları
 
-Motorlar içerikten tamamen bağımsızdır. Yeni bir kazanım eklemek için yalnızca JSON payload değiştirilir:
+Motorlar hem içerikten hem **dersten** bağımsızdır. Yeni bir kazanım eklemek için yalnızca payload değiştirilir:
 
 | Motor | ID | Kullanım |
 |-------|-----|----------|
+| Konu Anlatım | `lesson` | Slayt tabanlı ders anlatımı |
 | Eşleştirme | `matching` | Sayı-nesne, işlem-sonuç eşleştirme |
 | Sürükle Bırak | `drag_drop` | Sıralama, kategorileme |
 | Karşılaştırma | `comparison` | Daha fazla, daha az, eşit |
+
+## Ders Modülleri
+
+MiniBilge bir Eğitim İşletim Sistemi'dir: motorlar çekirdek, dersler eklentidir.
+
+```
+src/subjects/
+  math/         → İlkokul Matematik (etkin)
+  index.ts      → registerSubject ile OS'e kayıt
+```
+
+Aynı motor birden fazla derste kullanılabilir — kod değişmez, yalnızca veri değişir:
+
+```
+Karşılaştırma Motoru
+├── Matematik  → "3 elma mı 5 elma mı fazla?"
+├── Türkçe     → "hangi kelime daha uzun?"     (planlandı)
+└── Fen        → "hangi hayvan daha ağır?"      (planlandı)
+```
+
+> **Kapsam kuralı:** Ürün Anayasası gereği matematik tamamlanmadan başka ders
+> etkinleştirilmez. Mimari hazırdır, içerik üretimi sıralıdır.
 
 ## Dokümantasyon
 

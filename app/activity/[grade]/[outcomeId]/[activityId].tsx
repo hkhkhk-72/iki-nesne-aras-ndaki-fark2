@@ -6,6 +6,7 @@ import { ScreenHeader, Button } from '@/components/ui';
 import { getActivity } from '@/core/content-loader';
 import { getEngine } from '@/core/engine-registry';
 import { saveActivityProgress } from '@/core/progress-store';
+import { DEFAULT_SUBJECT } from '@/core/subject-registry';
 import { colors, spacing, typography, radius } from '@/theme';
 import type { EngineResult } from '@/core/types';
 
@@ -24,6 +25,7 @@ export default function ActivityScreen() {
     async (engineResult: EngineResult) => {
       setResult(engineResult);
       await saveActivityProgress({
+        subject: DEFAULT_SUBJECT,
         outcomeId,
         activityId,
         completed: engineResult.completed,

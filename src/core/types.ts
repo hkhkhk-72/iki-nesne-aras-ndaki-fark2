@@ -7,6 +7,35 @@ import type React from 'react';
 
 export type Grade = 1 | 2 | 3 | 4;
 
+/**
+ * Ders kimlikleri. Oyun motorları hiçbir derse bağlı değildir;
+ * ders yalnızca içeriğin adreslenmesi ve kayıt için kullanılır.
+ *
+ * Ürün Anayasası: matematik tamamlanmadan başka ders etkinleştirilmez.
+ * Bu yüzden tip burada tanımlıdır ama yalnızca 'math' modülü kayıtlıdır.
+ */
+export type SubjectId = 'math' | 'turkish' | 'life_studies' | 'science' | 'english';
+
+export interface SubjectMeta {
+  id: SubjectId;
+  title: string;
+  shortTitle: string;
+  icon: string;
+  color: string;
+  grades: Grade[];
+  /** Anayasa gereği kapsam kilidi; yalnızca matematik true. */
+  enabled: boolean;
+}
+
+/**
+ * Bir dersin Eğitim OS'e bağlanma sözleşmesi.
+ * Yeni ders eklemek = bu arayüzü implement edip registry'e kaydetmek.
+ */
+export interface SubjectModule {
+  meta: SubjectMeta;
+  getCurriculum(grade: Grade): GradeCurriculum | undefined;
+}
+
 export type ActivityMode =
   | 'learn'
   | 'play'
@@ -91,6 +120,7 @@ export interface LearningOutcome {
   code: string;
   title: string;
   description: string;
+  subject: SubjectId;
   grade: Grade;
   unitId: string;
   order: number;
@@ -106,6 +136,7 @@ export interface Unit {
   id: string;
   title: string;
   description: string;
+  subject: SubjectId;
   grade: Grade;
   order: number;
   icon: string;
@@ -114,6 +145,7 @@ export interface Unit {
 }
 
 export interface GradeCurriculum {
+  subject: SubjectId;
   grade: Grade;
   title: string;
   units: Unit[];
@@ -121,6 +153,8 @@ export interface GradeCurriculum {
 }
 
 export interface StudentProgress {
+  /** Dersler arası çakışmayı önler; eski kayıtlar 'math' sayılır. */
+  subject: SubjectId;
   outcomeId: string;
   activityId: string;
   completed: boolean;
@@ -134,6 +168,8 @@ export interface StudentProfile {
   name: string;
   grade: Grade;
   avatar: string;
+  /** Öğrencinin üzerinde çalıştığı ders; şu an yalnızca matematik. */
+  activeSubject?: SubjectId;
   progress: StudentProgress[];
   collections: string[];
   totalStars: number;

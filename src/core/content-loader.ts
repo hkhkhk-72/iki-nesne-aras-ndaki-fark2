@@ -1,49 +1,85 @@
-import type { GradeCurriculum } from './types';
+import type { Grade, GradeCurriculum, SubjectId } from './types';
 import {
-  allCurricula,
-  grade1Curriculum,
-  grade2Curriculum,
-  grade3Curriculum,
-  grade4Curriculum,
-  getCurriculumStats,
-} from '../content/grades';
+  DEFAULT_SUBJECT,
+  getEnabledSubjects,
+  getSubject,
+  getSubjectCurriculum,
+} from './subject-registry';
+import { initializeSubjects } from '@/subjects';
 
-const curriculumMap: Record<number, GradeCurriculum> = {
-  1: grade1Curriculum,
-  2: grade2Curriculum,
-  3: grade3Curriculum,
-  4: grade4Curriculum,
-};
+/**
+ * İçerik erişim katmanı.
+ *
+ * Tüm sorgular ders (subject) boyutunu taşır; varsayılan matematiktir, bu
+ * sayede mevcut ekranlar ve route'lar değişmeden çalışır. Yeni bir ders
+ * eklendiğinde aynı fonksiyonlar subject parametresiyle kullanılır.
+ */
 
-export function getCurriculum(grade: number): GradeCurriculum | undefined {
-  return curriculumMap[grade];
+/** Registry'nin dolu olmasını garanti eder (idempotent). */
+function ensureReady(): void {
+  initializeSubjects();
 }
 
-export function getOutcome(grade: number, outcomeId: string) {
-  const curriculum = getCurriculum(grade);
-  return curriculum?.outcomes.find((o) => o.id === outcomeId);
+export function getCurriculum(
+  grade: number,
+  subject: SubjectId = DEFAULT_SUBJECT,
+): GradeCurriculum | undefined {
+  ensureReady();
+  return getSubjectCurriculum(subject, grade as Grade);
 }
 
-export function getUnit(grade: number, unitId: string) {
-  const curriculum = getCurriculum(grade);
-  return curriculum?.units.find((u) => u.id === unitId);
+export function getOutcome(
+  grade: number,
+  outcomeId: string,
+  subject: SubjectId = DEFAULT_SUBJECT,
+) {
+  return getCurriculum(grade, subject)?.outcomes.find((o) => o.id === outcomeId);
 }
 
-export function getActivity(grade: number, outcomeId: string, activityId: string) {
-  const outcome = getOutcome(grade, outcomeId);
-  return outcome?.activities.find((a) => a.id === activityId);
+export function getUnit(
+  grade: number,
+  unitId: string,
+  subject: SubjectId = DEFAULT_SUBJECT,
+) {
+  return getCurriculum(grade, subject)?.units.find((u) => u.id === unitId);
 }
 
-export function getAllGrades(): number[] {
-  return Object.keys(curriculumMap).map(Number);
+export function getActivity(
+  grade: number,
+  outcomeId: string,
+  activityId: string,
+  subject: SubjectId = DEFAULT_SUBJECT,
+) {
+  return getOutcome(grade, outcomeId, subject)?.activities.find((a) => a.id === activityId);
 }
 
-export function getAllCurricula(): GradeCurriculum[] {
-  return allCurricula;
+export function getAllGrades(subject: SubjectId = DEFAULT_SUBJECT): number[] {
+  ensureReady();
+  return getSubject(subject)?.meta.grades ?? [];
 }
 
-export function getTotalStats() {
-  const stats = getCurriculumStats();
+export function getAllCurricula(subject: SubjectId = DEFAULT_SUBJECT): GradeCurriculum[] {
+  ensureReady();
+  const module = getSubject(subject);
+  if (!module) return [];
+  return module.meta.grades
+    .map((g) => module.getCurriculum(g))
+    .filter((c): c is GradeCurriculum => Boolean(c));
+}
+
+export function getCurriculumStats(subject: SubjectId = DEFAULT_SUBJECT) {
+  return getAllCurricula(subject).map((c) => ({
+    subject: c.subject,
+    grade: c.grade,
+    title: c.title,
+    units: c.units.length,
+    outcomes: c.outcomes.length,
+    activities: c.outcomes.reduce((sum, o) => sum + o.activities.length, 0),
+  }));
+}
+
+export function getTotalStats(subject: SubjectId = DEFAULT_SUBJECT) {
+  const stats = getCurriculumStats(subject);
   return {
     grades: stats.length,
     units: stats.reduce((s, g) => s + g.units, 0),
@@ -53,4 +89,11 @@ export function getTotalStats() {
   };
 }
 
-export { getCurriculumStats };
+/** Tüm etkin derslerin toplamı — Eğitim OS genel görünümü. */
+export function getPlatformStats() {
+  ensureReady();
+  return getEnabledSubjects().map((s) => ({
+    ...s.meta,
+    ...getTotalStats(s.meta.id),
+  }));
+}

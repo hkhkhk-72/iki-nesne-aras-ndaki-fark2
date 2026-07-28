@@ -18,13 +18,58 @@
 
 ```
 app/           → Route ekranları (ince katman)
-src/core/      → İş mantığı, tipler, kayıtlar
-src/engines/   → Oyun motorları (içerikten bağımsız)
-src/content/   → JSON müfredat verileri
+src/core/      → OS çekirdeği: tipler, motor kaydı, ders kaydı
+src/engines/   → Oyun motorları (ders ve içerikten bağımsız)
+src/subjects/  → Ders modülleri (şu an yalnızca math)
+src/content/   → Müfredat verileri ve içerik fabrikaları
 src/features/  → (gelecek) Öğrenci, öğretmen, AI modülleri
 src/components → Paylaşılan UI
 src/theme/     → Tasarım tokenları
 ```
+
+### Katman Bağımsızlığı
+
+Eğitim OS iki bağımsız eksende çalışır:
+
+| Katman | Bilgisi | Örnek |
+|--------|---------|-------|
+| **Motorlar (kernel)** | Dersten habersiz | `comparison` yalnızca iki grup ve doğru cevap bilir |
+| **Ders modülleri** | İçeriği sağlar | `math` modülü müfredatı üretir |
+
+Bu ayrım sayesinde bir motor birden fazla derste yeniden kullanılır:
+
+```
+Karşılaştırma Motoru
+├── Matematik  → "3 elma mı 5 elma mı fazla?"
+├── Türkçe     → "hangi kelime daha uzun?"      (gelecek)
+└── Fen        → "hangi hayvan daha ağır?"       (gelecek)
+```
+
+### Ders Modülü Sözleşmesi
+
+```typescript
+interface SubjectModule {
+  meta: SubjectMeta;                                  // id, başlık, ikon, sınıflar, enabled
+  getCurriculum(grade: Grade): GradeCurriculum | undefined;
+}
+```
+
+Ders eklemek için oyun motorlarında **hiçbir değişiklik gerekmez**:
+
+1. `src/subjects/<ders>/index.ts` içinde `SubjectModule` implement et
+2. Kendi konu tiplerini ve içerik fabrikasını yaz
+3. `src/subjects/index.ts` içinde `registerSubject(...)` ile kaydet
+4. `meta.enabled` ile kapsam kilidini yönet
+
+> **Anayasa kuralı:** Matematik tamamlanmadan başka ders `enabled: true` yapılmaz.
+> Planlanan dersler `PLANNED_SUBJECTS` içinde tutulur.
+
+### Ders Boyutu ve Veri Bütünlüğü
+
+Kazanım kimlikleri dersler arasında tekrar edebileceği için (`out-1-2-1` hem
+matematikte hem Türkçe'de olabilir) ilerleme kayıtları **ders + kazanım**
+ikilisiyle eşleşir. `StudentProgress.subject` alanı bu yüzden zorunludur;
+alan eklenmeden önce yazılmış kayıtlar okunurken `math` sayılır.
 
 ### Oyun Motoru Sözleşmesi
 

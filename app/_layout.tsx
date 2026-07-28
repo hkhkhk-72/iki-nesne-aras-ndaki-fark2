@@ -4,11 +4,13 @@ import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StyleSheet } from 'react-native';
 import { initializeEngines } from '@/engines';
+import { initializeSubjects } from '@/subjects';
 import { colors } from '@/theme';
 
 export default function RootLayout() {
   useEffect(() => {
     initializeEngines();
+    initializeSubjects();
   }, []);
 
   return (

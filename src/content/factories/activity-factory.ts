@@ -4,12 +4,15 @@ import type {
   ComparisonSymbol,
   DragDropPayload,
   Grade,
+  GradeCurriculum,
   LearningOutcome,
   MatchingPayload,
+  SubjectId,
   Unit,
 } from '@/core/types';
 import { buildLesson } from './lesson-factory';
 
+/** Matematiğe özgü konu tipleri. Her ders kendi konu tiplerini tanımlar. */
 export type TopicType =
   | 'counting'
   | 'comparison'
@@ -550,7 +553,7 @@ export function buildActivities(def: OutcomeDef): ActivityConfig[] {
   return activities;
 }
 
-export function buildOutcome(def: OutcomeDef): LearningOutcome {
+export function buildOutcome(def: OutcomeDef, subject: SubjectId = 'math'): LearningOutcome {
   const lesson = buildLesson(def);
   const lessonActivity: ActivityConfig = {
     id: `act-${def.id.replace('out-', '')}-learn`,
@@ -569,6 +572,7 @@ export function buildOutcome(def: OutcomeDef): LearningOutcome {
     code: def.code,
     title: def.title,
     description: def.description,
+    subject,
     grade: def.grade,
     unitId: def.unitId,
     order: def.order,
@@ -581,11 +585,12 @@ export function buildOutcome(def: OutcomeDef): LearningOutcome {
   };
 }
 
-export function buildUnit(def: UnitDef): Unit {
+export function buildUnit(def: UnitDef, subject: SubjectId = 'math'): Unit {
   return {
     id: def.id,
     title: def.title,
     description: def.description,
+    subject,
     grade: def.grade,
     order: def.order,
     icon: def.icon,
@@ -599,11 +604,13 @@ export function buildCurriculum(
   title: string,
   units: UnitDef[],
   outcomes: OutcomeDef[],
-) {
+  subject: SubjectId = 'math',
+): GradeCurriculum {
   return {
+    subject,
     grade,
     title,
-    units: units.map(buildUnit),
-    outcomes: outcomes.map(buildOutcome),
+    units: units.map((u) => buildUnit(u, subject)),
+    outcomes: outcomes.map((o) => buildOutcome(o, subject)),
   };
 }

@@ -12,6 +12,22 @@ MiniBilge, yaşayan bir **Eğitim İşletim Sistemi (Education OS)**'tir. Sırad
 - Geliştirmeye **1. Sınıf Matematik** ile başlanır
 - Matematik bitmeden başka alana geçilmez
 
+### Kapsam ile Mimari Ayrımı
+
+Kapsam kuralı **içerik üretimi** için geçerlidir, mimari için değil.
+
+MiniBilge bir Eğitim İşletim Sistemi olduğu için altyapı ders bağımsız
+tasarlanır: oyun motorları hiçbir dersi bilmez, dersler birer modül olarak
+kaydedilir. Bu, ileride Türkçe/Fen/Hayat Bilgisi eklenirken sıfırdan
+geliştirme değil yalnızca içerik üretimi gerektirmesini sağlar.
+
+Kural nettir:
+
+- Mimari çok derse **hazır** olur → izinli, hatta zorunlu
+- Matematik dışında ders **içeriği yayınlanır** → matematik bitene kadar yasak
+
+Planlanan dersler `PLANNED_SUBJECTS` içinde `enabled: false` olarak durur.
+
 ## Temel Felsefe
 
 Çocuğa soru çözdürmek değil; matematiği **yaşayarak, keşfederek ve eğlenerek** öğrenmesini sağlamak.

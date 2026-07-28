@@ -1,4 +1,10 @@
-import type { ActivityConfig, LearningOutcome, StudentProgress } from './types';
+import type {
+  ActivityConfig,
+  LearningOutcome,
+  StudentProgress,
+  SubjectId,
+} from './types';
+import { DEFAULT_SUBJECT } from './subject-registry';
 
 const LESSON_ACTIVITY_SUFFIX = '-learn';
 
@@ -6,30 +12,51 @@ export function isLessonActivity(activityId: string): boolean {
   return activityId.endsWith(LESSON_ACTIVITY_SUFFIX);
 }
 
-export function isLessonCompleted(outcomeId: string, progress: StudentProgress[]): boolean {
+/**
+ * Kazanım kimlikleri dersler arasında tekrar edebileceği için (örn. hem
+ * matematik hem Türkçe'de out-1-2-1) eşleşme her zaman ders + kazanım
+ * ikilisi üzerinden yapılır.
+ */
+function matchesOutcome(
+  p: StudentProgress,
+  outcomeId: string,
+  subject: SubjectId,
+): boolean {
+  return p.subject === subject && p.outcomeId === outcomeId;
+}
+
+export function isLessonCompleted(
+  outcomeId: string,
+  progress: StudentProgress[],
+  subject: SubjectId = DEFAULT_SUBJECT,
+): boolean {
   return progress.some(
-    (p) => p.outcomeId === outcomeId && isLessonActivity(p.activityId) && p.completed,
+    (p) => matchesOutcome(p, outcomeId, subject) && isLessonActivity(p.activityId) && p.completed,
   );
 }
 
-export function isPlayCompleted(outcomeId: string, progress: StudentProgress[]): boolean {
+export function isPlayCompleted(
+  outcomeId: string,
+  progress: StudentProgress[],
+  subject: SubjectId = DEFAULT_SUBJECT,
+): boolean {
   return progress.some(
-    (p) =>
-      p.outcomeId === outcomeId &&
-      p.activityId.includes('-play') &&
-      p.completed,
+    (p) => matchesOutcome(p, outcomeId, subject) && p.activityId.includes('-play') && p.completed,
   );
 }
 
-/** Challenge unlocks after lesson + play mode completed */
+/** Meydan okuma, konu anlatımı ve oyna modu tamamlanınca açılır. */
 export function resolveActivityUnlock(
   activity: ActivityConfig,
   outcomeId: string,
   progress: StudentProgress[],
+  subject: SubjectId = DEFAULT_SUBJECT,
 ): boolean {
-  if (activity.unlocked && activity.mode !== 'challenge') return true;
   if (activity.mode === 'challenge') {
-    return isLessonCompleted(outcomeId, progress) && isPlayCompleted(outcomeId, progress);
+    return (
+      isLessonCompleted(outcomeId, progress, subject) &&
+      isPlayCompleted(outcomeId, progress, subject)
+    );
   }
   return activity.unlocked;
 }
@@ -40,7 +67,7 @@ export function getUnlockedActivities(
 ): ActivityConfig[] {
   return outcome.activities.map((a) => ({
     ...a,
-    unlocked: resolveActivityUnlock(a, outcome.id, progress),
+    unlocked: resolveActivityUnlock(a, outcome.id, progress, outcome.subject),
   }));
 }
 
@@ -51,11 +78,21 @@ export function calculateOutcomeProgress(
   const activityIds = outcome.activities.map((a) => a.id);
   if (activityIds.length === 0) return 0;
   const completed = activityIds.filter((id) =>
-    progress.some((p) => p.outcomeId === outcome.id && p.activityId === id && p.completed),
+    progress.some(
+      (p) => matchesOutcome(p, outcome.id, outcome.subject) && p.activityId === id && p.completed,
+    ),
   ).length;
   return Math.round((completed / activityIds.length) * 100);
 }
 
-export function countCompletedLessons(progress: StudentProgress[]): number {
-  return progress.filter((p) => isLessonActivity(p.activityId) && p.completed).length;
+export function countCompletedLessons(
+  progress: StudentProgress[],
+  subject?: SubjectId,
+): number {
+  return progress.filter(
+    (p) =>
+      isLessonActivity(p.activityId) &&
+      p.completed &&
+      (subject ? p.subject === subject : true),
+  ).length;
 }

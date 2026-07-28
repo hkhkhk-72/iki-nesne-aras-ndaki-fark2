@@ -1,6 +1,6 @@
-# Mavi Kitap — Kararlar 234 · 235 · 236
+# Mavi Kitap — Kararlar 231 · 234–239
 
-> Bu kararlar MB-MAT-1.1.01 "İlk Bakış" ile birlikte yürürlüğe girmiştir.
+> Bu kararlar MB-MAT-1.1.01 "İlk Bakış", MB-CHAR-002 ve MB-AI-001 ile yürürlüktedir.
 > Kod denetimi: `validateExperience()` + `npm run mes:check`.
 
 ## 📘 Karar No: 231 — Sezgisel Matematik Önceliği *(hatırlatma)*
@@ -75,3 +75,36 @@ Her sahnede en fazla **4 katman**:
 Aynı anda onlarca efekt çalmaz. Dikkat dağınıklığını azaltır, odağı korur.
 
 **Kod:** `SceneSpec.soundBudget` — dört alan zorunlu doldurulur.
+
+---
+
+## 📘 Karar No: 237 — Sessizlik de Rehberliğin Bir Parçasıdır
+
+Bilge Baykuş, çocuk aktif olarak düşünürken veya keşfederken konuşmaz.
+Gereksiz yönlendirme, keşif duygusunu zayıflatır.
+
+**Kod:** `BilgeSilenceReason` · `decideIntervention` zorunlu sus (`drag_active`, `explore_active`, düşünme penceresi).
+
+---
+
+## 📘 Karar No: 238 — Yardım Basamaklıdır
+
+Bilge hiçbir zaman doğrudan çözümü sunmaz. Yardım sırası:
+
+1. İşaret etme (sessiz bakış)
+2. Küçük ipucu
+3. Düşünmeyi yönlendirme
+4. Birlikte çözme (cevap yok)
+
+**Kod:** `HELP_LADDER` · `HelpLevel` 1–4 · `lineForHelpLevel()`.
+
+---
+
+## 📘 Karar No: 239 — Başarı Sonuçta Değil Süreçtedir
+
+MiniBilge'de övgü; doğru cevaba değil, gösterilen çabaya, meraka, sabra
+ve öğrenme stratejisine yöneliktir.
+
+Örnek: *"Harika, vazgeçmedin."* · *"Dikkatlice inceledin."* · *"Yeni bir yol denedin."*
+
+**Kod:** `EFFORT_PRAISE` · `isProcessPraise()` · `after_effort` tetikleyicisi.

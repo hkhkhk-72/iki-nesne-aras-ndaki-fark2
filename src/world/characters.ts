@@ -72,12 +72,14 @@ export function getCharacter(id: CharacterId): CharacterProfile {
 export const FORBIDDEN_PHRASES = [
   'yanlış',
   'hatalı',
+  'hatalısın',
   'başarısız',
   'olmadı',
   'yapamadın',
   'tekrar dene',
   'kaybettin',
   'puan kazandın',
+  'doğru cevabı bulamadın',
 ];
 
 /** Bir replik Character Bible kurallarına uyuyor mu? */

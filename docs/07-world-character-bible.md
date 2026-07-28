@@ -43,8 +43,14 @@ Kışın köye kar yağar, sonbaharda yaprak döker. Köy çocuğu hatırlar.
 **İlk Bakış kuralı:** Açılışta dalda sessizce gülümser. Çocuk "Bana Yardım Et"
 dedikten sonra ilk kez konuşur.
 
-Ayrıntılı rehberlik sistemi: [MB-CHAR-002](./10-mb-char-002-bilge-rehberlik-sistemi.md)
+Ayrıntılı rehberlik anayasası: [MB-CHAR-002](./10-mb-char-002-bilge-rehberlik-sistemi.md)
 · Kod: `src/world/bilge-guidance.ts`
+
+Karar motoru (ne zaman konuşur): [MB-AI-001](./11-mb-ai-001-ogrenme-gozlem-karar-motoru.md)
+· Kod: `src/ai/decision-engine.ts`
+
+**4 seviyeli yardım:** bakış → küçük ipucu → yönlendirme → birlikte (cevap yok).
+**Övgü:** sonuç değil çaba ("vazgeçmedin", "inceledin", "düşündün").
 
 ### 🐿️ Fındık Sincap — En yakın arkadaş
 

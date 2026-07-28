@@ -65,18 +65,19 @@ export function buildInsights(code: string, behaviors: SceneBehavior[]): Experie
     const hesitated = related.some(hasHesitation);
     const idled = related.some(isIdlePattern);
 
-    // Çocuğa: her zaman cesaretlendirici, asla yargılayıcı değil
+    // Çocuğa: süreç övgüsü (Karar 239) — sonuç/puan yok
     insights.push({
       audience: 'child',
       level,
       concept,
       message:
         level === 'guclu'
-          ? `${concept} konusunda çok rahatsın! Fındık sana güveniyor.`
+          ? 'Harika, vazgeçmedin. Dikkatlice inceledin — Fındık sana güveniyor.'
           : level === 'gelisiyor'
-            ? `${concept} konusunda ilerliyorsun. Biraz daha keşfedelim mi?`
-            : `${concept} konusunu birlikte tekrar keşfedelim. Bilge Baykuş yanında.`,
-      nextStep: level === 'guclu' ? 'Yeni bir maceraya geçebilirsin.' : 'Aynı sahneyi tekrar oynayabilirsin.',
+            ? 'Güzel düşündün. Birlikte başka bir açıdan bakalım mı?'
+            : 'Ben yanındayım. Bir ipucu daha keşfetmek ister misin?',
+      nextStep:
+        level === 'guclu' ? 'Yeni bir maceraya geçebilirsin.' : 'Aynı sahneyi birlikte tekrar keşfedelim.',
     });
 
     // Öğretmene: davranış temelli, uygulanabilir

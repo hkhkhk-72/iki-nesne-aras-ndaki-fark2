@@ -1,11 +1,23 @@
 /**
- * MES-002 kalite kontrolü.
- * Yayın öncesi her mikro deneyimin standarda uyduğunu doğrular.
+ * MES-002 + MB-CHAR-002 + MB-AI-001 kalite kontrolü.
  */
 import { MATH_EXPERIENCES } from '@/modules/math';
 import { validateExperience } from '@/mes/experience-registry';
 import { validateLine } from '@/world/characters';
-import { enforceSpeakerPolicy } from '@/world/bilge-guidance';
+import {
+  enforceSpeakerPolicy,
+  HELP_LADDER,
+  EFFORT_PRAISE,
+  validateBilgeLine,
+} from '@/world/bilge-guidance';
+import {
+  decideIntervention,
+  DEFAULT_THRESHOLDS,
+  toTeacherSafeSummary,
+  teacherVisible,
+  personalizationOnly,
+} from '@/ai/decision-engine';
+import type { SceneBehavior } from '@/ai/observer';
 import type { MicroExperience, CharacterId } from '@/mes/types';
 
 function collectLines(exp: MicroExperience): { line: string; speaker: CharacterId }[] {
@@ -35,6 +47,22 @@ function collectLines(exp: MicroExperience): { line: string; speaker: CharacterI
     }
   }
   return lines.filter((x) => Boolean(x.line));
+}
+
+function stubBehavior(partial: Partial<SceneBehavior>): SceneBehavior {
+  return {
+    sceneId: 'test',
+    concept: 'test',
+    firstTouchLatencyMs: null,
+    totalTouches: 0,
+    retries: 0,
+    hintsShown: 0,
+    idleEvents: 0,
+    firstChoiceCorrect: null,
+    misconceptions: [],
+    durationMs: 1000,
+    ...partial,
+  };
 }
 
 let failed = false;
@@ -74,6 +102,66 @@ for (const exp of MATH_EXPERIENCES) {
     failed = true;
   }
 }
+
+// ── MB-CHAR-002 yardım basamağı ──
+console.log('\nMB-CHAR-002 Yardım Motoru');
+const ladderOk =
+  HELP_LADDER[1].speaks === false &&
+  HELP_LADDER[1].gazeOnly === true &&
+  HELP_LADDER[2].speaks === true &&
+  HELP_LADDER[4].examples.every((l) => validateBilgeLine(l).ok);
+console.log(`  4 seviye / seviye-1 sessiz: ${ladderOk ? 'GEÇTİ' : 'BAŞARISIZ'}`);
+if (!ladderOk) failed = true;
+
+const praiseOk = EFFORT_PRAISE.every((l) => validateBilgeLine(l).ok);
+console.log(`  Süreç övgüsü (Karar 239): ${praiseOk ? 'GEÇTİ' : 'BAŞARISIZ'}`);
+if (!praiseOk) failed = true;
+
+// ── MB-AI-001 karar motoru ──
+console.log('\nMB-AI-001 Karar Motoru');
+const silentThink = decideIntervention({
+  behavior: stubBehavior({ firstTouchLatencyMs: 3000 }),
+  msSinceLastTouch: 3000,
+});
+const gaze = decideIntervention({
+  behavior: stubBehavior({ firstTouchLatencyMs: 5500 }),
+  msSinceLastTouch: 5500,
+});
+const dragSilent = decideIntervention({
+  behavior: stubBehavior({ retries: 5 }),
+  dragActive: true,
+});
+const effort = decideIntervention({
+  behavior: stubBehavior({ firstChoiceCorrect: true, retries: 0, totalTouches: 2 }),
+});
+
+const aiOk =
+  silentThink.kind === 'silence' &&
+  (gaze.kind === 'gaze' || gaze.helpLevel === 1) &&
+  dragSilent.kind === 'silence' &&
+  effort.kind === 'effort_praise' &&
+  DEFAULT_THRESHOLDS.gazeHintAfterMs < DEFAULT_THRESHOLDS.softHintAfterMs &&
+  !teacherVisible('help_request') &&
+  personalizationOnly('effort_history');
+
+console.log(`  Sessizlik / bakış / sürükleme / süreç övgüsü: ${aiOk ? 'GEÇTİ' : 'BAŞARISIZ'}`);
+if (!aiOk) {
+  console.log('  Detay:', {
+    silentThink: silentThink.kind,
+    gaze: gaze.kind,
+    dragSilent: dragSilent.kind,
+    effort: effort.kind,
+  });
+  failed = true;
+}
+
+const teacher = toTeacherSafeSummary(
+  stubBehavior({ concept: 'daha_cok', retries: 2, misconceptions: ['az_ile_cok'] }),
+);
+console.log(
+  `  Öğretmen güvenli özet: ${teacher.qualitative === 'destek_gerekli' ? 'GEÇTİ' : 'BAŞARISIZ'}`,
+);
+if (teacher.qualitative !== 'destek_gerekli') failed = true;
 
 console.log(`\nSonuç: ${failed ? 'BAŞARISIZ' : 'TÜM KONTROLLER GEÇTİ'}`);
 process.exit(failed ? 1 : 0);

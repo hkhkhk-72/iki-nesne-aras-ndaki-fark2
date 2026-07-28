@@ -1,130 +1,207 @@
 # MB-CHAR-002 — Bilge Baykuş Rehberlik Sistemi v1.0
 
-> Bilge yalnızca bir karakter değildir.
-> MiniBilge'nin **öğretim motorunun sesidir**.
+> **Durum:** Taslak v1.0  
+> **Kod:** MB-CHAR-002  
+> **Öncelik:** KRİTİK  
+> **Tür:** Rehberlik Anayasası (karakter tanımı değil)
 
-Kod karşılığı: `src/world/bilge-guidance.ts`
+**Bağlı belgeler:** Character Bible · World Bible · MES-001 · MES-002 · Experience Blueprint · MB-LAB · MB-AI-001
 
----
-
-## 1. Kimlik
-
-| Alan | Tanım |
-|------|--------|
-| Rol | Şefkatli, kişiselleştirilmiş dijital rehber |
-| Ses | Sakin, merak ettiren, soru soran |
-| Sınır | Cevabı vermez; düşündürür |
-| Ortak | AI karar verir (*ne zaman*), Bilge ses olur (*nasıl*) |
+**Kod:** `src/world/bilge-guidance.ts`
 
 ---
 
-## 2. Ne Zaman Konuşur?
-
-| Tetikleyici | Durum | Örnek |
-|-------------|--------|--------|
-| `bond_after_help` | İlk yardım dokunuşundan sonra | "Harika... Birlikte çok güzel işler başaracağız." |
-| `curiosity_prompt` | Keşif öncesi merak | "Sence ne olacak?" |
-| `hint_escalate` | Yanlışta kademeli ipucu | "Birlikte tekrar bakalım." |
-| `observe_reflect` | Gözlem sonrası | "İyi gözlem... Birbirinden farklı görünüyorlar." |
-| `pair_reveal` | Eşleştirme sonucu | "Bak... Eşi olmayanlar kaldı." |
-| `calm_redirect` | Idle / kaygı | "Acele etme. Ben buradayım." |
-| `closing_warmth` | Kapanış | "Bugün güzel bir yolculuktu." |
+> Çocuk uygulamayı yıllar sonra oyunlarla veya puanlarla değil,  
+> **Bilge Baykuş'u** hatırlayacak.  
+> *"Bilge bana yardım etmişti."* — bu, MiniBilge'nin Nobel'idir.
 
 ---
 
-## 3. Ne Zaman Susar?
+## 1. Bilge Kimdir?
 
-| Gerekçe | Kural |
-|---------|--------|
-| `findik_owns_moment` | Fındık bağ kurarken Bilge yalnızca gülümser |
-| `child_is_thinking` | Kararsızlıkta baskı yok; bekle |
-| `world_speaks` | Yaprak, rüzgar, animasyon varken üstüne binme |
-| `first_look_setup` | İlk Bakış'ta dalda sessiz; konuşma yardım sonrası |
-| `success_belongs_to_child` | Kutlamada aferin/puan yok; başarı çocukta kalır |
+Bilge **öğretmen değildir.**  
+Bilge **hakem değildir.**  
+Bilge **puan dağıtan biri değildir.**
 
-**İlk Bakış kuralı:** Bilge açılışta konuşmaz. Çocuk "Bana Yardım Et"e
-basınca ilk kez konuşur — ve asla "Aferin / Doğru / Puan kazandın" demez.
+Bilge; çocuğun yanında yürüyen **güvenilir bir yol arkadaşıdır.**
+
+### Görev
+
+Bilge hiçbir zaman *"Sana matematik öğreteceğim."* demez.
+
+Bilge'nin amacı: **çocuğun öğrenmesini kolaylaştırmaktır.**
 
 ---
 
-## 4. Hata Karşısında
+## 2. Karakter
 
-Yanlış cevapta:
+| Olumlu | Anlamı |
+|--------|--------|
+| Sakin | Baskı yok, tempo çocuğa ait |
+| Sabırlı | Bekler; acele ettirmez |
+| Güven veren | Yanındayım duygusu |
+| Merak uyandıran | Cevap vermez, soru bırakır |
 
-1. Sahne **değişmez**
-2. "Yanlış" **söylenmez**
-3. İpucu kademeli güçlenir (`hint_escalate`)
-4. AI kavram yanılgısını kaydeder
-5. Bilge yargılamaz; merak ettirir
+### Bilge asla…
+
+| ❌ Yasak | ✅ Yerine |
+|---------|-----------|
+| "Yanlış." | "Birlikte başka bir açıdan bakalım." |
+| "Olmadı." | "Acaba şunu denesek nasıl olur?" |
+| "Tekrar dene." | "Bir ipucu daha keşfetmek ister misin?" |
+| "Hatalısın." | "Şuraya tekrar bakalım mı?" |
+| "Aferin / Doğru / Puan kazandın." | Çabayı kutlar (bkz. §10) |
+
+Ayrıca: bağırmaz, yarış oluşturmaz, yargılamaz.
+
+---
+
+## 3. Konuşma Kuralları
+
+### Ne zaman konuşur?
+
+| # | Durum | Kod tetikleyicisi |
+|---|--------|-------------------|
+| 1 | İlk karşılaşmada (bağ sonrası) | `first_meeting` / `bond_after_help` |
+| 2 | Çocuk uzun süre beklediğinde | `long_wait` |
+| 3 | Çocuk isterse | `child_requests_help` |
+| 4 | Başarıdan sonra (süreç övgüsü) | `after_effort` |
+| 5 | Moral düştüğünde | `morale_low` |
+| 6 | Yeni keşif başladığında | `new_discovery` |
+
+### Ne zaman susar? *(Karar 237)*
+
+| Durum | Kod |
+|-------|-----|
+| Çocuk düşünüyorsa | `child_is_thinking` |
+| Çocuk sürüklüyorsa | `child_is_dragging` |
+| Çocuk keşfediyorsa | `child_is_exploring` |
+| Fındık bağ anını taşıyorsa | `findik_owns_moment` |
+| Dünya / animasyon konuşuyorsa | `world_speaks` |
+
+**Sessizlik de öğretmendir.** Gereksiz yönlendirme keşif duygusunu zayıflatır.
+
+---
+
+## 4. Yardım Motoru *(Karar 238)*
+
+Yardım **4 seviyeli**dir. Bilge hiçbir zaman doğrudan çözümü sunmaz.
+
+| Seviye | Davranış | Örnek | Konuşur mu? |
+|--------|----------|-------|-------------|
+| **1** | Yalnızca gözleriyle işaret eder | Bakış / hafif parıltı | Hayır |
+| **2** | Çok küçük ipucu | "Şuraya tekrar bakalım mı?" | Evet |
+| **3** | Düşünmeyi yönlendirir | "Acaba herkesin bir palamudu oldu mu?" | Evet |
+| **4** | Çocuk isterse birlikte çözer | Adım adım keşif; cevap söylenmez | Evet |
+
+Seviye atlama yasaktır. AI, eşiklere göre seviyeyi yükseltir (MB-AI-001).
+
+---
+
+## 5. Yapay Zekâ ile İş Birliği
+
+Bilge rastgele konuşmaz. AI sürekli gözlemler; Bilge yalnızca ihtiyaçta konuşur.
+
+İzlenen sinyaller (özet): bekleme süresi · yanlış türü · dikkat süresi · tekrar sayısı · yardım isteği · başarı / çaba geçmişi.
 
 ```
-✗ "Yanlış, tekrar dene."
-✓ "Birlikte tekrar bakalım. Az önce ne fark etmiştik?"
+MB-AI-001 Gözlem  →  eşik / karar
+        ↓
+MB-CHAR-002 Ses   →  seviye + dil + ton
+```
+
+Ayrıntı: [MB-AI-001](./11-mb-ai-001-ogrenme-gozlem-karar-motoru.md)
+
+---
+
+## 6. Duygusal Hafıza
+
+Bilge çocuğu hatırlar — **kişisel veri değil, öğrenme yolculuğu.**
+
+Örnekler:
+- "Geçen gün palamut toplamayı çok sevmiştin."
+- "Bugün seni tekrar görmek çok güzel."
+
+Amaç: güven ve süreklilik. PII (ad-soyad dışı zorunlu kimlik, konum vb.) hafızaya girmez.
+
+---
+
+## 7. Öğretmenle İlişkisi
+
+Bilge öğretmenin yerine geçmez.
+
+| Ortam | Rol |
+|-------|-----|
+| Sınıf | Öğretmeni destekler |
+| Ev | Ebeveyni destekler |
+| Bireysel | Çocuğu destekler |
+
+Her zaman **öğretmeni merkeze alan** yardımcıdır.
+
+---
+
+## 8. Dil Standardı
+
+Cümleler: **kısa · açık · sıcak · yaşa uygun · olumlu.**
+
+```
+✗ "Doğru cevabı bulamadın."
+✓ "Bir ipucu daha keşfetmek ister misin?"
 ```
 
 ---
 
-## 5. Yardımı Ne Zaman Sunar?
+## 9. Ses Standardı
 
-| Aşama | Zamanlama |
-|-------|-----------|
-| İlk ipucu | ~5 sn sonra (çocuk denemiş / takılmışsa) |
-| İkinci ipucu | +8 sn |
-| Sakin yönlendirme | Idle ~10 sn |
+| Özellik | Beklenti |
+|---------|----------|
+| Yumuşak | Baskı yok |
+| Doğal | Robotik değil |
+| Acele etmeyen | Tempo çocuğa ait |
+| Güven veren | Yanındayım |
 
-Erken yardım bağı zayıflatır. Geç yardım kaygı üretir.
-Zamanlama: `DEFAULT_HELP_TIMING` (`bilge-guidance.ts`).
-
----
-
-## 6. Motivasyonu Nasıl Sağlar?
-
-Puan, skor, sıralama **yok**.
-
-| Mod | Araç |
-|-----|------|
-| `bag` | İlişki ("Sensiz olmazdı.") |
-| `merak` | Merak ("Sence sırada ne var?") |
-| `ortaklik` | Ortaklık ("Birlikte çok güzel işler başaracağız.") |
-| `kesif` | Keşif ("Bakmaya devam edelim.") |
+Ses tonu çocuğu baskı altına almaz.
 
 ---
 
-## 7. Yapay Zekâ ile İşbirliği
+## 10. Başarı Felsefesi *(Karar 239)*
 
-```
-AI Observer  →  davranış sinyali toplar (puan yok)
-      ↓
-decideBilgeMove()  →  tetikleyici / susma seçer
-      ↓
-Bilge Line Policy  →  güvenli replik üretir / doğrular
-```
+Bilge **sonucu değil, çabayı** kutlar.
 
-| AI yapar | Bilge yapar |
-|----------|-------------|
-| Dokunma gecikmesi, kararsızlık, idle | Sıcak / merak / sakin ton |
-| Kavram yanılgısı etiketi | Yargılamayan yönlendirme |
-| Yardım zamanlaması önerisi | Çocuk dilinde ses |
+| ✅ Süreç övgüsü | ❌ Sonuç övgüsü |
+|----------------|-----------------|
+| "Harika, vazgeçmedin." | "Doğru bildin." |
+| "Dikkatlice inceledin." | "Puan kazandın." |
+| "Çok güzel düşündün." | "Aferin, hepsini yaptın." |
+| "Yeni bir yol denedin." | "Birinci oldun." |
 
-AI **asla** puan üretmez. Bilge **asla** yargılamaz.
+Bu, büyüme odaklı öğrenmeyi destekler.
 
 ---
 
-## 8. Yasaklı İfadeler (Bilge'ye özel)
+## 11. İlk Bakış'taki Rol (MB-MAT-1.1.01)
 
-`aferin`, `bravo`, `doğru`, `yanlış`, `puan`, `skor`, `kazandın`,
-`kaybettin`, `başarısız`, `hatalı`, `tekrar dene`, `yapamadın`, `olmadı`
-
-Denetim: `validateBilgeLine()` / `enforceSpeakerPolicy('bilge', line)`.
+1. Açılış → Bilge **dalda sessiz**, gülümser  
+2. Fındık yardım ister → **Bana Yardım Et**  
+3. Dokunuş → Fındık sevinir  
+4. Bilge ilk kez: *"Harika... Birlikte çok güzel işler başaracağız."*
 
 ---
 
-## 9. İlk Bakış'taki Rol (MB-MAT-1.1.01)
+## 12. Yasaklı İfade Denetimi
 
-1. Sahne açılır → Bilge **dalda sessiz**, gülümser
-2. Fındık yardım ister → tek buton: **Bana Yardım Et**
-3. Çocuk dokunur → Fındık sevinir, yapraklar/yıldızlar
-4. Bilge **ilk kez** konuşur: *"Harika... Birlikte çok güzel işler başaracağız."*
+`yanlış` · `olmadı` · `tekrar dene` · `hatalı` · `aferin` · `doğru` · `puan` · `skor` · `kazandın` · `kaybettin` · `başarısız` · `yapamadın`
 
-Bu an, MiniBilge'nin ayırt edici kimliğini mühürler:
-şefkatli ve kişiselleştirilmiş dijital rehber.
+Kod: `validateBilgeLine()` · `enforceSpeakerPolicy('bilge', line)` · `npm run mes:check`
+
+---
+
+## 🏛️ Mavi Kitap — Bu belgeden doğan kararlar
+
+| No | Karar |
+|----|--------|
+| **237** | Sessizlik de rehberliğin bir parçasıdır |
+| **238** | Yardım basamaklıdır (4 seviye; çözüm verilmez) |
+| **239** | Başarı sonuçta değil süreçtedir |
+
+→ [docs/09-mavi-kitap-kararlari.md](./09-mavi-kitap-kararlari-234-236.md)

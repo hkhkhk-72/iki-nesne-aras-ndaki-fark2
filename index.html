@@ -8,512 +8,435 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg1: #667eea;
-      --bg2: #764ba2;
-      --bg3: #f093fb;
-      --glass: rgba(255, 255, 255, 0.18);
-      --glass-border: rgba(255, 255, 255, 0.35);
-      --glass-strong: rgba(255, 255, 255, 0.28);
-      --text: #ffffff;
-      --text-soft: rgba(255, 255, 255, 0.85);
-      --shadow: 0 8px 32px rgba(31, 38, 135, 0.25);
-      --radius: 18px;
-      --cell-size: clamp(44px, 12vw, 64px);
-      --color-a: #e53935;
-      --color-b: #1e88e5;
-      --color-c: #43a047;
-      --color-d: #8e24aa;
-      --color-e: #f57c00;
-      --ink: #1a1a1a;
-      --paper: #ffffff;
-      --grid-line: #222222;
+      --blue: #2e3a92;
+      --blue-soft: #3d4db8;
+      --blue-pale: #e8ebf8;
+      --ink: #231f20;
+      --page: #eef1f6;
+      --ok: #2e7d32;
+      --warn: #c62828;
+      --hint: #ef6c00;
+      --teal: #00695c;
+      --path-a: #e65100;
+      --path-b: #f9a825;
+      --path-c: #1565c0;
+      --path-d: #2e7d32;
+      --path-e: #8e24aa;
+      --path-f: #00838f;
+      --path-g: #d81b60;
+      --path-h: #5d4037;
     }
-
-    html { font-size: 16px; }
 
     body {
-      font-family: 'Segoe UI', 'Nunito', system-ui, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       min-height: 100dvh;
-      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
-      background-attachment: fixed;
-      color: var(--text);
+      background: linear-gradient(180deg, #dfe6f3 0%, var(--page) 38%, #d7dde8 100%);
+      color: #1a1a1a;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 16px;
-      overflow-x: hidden;
+      padding: 0 10px 26px;
       -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
       user-select: none;
+      overscroll-behavior-y: contain;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 40%);
-      pointer-events: none;
-      z-index: 0;
-    }
+    .app { width: 100%; max-width: 540px; }
 
-    .app {
+    /* Başlık */
+    .hero {
+      background: linear-gradient(180deg, var(--blue-soft), var(--blue));
+      color: #fff;
+      border-radius: 0 0 18px 18px;
+      padding: 12px 14px 14px;
+      margin: 0 -10px 10px;
+      box-shadow: 0 8px 24px rgba(46,58,146,0.32);
+      text-align: center;
       position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 560px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      overflow: hidden;
     }
-
-    /* Header */
-    .header {
-      text-align: center;
-      padding: 20px 16px 8px;
+    .hero::before, .hero::after {
+      content: 'A B C';
+      position: absolute;
+      top: 6px;
+      font-size: 2.8rem;
+      font-weight: 900;
+      opacity: 0.09;
     }
-
-    .header h1 {
-      font-size: clamp(1.8rem, 6vw, 2.4rem);
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.2);
-      margin-bottom: 4px;
-    }
-
-    .header .subtitle {
-      font-size: 0.95rem;
-      color: var(--text-soft);
-      font-weight: 500;
-    }
-
-    /* Glass panels */
-    .panel {
-      background: var(--glass);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 16px;
-    }
-
-    /* Level selector */
-    .level-bar {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .level-bar label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
+    .hero::before { left: 6px; }
+    .hero::after { right: 6px; }
+    .hero .kids { font-size: 1.3rem; letter-spacing: 0.12em; }
+    .hero h1 {
+      font-size: clamp(1.3rem, 5vw, 1.7rem);
+      font-weight: 900;
       letter-spacing: 0.08em;
-      color: var(--text-soft);
-      text-align: center;
     }
+    .hero .sub { font-size: 0.7rem; opacity: 0.85; margin-top: 3px; }
 
-    .level-buttons {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
+    .card {
+      background: #fff;
+      border: 2px solid #c5cae9;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
     }
-
-    .level-btn {
-      flex: 1;
-      min-width: 56px;
-      max-width: 80px;
-      padding: 10px 6px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-radius: 14px;
-      background: rgba(255,255,255,0.12);
-      color: var(--text);
-      font-size: 0.85rem;
-      font-weight: 700;
+    .rules { font-size: 0.76rem; line-height: 1.45; color: #37474f; }
+    .rules strong { color: var(--blue); }
+    .rules summary {
       cursor: pointer;
-      transition: all 0.2s ease;
+      font-weight: 800;
+      color: var(--blue);
+      font-size: 0.82rem;
+    }
+    .rules ul { margin: 6px 0 0 16px; }
+    .rules li { margin-bottom: 2px; }
+
+    /* Seçiciler */
+    .picker { margin-bottom: 8px; }
+    .picker-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5c6bc0;
+      margin-bottom: 4px;
       text-align: center;
-      line-height: 1.2;
     }
+    .grades, .levels { display: grid; gap: 5px; }
+    .grades { grid-template-columns: repeat(4, 1fr); }
+    .levels { grid-template-columns: repeat(5, 1fr); }
 
-    .level-btn:hover {
-      background: rgba(255,255,255,0.22);
-      transform: translateY(-2px);
+    .chip {
+      border: 2px solid #9fa8da;
+      background: #fff;
+      border-radius: 9px;
+      padding: 7px 2px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 0.76rem;
+      line-height: 1.1;
+      color: #303f9f;
+      transition: 0.15s;
     }
-
-    .level-btn.active {
-      background: rgba(255,255,255,0.38);
-      border-color: #fff;
-      box-shadow: 0 4px 16px rgba(255,255,255,0.25);
-      transform: scale(1.05);
-    }
-
-    .level-btn .grade {
+    .chip .sub {
       display: block;
-      font-size: 0.65rem;
-      font-weight: 500;
-      opacity: 0.8;
+      font-size: 0.56rem;
+      font-weight: 600;
+      opacity: 0.72;
       margin-top: 2px;
     }
-
-    .level-info {
-      text-align: center;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-soft);
-      padding: 4px 0;
-    }
-
-    .level-info strong {
+    .chip { touch-action: manipulation; }
+    .chip:hover { background: var(--blue-pale); }
+    .chip:active { transform: scale(0.97); }
+    .chip.active {
+      background: var(--blue);
       color: #fff;
+      border-color: var(--blue);
+      box-shadow: 0 3px 10px rgba(46,58,146,0.3);
     }
 
-    /* Worksheet board – PDF referans stili */
-    .grid-wrap {
-      display: flex;
-      justify-content: center;
-      padding: 8px 0;
-    }
-
-    .worksheet-board {
-      background: var(--paper);
-      border: 3px solid var(--ink);
+    /* Tahta – PDF görünümü */
+    .board-wrap { display: flex; justify-content: center; margin-bottom: 8px; }
+    .board-frame {
+      background: #fff;
+      border: 4px solid var(--blue);
       border-radius: 4px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-      overflow: hidden;
-      max-width: 100%;
-    }
-
-    .worksheet-header {
-      background: #2b2b2b;
-      color: #fff;
-      text-align: center;
-      padding: 10px 16px;
-      font-family: 'Times New Roman', Times, serif;
-      font-size: clamp(0.85rem, 3vw, 1rem);
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      border-bottom: 2px solid var(--ink);
-    }
-
-    .worksheet-header span {
-      opacity: 0.7;
-      margin: 0 6px;
-    }
-
-    .grid-container {
-      position: relative;
-      padding: 16px;
-      background: var(--paper);
+      padding: 12px;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.12);
       touch-action: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-
-    .path-svg {
-      position: absolute;
-      top: 16px;
-      left: 16px;
+    .board-frame.hint-armed {
+      border-color: var(--hint);
+      box-shadow: 0 0 0 4px rgba(239,108,0,0.18), 0 8px 26px rgba(0,0,0,0.12);
+    }
+    .board-svg {
+      display: block;
+      overflow: visible;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .path-line {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
       pointer-events: none;
-      z-index: 0;
     }
-
-    .grid {
-      display: grid;
-      gap: 0;
-      border: 2.5px solid var(--grid-line);
-      background: var(--paper);
-      position: relative;
-      z-index: 1;
-    }
-
-    .cell {
-      width: var(--cell-size);
-      height: var(--cell-size);
-      background: var(--paper);
-      border-right: 1.5px solid var(--grid-line);
-      border-bottom: 1.5px solid var(--grid-line);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Times New Roman', Times, serif;
-      font-size: clamp(1.4rem, 4.5vw, 1.9rem);
-      font-weight: 700;
-      color: var(--ink);
-      cursor: pointer;
-      position: relative;
-      transition: background 0.12s;
-    }
-
-    .cell.no-right { border-right: none; }
-    .cell.no-bottom { border-bottom: none; }
-
-    /* Boş hücrelerde nokta (PDF'deki gibi) */
-    .cell.empty::after {
-      content: '';
-      width: 7px;
-      height: 7px;
-      background: var(--grid-line);
-      border-radius: 50%;
-      position: absolute;
-    }
-
-    .cell .letter {
-      position: relative;
-      z-index: 4;
-      line-height: 1;
-    }
-
-    .cell.endpoint {
-      font-size: clamp(1.6rem, 5vw, 2.2rem);
-      font-weight: 700;
-    }
-
-    .cell.path-a { background: color-mix(in srgb, var(--color-a) 22%, white); }
-    .cell.path-b { background: color-mix(in srgb, var(--color-b) 22%, white); }
-    .cell.path-c { background: color-mix(in srgb, var(--color-c) 22%, white); }
-    .cell.path-d { background: color-mix(in srgb, var(--color-d) 22%, white); }
-    .cell.path-e { background: color-mix(in srgb, var(--color-e) 22%, white); }
-
-    .cell.endpoint.color-a { color: var(--color-a); }
-    .cell.endpoint.color-b { color: var(--color-b); }
-    .cell.endpoint.color-c { color: var(--color-c); }
-    .cell.endpoint.color-d { color: var(--color-d); }
-    .cell.endpoint.color-e { color: var(--color-e); }
-
-  /* Yol çizgileri – hücre içi bağlantılar */
-    .cell .pipe {
-      position: absolute;
-      background: currentColor;
+    .node-dot { fill: var(--ink); }
+    .node-letter {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      fill: var(--ink);
+      stroke: #fff;
+      stroke-width: 1.6;
+      stroke-linejoin: round;
+      paint-order: stroke;
+      text-anchor: middle;
+      dominant-baseline: central;
       pointer-events: none;
-      z-index: 1;
+    }
+    .hint-halo {
+      fill: none;
+      stroke: var(--hint);
+      stroke-width: 2;
+      opacity: 0.9;
     }
 
-    .cell.color-a, .cell.path-a { color: var(--color-a); }
-    .cell.color-b, .cell.path-b { color: var(--color-b); }
-    .cell.color-c, .cell.path-c { color: var(--color-c); }
-    .cell.color-d, .cell.path-d { color: var(--color-d); }
-    .cell.color-e, .cell.path-e { color: var(--color-e); }
-
-    .pipe-h {
-      width: 100%;
-      height: 34%;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-    }
-
-    .pipe-v {
-      width: 34%;
-      height: 100%;
-      left: 50%;
-      top: 0;
-      transform: translateX(-50%);
-    }
-
-    .pipe-t { width: 34%; height: 50%; top: 0; left: 50%; transform: translateX(-50%); }
-    .pipe-b { width: 34%; height: 50%; bottom: 0; top: auto; left: 50%; transform: translateX(-50%); }
-    .pipe-l { width: 50%; height: 34%; left: 0; top: 50%; transform: translateY(-50%); }
-    .pipe-r { width: 50%; height: 34%; right: 0; left: auto; top: 50%; transform: translateY(-50%); }
-
-    /* Action buttons */
-    .actions {
+    /* Durum çubuğu */
+    .status {
       display: flex;
-      gap: 10px;
-    }
-
-    .btn {
-      flex: 1;
-      padding: 14px 12px;
-      border: none;
-      border-radius: 14px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
       justify-content: center;
       gap: 6px;
-    }
-
-    .btn-restart {
-      background: rgba(255,255,255,0.2);
-      color: #fff;
-      border: 2px solid rgba(255,255,255,0.35);
-    }
-
-    .btn-restart:hover {
-      background: rgba(255,255,255,0.32);
-      transform: translateY(-2px);
-    }
-
-    .btn-check {
-      background: linear-gradient(135deg, #00c9ff, #92fe9d);
-      color: #1a3a2a;
-      box-shadow: 0 4px 16px rgba(0,201,255,0.35);
-    }
-
-    .btn-check:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,201,255,0.45);
-    }
-
-    /* Message toast */
-    .toast {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.8);
-      background: rgba(255,255,255,0.95);
-      color: #333;
-      padding: 28px 36px;
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      text-align: center;
-      z-index: 1000;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      max-width: 90vw;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-      pointer-events: auto;
-    }
-
-    .toast.success {
-      background: linear-gradient(135deg, #fff9c4, #fff);
-      border: 3px solid #ffd54f;
-    }
-
-    .toast.error {
-      background: linear-gradient(135deg, #ffebee, #fff);
-      border: 3px solid #ef9a9a;
-    }
-
-    .toast .icon {
-      font-size: 3rem;
-      margin-bottom: 8px;
-      animation: bounce 0.6s ease infinite alternate;
-    }
-
-    .toast h2 {
-      font-size: 1.4rem;
+      flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: #455a64;
       margin-bottom: 6px;
-      color: #2e7d32;
     }
-
-    .toast.error h2 { color: #c62828; }
-
-    .toast p {
-      font-size: 0.95rem;
-      color: #555;
+    .status .tag {
+      background: #fff;
+      border: 1px solid #cfd8dc;
+      border-radius: 20px;
+      padding: 3px 10px;
     }
+    .status .tag strong { color: #1a1a1a; }
+    .status .tag.diff { border-color: #ffcc80; color: #e65100; font-weight: 700; }
+    .status .tag.solved { border-color: #a5d6a7; color: var(--ok); font-weight: 700; }
 
-    @keyframes bounce {
-      from { transform: translateY(0); }
-      to { transform: translateY(-8px); }
-    }
-
-    /* Confetti */
-    .confetti-container {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 999;
-      overflow: hidden;
-    }
-
-    .confetti {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      top: -10px;
-      animation: confetti-fall linear forwards;
-    }
-
-    @keyframes confetti-fall {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-    }
-
-    /* Instructions */
-    .instructions {
-      font-size: 0.82rem;
-      color: var(--text-soft);
+    .note {
       text-align: center;
-      line-height: 1.5;
-      padding: 0 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      min-height: 1.15em;
+      color: var(--hint);
     }
+    .note.teach { color: var(--blue); }
 
-    .instructions span {
-      display: inline-block;
-      background: rgba(255,255,255,0.15);
-      padding: 2px 8px;
-      border-radius: 8px;
-      margin: 2px;
-      font-weight: 600;
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 6px;
     }
+    .actions .wide { grid-column: 1 / -1; }
 
-    /* Overlay backdrop */
+    .btn {
+      padding: 13px 8px;
+      border: 2px solid #37474f;
+      border-radius: 10px;
+      background: #fff;
+      color: #263238;
+      font-size: 0.86rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.15s;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover:not(:disabled) { background: #f5f5f5; }
+    .btn:active:not(:disabled) { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-check { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .btn-check:hover:not(:disabled) { background: #1a237e; }
+    .btn-hint { background: var(--hint); border-color: var(--hint); color: #fff; }
+    .btn-hint:hover:not(:disabled) { background: #e65100; }
+    .btn-hint.armed { animation: pulse 1s infinite; }
+    .btn-new { background: #455a64; border-color: #455a64; color: #fff; }
+    .btn-new:hover:not(:disabled) { background: #263238; }
+    .btn-pdf { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .btn-pdf:hover:not(:disabled) { background: #004d40; }
+    @keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(239,108,0,0.25); } }
+
+    .hint-text {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #607d8b;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .footer { text-align: center; font-size: 0.66rem; color: #90a4ae; }
+
+    /* Bildirim */
     .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.4);
-      z-index: 999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.35);
+      z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.25s;
+    }
+    .overlay.show { opacity: 1; pointer-events: auto; }
+    .toast {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: #fff; border: 3px solid var(--blue);
+      border-radius: 16px; padding: 20px 24px; text-align: center;
+      z-index: 101; opacity: 0; pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-width: 88vw; min-width: 250px;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+    .toast .icon { font-size: 2.1rem; margin-bottom: 4px; }
+    .toast h2 { font-size: 1.15rem; margin-bottom: 4px; }
+    .toast p { font-size: 0.86rem; color: #546e7a; }
+    .toast-actions { display: flex; gap: 8px; justify-content: center; margin-top: 12px; }
+    .toast .t-btn {
+      padding: 9px 16px; border: none; border-radius: 9px;
+      background: var(--blue); color: #fff; font-weight: 800;
+      font-size: 0.85rem; cursor: pointer;
+    }
+    .toast .t-btn.ghost { background: #eceff1; color: #455a64; }
+    .toast.success { border-color: var(--ok); }
+    .toast.success h2 { color: var(--ok); }
+    .toast.error { border-color: var(--warn); }
+    .toast.error h2 { color: var(--warn); }
+
+    .confetti-box { position: fixed; inset: 0; pointer-events: none; z-index: 99; overflow: hidden; }
+    .confetti {
+      position: absolute; top: -10px; width: 8px; height: 8px;
+      animation: fall linear forwards;
+    }
+    @keyframes fall { to { transform: translateY(105vh) rotate(720deg); opacity: 0; } }
+
+    /* PDF penceresi */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+      z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    }
+    .modal-overlay.show { opacity: 1; pointer-events: auto; }
+    .modal {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.94);
+      width: min(92vw, 380px); max-height: 88vh; overflow-y: auto;
+      background: #fff; border: 3px solid var(--teal);
+      border-radius: 16px; padding: 18px; z-index: 201;
+      opacity: 0; pointer-events: none;
+      transition: all 0.22s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .modal.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+    .modal h3 { font-size: 1.05rem; color: var(--teal); margin-bottom: 6px; }
+    .modal-note { font-size: 0.76rem; color: #546e7a; line-height: 1.45; margin-bottom: 12px; }
+    .field {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; margin-bottom: 9px;
+      font-size: 0.85rem; font-weight: 700; color: #37474f;
+    }
+    .field select {
+      flex: 1; max-width: 190px; padding: 8px;
+      border: 2px solid #b0bec5; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 700; color: #263238; background: #fff;
+    }
+    .check {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.85rem; font-weight: 700; color: #37474f;
+      margin: 4px 0 10px; cursor: pointer;
+    }
+    .check input { width: 17px; height: 17px; accent-color: var(--teal); }
+    .modal-summary {
+      font-size: 0.76rem; color: var(--teal); background: #e0f2f1;
+      border-radius: 8px; padding: 7px 9px; margin-bottom: 12px;
+      text-align: center; font-weight: 700;
+    }
+    .modal-actions { display: flex; gap: 8px; }
+    .modal-actions .btn { flex: 1; }
+
+    /* Baskı düzeni */
+    #printArea { display: none; }
+    .print-banner {
+      background: var(--blue); color: #fff; text-align: center;
+      padding: 7px 10px; border-radius: 4px; margin-bottom: 6mm;
+    }
+    .print-banner .t1 { font-size: 8pt; letter-spacing: 0.14em; opacity: 0.9; }
+    .print-banner .t2 { font-size: 15pt; font-weight: 900; letter-spacing: 0.08em; }
+    .print-rules {
+      font-size: 8pt; line-height: 1.4; color: #222;
+      border: 1px solid #999; border-radius: 3px;
+      padding: 5px 7px; margin-bottom: 5mm;
+    }
+    .print-grid { display: grid; gap: 6mm 5mm; }
+    .print-card { break-inside: avoid; text-align: center; }
+    .print-card .cap { font-size: 8pt; font-weight: 700; margin-bottom: 1.5mm; color: #222; }
+    .print-card .frame {
+      border: 2px solid var(--blue); border-radius: 3px;
+      padding: 2.5mm; display: block; margin: 0 auto;
+    }
+    .print-card svg { display: block; width: 100%; height: auto; }
+    .print-foot {
+      margin-top: 4mm; font-size: 7pt; color: #666;
+      display: flex; justify-content: space-between;
+    }
+    .print-answer-tag {
+      display: inline-block; background: var(--warn); color: #fff;
+      font-size: 8pt; font-weight: 800; padding: 2px 8px;
+      border-radius: 10px; margin-bottom: 3mm; letter-spacing: 0.08em;
     }
 
-    .overlay.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    @media (max-width: 380px) {
-      :root { --cell-size: 48px; }
-      .level-btn { min-width: 48px; font-size: 0.75rem; }
+    @media print {
+      @page { size: A4 portrait; margin: 12mm 10mm; }
+      html, body { background: #fff !important; padding: 0 !important; }
+      body > .app, #overlay, #toast, #confetti, #pdfOverlay, #pdfModal { display: none !important; }
+      #printArea { display: block !important; }
+      .print-page { break-after: page; page-break-after: always; }
+      .print-page:last-child { break-after: auto; page-break-after: auto; }
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <header class="header">
-      <h1>🔤 ABC Bağlamaca</h1>
-      <p class="subtitle">Harfleri birbirine bağla, tüm kareleri doldur!</p>
+    <header class="hero">
+      <div class="kids">👧🧒👦</div>
+      <h1>ABC BAĞLAMACA</h1>
+      <div class="sub">Zekâ ve Akıl Oyunları · Uzamsal Algı</div>
     </header>
 
-    <div class="panel level-bar">
-      <label>Seviye Seç</label>
-      <div class="level-buttons" id="levelButtons"></div>
-      <div class="level-info" id="levelInfo"></div>
+    <details class="card rules">
+      <summary>Nasıl oynanır?</summary>
+      <p style="margin-top:6px">
+        Temel amaç <strong>tüm noktaları kullanarak</strong> aynı harfleri birbirine bağlamaktır.
+      </p>
+      <ul>
+        <li>Yalnızca <strong>yatay</strong> ve <strong>dikey</strong> çizgiler kullanılır (çapraz yasak).</li>
+        <li>Çizgiler birbirini <strong>kesmemelidir</strong>.</li>
+        <li>Çizgi başka bir <strong>harfin üzerinden geçemez</strong>.</li>
+        <li>Bitişte <strong>tek bir nokta bile açıkta kalmamalıdır</strong>.</li>
+        <li>Her harf çifti <strong>en az bir viraj</strong> yaparak bağlanır; düz çizgi çözüm olmaz.</li>
+        <li>Kendi yolunun üzerine geri gidersen çizgi <strong>kısalır</strong>.</li>
+        <li>Dokunmatik ekranda iki şekilde oynanır: harfe <strong>dokunup sürükle</strong>
+            ya da harfe <strong>bir kez dokun</strong>, sonra noktalara sırayla dokun.</li>
+        <li>Her seviyede <strong>sonsuz soru</strong> vardır ve her çözdüğünde bir sonraki <strong>daha zor</strong> olur.</li>
+        <li>Her soruda <strong>bir kez</strong> ipucu alabilirsin.</li>
+      </ul>
+    </details>
+
+    <div class="picker">
+      <div class="picker-label">Sınıf</div>
+      <div class="grades" id="gradeButtons"></div>
     </div>
 
-    <div class="grid-wrap">
-      <div class="worksheet-board">
-        <div class="worksheet-header">ZEKA OYUNLARI <span>–</span> ABC BAĞLAMACA</div>
-        <div class="grid-container" id="gridContainer">
-          <svg class="path-svg" id="pathSvg"></svg>
-          <div class="grid" id="grid"></div>
-        </div>
+    <div class="picker">
+      <div class="picker-label">Seviye</div>
+      <div class="levels" id="levelButtons"></div>
+    </div>
+
+    <div class="board-wrap">
+      <div class="board-frame" id="boardFrame">
+        <svg class="board-svg" id="boardSvg"></svg>
       </div>
     </div>
 
-    <div class="panel actions">
-      <button class="btn btn-restart" id="btnRestart">🔄 Yeniden Başlat</button>
-      <button class="btn btn-check" id="btnCheck">✅ Çözümü Kontrol Et</button>
+    <div class="status" id="status"></div>
+    <div class="note" id="note"></div>
+
+    <div class="actions">
+      <button class="btn" id="btnClear">Temizle</button>
+      <button class="btn btn-hint" id="btnHint">İpucu (1)</button>
+      <button class="btn btn-check wide" id="btnCheck">Çözümü Kontrol Et</button>
+      <button class="btn btn-new wide" id="btnNew">🎲 Yeni Soru</button>
+      <button class="btn btn-pdf wide" id="btnPdf">📄 PDF olarak çıkar</button>
     </div>
 
-    <p class="instructions">
-      <span>Aynı harfleri bağla</span>
-      <span>Çapraz yasak</span>
-      <span>Tüm kareleri doldur</span>
-    </p>
+    <p class="hint-text">Harfe dokunup sürükle veya dokun-dokun ile ilerle · Çapraz yasak · Tüm noktaları doldur · Diğer harfin üzerinden geçme</p>
+    <p class="footer">ABC Bağlamaca Etkinliği · 4 sınıf × 5 seviye × sonsuz soru</p>
   </div>
 
   <div class="overlay" id="overlay"></div>
@@ -521,133 +444,362 @@
     <div class="icon" id="toastIcon"></div>
     <h2 id="toastTitle"></h2>
     <p id="toastMsg"></p>
+    <div class="toast-actions">
+      <button class="t-btn ghost" id="toastClose" hidden>Kapat</button>
+      <button class="t-btn" id="toastNext" hidden>Yeni Soru →</button>
+    </div>
   </div>
-  <div class="confetti-container" id="confetti"></div>
+  <div class="confetti-box" id="confetti"></div>
+
+  <div class="modal-overlay" id="pdfOverlay"></div>
+  <div class="modal" id="pdfModal">
+    <h3>PDF olarak çıkar</h3>
+    <p class="modal-note">
+      Sorular anında üretilir ve A4 çalışma kağıdı düzeninde kolaydan zora sıralanır.
+      Açılan yazdırma penceresinde hedef olarak <strong>“PDF olarak kaydet”</strong> seçeneğini seçin.
+    </p>
+
+    <label class="field">
+      <span>Kapsam</span>
+      <select id="pdfScope">
+        <option value="question">Ekrandaki soru</option>
+        <option value="level" selected>Bu seviye</option>
+        <option value="grade">Bu sınıf (5 seviye)</option>
+        <option value="all">Tüm sınıflar (20 seviye)</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Seviye başına soru</span>
+      <select id="pdfCount">
+        <option value="3">3</option>
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Sayfada bulmaca</span>
+      <select id="pdfPerPage">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="4" selected>4</option>
+        <option value="6">6</option>
+      </select>
+    </label>
+
+    <label class="check">
+      <input type="checkbox" id="pdfAnswers">
+      <span>Cevap anahtarı ekle</span>
+    </label>
+
+    <p class="modal-summary" id="pdfSummary"></p>
+
+    <div class="modal-actions">
+      <button class="btn" id="pdfCancel">İptal</button>
+      <button class="btn btn-check" id="pdfCreate">Oluştur</button>
+    </div>
+  </div>
+
+  <div id="printArea"></div>
 
   <script>
   (function () {
     'use strict';
 
-    const LETTER_COLORS = { A: 'a', B: 'b', C: 'c', D: 'd', E: 'e' };
-
-    const PATH_COLORS = {
-      A: '#e53935', B: '#1e88e5', C: '#43a047', D: '#8e24aa', E: '#f57c00'
-    };
-
-    /* PDF referans bulmacaları + kademeli giriş seviyeleri */
-    const LEVELS = [
-      {
-        id: 1,
-        name: 'Çok Kolay',
-        grade: '1. Sınıf',
-        size: 3,
-        pairs: ['A', 'B'],
-        puzzle: [
-          ['A', 'B', 'B'],
-          ['', '', ''],
-          ['', '', 'A']
-        ],
-        endpoints: { A: [[0,0],[2,2]], B: [[0,1],[0,2]] }
-      },
-      {
-        id: 2,
-        name: 'Kolay',
-        grade: '1. Sınıf+',
-        size: 4,
-        pairs: ['A', 'B'],
-        puzzle: [
-          ['A', '', '', 'B'],
-          ['', '', '', ''],
-          ['', '', '', ''],
-          ['A', '', '', 'B']
-        ],
-        endpoints: { A: [[0,0],[3,0]], B: [[0,3],[3,3]] }
-      },
-      {
-        id: 3,
-        name: 'Orta',
-        grade: '2. Sınıf',
-        size: 6,
-        pairs: ['A', 'B', 'C', 'D'],
-        puzzle: [
-          ['', '', '', '', '', ''],
-          ['', 'D', '', '', 'C', ''],
-          ['', '', 'C', 'B', '', ''],
-          ['', '', '', '', '', 'B'],
-          ['A', '', '', 'A', '', ''],
-          ['D', '', '', '', '', '']
-        ],
-        endpoints: { A: [[4,0],[4,3]], B: [[2,3],[3,5]], C: [[2,2],[1,4]], D: [[1,1],[5,0]] }
-      },
-      {
-        id: 4,
-        name: 'Zor',
-        grade: '3. Sınıf',
-        size: 6,
-        pairs: ['A', 'B', 'C', 'D'],
-        puzzle: [
-          ['D', '', '', '', '', 'C'],
-          ['', '', '', '', '', ''],
-          ['', '', '', 'B', '', ''],
-          ['', '', 'A', 'C', '', ''],
-          ['', '', '', '', '', ''],
-          ['', 'D', 'B', '', '', 'A']
-        ],
-        endpoints: { D: [[0,0],[5,1]], A: [[3,2],[5,5]], B: [[2,3],[5,2]], C: [[3,3],[0,5]] }
-      },
-      {
-        id: 5,
-        name: 'Uzman',
-        grade: '4. Sınıf',
-        size: 6,
-        pairs: ['A', 'B', 'C', 'D', 'E'],
-        puzzle: [
-          ['D', 'C', 'B', '', '', 'A'],
-          ['', '', '', 'C', '', ''],
-          ['', 'B', '', '', '', 'A'],
-          ['', '', '', '', '', ''],
-          ['', 'E', '', '', 'D', ''],
-          ['', '', '', 'E', '', '']
-        ],
-        endpoints: { D: [[0,0],[4,4]], E: [[5,3],[4,1]], B: [[2,1],[0,2]], C: [[0,1],[1,3]], A: [[0,5],[2,5]] }
-      }
+    /* ─────────────────────────────────────────────
+       Sınıf ve seviye tanımları
+       Her seviyede sonsuz soru üretilir; zorluk
+       çözüldükçe artar.
+       ───────────────────────────────────────────── */
+    /* Seviyeler ölçülen zorluk puanına göre sıralıdır; ilerledikçe
+       ızgara büyür ve harfleri birleştiren yollar uzar. */
+    const GRADES = [
+      { grade: 1, label: '1. Sınıf', levels: [
+        { level: 1, size: 3, pairs: 2 },
+        { level: 2, size: 4, pairs: 3 },
+        { level: 3, size: 4, pairs: 2 },
+        { level: 4, size: 5, pairs: 4 },
+        { level: 5, size: 5, pairs: 3 }
+      ]},
+      { grade: 2, label: '2. Sınıf', levels: [
+        { level: 1, size: 6, pairs: 6 },
+        { level: 2, size: 6, pairs: 5 },
+        { level: 3, size: 6, pairs: 4 },
+        { level: 4, size: 7, pairs: 7 },
+        { level: 5, size: 7, pairs: 6 }
+      ]},
+      { grade: 3, label: '3. Sınıf', levels: [
+        { level: 1, size: 7, pairs: 5 },
+        { level: 2, size: 8, pairs: 8 },
+        { level: 3, size: 8, pairs: 7 },
+        { level: 4, size: 8, pairs: 6 },
+        { level: 5, size: 8, pairs: 5 }
+      ]},
+      { grade: 4, label: '4. Sınıf', levels: [
+        { level: 1, size: 9, pairs: 8 },
+        { level: 2, size: 9, pairs: 7 },
+        { level: 3, size: 9, pairs: 6 },
+        { level: 4, size: 9, pairs: 5 },
+        { level: 5, size: 9, pairs: 4 }
+      ]}
     ];
 
-    let currentLevel = 0;
+    const MAX_SIZE = 10;
+
+    const LETTERS = 'ABCDEFGH';
+    const PATH_COLORS = {
+      A: '#e65100', B: '#f9a825', C: '#1565c0', D: '#2e7d32',
+      E: '#8e24aa', F: '#00838f', G: '#d81b60', H: '#5d4037'
+    };
+
+    /* Her harf çifti en az bu kadar hücreden geçer (tek/iki noktalı bağlantı yok) */
+    const MIN_PATH_CELLS = 4;
+
+    const STORAGE_KEY = 'abc-baglamaca-v2';
+
+    /* ─────────────────────────────────────────────
+       Bulmaca üretici
+       Backbite ile rastgele Hamilton yolu üretilir,
+       harf sayısı kadar parçaya bölünür. Böylece
+       "tüm noktalar dolu" çözümü garanti olur.
+       ───────────────────────────────────────────── */
+    const neighborCache = {};
+    function neighborsOf(size) {
+      if (neighborCache[size]) return neighborCache[size];
+      const nb = [];
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          const list = [];
+          if (r > 0) list.push((r - 1) * size + c);
+          if (r < size - 1) list.push((r + 1) * size + c);
+          if (c > 0) list.push(r * size + c - 1);
+          if (c < size - 1) list.push(r * size + c + 1);
+          nb.push(list);
+        }
+      }
+      neighborCache[size] = nb;
+      return nb;
+    }
+
+    function reverseSegment(path, pos, from, to) {
+      while (from < to) {
+        const a = path[from], b = path[to];
+        path[from] = b; path[to] = a;
+        pos[b] = from; pos[a] = to;
+        from++; to--;
+      }
+    }
+
+    function randomHamiltonian(size, iterations) {
+      const nb = neighborsOf(size);
+      const path = [];
+      for (let r = 0; r < size; r++) {
+        if (r % 2 === 0) for (let c = 0; c < size; c++) path.push(r * size + c);
+        else for (let c = size - 1; c >= 0; c--) path.push(r * size + c);
+      }
+      const pos = new Array(size * size);
+      path.forEach((cell, i) => { pos[cell] = i; });
+      const n = path.length;
+
+      for (let it = 0; it < iterations; it++) {
+        if (Math.random() < 0.5) {
+          const list = nb[path[0]];
+          const i = pos[list[(Math.random() * list.length) | 0]];
+          if (i > 1) reverseSegment(path, pos, 0, i - 1);
+        } else {
+          const list = nb[path[n - 1]];
+          const i = pos[list[(Math.random() * list.length) | 0]];
+          if (i < n - 2) reverseSegment(path, pos, i + 1, n - 1);
+        }
+      }
+      return path;
+    }
+
+    function splitPath(path, parts, minLen) {
+      const total = path.length;
+      if (total < parts * minLen) return null;
+      const lengths = new Array(parts).fill(minLen);
+      let extra = total - parts * minLen;
+      while (extra > 0) {
+        lengths[(Math.random() * parts) | 0]++;
+        extra--;
+      }
+      const segments = [];
+      let cursor = 0;
+      for (const len of lengths) {
+        segments.push(path.slice(cursor, cursor + len));
+        cursor += len;
+      }
+      return segments;
+    }
+
+    function manhattanIdx(a, b, size) {
+      return Math.abs(((a / size) | 0) - ((b / size) | 0)) + Math.abs((a % size) - (b % size));
+    }
+
+    function countTurns(seg) {
+      let turns = 0;
+      for (let i = 2; i < seg.length; i++) {
+        if (seg[i] - seg[i - 1] !== seg[i - 1] - seg[i - 2]) turns++;
+      }
+      return turns;
+    }
+
+    function segScore(seg, size) {
+      const detour = (seg.length - 1) - manhattanIdx(seg[0], seg[seg.length - 1], size);
+      return countTurns(seg) + detour * 0.6;
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = (Math.random() * (i + 1)) | 0;
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    /*
+     * percentile: 0 = en kolay, 1 = en zor
+     * floorScore: verilirse bu puandan daha zor bulmaca seçilir
+     */
+    function generatePuzzle(size, pairs, percentile, floorScore, poolSize) {
+      const want = poolSize || 90;
+      const iterations = 260 + size * 90;
+      const candidates = [];
+      let guard = 0;
+
+      while (candidates.length < want && guard < want * 30) {
+        guard++;
+        const segments = splitPath(randomHamiltonian(size, iterations), pairs, MIN_PATH_CELLS);
+        if (!segments) return null;
+
+        /* Her çift en az bir viraj yapmalı ve uçlar komşu olmamalı */
+        let ok = true;
+        for (const seg of segments) {
+          if (countTurns(seg) < 1) { ok = false; break; }
+          if (manhattanIdx(seg[0], seg[seg.length - 1], size) < 2) { ok = false; break; }
+        }
+        if (!ok) continue;
+
+        candidates.push({
+          segments,
+          score: segments.reduce((sum, s) => sum + segScore(s, size), 0)
+        });
+      }
+
+      if (!candidates.length) return null;
+      candidates.sort((a, b) => a.score - b.score);
+
+      let idx = Math.round(percentile * (candidates.length - 1));
+      if (floorScore != null) {
+        let found = -1;
+        for (let i = idx; i < candidates.length; i++) {
+          if (candidates[i].score > floorScore) { found = i; break; }
+        }
+        idx = found !== -1 ? found : candidates.length - 1;
+      }
+
+      const chosen = candidates[idx];
+      return {
+        s: size,
+        score: chosen.score,
+        sol: shuffle(chosen.segments.slice()).map(s => s.slice())
+      };
+    }
+
+    /* Zorluk bandı: sınıf ve seviyeye göre başlangıç, çözdükçe artış */
+    function difficultyRange(gi, li) {
+      const base = gi * 0.12 + li * 0.05;
+      return {
+        start: Math.min(0.62, 0.03 + base),
+        max: Math.min(0.98, 0.45 + base * 1.15),
+        step: 0.05
+      };
+    }
+
+    /* Küçük ızgaralarda olası bulmaca sayısı azdır ve zorluk doyar.
+       Bu yüzden belirli sayıda çözümden sonra ızgara bir büyür;
+       böylece seviye tükenmez, sorular zorlaşmaya devam eder. */
+    function growthEvery(gi, li) {
+      return GRADES[gi].levels[li].size <= 3 ? 4 : 8;
+    }
+
+    function grownSteps(gi, li, solved) {
+      return Math.min(2, Math.floor(solved / growthEvery(gi, li)));
+    }
+
+    function variantFor(gi, li, solved) {
+      const cfg = GRADES[gi].levels[li];
+      const grown = grownSteps(gi, li, solved);
+      return {
+        size: Math.min(cfg.size + grown, MAX_SIZE),
+        pairs: cfg.pairs,
+        grown
+      };
+    }
+
+    function percentileFor(gi, li, solved) {
+      const r = difficultyRange(gi, li);
+      const inVariant = solved - growthEvery(gi, li) * grownSteps(gi, li, solved);
+      return Math.min(r.max, r.start + inVariant * r.step);
+    }
+
+    /* ─────────────────────────────────────────────
+       Durum
+       ───────────────────────────────────────────── */
+    let gradeIdx = 0;
+    let levelIdx = 0;
+
     let size = 3;
+    let letters = [];
     let endpoints = {};
-    let endpointSet = new Set();
+    let solution = {};
     let paths = {};
+    let puzzleScore = 0;
+
     let activeLetter = null;
+    let tapLetter = null;
     let isDrawing = false;
     let lastCell = null;
+    let lastDir = null;
+    let lastSvgPt = null;
+    let cellGap = 48;
+    let pad = 10;
 
-    const gridEl = document.getElementById('grid');
-    const gridContainer = document.getElementById('gridContainer');
-    const pathSvgEl = document.getElementById('pathSvg');
+    let hintUsed = false;
+    let hintArmed = false;
+    let pendingFloor = null;
+
+    let progress = loadProgress();
+
+    const boardSvg = document.getElementById('boardSvg');
+    const boardFrame = document.getElementById('boardFrame');
+    const gradeButtonsEl = document.getElementById('gradeButtons');
     const levelButtonsEl = document.getElementById('levelButtons');
-    const levelInfoEl = document.getElementById('levelInfo');
-    const btnRestart = document.getElementById('btnRestart');
+    const statusEl = document.getElementById('status');
+    const noteEl = document.getElementById('note');
+    const btnClear = document.getElementById('btnClear');
+    const btnHint = document.getElementById('btnHint');
     const btnCheck = document.getElementById('btnCheck');
+    const btnNew = document.getElementById('btnNew');
     const toast = document.getElementById('toast');
     const toastIcon = document.getElementById('toastIcon');
     const toastTitle = document.getElementById('toastTitle');
     const toastMsg = document.getElementById('toastMsg');
+    const toastNext = document.getElementById('toastNext');
+    const toastClose = document.getElementById('toastClose');
     const overlay = document.getElementById('overlay');
     const confettiEl = document.getElementById('confetti');
 
-    /* ── Audio (Web Audio API celebration) ── */
+    /* ── Ses ── */
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
-
-    function getAudio() {
-      if (!audioCtx) audioCtx = new AudioCtx();
-      return audioCtx;
-    }
-
-    function playTone(freq, start, dur, type = 'sine', vol = 0.15) {
+    function playTone(freq, start, dur, type = 'sine', vol = 0.12) {
       try {
-        const ctx = getAudio();
+        if (!audioCtx) audioCtx = new AudioCtx();
+        const ctx = audioCtx;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = type;
@@ -660,499 +812,1221 @@
         osc.stop(ctx.currentTime + start + dur);
       } catch (_) {}
     }
-
-    function playSuccessSound() {
-      const notes = [523, 659, 784, 1047];
-      notes.forEach((n, i) => playTone(n, i * 0.12, 0.3, 'sine', 0.18));
-      setTimeout(() => playTone(1318, 0.5, 0.5, 'triangle', 0.12), 400);
+    function playSuccess() {
+      [523, 659, 784, 1047].forEach((n, i) => playTone(n, i * 0.11, 0.26, 'sine', 0.14));
+    }
+    function playError() {
+      playTone(200, 0, 0.16, 'square', 0.07);
+      playTone(150, 0.13, 0.2, 'square', 0.05);
+    }
+    function playClick() { playTone(520, 0, 0.05, 'sine', 0.05); }
+    function playHint() {
+      [700, 900, 1100].forEach((n, i) => playTone(n, i * 0.08, 0.2, 'triangle', 0.1));
     }
 
-    function playErrorSound() {
-      playTone(200, 0, 0.2, 'square', 0.1);
-      playTone(150, 0.15, 0.3, 'square', 0.08);
+    /* ── Kayıt ── */
+    function loadProgress() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (_) { return {}; }
+    }
+    function saveProgress() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); } catch (_) {}
+    }
+    function levelKey(gi, li) { return `g${GRADES[gi].grade}-l${GRADES[gi].levels[li].level}`; }
+    function solvedCount(gi, li) { return (progress[levelKey(gi, li)] || 0); }
+    function addSolved(gi, li) {
+      const k = levelKey(gi, li);
+      progress[k] = (progress[k] || 0) + 1;
+      saveProgress();
+    }
+    function gradeSolved(gi) {
+      return GRADES[gi].levels.reduce((sum, _, li) => sum + solvedCount(gi, li), 0);
     }
 
-    function playClickSound() {
-      playTone(440, 0, 0.08, 'sine', 0.06);
-    }
-
-    /* ── Helpers ── */
+    /* ── Yardımcılar ── */
     function key(r, c) { return r + ',' + c; }
-
-    function parseKey(k) {
-      const [r, c] = k.split(',').map(Number);
-      return [r, c];
-    }
-
     function isAdjacent(r1, c1, r2, c2) {
-      return (Math.abs(r1 - r2) + Math.abs(c1 - c2)) === 1;
+      return Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1;
     }
-
-    function isEndpoint(r, c) {
-      return endpointSet.has(key(r, c));
-    }
-
     function getEndpointLetter(r, c) {
-      for (const [letter, coords] of Object.entries(endpoints)) {
-        for (const [er, ec] of coords) {
+      for (const letter of letters) {
+        for (const [er, ec] of endpoints[letter]) {
           if (er === r && ec === c) return letter;
         }
       }
       return null;
     }
-
     function getCellOwner(r, c) {
-      if (isEndpoint(r, c)) return getEndpointLetter(r, c);
-      for (const [letter, path] of Object.entries(paths)) {
-        for (const [pr, pc] of path) {
+      const ep = getEndpointLetter(r, c);
+      if (ep) return ep;
+      for (const letter of letters) {
+        for (const [pr, pc] of paths[letter]) {
           if (pr === r && pc === c) return letter;
         }
       }
       return null;
     }
-
-    function clearLetterPath(letter) {
-      paths[letter] = [];
-    }
-
-    function rebuildPathsFromEndpoints() {
-      const level = LEVELS[currentLevel];
+    function nodeXY(r, c) { return { x: pad + c * cellGap, y: pad + r * cellGap }; }
+    function levelCfg() { return GRADES[gradeIdx].levels[levelIdx]; }
+    function rebuildPaths() {
       paths = {};
-      level.pairs.forEach(l => { paths[l] = []; });
+      letters.forEach(l => { paths[l] = []; });
     }
-
-    /* ── Level setup ── */
-    function buildLevelButtons() {
-      levelButtonsEl.innerHTML = '';
-      LEVELS.forEach((lvl, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'level-btn' + (idx === currentLevel ? ' active' : '');
-        btn.innerHTML = `Level ${lvl.id}<span class="grade">${lvl.grade}</span>`;
-        btn.addEventListener('click', () => {
-          if (idx !== currentLevel) {
-            playClickSound();
-            currentLevel = idx;
-            loadLevel();
-            buildLevelButtons();
-          }
-        });
-        levelButtonsEl.appendChild(btn);
-      });
-    }
-
-    function loadLevel() {
-      const level = LEVELS[currentLevel];
-      size = level.size;
-      endpoints = level.endpoints;
-      endpointSet = new Set();
-      Object.values(endpoints).flat().forEach(([r, c]) => endpointSet.add(key(r, c)));
-      rebuildPathsFromEndpoints();
-      activeLetter = null;
-      isDrawing = false;
-      lastCell = null;
-
-      document.documentElement.style.setProperty(
-        '--cell-size',
-        size >= 6 ? 'clamp(38px, 10vw, 52px)' : size >= 5 ? 'clamp(40px, 11vw, 56px)' : 'clamp(44px, 12vw, 64px)'
-      );
-
-      levelInfoEl.innerHTML =
-        `<strong>Level ${level.id} – ${level.name}</strong> · ${size}×${size} ızgara · ${level.pairs.length} harf çifti (${level.pairs.join(', ')})`;
-
-      renderGrid();
-    }
-
-    function getPathConnections(letter) {
-      const path = paths[letter];
-      const conn = new Map();
-      if (!path || path.length === 0) return conn;
-
-      for (let i = 0; i < path.length; i++) {
-        const [r, c] = path[i];
-        const k = key(r, c);
-        const dirs = { t: false, b: false, l: false, r: false };
-
-        if (i > 0) {
-          const [pr, pc] = path[i - 1];
-          if (pr < r) dirs.t = true;
-          if (pr > r) dirs.b = true;
-          if (pc < c) dirs.l = true;
-          if (pc > c) dirs.r = true;
-        }
-        if (i < path.length - 1) {
-          const [nr, nc] = path[i + 1];
-          if (nr < r) dirs.t = true;
-          if (nr > r) dirs.b = true;
-          if (nc < c) dirs.l = true;
-          if (nc > c) dirs.r = true;
-        }
-        conn.set(k, dirs);
-      }
-      return conn;
-    }
-
-    function addPipesToCell(cell, dirs) {
-      if (dirs.t && dirs.b) {
-        const p = document.createElement('div');
-        p.className = 'pipe pipe-v';
-        cell.appendChild(p);
-      } else if (dirs.l && dirs.r) {
-        const p = document.createElement('div');
-        p.className = 'pipe pipe-h';
-        cell.appendChild(p);
-      } else {
-        if (dirs.t) { const p = document.createElement('div'); p.className = 'pipe pipe-t'; cell.appendChild(p); }
-        if (dirs.b) { const p = document.createElement('div'); p.className = 'pipe pipe-b'; cell.appendChild(p); }
-        if (dirs.l) { const p = document.createElement('div'); p.className = 'pipe pipe-l'; cell.appendChild(p); }
-        if (dirs.r) { const p = document.createElement('div'); p.className = 'pipe pipe-r'; cell.appendChild(p); }
-      }
-    }
-
-    function renderPathSvg() {
-      const gridRect = gridEl.getBoundingClientRect();
-      const containerRect = gridContainer.getBoundingClientRect();
-      const offsetX = gridRect.left - containerRect.left;
-      const offsetY = gridRect.top - containerRect.top;
-
-      pathSvgEl.setAttribute('width', gridRect.width);
-      pathSvgEl.setAttribute('height', gridRect.height);
-      pathSvgEl.style.width = gridRect.width + 'px';
-      pathSvgEl.style.height = gridRect.height + 'px';
-      pathSvgEl.style.left = offsetX + 'px';
-      pathSvgEl.style.top = offsetY + 'px';
-      pathSvgEl.innerHTML = '';
-
-      const cells = gridEl.querySelectorAll('.cell');
-      if (!cells.length) return;
-
-      const cellW = gridRect.width / size;
-      const cellH = gridRect.height / size;
-
-      function center(r, c) {
-        return { x: c * cellW + cellW / 2, y: r * cellH + cellH / 2 };
-      }
-
-      const level = LEVELS[currentLevel];
-      level.pairs.forEach(letter => {
-        const path = paths[letter];
-        if (!path || path.length < 2) return;
-        const color = PATH_COLORS[letter];
-
-        for (let i = 0; i < path.length - 1; i++) {
-          const a = center(path[i][0], path[i][1]);
-          const b = center(path[i + 1][0], path[i + 1][1]);
-          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-          line.setAttribute('x1', a.x);
-          line.setAttribute('y1', a.y);
-          line.setAttribute('x2', b.x);
-          line.setAttribute('y2', b.y);
-          line.setAttribute('stroke', color);
-          line.setAttribute('stroke-width', Math.min(cellW, cellH) * 0.38);
-          line.setAttribute('stroke-linecap', 'round');
-          pathSvgEl.appendChild(line);
-        }
-      });
-    }
-
-    /* ── Render ── */
-    function renderGrid() {
-      gridEl.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-      gridEl.innerHTML = '';
-
-      const allConnections = {};
-      LEVELS[currentLevel].pairs.forEach(letter => {
-        allConnections[letter] = getPathConnections(letter);
-      });
-
-      for (let r = 0; r < size; r++) {
-        for (let c = 0; c < size; c++) {
-          const cell = document.createElement('div');
-          cell.className = 'cell';
-          cell.dataset.r = r;
-          cell.dataset.c = c;
-
-          if (c === size - 1) cell.classList.add('no-right');
-          if (r === size - 1) cell.classList.add('no-bottom');
-
-          const epLetter = getEndpointLetter(r, c);
-          const owner = getCellOwner(r, c);
-          const letter = epLetter || owner;
-
-          if (epLetter) {
-            cell.classList.add('endpoint', 'color-' + LETTER_COLORS[epLetter]);
-            const dirs = allConnections[epLetter]?.get(key(r, c));
-            if (dirs) addPipesToCell(cell, dirs);
-            const span = document.createElement('span');
-            span.className = 'letter';
-            span.textContent = epLetter;
-            cell.appendChild(span);
-          } else if (owner) {
-            cell.classList.add('path-' + LETTER_COLORS[owner]);
-            const dirs = allConnections[owner]?.get(key(r, c));
-            if (dirs) addPipesToCell(cell, dirs);
-          } else {
-            cell.classList.add('empty');
-          }
-
-          gridEl.appendChild(cell);
-        }
-      }
-
-      requestAnimationFrame(renderPathSvg);
-    }
-
-    function getCellFromEvent(e) {
-      const target = e.target.closest('.cell');
-      if (!target) return null;
-      return [parseInt(target.dataset.r, 10), parseInt(target.dataset.c, 10)];
-    }
-
-    /* ── Drawing / Rule Engine ── */
-    function startDraw(r, c) {
-      const epLetter = getEndpointLetter(r, c);
-      if (!epLetter) return;
-
-      playClickSound();
-      activeLetter = epLetter;
-      isDrawing = true;
-      lastCell = [r, c];
-
-      const path = paths[activeLetter];
-      const idx = path.findIndex(([pr, pc]) => pr === r && pc === c);
-
-      if (idx !== -1) {
-        paths[activeLetter] = path.slice(0, idx + 1);
-      } else {
-        clearOtherPathsFromCell(r, c, activeLetter);
-        paths[activeLetter] = [[r, c]];
-      }
-
-      renderGrid();
-    }
-
     function clearOtherPathsFromCell(r, c, exceptLetter) {
-      for (const letter of Object.keys(paths)) {
+      for (const letter of letters) {
         if (letter === exceptLetter) continue;
         paths[letter] = paths[letter].filter(([pr, pc]) => pr !== r || pc !== c);
       }
     }
 
-    function continueDraw(r, c) {
-      if (!isDrawing || !activeLetter) return;
-      if (lastCell && lastCell[0] === r && lastCell[1] === c) return;
+    /* ── Seçiciler ── */
+    function buildGradeButtons() {
+      gradeButtonsEl.innerHTML = '';
+      GRADES.forEach((g, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'chip' + (i === gradeIdx ? ' active' : '');
+        btn.innerHTML = `${g.grade}. Sınıf<span class="sub">${gradeSolved(i)} çözüm</span>`;
+        btn.addEventListener('click', () => {
+          if (i === gradeIdx) return;
+          playClick();
+          gradeIdx = i;
+          levelIdx = 0;
+          buildGradeButtons();
+          buildLevelButtons();
+          newPuzzle();
+        });
+        gradeButtonsEl.appendChild(btn);
+      });
+    }
 
-      if (!isAdjacent(lastCell[0], lastCell[1], r, c)) return;
+    function buildLevelButtons() {
+      levelButtonsEl.innerHTML = '';
+      GRADES[gradeIdx].levels.forEach((lvl, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'chip' + (i === levelIdx ? ' active' : '');
+        const v = variantFor(gradeIdx, i, solvedCount(gradeIdx, i));
+        btn.innerHTML = `Seviye ${lvl.level}` +
+          `<span class="sub">${v.size}×${v.size} · ${v.pairs} çift${v.grown ? ' ↑' : ''}</span>`;
+        btn.addEventListener('click', () => {
+          if (i === levelIdx) return;
+          playClick();
+          levelIdx = i;
+          buildLevelButtons();
+          newPuzzle();
+        });
+        levelButtonsEl.appendChild(btn);
+      });
+    }
+
+    /* ── Yeni soru ── */
+    function applyPuzzle(puzzle) {
+      size = puzzle.s;
+      puzzleScore = puzzle.score;
+      letters = LETTERS.slice(0, puzzle.sol.length).split('');
+
+      endpoints = {};
+      solution = {};
+      puzzle.sol.forEach((cells, i) => {
+        const letter = letters[i];
+        const coords = cells.map(idx => [Math.floor(idx / size), idx % size]);
+        solution[letter] = coords;
+        endpoints[letter] = [coords[0], coords[coords.length - 1]];
+      });
+
+      rebuildPaths();
+      activeLetter = null;
+      tapLetter = null;
+      isDrawing = false;
+      lastCell = null;
+      hintUsed = false;
+      hintArmed = false;
+
+      resizeBoard();
+      updateHintUI();
+      updateStatus();
+      render();
+    }
+
+    function newPuzzle() {
+      const solved = solvedCount(gradeIdx, levelIdx);
+      const v = variantFor(gradeIdx, levelIdx, solved);
+      const p = percentileFor(gradeIdx, levelIdx, solved);
+      const puzzle = generatePuzzle(v.size, v.pairs, p, pendingFloor);
+      pendingFloor = null;
+      if (!puzzle) {
+        showToast('error', '!', 'Üretilemedi', 'Bu seviye için bulmaca üretilemedi.');
+        return;
+      }
+      applyPuzzle(puzzle);
+    }
+
+    function resizeBoard() {
+      const maxW = Math.min(window.innerWidth - 54, 400);
+      cellGap = Math.floor(maxW / (size - 1 + 0.5));
+      if (size >= 8) cellGap = Math.max(30, Math.min(cellGap, 44));
+      else if (size >= 7) cellGap = Math.max(32, Math.min(cellGap, 48));
+      else if (size >= 6) cellGap = Math.max(36, Math.min(cellGap, 54));
+      else if (size >= 5) cellGap = Math.max(40, Math.min(cellGap, 60));
+      else cellGap = Math.max(44, Math.min(cellGap, 66));
+      pad = Math.round(cellGap * 0.32);
+    }
+
+    function updateStatus() {
+      const cfg = levelCfg();
+      const solved = solvedCount(gradeIdx, levelIdx);
+      const p = percentileFor(gradeIdx, levelIdx, solved);
+      const stars = Math.max(1, Math.min(5, Math.round(p * 5)));
+      const bar = '●'.repeat(stars) + '○'.repeat(5 - stars);
+
+      statusEl.innerHTML =
+        `<span class="tag"><strong>${GRADES[gradeIdx].grade}. Sınıf</strong> · Seviye ${cfg.level}</span>` +
+        `<span class="tag">${size}×${size} · ${letters.join(', ')}</span>` +
+        `<span class="tag diff">Zorluk ${bar}</span>` +
+        `<span class="tag solved">Çözülen: ${solved}</span>`;
+
+      /* İlk seviye öğreticidir */
+      if (gradeIdx === 0 && levelIdx === 0 && solved === 0) {
+        noteEl.className = 'note teach';
+        noteEl.textContent = 'Bir harfe dokun ve parmağını diğer aynı harfe doğru sürükle.';
+      } else if (!hintUsed) {
+        noteEl.className = 'note';
+        noteEl.textContent = 'Her soruda bir kez ipucu kullanabilirsin.';
+      }
+    }
+
+    /* ─────────────────────────────────────────────
+       Çizim (PDF görünümü: noktalar çizgilerin üstünde)
+
+       Tahta soru başına bir kez kurulur. Parmak/fare
+       hareketinde yalnızca yol çizgileri güncellenir;
+       böylece dokunmatik ekranda gecikme olmaz.
+       ───────────────────────────────────────────── */
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    let polyByLetter = {};
+    let haloEls = [];
+    let headMarker = null;
+
+    function svgEl(name, attrs) {
+      const el = document.createElementNS(SVG_NS, name);
+      for (const k in attrs) el.setAttribute(k, attrs[k]);
+      return el;
+    }
+
+    function render() {
+      const W = pad * 2 + (size - 1) * cellGap;
+      boardSvg.setAttribute('width', W);
+      boardSvg.setAttribute('height', W);
+      boardSvg.setAttribute('viewBox', `0 0 ${W} ${W}`);
+      boardSvg.innerHTML = '';
+
+      const strokeW = Math.max(5, cellGap * 0.3);
+      const dotR = Math.max(2.6, cellGap * 0.075);
+      const fontSize = Math.round(cellGap * (size >= 8 ? 0.5 : 0.54));
+
+      /* 1) Yollar – her harf için tek polyline, sonradan güncellenir */
+      polyByLetter = {};
+      const pathGroup = svgEl('g');
+      letters.forEach(letter => {
+        const poly = svgEl('polyline', {
+          class: 'path-line',
+          points: '',
+          stroke: PATH_COLORS[letter],
+          'stroke-width': strokeW
+        });
+        polyByLetter[letter] = poly;
+        pathGroup.appendChild(poly);
+      });
+      boardSvg.appendChild(pathGroup);
+
+      /* Aktif yolun ucunu gösteren imleç */
+      headMarker = svgEl('circle', {
+        r: strokeW * 0.62,
+        fill: 'none',
+        opacity: '0'
+      });
+      boardSvg.appendChild(headMarker);
+
+      /* 2) Noktalar – çizgilerin üzerinde kalır (PDF'teki gibi) */
+      const dotGroup = svgEl('g');
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          if (getEndpointLetter(r, c)) continue;
+          const { x, y } = nodeXY(r, c);
+          dotGroup.appendChild(svgEl('circle', { class: 'node-dot', cx: x, cy: y, r: dotR }));
+        }
+      }
+      boardSvg.appendChild(dotGroup);
+
+      /* 3) Harfler ve ipucu haleleri */
+      haloEls = [];
+      const letterGroup = svgEl('g');
+      letters.forEach(letter => {
+        endpoints[letter].forEach(([r, c]) => {
+          const { x, y } = nodeXY(r, c);
+          const halo = svgEl('circle', {
+            class: 'hint-halo', cx: x, cy: y, r: cellGap * 0.36, opacity: '0'
+          });
+          haloEls.push(halo);
+          letterGroup.appendChild(halo);
+
+          const text = svgEl('text', {
+            class: 'node-letter', x, y, 'font-size': fontSize
+          });
+          text.textContent = letter;
+          letterGroup.appendChild(text);
+        });
+      });
+      boardSvg.appendChild(letterGroup);
+
+      updatePaths();
+      updateHalos();
+    }
+
+    function updatePaths() {
+      letters.forEach(letter => {
+        const poly = polyByLetter[letter];
+        if (!poly) return;
+        const path = paths[letter];
+        if (!path || path.length < 2) {
+          poly.setAttribute('points', '');
+          return;
+        }
+        let pts = '';
+        for (let i = 0; i < path.length; i++) {
+          const p = nodeXY(path[i][0], path[i][1]);
+          pts += (i ? ' ' : '') + p.x + ',' + p.y;
+        }
+        poly.setAttribute('points', pts);
+      });
+      updateHead();
+    }
+
+    function updateHead() {
+      if (!headMarker) return;
+      const letter = activeLetter || tapLetter;
+      const path = letter ? paths[letter] : null;
+      if (!letter || !path || !path.length) {
+        headMarker.setAttribute('opacity', '0');
+        return;
+      }
+      const [r, c] = path[path.length - 1];
+      const { x, y } = nodeXY(r, c);
+      headMarker.setAttribute('cx', x);
+      headMarker.setAttribute('cy', y);
+      headMarker.setAttribute('stroke', PATH_COLORS[letter]);
+      headMarker.setAttribute('stroke-width', Math.max(2, cellGap * 0.06));
+      headMarker.setAttribute('opacity', '0.9');
+    }
+
+    function updateHalos() {
+      haloEls.forEach(el => el.setAttribute('opacity', hintArmed ? '1' : '0'));
+    }
+
+    /* ── İpucu ── */
+    function updateHintUI() {
+      btnHint.disabled = hintUsed;
+      btnHint.classList.toggle('armed', hintArmed);
+      btnHint.textContent = hintUsed
+        ? 'İpucu kullanıldı'
+        : (hintArmed ? 'Bir harfe dokun' : 'İpucu (1)');
+      boardFrame.classList.toggle('hint-armed', hintArmed);
+      if (hintArmed) {
+        noteEl.className = 'note';
+        noteEl.textContent = 'İpucu hazır: birleştirmek istediğin harfe dokun.';
+      }
+    }
+
+    function applyHint(letter) {
+      const sol = solution[letter];
+      if (!sol) return;
+      sol.forEach(([r, c]) => clearOtherPathsFromCell(r, c, letter));
+      paths[letter] = sol.map(([r, c]) => [r, c]);
+      hintUsed = true;
+      hintArmed = false;
+      updateHintUI();
+      noteEl.className = 'note';
+      noteEl.textContent = `${letter} harfi eşiyle birleştirildi.`;
+      playHint();
+      updatePaths();
+      updateHalos();
+    }
+
+    btnHint.addEventListener('click', () => {
+      if (hintUsed) return;
+      playClick();
+      hintArmed = !hintArmed;
+      updateHintUI();
+      if (!hintArmed) updateStatus();
+      updateHalos();
+    });
+
+    /* ── Kural motoru ── */
+    function buzz(ms) {
+      try { if (navigator.vibrate) navigator.vibrate(ms); } catch (_) {}
+    }
+
+    /* Bir harfin yolunu belirtilen hücreden başlatır ya da o hücreye kadar kısaltır */
+    function grabPath(letter, r, c) {
+      activeLetter = letter;
+      lastCell = [r, c];
+      lastDir = null;
+      const path = paths[letter];
+      const idx = path.findIndex(([pr, pc]) => pr === r && pc === c);
+      if (idx !== -1) {
+        paths[letter] = path.slice(0, idx + 1);
+      } else {
+        clearOtherPathsFromCell(r, c, letter);
+        paths[letter] = [[r, c]];
+      }
+    }
+
+    function startDraw(r, c) {
+      const ep = getEndpointLetter(r, c);
+
+      if (hintArmed) {
+        if (ep) applyHint(ep);
+        return false;
+      }
+
+      /* Harf ucundan başla */
+      if (ep) {
+        playClick();
+        buzz(8);
+        isDrawing = true;
+        tapLetter = ep;
+        grabPath(ep, r, c);
+        updatePaths();
+        return true;
+      }
+
+      /* Çizili bir yolun üzerinden tutup devam et */
+      const owner = getCellOwner(r, c);
+      if (owner) {
+        playClick();
+        isDrawing = true;
+        tapLetter = owner;
+        grabPath(owner, r, c);
+        updatePaths();
+        return true;
+      }
+      return false;
+    }
+
+    /* Tek komşu hücreye adım. Kabul edilirse true döner. */
+    function stepTo(r, c) {
+      if (r < 0 || c < 0 || r >= size || c >= size) return false;
+      if (!activeLetter || !lastCell) return false;
+      if (lastCell[0] === r && lastCell[1] === c) return false;
+      if (!isAdjacent(lastCell[0], lastCell[1], r, c)) return false;
 
       const path = paths[activeLetter];
       const existingIdx = path.findIndex(([pr, pc]) => pr === r && pc === c);
 
-      /* Backtracking: returning on own path shortens it */
+      /* Geri dönüşte çizgi kısalır */
       if (existingIdx !== -1) {
         paths[activeLetter] = path.slice(0, existingIdx + 1);
+        lastDir = [r - lastCell[0], c - lastCell[1]];
         lastCell = [r, c];
-        renderGrid();
-        return;
+        return true;
       }
 
-      /* Cannot enter other letter endpoints */
-      const epLetter = getEndpointLetter(r, c);
-      if (epLetter && epLetter !== activeLetter) return;
-
-      /* Cannot cross other paths */
+      const ep = getEndpointLetter(r, c);
+      if (ep && ep !== activeLetter) return false;
       const owner = getCellOwner(r, c);
-      if (owner && owner !== activeLetter) return;
+      if (owner && owner !== activeLetter) return false;
 
-      /* Clear this cell from other paths */
       clearOtherPathsFromCell(r, c, activeLetter);
-
       paths[activeLetter].push([r, c]);
+      lastDir = [r - lastCell[0], c - lastCell[1]];
       lastCell = [r, c];
-      renderGrid();
 
-      /* Auto-complete when reaching matching endpoint */
-      if (epLetter === activeLetter) {
-        const ep = endpoints[activeLetter];
-        const pathStart = path[0];
-        const isAtOtherEnd = ep.some(([er, ec]) => er === r && ec === c) &&
-          !(pathStart[0] === r && pathStart[1] === c);
-        if (isAtOtherEnd) {
+      /* Eşine ulaşıldıysa çizim tamamlanır */
+      if (ep === activeLetter) {
+        const start = paths[activeLetter][0];
+        if (!(start[0] === r && start[1] === c)) {
           isDrawing = false;
+          buzz(14);
         }
       }
+      return true;
     }
 
-    function endDraw() {
+    /*
+     * Parmak hızlı kaydırıldığında iki olay arasında hücre atlanabilir.
+     * Aradaki hücreler yatay/dikey adımlarla tek tek doldurulur.
+     */
+    function traceTo(tr, tc) {
+      let changed = false;
+      let guard = 0;
+      const limit = size * size + 8;
+      const maxBridge = Math.max(6, size + 2);
+
+      if (lastCell && (Math.abs(tr - lastCell[0]) + Math.abs(tc - lastCell[1])) > maxBridge) {
+        return false;
+      }
+
+      while (lastCell && guard++ < limit) {
+        const [r, c] = lastCell;
+        if (r === tr && c === tc) break;
+
+        const dr = Math.sign(tr - r);
+        const dc = Math.sign(tc - c);
+        const order = Math.abs(tr - r) >= Math.abs(tc - c)
+          ? [[dr, 0], [0, dc]]
+          : [[0, dc], [dr, 0]];
+
+        /* Parmak önce mevcut yönde devam etmiş olma olasılığı yüksektir */
+        if (lastDir) {
+          if (lastDir[0] && dr === lastDir[0]) order.unshift([dr, 0]);
+          else if (lastDir[1] && dc === lastDir[1]) order.unshift([0, dc]);
+        }
+
+        let moved = false;
+        for (const [sr, sc] of order) {
+          if (!sr && !sc) continue;
+          if (stepTo(r + sr, c + sc)) { moved = true; break; }
+        }
+        if (!moved) break;
+        changed = true;
+        if (!isDrawing) break;
+      }
+
+      return changed;
+    }
+
+    function pauseStroke() {
+      /* Parmak kalktı: seçili harf (tapLetter) korunur, sürükleme biter */
       isDrawing = false;
       activeLetter = null;
       lastCell = null;
+      lastDir = null;
+      lastSvgPt = null;
+      updateHead();
     }
 
-    /* ── Pointer events ── */
-    gridEl.addEventListener('mousedown', (e) => {
+    function endDraw() {
+      pauseStroke();
+      tapLetter = null;
+      updateHead();
+    }
+
+    function boardSizeSvg() {
+      return pad * 2 + (size - 1) * cellGap;
+    }
+
+    /* Ekran → SVG koordinatı (viewBox.baseVal bazı mobil tarayıcılarda 0 gelebilir) */
+    function clientToSvg(clientX, clientY) {
+      const rect = boardSvg.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      const W = boardSizeSvg();
+      return {
+        x: ((clientX - rect.left) / rect.width) * W,
+        y: ((clientY - rect.top) / rect.height) * W
+      };
+    }
+
+    function nearestCellFromSvg(x, y, tolerance) {
+      const W = boardSizeSvg();
+      const margin = cellGap * 0.85;
+      if (x < -margin || y < -margin || x > W + margin || y > W + margin) return null;
+
+      let c = Math.round((x - pad) / cellGap);
+      let r = Math.round((y - pad) / cellGap);
+      c = Math.max(0, Math.min(size - 1, c));
+      r = Math.max(0, Math.min(size - 1, r));
+      const p = nodeXY(r, c);
+      const dist2 = (p.x - x) ** 2 + (p.y - y) ** 2;
+      if (tolerance != null && dist2 > (cellGap * tolerance) ** 2) return null;
+      return [r, c];
+    }
+
+    function nodeAt(clientX, clientY, tolerance) {
+      const pt = clientToSvg(clientX, clientY);
+      if (!pt) return null;
+      return nearestCellFromSvg(pt.x, pt.y, tolerance);
+    }
+
+    /*
+     * Sürüklerken parmak her zaman lastCell'in kendisi veya 4 komşusundan
+     * birine yapışır. Böylece noktaların arasında kaldığında çizgi donmaz.
+     * Uzak hedefler için en yakın hücreye köprü kurulur.
+     */
+    function dragTargetFromSvg(x, y) {
+      if (!lastCell) return nearestCellFromSvg(x, y, null);
+
+      const [lr, lc] = lastCell;
+      const candidates = [
+        [lr, lc],
+        [lr - 1, lc], [lr + 1, lc], [lr, lc - 1], [lr, lc + 1]
+      ];
+
+      let best = null;
+      let bestD = Infinity;
+      for (const [r, c] of candidates) {
+        if (r < 0 || c < 0 || r >= size || c >= size) continue;
+        const p = nodeXY(r, c);
+        const d = (p.x - x) ** 2 + (p.y - y) ** 2;
+        if (d < bestD) {
+          bestD = d;
+          best = [r, c];
+        }
+      }
+
+      const nearest = nearestCellFromSvg(x, y, null);
+      if (nearest) {
+        const p = nodeXY(nearest[0], nearest[1]);
+        const dn = (p.x - x) ** 2 + (p.y - y) ** 2;
+        const man = Math.abs(nearest[0] - lr) + Math.abs(nearest[1] - lc);
+        /* Parmak net biçimde başka bir hücreye geçmişse oraya yönel */
+        if (man > 1 && dn + (cellGap * 0.12) ** 2 < bestD) return nearest;
+        if (man === 1 && dn < bestD) return nearest;
+      }
+      return best;
+    }
+
+    /* İki SVG noktası arasında örnekleyerek hızlı kaydırmada hücre atlamayı önle */
+    function sampleSvgSegment(x0, y0, x1, y1) {
+      const dx = x1 - x0;
+      const dy = y1 - y0;
+      const dist = Math.hypot(dx, dy);
+      const step = Math.max(4, cellGap * 0.22);
+      const n = Math.max(1, Math.ceil(dist / step));
+      const out = [];
+      for (let i = 1; i <= n; i++) {
+        const t = i / n;
+        out.push([x0 + dx * t, y0 + dy * t]);
+      }
+      return out;
+    }
+
+    /* ── Girdi: dokunma (birincil) + fare/kalem ── */
+    let pointerId = null;
+    let activeTouchId = null;
+    let usingTouch = false;
+    let pathsDirty = false;
+    let frameQueued = false;
+
+    function schedulePathPaint() {
+      if (frameQueued) return;
+      frameQueued = true;
+      requestAnimationFrame(() => {
+        frameQueued = false;
+        if (pathsDirty) {
+          pathsDirty = false;
+          updatePaths();
+        }
+      });
+    }
+
+    function markPathsDirty() {
+      pathsDirty = true;
+      schedulePathPaint();
+    }
+
+    function processDragSvg(x, y) {
+      if (!isDrawing || !lastCell) return;
+      const samples = lastSvgPt
+        ? sampleSvgSegment(lastSvgPt.x, lastSvgPt.y, x, y)
+        : [[x, y]];
+      lastSvgPt = { x, y };
+
+      let changed = false;
+      for (let i = 0; i < samples.length; i++) {
+        const target = dragTargetFromSvg(samples[i][0], samples[i][1]);
+        if (!target) continue;
+        if (target[0] === lastCell[0] && target[1] === lastCell[1]) continue;
+        if (traceTo(target[0], target[1])) changed = true;
+        if (!isDrawing) break;
+      }
+      if (changed) markPathsDirty();
+    }
+
+    function processDragClient(clientX, clientY) {
+      const pt = clientToSvg(clientX, clientY);
+      if (!pt) return;
+      processDragSvg(pt.x, pt.y);
+    }
+
+    /*
+     * Dokunma/tıklama başlangıcı.
+     * Seçili harfin ucuna komşu bir noktaya dokunmak çizgiyi uzatır;
+     * böylece oyun sürüklemeden, tek tek dokunarak da oynanabilir.
+     */
+    function handleDown(r, c) {
+      if (hintArmed) {
+        const ep = getEndpointLetter(r, c);
+        if (ep) applyHint(ep);
+        return false;
+      }
+
+      if (tapLetter) {
+        const path = paths[tapLetter];
+        if (path && path.length) {
+          const head = path[path.length - 1];
+          const ep = getEndpointLetter(r, c);
+          if (isAdjacent(head[0], head[1], r, c) && (!ep || ep === tapLetter)) {
+            activeLetter = tapLetter;
+            lastCell = head;
+            lastDir = null;
+            isDrawing = true;
+            if (stepTo(r, c)) {
+              playClick();
+              buzz(6);
+              updatePaths();
+            }
+            return true;
+          }
+        }
+      }
+
+      return startDraw(r, c);
+    }
+
+    function beginAtClient(clientX, clientY) {
+      lastSvgPt = clientToSvg(clientX, clientY);
+      /* Başlangıçta geniş tolerans: parmak harfin biraz yanına bassa da tutar */
+      const pos = nodeAt(clientX, clientY, 0.92);
+      if (!pos) {
+        isDrawing = false;
+        return false;
+      }
+      return handleDown(pos[0], pos[1]);
+    }
+
+    /* —— Touch: mobil için asıl yol (pointercancel sürüklemeyi kesmesin) —— */
+    function onTouchStart(e) {
+      if (e.touches.length !== 1) return;
+      const t = e.touches[0];
+      usingTouch = true;
+      activeTouchId = t.identifier;
+      pointerId = null;
       e.preventDefault();
-      const pos = getCellFromEvent(e);
-      if (pos) startDraw(pos[0], pos[1]);
+      beginAtClient(t.clientX, t.clientY);
+    }
+
+    function onTouchMove(e) {
+      if (!usingTouch || !isDrawing) return;
+      let t = null;
+      for (let i = 0; i < e.touches.length; i++) {
+        if (e.touches[i].identifier === activeTouchId) {
+          t = e.touches[i];
+          break;
+        }
+      }
+      if (!t && e.touches.length) t = e.touches[0];
+      if (!t) return;
+      e.preventDefault();
+      processDragClient(t.clientX, t.clientY);
+    }
+
+    function onTouchEnd(e) {
+      if (!usingTouch) return;
+      if (activeTouchId !== null) {
+        for (let i = 0; i < e.touches.length; i++) {
+          if (e.touches[i].identifier === activeTouchId) return; /* başka parmak hâlâ basılı */
+        }
+      }
+      e.preventDefault();
+      if (pathsDirty) {
+        pathsDirty = false;
+        updatePaths();
+      }
+      usingTouch = false;
+      activeTouchId = null;
+      pauseStroke();
+    }
+
+    function onTouchCancel() {
+      if (!usingTouch) return;
+      usingTouch = false;
+      activeTouchId = null;
+      pauseStroke();
+    }
+
+    boardFrame.addEventListener('touchstart', onTouchStart, { passive: false });
+    boardFrame.addEventListener('touchmove', onTouchMove, { passive: false });
+    boardFrame.addEventListener('touchend', onTouchEnd, { passive: false });
+    boardFrame.addEventListener('touchcancel', onTouchCancel, { passive: false });
+    /* Parmak tahta dışına çıksa da çizgi devam etsin */
+    document.addEventListener('touchmove', onTouchMove, { passive: false });
+    document.addEventListener('touchend', onTouchEnd, { passive: false });
+    document.addEventListener('touchcancel', onTouchCancel, { passive: false });
+
+    /* —— Pointer: fare ve kalem (dokunmayı çifte işlemesin) —— */
+    function onPointerDown(e) {
+      if (e.pointerType === 'touch') return; /* touch* olayları yönetir */
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      usingTouch = false;
+      activeTouchId = null;
+      pointerId = e.pointerId;
+      e.preventDefault();
+      try { boardFrame.setPointerCapture(e.pointerId); } catch (_) {}
+      beginAtClient(e.clientX, e.clientY);
+    }
+
+    function onPointerMove(e) {
+      if (e.pointerType === 'touch') return;
+      if (e.pointerId !== pointerId || !isDrawing) return;
+      e.preventDefault();
+
+      if (e.getCoalescedEvents) {
+        const list = e.getCoalescedEvents();
+        if (list && list.length) {
+          for (const ev of list) processDragClient(ev.clientX, ev.clientY);
+          return;
+        }
+      }
+      processDragClient(e.clientX, e.clientY);
+    }
+
+    function onPointerUp(e) {
+      if (e.pointerType === 'touch') return;
+      if (e.pointerId !== pointerId) return;
+      pointerId = null;
+      if (pathsDirty) {
+        pathsDirty = false;
+        updatePaths();
+      }
+      pauseStroke();
+    }
+
+    function onPointerCancel(e) {
+      if (e.pointerType === 'touch') return;
+      if (e.pointerId !== pointerId) return;
+      pointerId = null;
+      pauseStroke();
+    }
+
+    boardFrame.addEventListener('pointerdown', onPointerDown);
+    boardFrame.addEventListener('pointermove', onPointerMove);
+    boardFrame.addEventListener('pointerup', onPointerUp);
+    boardFrame.addEventListener('pointercancel', onPointerCancel);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('blur', () => {
+      pointerId = null;
+      usingTouch = false;
+      activeTouchId = null;
+      pauseStroke();
     });
 
-    gridEl.addEventListener('mousemove', (e) => {
-      if (!isDrawing) return;
-      e.preventDefault();
-      const pos = getCellFromEvent(e);
-      if (pos) continueDraw(pos[0], pos[1]);
-    });
+    boardFrame.addEventListener('contextmenu', (e) => e.preventDefault());
 
-    document.addEventListener('mouseup', endDraw);
-
-    gridEl.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      const touch = e.touches[0];
-      const target = document.elementFromPoint(touch.clientX, touch.clientY);
-      if (!target) return;
-      const cell = target.closest('.cell');
-      if (!cell) return;
-      const r = parseInt(cell.dataset.r, 10);
-      const c = parseInt(cell.dataset.c, 10);
-      startDraw(r, c);
-    }, { passive: false });
-
-    gridEl.addEventListener('touchmove', (e) => {
-      if (!isDrawing) return;
-      e.preventDefault();
-      const touch = e.touches[0];
-      const target = document.elementFromPoint(touch.clientX, touch.clientY);
-      if (!target) return;
-      const cell = target.closest('.cell');
-      if (!cell) return;
-      const r = parseInt(cell.dataset.r, 10);
-      const c = parseInt(cell.dataset.c, 10);
-      continueDraw(r, c);
-    }, { passive: false });
-
-    gridEl.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      endDraw();
-    });
-
-    /* ── Solution validation ── */
-    function validateSolution() {
-      const level = LEVELS[currentLevel];
+    /* ── Doğrulama ── */
+    function validate() {
       const issues = [];
 
-      for (const letter of level.pairs) {
+      for (const letter of letters) {
         const eps = endpoints[letter];
         const path = paths[letter];
-
         if (path.length < 2) {
           issues.push(`${letter} harfi henüz bağlanmadı.`);
           continue;
         }
-
-        const pathSet = new Set(path.map(([r,c]) => key(r,c)));
-        const hasEp1 = pathSet.has(key(eps[0][0], eps[0][1]));
-        const hasEp2 = pathSet.has(key(eps[1][0], eps[1][1]));
-        if (!hasEp1 || !hasEp2) {
-          issues.push(`${letter} harfinin iki ucu birbirine bağlı değil.`);
+        const set = new Set(path.map(([r, c]) => key(r, c)));
+        if (!set.has(key(eps[0][0], eps[0][1])) || !set.has(key(eps[1][0], eps[1][1]))) {
+          issues.push(`${letter} harfinin iki ucu bağlı değil.`);
           continue;
         }
-
         for (let i = 1; i < path.length; i++) {
           if (!isAdjacent(path[i-1][0], path[i-1][1], path[i][0], path[i][1])) {
-            issues.push(`${letter} yolunda kopukluk var.`);
+            issues.push(`${letter} yolunda çapraz veya kopukluk var.`);
             break;
           }
         }
       }
 
       const occupied = new Map();
-      for (const letter of level.pairs) {
+      for (const letter of letters) {
         for (const [r, c] of paths[letter]) {
           const k = key(r, c);
           if (occupied.has(k) && occupied.get(k) !== letter) {
-            issues.push('Yollar birbirine çakışıyor!');
+            issues.push('Yollar birbirini kesiyor!');
             break;
           }
           occupied.set(k, letter);
         }
       }
 
-      let emptyCount = 0;
-      for (let r = 0; r < size; r++) {
-        for (let c = 0; c < size; c++) {
-          if (!occupied.has(key(r, c))) emptyCount++;
+      for (const letter of letters) {
+        for (const [r, c] of paths[letter]) {
+          const ep = getEndpointLetter(r, c);
+          if (ep && ep !== letter) {
+            issues.push(`${letter} yolu ${ep} harfinin üzerinden geçmiş.`);
+            break;
+          }
         }
       }
 
-      if (emptyCount > 0) {
-        issues.push(`Henüz ${emptyCount} boş kare var. Tüm ızgarayı doldur!`);
+      let empty = 0;
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          if (!occupied.has(key(r, c))) empty++;
+        }
       }
+      if (empty > 0) issues.push(`Henüz ${empty} nokta açıkta. Tüm noktaları doldur!`);
 
       return { valid: issues.length === 0, issues };
     }
 
-    /* ── UI feedback ── */
-    function showToast(type, icon, title, msg, duration = 3000) {
+    /* ── Bildirim ── */
+    function showToast(type, icon, title, msg, opts = {}) {
       toast.className = 'toast show ' + type;
       toastIcon.textContent = icon;
       toastTitle.textContent = title;
       toastMsg.textContent = msg;
+      toastNext.hidden = !opts.showNext;
+      toastClose.hidden = !opts.showNext;
       overlay.classList.add('show');
-
-      setTimeout(() => {
-        toast.classList.remove('show');
-        overlay.classList.remove('show');
-      }, duration);
+      if (!opts.showNext) setTimeout(hideToast, opts.duration || 2600);
+    }
+    function hideToast() {
+      toast.classList.remove('show');
+      overlay.classList.remove('show');
     }
 
     function spawnConfetti() {
       confettiEl.innerHTML = '';
-      const colors = ['#ff6b6b','#4ecdc4','#ffe66d','#a78bfa','#ff9ff3','#54a0ff','#5cd85a'];
-      for (let i = 0; i < 60; i++) {
-        const piece = document.createElement('div');
-        piece.className = 'confetti';
-        piece.style.left = Math.random() * 100 + '%';
-        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.animationDuration = (2 + Math.random() * 2) + 's';
-        piece.style.animationDelay = Math.random() * 0.5 + 's';
-        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-        piece.style.width = (6 + Math.random() * 8) + 'px';
-        piece.style.height = (6 + Math.random() * 8) + 'px';
-        confettiEl.appendChild(piece);
+      const colors = Object.values(PATH_COLORS);
+      for (let i = 0; i < 55; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.background = colors[i % colors.length];
+        p.style.animationDuration = (1.8 + Math.random() * 2) + 's';
+        p.style.animationDelay = Math.random() * 0.4 + 's';
+        confettiEl.appendChild(p);
       }
-      setTimeout(() => { confettiEl.innerHTML = ''; }, 4500);
+      setTimeout(() => { confettiEl.innerHTML = ''; }, 4200);
     }
 
-    /* ── Button handlers ── */
-    btnRestart.addEventListener('click', () => {
-      playClickSound();
-      rebuildPathsFromEndpoints();
-      renderGrid();
+    const PRAISE_EASY = ['Harikasın!', 'Süpersin!', 'Çok iyi!', 'Bravo!', 'Aferin!'];
+    const PRAISE_HARD = ['Doğru çözüm!', 'Tebrikler!', 'Mükemmel mantık!', 'Çok iyi düşündün!'];
+
+    /* ── Düğmeler ── */
+    btnClear.addEventListener('click', () => {
+      playClick();
+      rebuildPaths();
+      activeLetter = null;
+      tapLetter = null;
+      isDrawing = false;
+      lastCell = null;
+      hintArmed = false;
+      updateHintUI();
+      updatePaths();
+      updateHalos();
+    });
+
+    btnNew.addEventListener('click', () => {
+      playClick();
+      newPuzzle();
     });
 
     btnCheck.addEventListener('click', () => {
-      const result = validateSolution();
-      if (result.valid) {
-        playSuccessSound();
-        spawnConfetti();
-        const lvl = LEVELS[currentLevel];
-        showToast('success', '🎉', 'Tebrikler!', `Level ${lvl.id} (${lvl.name}) başarıyla tamamlandı! Harika iş çıkardın!`, 4000);
-      } else {
-        playErrorSound();
-        showToast('error', '🤔', 'Henüz Tamamlanmadı', result.issues[0], 2500);
+      const result = validate();
+      if (!result.valid) {
+        playError();
+        showToast('error', '🤔', 'Henüz Tamamlanmadı', result.issues[0]);
+        return;
       }
+
+      const easy = gradeIdx === 0 && levelIdx <= 1;
+      const list = easy ? PRAISE_EASY : PRAISE_HARD;
+      const title = list[(Math.random() * list.length) | 0];
+
+      const before = variantFor(gradeIdx, levelIdx, solvedCount(gradeIdx, levelIdx));
+      addSolved(gradeIdx, levelIdx);
+      pendingFloor = puzzleScore;
+
+      const solved = solvedCount(gradeIdx, levelIdx);
+      const after = variantFor(gradeIdx, levelIdx, solved);
+
+      playSuccess();
+      spawnConfetti();
+      buildGradeButtons();
+      buildLevelButtons();
+      updateStatus();
+
+      const grew = after.size !== before.size;
+      showToast('success', '🎉', title,
+        `${GRADES[gradeIdx].grade}. Sınıf · Seviye ${levelCfg().level} · ${solved}. çözümün! ` +
+        (grew
+          ? `Izgara büyüdü: sıradaki soru ${after.size}×${after.size} olacak.`
+          : 'Sıradaki soru biraz daha zor olacak.'),
+        { showNext: true });
     });
 
-    overlay.addEventListener('click', () => {
-      toast.classList.remove('show');
-      overlay.classList.remove('show');
-    });
+    toastNext.addEventListener('click', () => { hideToast(); newPuzzle(); });
+    toastClose.addEventListener('click', hideToast);
+    overlay.addEventListener('click', hideToast);
 
+    let resizeTimer = null;
     window.addEventListener('resize', () => {
-      if (gridEl.children.length) renderPathSvg();
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => { resizeBoard(); render(); }, 120);
     });
 
-    /* ── Init ── */
+    /* ─────────────────────────────────────────────
+       PDF / yazdırma
+       ───────────────────────────────────────────── */
+    const btnPdf = document.getElementById('btnPdf');
+    const pdfOverlay = document.getElementById('pdfOverlay');
+    const pdfModal = document.getElementById('pdfModal');
+    const pdfScope = document.getElementById('pdfScope');
+    const pdfCount = document.getElementById('pdfCount');
+    const pdfPerPage = document.getElementById('pdfPerPage');
+    const pdfAnswers = document.getElementById('pdfAnswers');
+    const pdfSummary = document.getElementById('pdfSummary');
+    const pdfCancel = document.getElementById('pdfCancel');
+    const pdfCreate = document.getElementById('pdfCreate');
+    const printArea = document.getElementById('printArea');
+
+    const PRINT_RULES =
+      'ABC Bağlamaca, zekâ oyunlarının uzamsal algı türlerindendir. Temel amaç tüm noktaları ' +
+      'kullanarak aynı harfleri birbirine bağlamaktır. Yalnızca yatay ve dikey çizgiler kullanılır, ' +
+      'çizgiler birbirini kesmez, başka bir harfin üzerinden geçmez ve bitişte tek bir nokta bile açıkta kalmaz.';
+
+    /* svgMax: A4 sayfasına taşmadan sığan kare kenar uzunluğu */
+    const LAYOUT = {
+      1: { cols: 1, svgMax: '115mm' },
+      2: { cols: 1, svgMax: '92mm' },
+      4: { cols: 2, svgMax: '76mm' },
+      6: { cols: 2, svgMax: '60mm' }
+    };
+
+    function puzzleSvgMarkup(puzzle, withSolution) {
+      const n = puzzle.s;
+      const gap = 10;
+      const padU = 7;
+      const W = padU * 2 + (n - 1) * gap;
+      const fontSize = gap * 0.62;
+      const strokeW = gap * 0.3;
+      const dotR = 0.8;
+      const xy = i => ({ x: padU + (i % n) * gap, y: padU + Math.floor(i / n) * gap });
+
+      let lines = '';
+      if (withSolution) {
+        puzzle.sol.forEach((cells, li) => {
+          const color = PATH_COLORS[LETTERS[li]];
+          const pts = cells.map(i => { const p = xy(i); return p.x + ',' + p.y; }).join(' ');
+          lines += `<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="${strokeW}"` +
+                   ' stroke-linecap="round" stroke-linejoin="round"/>';
+        });
+      }
+
+      const epMap = new Map();
+      puzzle.sol.forEach((cells, li) => {
+        epMap.set(cells[0], LETTERS[li]);
+        epMap.set(cells[cells.length - 1], LETTERS[li]);
+      });
+
+      let dots = '';
+      let texts = '';
+      for (let i = 0; i < n * n; i++) {
+        const p = xy(i);
+        const letter = epMap.get(i);
+        if (letter) {
+          const outline = withSolution
+            ? ' stroke="#fff" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke"'
+            : '';
+          texts += `<text x="${p.x}" y="${p.y}" font-size="${fontSize}"` +
+                   ' font-family="Arial, Helvetica, sans-serif" font-weight="bold" fill="#231f20"' +
+                   ` text-anchor="middle" dominant-baseline="central"${outline}>${letter}</text>`;
+        } else {
+          dots += `<circle cx="${p.x}" cy="${p.y}" r="${dotR}" fill="#231f20"/>`;
+        }
+      }
+
+      return `<svg viewBox="0 0 ${W} ${W}" xmlns="http://www.w3.org/2000/svg">${lines}${dots}${texts}</svg>`;
+    }
+
+    function buildPrintItems(scope, count) {
+      const items = [];
+
+      function addLevel(gi, li, n) {
+        const cfg = GRADES[gi].levels[li];
+        const v = variantFor(gi, li, solvedCount(gi, li));
+        const range = difficultyRange(gi, li);
+        for (let i = 0; i < n; i++) {
+          const p = n === 1
+            ? percentileFor(gi, li, solvedCount(gi, li))
+            : range.start + (range.max - range.start) * (i / (n - 1));
+          const puzzle = generatePuzzle(v.size, v.pairs, p, null, 40);
+          if (!puzzle) continue;
+          items.push({
+            puzzle,
+            caption: `${GRADES[gi].grade}. Sınıf · Seviye ${cfg.level} · Soru ${i + 1} (${v.size}×${v.size})`
+          });
+        }
+      }
+
+      if (scope === 'question') {
+        const sol = letters.map(l => solution[l].map(([r, c]) => r * size + c));
+        items.push({
+          puzzle: { s: size, sol },
+          caption: `${GRADES[gradeIdx].grade}. Sınıf · Seviye ${levelCfg().level} · Ekrandaki soru (${size}×${size})`
+        });
+      } else if (scope === 'level') {
+        addLevel(gradeIdx, levelIdx, count);
+      } else if (scope === 'grade') {
+        GRADES[gradeIdx].levels.forEach((_, li) => addLevel(gradeIdx, li, count));
+      } else {
+        GRADES.forEach((g, gi) => g.levels.forEach((_, li) => addLevel(gi, li, count)));
+      }
+      return items;
+    }
+
+    function chunk(arr, n) {
+      const out = [];
+      for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+      return out;
+    }
+
+    function buildPrintPages(items, perPage, withAnswers) {
+      const layout = LAYOUT[perPage] || LAYOUT[4];
+      const pages = chunk(items, perPage);
+      const totalPages = pages.length * (withAnswers ? 2 : 1);
+      let pageNo = 0;
+      let html = '';
+
+      function renderSet(showSolution) {
+        pages.forEach((group, gi) => {
+          pageNo++;
+          html += '<section class="print-page">';
+          html += '<div class="print-banner">' +
+                  '<div class="t1">ZEKA VE AKIL OYUNLARI</div>' +
+                  '<div class="t2">ABC BAĞLAMACA</div></div>';
+
+          if (showSolution) {
+            html += '<div style="text-align:center">' +
+                    '<span class="print-answer-tag">CEVAP ANAHTARI</span></div>';
+          } else if (gi === 0) {
+            html += `<div class="print-rules">${PRINT_RULES}</div>`;
+          }
+
+          html += `<div class="print-grid" style="grid-template-columns:repeat(${layout.cols},1fr)">`;
+          group.forEach(item => {
+            html += '<div class="print-card">' +
+                    `<div class="cap">${item.caption}</div>` +
+                    `<div class="frame" style="max-width:${layout.svgMax}">` +
+                    puzzleSvgMarkup(item.puzzle, showSolution) +
+                    '</div></div>';
+          });
+          html += '</div>';
+
+          html += '<div class="print-foot">' +
+                  '<span>ABC Bağlamaca Etkinliği</span>' +
+                  `<span>Sayfa ${pageNo} / ${totalPages}</span></div>`;
+          html += '</section>';
+        });
+      }
+
+      renderSet(false);
+      if (withAnswers) renderSet(true);
+      return html;
+    }
+
+    function scopeCount(scope, count) {
+      if (scope === 'question') return 1;
+      if (scope === 'level') return count;
+      if (scope === 'grade') return count * GRADES[gradeIdx].levels.length;
+      return count * GRADES.reduce((s, g) => s + g.levels.length, 0);
+    }
+
+    function scopeLabel(scope) {
+      const cfg = levelCfg();
+      const grade = GRADES[gradeIdx].grade;
+      if (scope === 'question') return `${grade}. Sınıf · Seviye ${cfg.level} · Ekrandaki soru`;
+      if (scope === 'level') return `${grade}. Sınıf · Seviye ${cfg.level}`;
+      if (scope === 'grade') return `${grade}. Sınıf`;
+      return 'Tüm sınıflar';
+    }
+
+    function updatePdfSummary() {
+      const scope = pdfScope.value;
+      const count = parseInt(pdfCount.value, 10);
+      const perPage = parseInt(pdfPerPage.value, 10);
+      const total = scopeCount(scope, count);
+      const pages = Math.ceil(total / perPage) * (pdfAnswers.checked ? 2 : 1);
+      pdfCount.disabled = (scope === 'question');
+      pdfSummary.textContent = `${scopeLabel(scope)} · ${total} bulmaca · ${pages} sayfa`;
+    }
+
+    function openPdfModal() {
+      updatePdfSummary();
+      pdfOverlay.classList.add('show');
+      pdfModal.classList.add('show');
+    }
+    function closePdfModal() {
+      pdfOverlay.classList.remove('show');
+      pdfModal.classList.remove('show');
+    }
+
+    function createPdf() {
+      const scope = pdfScope.value;
+      const count = parseInt(pdfCount.value, 10);
+      const perPage = parseInt(pdfPerPage.value, 10);
+      const withAnswers = pdfAnswers.checked;
+
+      pdfCreate.disabled = true;
+      pdfCreate.textContent = 'Hazırlanıyor…';
+
+      setTimeout(() => {
+        const items = buildPrintItems(scope, count);
+        printArea.innerHTML = buildPrintPages(items, perPage, withAnswers);
+
+        const safeTitle = ('ABC-Baglamaca-' + scopeLabel(scope) + (withAnswers ? '-cevapli' : ''))
+          .replace(/[^\w\sğüşıöçĞÜŞİÖÇ.-]/g, '')
+          .replace(/\s+/g, '-');
+
+        const prevTitle = document.title;
+        document.title = safeTitle;
+        pdfCreate.disabled = false;
+        pdfCreate.textContent = 'Oluştur';
+        closePdfModal();
+
+        setTimeout(() => {
+          window.print();
+          document.title = prevTitle;
+        }, 60);
+      }, 40);
+    }
+
+    btnPdf.addEventListener('click', () => { playClick(); openPdfModal(); });
+    pdfCancel.addEventListener('click', () => { playClick(); closePdfModal(); });
+    pdfOverlay.addEventListener('click', closePdfModal);
+    pdfCreate.addEventListener('click', createPdf);
+    pdfScope.addEventListener('change', updatePdfSummary);
+    pdfCount.addEventListener('change', updatePdfSummary);
+    pdfPerPage.addEventListener('change', updatePdfSummary);
+    pdfAnswers.addEventListener('change', updatePdfSummary);
+    window.addEventListener('afterprint', () => { printArea.innerHTML = ''; });
+
+    /* Test kancası */
+    window.__abcTest = {
+      state: () => ({
+        size, letters,
+        solution: letters.map(l => solution[l].map(([r, c]) => r * size + c)),
+        score: puzzleScore,
+        percentile: percentileFor(gradeIdx, levelIdx, solvedCount(gradeIdx, levelIdx)),
+        solved: solvedCount(gradeIdx, levelIdx)
+      }),
+      input: () => ({
+        pointerId, tapLetter, activeLetter, isDrawing,
+        pathLens: letters.map(l => paths[l].length)
+      }),
+      geo: () => ({ pad, cellGap, size }),
+      paths: () => letters.map(l => paths[l].map(([r, c]) => [r, c])),
+      generate: (s, pairs, p) => generatePuzzle(s, pairs, p, null),
+      config: () => GRADES,
+      newPuzzle
+    };
+
+    /* ── Başlat ── */
+    buildGradeButtons();
     buildLevelButtons();
-    loadLevel();
+    newPuzzle();
   })();
   </script>
 </body>

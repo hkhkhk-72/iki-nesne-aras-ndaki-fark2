@@ -256,7 +256,15 @@ Haftalık **3** saat · yıllık **108** saat · **17** çıktı · kod `SB.4.x.
 - [x] Hayat Bilgisi 1–3 öğrenme alanları + süre + çıktılar
 - [x] Fen Bilimleri 3–4 ünite + süre + çıktılar
 - [x] Sosyal Bilgiler 4 öğrenme alanları + süre + çıktılar
+
+### Mimari karar (29 Temmuz 2026)
+
+Yeni curriculum JSON yazımı **durduruldu**.  
+Önce domain anayasası: `docs/MB-DM-001-OGRETIM-PROGRAMI-DOMAIN-MODELI.md`  
+Sıradaki: **MB-DM-002** Entity Detay Spesifikasyonu → sonra MB-TPM-001 (1. sınıf Türkçe uygulama).
+
+Keşif amaçlı kalan okumalar (domain’e bağlanınca):
+
 - [ ] Görsel Sanatlar, Müzik, Beden Eğitimi ve Oyun (1–4)
 - [ ] İngilizce (2–8) — 1. sınıfta yok (doğrulandı)
 - [ ] İnsan Hakları, Vatandaşlık ve Demokrasi (4)
-- [ ] Süreç bileşenlerinin (`a)`, `b)`…) tam gövdesi yıllık plana işlensin

@@ -44,12 +44,13 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 
 ---
 
-## Yol Haritası
+## Yol Haritası (Domain-First)
 
-1. Ders bazlı veri tabanı tamamlama (1-4. sınıf)
-2. Takvim ve plan algoritması (2026-2027 senkronizasyonu)
-3. Evrak şablon motoru Word/PDF MEB formatı
-4. Sahada test ve kalite kontrol
+1. **MB-DM-001** Domain Model ✅ — `docs/MB-DM-001-OGRETIM-PROGRAMI-DOMAIN-MODELI.md`
+2. **MB-DM-002** Entity Detay Spesifikasyonu
+3. MB-TPM-001 → MB-DB-001 → MB-JSON-001 → MB-ALG-001 → MB-APP-001
+
+> JSON en son ürün olacaktır. Mevcut curriculum JSON’ları geçici keşif verisidir.
 
 Detay: `docs/STRATEJI-RAPORU.md`
 

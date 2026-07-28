@@ -14,12 +14,18 @@
 
 MiniBilge Öğretmen, klasik bir belge indirme platformu değildir. Amacımız, Türkiye'deki bir ilkokul öğretmeninin eğitim-öğretim yılı boyunca hazırlamak, kullanmak ve idareye sunmak zorunda olduğu **tüm resmî evrakları** hatasız, mevzuata tam uygun ve saniyeler içinde üretebilen akıllı bir **Öğretmen Bilgi ve Otomasyon Sistemi** kurmaktır.
 
-Proje, dört ana motor üzerine inşa edilmektedir:
+Proje bir belge indirme sitesi değil; **Öğretim Programı İşletim Sistemi** olarak tasarlanır.
 
-1. **Öğretim Programı Motoru** — 1-4. sınıf tüm derslerin öğrenme çıktıları, süreç bileşenleri, içerik çerçeveleri, alan/kavramsal becerileri, eğilimleri ve farklılaştırma yaklaşımları.
-2. **Takvim Motoru** — MEB çalışma takvimi, ara tatiller, yarıyıl tatili, resmî tatiller, bayramlar ve belirli gün/haftalar.
-3. **Plan Motoru (Sistemin Beyni)** — Okul, sınıf, ders ve öğretmen bilgilerini harmanlayarak doğru hafta, tema, kazanım ve ders saatlerini üreten otomasyon merkezi.
-4. **Evrak Motoru** — Plan motorundan gelen verileri Word ve PDF formatlarında MEB standartlarına uygun belgelere dönüştüren biçimlendirme motoru.
+Üç katman asla karıştırılmaz: **Program ≠ Plan ≠ Belge**.
+
+Çekirdek motorlar (domain’den türetilir):
+
+1. **Öğretim Programı Motoru (MB-TPM)** — TYMM nesneleri: çıktı, süreç bileşeni, içerik, beceri, değer, eğilim…
+2. **Takvim Motoru** — MEB çalışma takvimi, tatiller, belirli gün/haftalar
+3. **Plan Motoru (MB-YPM / MB-GPM)** — Program + takvim + planlama kuralları → yıllık/günlük plan
+4. **Evrak Motoru (MB-BM)** — Planı Word/PDF/HTML belgesine dönüştürür
+
+Anayasa: `docs/MB-DM-001-OGRETIM-PROGRAMI-DOMAIN-MODELI.md`
 
 ---
 
@@ -45,12 +51,21 @@ Proje, dört ana motor üzerine inşa edilmektedir:
 
 ---
 
-## 4. Yol Haritası
+## 4. Yol Haritası (Domain-First)
 
-1. Ders bazlı veri tabanı tamamlama (1-4. sınıf tüm dersler)
-2. Takvim ve plan algoritmasının kodlanması (2026-2027 dahil)
-3. Evrak şablon motorunun Word/PDF entegrasyonu
-4. Test ve kalite kontrol aşaması
+> **Karar (29 Temmuz 2026):** JSON / dosya yazımı durduruldu. Önce kavramsal domain modeli, sonra şema ve algoritma.
+
+Bağlayıcı sıra:
+
+1. **MB-DM-001** — Öğretim Programı Domain Modeli *(anayasa — tamamlandı)* → `docs/MB-DM-001-OGRETIM-PROGRAMI-DOMAIN-MODELI.md`
+2. **MB-DM-002** — Entity Detay Spesifikasyonu
+3. **MB-TPM-001** — 1. Sınıf Türkçe domain uygulaması
+4. **MB-DB-001** — Fiziksel veri tabanı
+5. **MB-JSON-001** — Makine tarafından işlenebilir JSON şeması
+6. **MB-ALG-001** — Yıllık plan üretim algoritması
+7. **MB-APP-001** — Uygulama entegrasyonu
+
+Mevcut `assets/data/curriculum/*.json` dosyaları geçici keşif verisidir; kanonik şema değildir.
 
 ---
 

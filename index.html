@@ -8,156 +8,130 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --page: #f7f4ee;
+      --blue: #2e3a92;
+      --blue-soft: #3d4db8;
       --ink: #1a1a1a;
-      --title-green: #2e7d32;
-      --title-blue: #1565c0;
+      --page: #eef1f6;
       --path-a: #e65100;
       --path-b: #f9a825;
       --path-c: #1565c0;
       --path-d: #2e7d32;
-      --path-e: #6a1b9a;
+      --path-e: #8e24aa;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       min-height: 100dvh;
-      background:
-        radial-gradient(ellipse at top, #fff 0%, transparent 55%),
-        linear-gradient(180deg, #efeae0 0%, var(--page) 40%, #e5dfd3 100%);
+      background: linear-gradient(180deg, #dfe6f3 0%, var(--page) 40%, #d7dde8 100%);
       color: var(--ink);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 12px 10px 28px;
+      padding: 0 10px 28px;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
     }
 
-    .app {
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .app { width: 100%; max-width: 520px; }
 
-    /* Üst başlık – PDF stili */
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .badge {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #42a5f5, #1565c0);
+    /* PDF mavi başlık */
+    .hero {
+      background: linear-gradient(180deg, var(--blue-soft), var(--blue));
       color: #fff;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      font-size: 0.85rem;
-      box-shadow: 0 3px 10px rgba(21,101,192,0.35);
+      border-radius: 0 0 18px 18px;
+      padding: 14px 14px 16px;
+      margin: 0 -10px 12px;
+      box-shadow: 0 8px 24px rgba(46,58,146,0.35);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-
-    .titles { text-align: center; flex: 1; }
-    .titles .line1 {
-      color: var(--title-green);
-      font-weight: 800;
-      font-size: clamp(0.85rem, 3.2vw, 1.05rem);
-      letter-spacing: 0.04em;
+    .hero::before, .hero::after {
+      content: 'A  B  C';
+      position: absolute;
+      font-size: 3rem;
+      font-weight: 900;
+      opacity: 0.08;
+      top: 8px;
     }
-    .titles .line2 {
-      color: var(--title-blue);
-      font-weight: 800;
-      font-size: clamp(1.1rem, 4.5vw, 1.45rem);
-      letter-spacing: 0.06em;
+    .hero::before { left: 8px; }
+    .hero::after { right: 8px; }
+    .hero .kids {
+      font-size: 1.5rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 2px;
+    }
+    .hero h1 {
+      font-size: clamp(1.35rem, 5vw, 1.8rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+    .hero .sub {
+      font-size: 0.72rem;
+      opacity: 0.85;
+      margin-top: 4px;
     }
 
     .rules {
       background: #fff;
-      border: 2px solid #cfd8dc;
+      border: 2px solid #c5cae9;
       border-radius: 12px;
       padding: 10px 12px;
       font-size: 0.78rem;
       line-height: 1.45;
       color: #37474f;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      margin-bottom: 12px;
     }
-    .rules strong { color: #1565c0; }
+    .rules strong { color: var(--blue); }
 
-    /* Seviye seçici – renkli çerçeveler */
     .levels {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 6px;
+      margin-bottom: 12px;
     }
-
     .level-btn {
-      border: 3px solid #999;
+      border: 3px solid #9fa8da;
       background: #fff;
       border-radius: 10px;
-      padding: 8px 4px;
+      padding: 8px 2px;
       cursor: pointer;
       font-weight: 800;
       font-size: 0.78rem;
       line-height: 1.15;
-      transition: transform 0.15s, box-shadow 0.15s;
+      transition: 0.15s;
     }
     .level-btn .sub {
       display: block;
-      font-size: 0.62rem;
+      font-size: 0.58rem;
       font-weight: 600;
-      opacity: 0.75;
+      opacity: 0.7;
       margin-top: 2px;
     }
-    .level-btn:hover { transform: translateY(-1px); }
     .level-btn.active {
-      box-shadow: 0 0 0 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.12);
-      transform: scale(1.04);
+      background: var(--blue);
       color: #fff;
+      border-color: var(--blue);
+      box-shadow: 0 4px 12px rgba(46,58,146,0.35);
+      transform: scale(1.04);
     }
 
-    .level-btn[data-color="cyan"] { border-color: #00bcd4; }
-    .level-btn[data-color="green"] { border-color: #4caf50; }
-    .level-btn[data-color="red"] { border-color: #f44336; }
-    .level-btn[data-color="yellow"] { border-color: #ffc107; }
-    .level-btn[data-color="purple"] { border-color: #9c27b0; }
-
-    .level-btn.active[data-color="cyan"] { background: #00bcd4; }
-    .level-btn.active[data-color="green"] { background: #4caf50; }
-    .level-btn.active[data-color="red"] { background: #f44336; }
-    .level-btn.active[data-color="yellow"] { background: #ffc107; color: #333; }
-    .level-btn.active[data-color="purple"] { background: #9c27b0; }
-
-    /* Oyun tahtası */
-    .board-wrap {
-      display: flex;
-      justify-content: center;
-    }
-
+    .board-wrap { display: flex; justify-content: center; margin-bottom: 8px; }
     .board-frame {
       background: #fff;
-      border: 6px solid #00bcd4;
-      border-radius: 4px;
-      padding: 16px;
+      border: 5px solid var(--blue);
+      border-radius: 6px;
+      padding: 14px;
       box-shadow: 0 8px 28px rgba(0,0,0,0.12);
       touch-action: none;
-      transition: border-color 0.2s;
     }
-
     .board-svg { display: block; overflow: visible; }
-
     .path-line {
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
       pointer-events: none;
     }
-
     .node-letter {
       font-family: Arial, Helvetica, sans-serif;
       font-weight: 800;
@@ -166,21 +140,17 @@
       dominant-baseline: central;
       pointer-events: none;
     }
-
     .node-dot { fill: #212121; }
 
     .info {
       text-align: center;
       font-size: 0.88rem;
       color: #455a64;
+      margin-bottom: 10px;
     }
     .info strong { color: var(--ink); }
 
-    .actions {
-      display: flex;
-      gap: 8px;
-    }
-
+    .actions { display: flex; gap: 8px; margin-bottom: 10px; }
     .btn {
       flex: 1;
       padding: 12px 10px;
@@ -191,53 +161,43 @@
       font-size: 0.9rem;
       font-weight: 800;
       cursor: pointer;
-      transition: transform 0.12s, background 0.12s;
     }
-    .btn:hover { transform: translateY(-1px); background: #f5f5f5; }
+    .btn:hover { background: #f5f5f5; }
     .btn-check {
-      background: #1565c0;
-      border-color: #1565c0;
+      background: var(--blue);
+      border-color: var(--blue);
       color: #fff;
     }
-    .btn-check:hover { background: #0d47a1; }
+    .btn-check:hover { background: #1a237e; }
 
     .hint {
       text-align: center;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: #607d8b;
       line-height: 1.4;
+      margin-bottom: 8px;
     }
-
     .footer {
       text-align: center;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: #90a4ae;
     }
 
-    /* Toast */
     .overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.35);
-      z-index: 100; opacity: 0; pointer-events: none;
-      transition: opacity 0.25s;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.35);
+      z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.25s;
     }
     .overlay.show { opacity: 1; pointer-events: auto; }
-
     .toast {
       position: fixed; top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0.9);
-      background: #fff; border: 3px solid #1565c0;
-      border-radius: 16px; padding: 22px 26px;
-      text-align: center; z-index: 101;
-      opacity: 0; pointer-events: none;
+      background: #fff; border: 3px solid var(--blue);
+      border-radius: 16px; padding: 22px 26px; text-align: center;
+      z-index: 101; opacity: 0; pointer-events: none;
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       max-width: 88vw; min-width: 240px;
     }
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-      pointer-events: auto;
-    }
+    .toast.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
     .toast .icon { font-size: 2.2rem; margin-bottom: 4px; }
     .toast h2 { font-size: 1.2rem; margin-bottom: 4px; }
     .toast p { font-size: 0.88rem; color: #546e7a; }
@@ -246,9 +206,7 @@
     .toast.error { border-color: #c62828; }
     .toast.error h2 { color: #c62828; }
 
-    .confetti-box {
-      position: fixed; inset: 0; pointer-events: none; z-index: 99; overflow: hidden;
-    }
+    .confetti-box { position: fixed; inset: 0; pointer-events: none; z-index: 99; overflow: hidden; }
     .confetti {
       position: absolute; top: -10px; width: 8px; height: 8px;
       animation: fall linear forwards;
@@ -260,17 +218,15 @@
 </head>
 <body>
   <div class="app">
-    <div class="topbar">
-      <div class="badge">ABC</div>
-      <div class="titles">
-        <div class="line1">ZEKA VE AKIL OYUNLARI</div>
-        <div class="line2">ABC BAĞLAMACA</div>
-      </div>
-      <div class="badge">🎯</div>
-    </div>
+    <header class="hero">
+      <div class="kids">👧🧒👦</div>
+      <h1>ABC BAĞLAMACA</h1>
+      <div class="sub">Zekâ ve Akıl Oyunları · Uzamsal Algı</div>
+    </header>
 
     <div class="rules">
       <strong>Nasıl oynanır?</strong>
+      ABC Bağlamaca, zekâ oyunlarının uzamsal algı türlerindendir.
       Temel amaç tüm noktaları kullanarak aynı harfleri birbirine bağlamaktır.
       Yalnızca <strong>yatay</strong> ve <strong>dikey</strong> çizgiler kullanılır;
       bağlantılar birbirini <strong>kesmemelidir</strong>.
@@ -291,7 +247,9 @@
       <button class="btn btn-check" id="btnCheck">Çözümü Kontrol Et</button>
     </div>
 
-    <p class="hint">Harfe dokunup sürükle · Çapraz yasak · Tüm noktaları doldur · Diğer harfin üzerinden geçme</p>
+    <p class="hint">
+      Harfe dokunup sürükle · Çapraz yasak · Tüm noktaları doldur · Diğer harfin üzerinden geçme
+    </p>
     <p class="footer">ABC Bağlamaca Etkinliği</p>
   </div>
 
@@ -308,57 +266,60 @@
     'use strict';
 
     const PATH_COLORS = {
-      A: '#e65100', B: '#f9a825', C: '#1565c0', D: '#2e7d32', E: '#6a1b9a'
+      A: '#e65100', B: '#f9a825', C: '#1565c0', D: '#2e7d32', E: '#8e24aa'
     };
 
-    /* PDF etkinlik sayfasındaki 6x6 bulmacalar */
+    /*
+     * Seviyeler: yüklenen PDF etkinlik / konu anlatımı bulmacaları
+     * L1–L2: kademeli giriş
+     * L3: konu anlatımı 5×5 örneği
+     * L4: etkinlik sayfası 6×6
+     * L5: abc-baglamaca-9 8×8 bulmaca
+     */
     const LEVELS = [
       {
-        id: 1, name: 'Kolay', grade: '1. Sınıf', color: 'cyan',
+        id: 1, name: 'Çok Kolay', grade: '1. Sınıf',
+        size: 3, pairs: ['A', 'B'],
+        endpoints: { A: [[0,0],[2,2]], B: [[0,1],[0,2]] }
+      },
+      {
+        id: 2, name: 'Kolay', grade: '1. Sınıf+',
+        size: 4, pairs: ['A', 'B'],
+        endpoints: { A: [[0,0],[3,0]], B: [[0,3],[3,3]] }
+      },
+      {
+        /* Konu anlatımı 5×5 örneği */
+        id: 3, name: 'Orta', grade: '2. Sınıf',
+        size: 5, pairs: ['A', 'B', 'C', 'D'],
+        endpoints: {
+          A: [[0,0],[2,3]], B: [[1,3],[3,4]],
+          C: [[1,0],[4,4]], D: [[1,1],[3,1]]
+        }
+      },
+      {
+        /* Etkinlik PDF 6×6 (cyan çerçeveli) */
+        id: 4, name: 'Zor', grade: '3. Sınıf',
         size: 6, pairs: ['A', 'B', 'C', 'D'],
         endpoints: {
-          D: [[0,0],[3,3]], A: [[1,0],[5,5]], C: [[1,4],[4,1]], B: [[2,4],[4,5]]
+          D: [[0,0],[3,3]], A: [[1,0],[5,5]],
+          C: [[1,4],[4,1]], B: [[2,4],[4,5]]
         }
       },
       {
-        id: 2, name: 'Kolay+', grade: '1. Sınıf+', color: 'green',
-        size: 6, pairs: ['A', 'B', 'C', 'D'],
+        /* abc-baglamaca-9 PDF – Bulmaca 1 (8×8) */
+        id: 5, name: 'Uzman', grade: '4. Sınıf',
+        size: 8, pairs: ['A', 'B', 'C', 'D', 'E'],
         endpoints: {
-          A: [[0,3],[1,1]], C: [[0,4],[4,0]], D: [[0,5],[5,0]], B: [[2,2],[3,0]]
-        }
-      },
-      {
-        id: 3, name: 'Orta', grade: '2. Sınıf', color: 'red',
-        size: 6, pairs: ['A', 'B', 'C', 'D', 'E'],
-        endpoints: {
-          B: [[0,0],[1,4]], A: [[0,3],[5,5]], D: [[1,0],[4,3]], C: [[1,1],[2,4]], E: [[3,1],[5,0]]
-        }
-      },
-      {
-        id: 4, name: 'Zor', grade: '3. Sınıf', color: 'yellow',
-        size: 6, pairs: ['A', 'B', 'C', 'D', 'E'],
-        endpoints: {
-          C: [[0,0],[4,2]], D: [[0,1],[3,2]], E: [[1,4],[3,1]], B: [[4,3],[5,5]], A: [[4,4],[5,0]]
-        }
-      },
-      {
-        id: 5, name: 'Uzman', grade: '4. Sınıf', color: 'purple',
-        size: 6, pairs: ['A', 'B', 'C', 'D', 'E'],
-        endpoints: {
-          B: [[0,0],[2,2]], E: [[0,4],[4,4]], D: [[0,5],[3,2]], C: [[1,0],[5,1]], A: [[1,2],[5,2]]
+          A: [[4,5],[7,7]], B: [[0,2],[5,4]],
+          C: [[0,3],[6,4]], D: [[3,5],[6,1]],
+          E: [[2,5],[4,2]]
         }
       }
     ];
 
-    const BORDER = {
-      cyan: '#00bcd4', green: '#4caf50', red: '#f44336',
-      yellow: '#ffc107', purple: '#9c27b0'
-    };
-
     let currentLevel = 0;
-    let size = 6;
+    let size = 3;
     let endpoints = {};
-    let endpointSet = new Set();
     let paths = {};
     let activeLetter = null;
     let isDrawing = false;
@@ -379,7 +340,6 @@
     const overlay = document.getElementById('overlay');
     const confettiEl = document.getElementById('confetti');
 
-    /* Audio */
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
     function getAudio() {
@@ -451,7 +411,6 @@
       LEVELS.forEach((lvl, idx) => {
         const btn = document.createElement('button');
         btn.className = 'level-btn' + (idx === currentLevel ? ' active' : '');
-        btn.dataset.color = lvl.color;
         btn.innerHTML = `L${lvl.id}<span class="sub">${lvl.grade}</span>`;
         btn.addEventListener('click', () => {
           if (idx === currentLevel) return;
@@ -468,19 +427,17 @@
       const level = LEVELS[currentLevel];
       size = level.size;
       endpoints = level.endpoints;
-      endpointSet = new Set();
-      Object.values(endpoints).flat().forEach(([r, c]) => endpointSet.add(key(r, c)));
       rebuildPaths();
       activeLetter = null;
       isDrawing = false;
       lastCell = null;
 
-      boardFrame.style.borderColor = BORDER[level.color];
-
-      const maxW = Math.min(window.innerWidth - 64, 380);
-      cellGap = Math.floor(maxW / (size - 1 + 0.4));
-      cellGap = Math.max(38, Math.min(cellGap, 58));
-      pad = Math.round(cellGap * 0.32);
+      const maxW = Math.min(window.innerWidth - 56, 400);
+      cellGap = Math.floor(maxW / (size - 1 + 0.45));
+      if (size >= 8) cellGap = Math.max(28, Math.min(cellGap, 42));
+      else if (size >= 6) cellGap = Math.max(34, Math.min(cellGap, 52));
+      else cellGap = Math.max(40, Math.min(cellGap, 64));
+      pad = Math.round(cellGap * 0.3);
 
       levelInfoEl.innerHTML =
         `<strong>Level ${level.id} – ${level.name}</strong> · ${size}×${size} · ${level.pairs.join(', ')}`;
@@ -495,9 +452,8 @@
       boardSvg.setAttribute('viewBox', `0 0 ${W} ${W}`);
       boardSvg.innerHTML = '';
 
-      const strokeW = Math.max(7, cellGap * 0.28);
+      const strokeW = Math.max(5, cellGap * 0.28);
 
-      /* Paths */
       const pathGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       LEVELS[currentLevel].pairs.forEach(letter => {
         const path = paths[letter];
@@ -515,10 +471,9 @@
       });
       boardSvg.appendChild(pathGroup);
 
-      /* Nodes */
       const nodeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      const fontSize = Math.round(cellGap * 0.52);
-      const dotR = Math.max(3.2, cellGap * 0.075);
+      const fontSize = Math.round(cellGap * (size >= 8 ? 0.48 : 0.52));
+      const dotR = Math.max(2.6, cellGap * 0.07);
 
       for (let r = 0; r < size; r++) {
         for (let c = 0; c < size; c++) {
@@ -526,8 +481,6 @@
           const ep = getEndpointLetter(r, c);
           const owner = getCellOwner(r, c);
           const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-          g.dataset.r = r;
-          g.dataset.c = c;
 
           const hit = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
           hit.setAttribute('cx', x);
@@ -559,14 +512,12 @@
             nub.setAttribute('fill', PATH_COLORS[owner]);
             g.appendChild(nub);
           }
-
           nodeGroup.appendChild(g);
         }
       }
       boardSvg.appendChild(nodeGroup);
     }
 
-    /* Drawing */
     function startDraw(r, c) {
       const ep = getEndpointLetter(r, c);
       if (!ep) return;
@@ -576,9 +527,8 @@
       lastCell = [r, c];
       const path = paths[activeLetter];
       const idx = path.findIndex(([pr, pc]) => pr === r && pc === c);
-      if (idx !== -1) {
-        paths[activeLetter] = path.slice(0, idx + 1);
-      } else {
+      if (idx !== -1) paths[activeLetter] = path.slice(0, idx + 1);
+      else {
         clearOtherPathsFromCell(r, c, activeLetter);
         paths[activeLetter] = [[r, c]];
       }
@@ -592,7 +542,6 @@
 
       const path = paths[activeLetter];
       const existingIdx = path.findIndex(([pr, pc]) => pr === r && pc === c);
-
       if (existingIdx !== -1) {
         paths[activeLetter] = path.slice(0, existingIdx + 1);
         lastCell = [r, c];
@@ -602,7 +551,6 @@
 
       const ep = getEndpointLetter(r, c);
       if (ep && ep !== activeLetter) return;
-
       const owner = getCellOwner(r, c);
       if (owner && owner !== activeLetter) return;
 
@@ -672,7 +620,6 @@
       endDraw();
     });
 
-    /* Validation – konu anlatımı kuralları */
     function validate() {
       const level = LEVELS[currentLevel];
       const issues = [];
@@ -709,7 +656,6 @@
         }
       }
 
-      /* Başka harfin üzerinden geçme kontrolü */
       for (const letter of level.pairs) {
         for (const [r, c] of paths[letter]) {
           const ep = getEndpointLetter(r, c);

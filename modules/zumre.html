@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zümre Evrakları — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+  document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('zumre', `
+    <div class="module-page">
+      <h1>👥 Zümre Evrakları</h1>
+      <p class="lead">Zümre toplantı tutanakları ve işbirliği belgeleri.</p>
+      <div class="quick-actions" style="margin-top:16px;">
+        <a href="../documents/olustur.html?id=zumre-toplanti" class="quick-btn primary">Zümre Toplantı Tutanağı</a>
+        <a href="../documents/olustur.html?id=unite-plani" class="quick-btn">Ünite Planı</a>
+      </div>
+    </div>`);
+  </script>
+</body>
+</html>

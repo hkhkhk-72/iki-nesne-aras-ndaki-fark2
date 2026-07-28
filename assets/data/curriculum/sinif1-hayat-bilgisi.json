@@ -1,0 +1,58 @@
+{
+  "ders": "Hayat Bilgisi",
+  "dersId": "hayatBilgisi",
+  "sinif": 1,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2025-2026",
+  "toplamHafta": 36,
+  "temalar": [
+    {
+      "id": "h1",
+      "ad": "Ben ve Okulum",
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "HB.1.1.1", "aciklama": "Kendini ve özelliklerini tanıtır." },
+        { "kod": "HB.1.1.2", "aciklama": "Okul kurallarına uyar." }
+      ],
+      "icerikCercevesi": "Benlik, okul yaşamı, kurallar",
+      "surecBilesenleri": ["Gözlem", "Tartışma", "Drama"],
+      "olcmeDegerlendirme": "Gözlem formu"
+    },
+    {
+      "id": "h2",
+      "ad": "Ailem ve Çevrem",
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "HB.1.2.1", "aciklama": "Aile bireylerinin görevlerini açıklar." },
+        { "kod": "HB.1.2.2", "aciklama": "Yakın çevresindeki yerleri tanır." }
+      ],
+      "icerikCercevesi": "Aile, mahalle, güvenlik",
+      "surecBilesenleri": ["Araştırma", "Sunum"],
+      "olcmeDegerlendirme": "Performans görevi"
+    },
+    {
+      "id": "h3",
+      "ad": "Sağlıklı Yaşam",
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "HB.1.3.1", "aciklama": "Sağlıklı beslenme alışkanlıklarını açıklar." },
+        { "kod": "HB.1.3.2", "aciklama": "Kişisel temizlik kurallarına uyar." }
+      ],
+      "icerikCercevesi": "Beslenme, hijyen, hareket",
+      "surecBilesenleri": ["Deney", "Gözlem"],
+      "olcmeDegerlendirme": "Gözlem, sözlü değerlendirme"
+    },
+    {
+      "id": "h4",
+      "ad": "Ülkemiz",
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "HB.1.4.1", "aciklama": "Bayrak ve İstiklal Marşı'na saygı gösterir." },
+        { "kod": "HB.1.4.2", "aciklama": "Atatürk'ü tanır." }
+      ],
+      "icerikCercevesi": "Vatan sevgisi, Atatürk, milli değerler",
+      "surecBilesenleri": ["Dinleme", "Tartışma", "Etkinlik"],
+      "olcmeDegerlendirme": "Performans görevi"
+    }
+  ]
+}

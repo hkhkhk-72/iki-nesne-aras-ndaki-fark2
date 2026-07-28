@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Belge Oluştur — Dijital Öğretmen</title>
+  <title>Belge Oluştur — MiniBilge Öğretmen</title>
   <link rel="stylesheet" href="../assets/css/platform.css">
   <link rel="stylesheet" href="../assets/css/belgeler.css">
 </head>
@@ -36,6 +36,7 @@
     </div>
   </div>
 
+  <script src="../assets/js/core/storage.js"></script>
   <script src="../assets/js/documents.js"></script>
   <script>
   (function () {
@@ -164,7 +165,10 @@
       const profile = {};
       profileFields.forEach(k => { if (data[k]) profile[k] = data[k]; });
       BelgeMerkezi.saveProfile(profile);
-      alert('Okul ve öğretmen bilgileri kaydedildi. Sonraki belgelerde otomatik doldurulacak.');
+      if (window.MiniBilgeStorage) {
+        MiniBilgeStorage.addDocument({ title: doc.title, type: doc.id });
+      }
+      alert('Okul ve öğretmen bilgileri kaydedildi.');
     });
 
     buildForm();

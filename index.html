@@ -3,84 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dijital Öğretmen Platformu</title>
+  <title>MiniBilge Öğretmen — Ana Sayfa</title>
   <link rel="stylesheet" href="assets/css/platform.css">
+  <link rel="stylesheet" href="assets/css/belgeler.css">
 </head>
 <body>
-  <div class="platform">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-icon">🎓</div>
-        <div>
-          <h1>Dijital Öğretmen</h1>
-          <p>Eğitim Etkinlikleri & Belge Merkezi</p>
-        </div>
-      </div>
-      <div class="topbar-actions">
-        <button class="role-btn active" data-role="student" type="button">👨‍🎓 Öğrenci</button>
-        <button class="role-btn" data-role="teacher" type="button">👩‍🏫 Öğretmen</button>
-      </div>
-    </header>
+  <div id="app"></div>
 
-    <section class="hero">
-      <h2 id="heroTitle">Eğlenerek Öğren!</h2>
-      <p id="heroDesc">Sınıfına uygun etkinlikleri seç, oyna ve ilerlemeni takip et. Her etkinlik farklı bir beceri geliştirir.</p>
-    </section>
-
-    <div class="panel" id="statsPanel">
-      <div class="panel-title">İlerleme Özeti</div>
-      <div class="stats-row" id="statsRow"></div>
-    </div>
-
-    <div id="studentPanel" class="student-panel">
-      <div class="panel">
-        <div class="panel-title">Kategori</div>
-        <div class="filters" id="categoryFilters"></div>
-        <div class="panel-title">Sınıf Seviyesi</div>
-        <div class="filters" id="gradeFilters"></div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-title">Etkinlikler</div>
-        <div class="activity-grid" id="activityGrid"></div>
-      </div>
-    </div>
-
-    <div id="teacherPanel" class="panel teacher-panel">
-      <div class="panel-title">Öğretmen Araçları</div>
-      <div class="teacher-tools">
-        <a href="documents/index.html" class="tool-card tool-card-link" style="text-decoration:none;color:inherit;">
-          <h4>📁 Belge Merkezi</h4>
-          <p>Yıl başından yıl sonuna tüm öğretmen belgelerini oluşturun, yazdırın veya indirin.</p>
-          <span class="tag" style="margin-top:8px;display:inline-block;">30+ belge şablonu</span>
-        </a>
-        <div class="tool-card">
-          <h4>📊 İlerleme Takibi</h4>
-          <p>Öğrencilerin etkinlik bazında tamamlama durumunu görüntüleyin.</p>
-        </div>
-        <div class="tool-card">
-          <h4>📚 Etkinlik Kütüphanesi</h4>
-          <p>Zeka oyunları, matematik ve Türkçe etkinlikleri sınıf seviyesine göre filtreleyin.</p>
-        </div>
-        <div class="tool-card">
-          <h4>🖨️ Yazdırılabilir İçerik</h4>
-          <p>ABC Bağlamaca gibi etkinlikler PDF çalışma kağıdı formatında sunulur.</p>
-        </div>
-      </div>
-
-      <div class="panel-title" style="margin-top:20px;">Öğrenci İlerlemesi</div>
-      <div class="progress-list" id="teacherProgressList"></div>
-
-      <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="btn btn-danger" id="btnResetProgress" type="button">İlerlemeyi Sıfırla</button>
-      </div>
-    </div>
-
-    <footer class="footer">
-      Dijital Öğretmen Platformu &copy; 2026 — İlkokul öğrencileri ve öğretmenleri için eğitim etkinlikleri ve belge merkezi
-    </footer>
-  </div>
-
-  <script src="assets/js/platform.js"></script>
+  <script>window.MINIBILGE_BASE = '';</script>
+  <script src="assets/js/core/storage.js"></script>
+  <script src="assets/js/core/calendar-engine.js"></script>
+  <script src="assets/js/navigation.js"></script>
+  <script src="assets/js/app.js"></script>
 </body>
 </html>

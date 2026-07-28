@@ -1,0 +1,111 @@
+{
+  "ders": "Türkçe",
+  "dersId": "turkce",
+  "sinif": 1,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2025-2026",
+  "toplamHafta": 36,
+  "temalar": [
+    {
+      "id": "t1",
+      "ad": "Ben Okuyorum, Ben Yazıyorum",
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.1.1.1", "aciklama": "Dinlediği ve izlediği metinlerdeki olayları sırasıyla anlatır." },
+        { "kod": "T.1.1.2", "aciklama": "Harfleri ve heceleri okur, yazar." },
+        { "kod": "T.1.1.3", "aciklama": "Okuduğu metindeki ana fikri belirler." }
+      ],
+      "icerikCercevesi": "Harf-hece çalışmaları, ses temelli okuma yazma, kısa metinler",
+      "surecBilesenleri": ["Dinleme", "Konuşma", "Okuma", "Yazma"],
+      "olcmeDegerlendirme": "Gözlem formu, performans görevi, sözlü değerlendirme"
+    },
+    {
+      "id": "t2",
+      "ad": "Okuma Yazma Becerilerim Gelişiyor",
+      "hafta": 5,
+      "ogrenmeCiktilari": [
+        { "kod": "T.1.2.1", "aciklama": "Okuduğu metinlerdeki kelimelerin anlamını tahmin eder." },
+        { "kod": "T.1.2.2", "aciklama": "Cümle kurar ve yazar." },
+        { "kod": "T.1.2.3", "aciklama": "Noktalama işaretlerini kullanır." }
+      ],
+      "icerikCercevesi": "Kelime dağarcığı, cümle kurma, noktalama",
+      "surecBilesenleri": ["Okuma", "Yazma", "Konuşma"],
+      "olcmeDegerlendirme": "Yazılı çalışma, portfolyo değerlendirme"
+    },
+    {
+      "id": "t3",
+      "ad": "Hikâyeler Dünyası",
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.1.3.1", "aciklama": "Hikâye ve masal dinler, okur." },
+        { "kod": "T.1.3.2", "aciklama": "Metindeki olayları sıralar." },
+        { "kod": "T.1.3.3", "aciklama": "Kendi deneyimlerini anlatır." }
+      ],
+      "icerikCercevesi": "Hikâye, masal, anlatı metinleri",
+      "surecBilesenleri": ["Dinleme", "Okuma", "Konuşma", "Yazma"],
+      "olcmeDegerlendirme": "Sözlü sınav, çizim-etiketleme etkinliği"
+    },
+    {
+      "id": "t4",
+      "ad": "Şiirler ve Tekerlemeler",
+      "hafta": 3,
+      "ogrenmeCiktilari": [
+        { "kod": "T.1.4.1", "aciklama": "Şiir ve tekerleme okur, ezberler." },
+        { "kod": "T.1.4.2", "aciklama": "Kafiye ve ritim özelliklerini fark eder." }
+      ],
+      "icerikCercevesi": "Çocuk şiirleri, tekerlemeler, ritim çalışmaları",
+      "surecBilesenleri": ["Dinleme", "Konuşma", "Okuma"],
+      "olcmeDegerlendirme": "Performans görevi, gözlem"
+    },
+    {
+      "id": "t5",
+      "ad": "Bilgilendirici Metinler",
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.1.5.1", "aciklama": "Bilgilendirici metinleri okur ve anlar." },
+        { "kod": "T.1.5.2", "aciklama": "Metindeki bilgileri sorularla cevaplar." },
+        { "kod": "T.1.5.3", "aciklama": "Basit bilgi metni yazar." }
+      ],
+      "icerikCercevesi": "Bilgilendirici metinler, soru-cevap, not alma",
+      "surecBilesenleri": ["Okuma", "Yazma", "Konuşma"],
+      "olcmeDegerlendirme": "Yazılı sınav, kısa yazı çalışması"
+    },
+    {
+      "id": "t6",
+      "ad": "Yazma Becerilerim",
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.1.6.1", "aciklama": "Düşüncelerini yazıya döker." },
+        { "kod": "T.1.6.2", "aciklama": "Yazım kurallarına dikkat eder." },
+        { "kod": "T.1.6.3", "aciklama": "Taslak oluşturur ve düzenler." }
+      ],
+      "icerikCercevesi": "Yaratıcı yazma, düzenleme, yazım kuralları",
+      "surecBilesenleri": ["Yazma", "Konuşma"],
+      "olcmeDegerlendirme": "Portfolyo, yazılı performans"
+    },
+    {
+      "id": "t7",
+      "ad": "Dinleme ve Konuşma",
+      "hafta": 3,
+      "ogrenmeCiktilari": [
+        { "kod": "T.1.7.1", "aciklama": "Dinlediklerini özetler." },
+        { "kod": "T.1.7.2", "aciklama": "Grup içinde düzgün ve anlaşılır konuşur." }
+      ],
+      "icerikCercevesi": "Dinleme etkinlikleri, tartışma, sunum",
+      "surecBilesenleri": ["Dinleme", "Konuşma"],
+      "olcmeDegerlendirme": "Gözlem formu, öz değerlendirme"
+    },
+    {
+      "id": "t8",
+      "ad": "Yıl Sonu Değerlendirme",
+      "hafta": 3,
+      "ogrenmeCiktilari": [
+        { "kod": "T.1.8.1", "aciklama": "Yıl boyunca öğrendiklerini gösterir." },
+        { "kod": "T.1.8.2", "aciklama": "Okuma ve yazma becerilerini pekiştirir." }
+      ],
+      "icerikCercevesi": "Tekrar, pekiştirme, genel değerlendirme",
+      "surecBilesenleri": ["Okuma", "Yazma", "Dinleme", "Konuşma"],
+      "olcmeDegerlendirme": "Yıl sonu yazılı sınav, performans görevi"
+    }
+  ]
+}

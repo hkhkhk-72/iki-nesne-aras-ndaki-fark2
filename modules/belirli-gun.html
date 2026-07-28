@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Belirli Gün ve Haftalar — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script>window.MINIBILGE_BASE = '../';</script>
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/core/calendar-engine.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+  (async function () {
+    const cal = await CalendarEngine.loadCalendar();
+    const events = cal.belirliGunler.map(e => ({
+      ad: e.ad,
+      tarih: e.tarih ? CalendarEngine.fmtDate(CalendarEngine.parseDate(e.tarih))
+        : `${CalendarEngine.fmtDate(CalendarEngine.parseDate(e.baslangic))} – ${CalendarEngine.fmtDate(CalendarEngine.parseDate(e.bitis))}`,
+      tur: e.tur
+    }));
+
+    const content = `
+      <div class="module-page">
+        <h1>🎉 Belirli Gün ve Haftalar</h1>
+        <p class="lead">${cal.egitimYili} eğitim-öğretim yılı resmî belirli gün ve haftalar takvimi.</p>
+        <div class="dashboard-card" style="background:var(--glass);padding:20px;border-radius:var(--radius);">
+          ${events.map(e => `
+            <div class="list-item">
+              <span>${e.tur === 'belirli-hafta' ? '📅' : '🎌'} ${e.ad}</span>
+              <span class="meta">${e.tarih}</span>
+            </div>`).join('')}
+        </div>
+        <p style="margin-top:16px;color:var(--text-soft);font-size:0.85rem;">
+          Belirli gün programları için <a href="../documents/index.html" style="text-decoration:underline">Okul Evrakları</a> modülünden etkinlik planı şablonunu kullanabilirsiniz.
+        </p>
+      </div>`;
+    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('belirli-gun', content);
+  })();
+  </script>
+</body>
+</html>

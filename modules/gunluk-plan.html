@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Günlük Plan — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/belgeler.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>window.MINIBILGE_BASE = '../';</script>
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/core/calendar-engine.js"></script>
+  <script src="../assets/js/core/daily-plan-engine.js"></script>
+  <script src="../assets/js/core/validation-engine.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+  (async function () {
+    const plans = MiniBilgeStorage.getPlans().filter(p => p.tur === 'yillik' && p.data);
+    const cal = await CalendarEngine.loadCalendar();
+    const week = CalendarEngine.getCurrentWeek(cal);
+    const today = new Date().toISOString().slice(0, 10);
+    const gunler = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+
+    const content = `
+      <div class="module-page">
+        <h1>📖 Günlük Plan Motoru</h1>
+        <p class="lead">Yıllık plandan ilgili haftanın öğrenme çıktılarını okuyarak günlük ders planını otomatik hazırlar.</p>
+
+        <div id="alerts"></div>
+
+        <div class="panel" style="background:var(--glass);padding:20px;border-radius:var(--radius);margin-bottom:16px;">
+          ${plans.length ? '' : '<div class="alert alert-warn">Önce <a href="yillik-plan.html" style="text-decoration:underline">yıllık plan</a> oluşturmalısınız.</div>'}
+          <div class="form-row">
+            <div class="form-field">
+              <label>Yıllık Plan</label>
+              <select id="annualPlan" ${plans.length ? '' : 'disabled'}>
+                ${plans.map((p, i) => `<option value="${i}">${p.ders} — ${p.sinif}. Sınıf</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Hafta</label>
+              <input type="number" id="hafta" value="${week?.hafta || 1}" min="1" max="40">
+            </div>
+            <div class="form-field">
+              <label>Gün</label>
+              <select id="gun">
+                ${gunler.slice(1, 6).map(g => `<option value="${g}" ${g === gunler[new Date().getDay()] ? 'selected' : ''}>${g}</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Ders Saati</label>
+              <input type="number" id="dersSaati" value="1" min="1" max="10">
+            </div>
+            <div class="form-field">
+              <label>Tarih</label>
+              <input type="date" id="tarih" value="${today}">
+            </div>
+          </div>
+          <div class="quick-actions">
+            <button class="quick-btn primary" id="btnGenerate" type="button" ${plans.length ? '' : 'disabled'}>⚡ Günlük Plan Oluştur</button>
+            <button class="quick-btn" id="btnPrint" type="button" disabled>🖨️ Yazdır / PDF</button>
+          </div>
+        </div>
+
+        <div class="preview-panel" id="previewPanel" style="display:none;">
+          <div class="preview-frame">
+            <div class="preview-content" id="preview"></div>
+          </div>
+        </div>
+      </div>`;
+
+    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('gunluk-plan', content);
+
+    let currentPlan = null;
+
+    document.getElementById('btnGenerate')?.addEventListener('click', () => {
+      const alerts = document.getElementById('alerts');
+      alerts.innerHTML = '';
+      const idx = parseInt(document.getElementById('annualPlan').value, 10);
+      const annual = plans[idx]?.data;
+      if (!annual) return;
+
+      currentPlan = DailyPlanEngine.generateDailyPlan({
+        annualPlan: annual,
+        hafta: document.getElementById('hafta').value,
+        gun: document.getElementById('gun').value,
+        dersSaati: document.getElementById('dersSaati').value,
+        tarih: document.getElementById('tarih').value
+      });
+
+      const check = ValidationEngine.validateDailyPlan(currentPlan);
+      if (!check.valid) {
+        alerts.innerHTML = check.errors.map(e => `<div class="alert alert-error">${e}</div>`).join('');
+        return;
+      }
+
+      document.getElementById('preview').innerHTML = DailyPlanEngine.renderDailyPlanHTML(currentPlan);
+      document.getElementById('previewPanel').style.display = 'block';
+      document.getElementById('btnPrint').disabled = false;
+
+      MiniBilgeStorage.addPlan({ tur: 'gunluk', ders: currentPlan.ders, sinif: currentPlan.sinif, hafta: currentPlan.hafta });
+      alerts.innerHTML = '<div class="alert alert-ok">✅ Günlük plan oluşturuldu.</div>';
+    });
+
+    document.getElementById('btnPrint')?.addEventListener('click', () => {
+      const w = window.open('', '_blank');
+      w.document.write('<html><head><title>Günlük Plan</title></head><body style="font-family:Times New Roman,serif;padding:20mm">' + document.getElementById('preview').innerHTML + '</body></html>');
+      w.document.close();
+      setTimeout(() => w.print(), 400);
+    });
+  })();
+  </script>
+</body>
+</html>

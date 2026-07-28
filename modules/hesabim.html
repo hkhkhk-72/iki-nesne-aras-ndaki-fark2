@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hesabım — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+  (function () {
+    const profile = MiniBilgeStorage.getProfile();
+    const school = MiniBilgeStorage.getSchool();
+
+    const content = `
+      <div class="module-page">
+        <h1>👤 Hesabım</h1>
+        <p class="lead">Öğretmen ve okul bilgileriniz tüm plan ve belgelerde otomatik kullanılır.</p>
+        <div id="msg"></div>
+        <div class="panel" style="background:var(--glass);padding:20px;border-radius:var(--radius);">
+          <h3 style="margin-bottom:12px;font-size:0.9rem;color:var(--text-soft);">ÖĞRETMEN BİLGİLERİ</h3>
+          <div class="form-row">
+            <div class="form-field"><label>Ad Soyad</label><input id="adSoyad" value="${profile.adSoyad || ''}"></div>
+            <div class="form-field"><label>Branş</label><input id="brans" value="${profile.brans || 'Sınıf Öğretmeni'}"></div>
+            <div class="form-field"><label>E-posta</label><input id="eposta" type="email" value="${profile.eposta || ''}"></div>
+            <div class="form-field"><label>Telefon</label><input id="telefon" value="${profile.telefon || ''}"></div>
+          </div>
+          <h3 style="margin:20px 0 12px;font-size:0.9rem;color:var(--text-soft);">OKUL BİLGİLERİ</h3>
+          <div class="form-row">
+            <div class="form-field"><label>Okul Adı</label><input id="okulAdi" value="${school.okulAdi || ''}"></div>
+            <div class="form-field"><label>İl</label><input id="il" value="${school.il || ''}"></div>
+            <div class="form-field"><label>İlçe</label><input id="ilce" value="${school.ilce || ''}"></div>
+            <div class="form-field"><label>Müdür Adı</label><input id="mudurAdi" value="${school.mudurAdi || ''}"></div>
+            <div class="form-field"><label>Müdür Yardımcısı</label><input id="mudurYardimcisi" value="${school.mudurYardimcisi || ''}"></div>
+            <div class="form-field"><label>Eğitim-Öğretim Yılı</label><input id="egitimYili" value="${school.egitimYili || '2025-2026'}"></div>
+          </div>
+          <button class="quick-btn primary" id="btnSave" type="button" style="margin-top:12px;">💾 Kaydet</button>
+        </div>
+      </div>`;
+
+    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('hesabim', content);
+
+    document.getElementById('btnSave').addEventListener('click', () => {
+      MiniBilgeStorage.saveProfile({
+        adSoyad: document.getElementById('adSoyad').value,
+        brans: document.getElementById('brans').value,
+        eposta: document.getElementById('eposta').value,
+        telefon: document.getElementById('telefon').value
+      });
+      MiniBilgeStorage.saveSchool({
+        okulAdi: document.getElementById('okulAdi').value,
+        il: document.getElementById('il').value,
+        ilce: document.getElementById('ilce').value,
+        mudurAdi: document.getElementById('mudurAdi').value,
+        mudurYardimcisi: document.getElementById('mudurYardimcisi').value,
+        egitimYili: document.getElementById('egitimYili').value
+      });
+      document.getElementById('msg').innerHTML = '<div class="alert alert-ok">✅ Bilgiler kaydedildi.</div>';
+    });
+  })();
+  </script>
+</body>
+</html>

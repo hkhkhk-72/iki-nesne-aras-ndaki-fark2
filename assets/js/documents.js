@@ -757,6 +757,16 @@
 
   function loadSavedProfile() {
     try {
+      if (window.MiniBilgeStorage) {
+        const p = MiniBilgeStorage.getProfile();
+        const s = MiniBilgeStorage.getSchool();
+        return {
+          okulAdi: s.okulAdi || '',
+          ogretmenAdi: p.adSoyad || '',
+          sinif: (MiniBilgeStorage.getSettings().varsayilanSinif || '1') + '/A',
+          egitimYili: s.egitimYili || '2025-2026'
+        };
+      }
       return JSON.parse(localStorage.getItem('dijitalOgretmenProfile') || '{}');
     } catch {
       return {};
@@ -764,9 +774,13 @@
   }
 
   function saveProfile(data) {
+    if (window.MiniBilgeStorage) {
+      MiniBilgeStorage.saveProfile({ adSoyad: data.ogretmenAdi });
+      MiniBilgeStorage.saveSchool({ okulAdi: data.okulAdi, egitimYili: data.egitimYili });
+      return;
+    }
     localStorage.setItem('dijitalOgretmenProfile', JSON.stringify(data));
   }
-
   window.BelgeMerkezi = {
     PERIODS,
     DOCUMENTS,

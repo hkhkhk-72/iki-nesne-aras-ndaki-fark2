@@ -3,43 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Belge Merkezi — Dijital Öğretmen</title>
+  <title>Okul Evrakları — MiniBilge Öğretmen</title>
   <link rel="stylesheet" href="../assets/css/platform.css">
   <link rel="stylesheet" href="../assets/css/belgeler.css">
 </head>
 <body>
-  <div class="platform belge-platform">
-    <a href="../index.html" class="back-link">← Platforma Dön</a>
+  <div id="app"></div>
 
-    <header class="belge-hero">
-      <h2>📁 Belge Merkezi</h2>
-      <p>İlkokul öğretmenlerinin eğitim-öğretim yılı boyunca ihtiyaç duyduğu tüm belgeleri oluşturun, yazdırın veya indirin.</p>
-      <span class="doc-count-badge" id="docCount"></span>
-    </header>
-
-    <div class="panel">
-      <input type="search" class="search-box" id="searchBox" placeholder="Belge ara... (ör. sınav, veli, plan)">
-      <div class="panel-title">Dönem Seçin</div>
-      <div class="period-grid" id="periodGrid"></div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title" id="docListTitle">Tüm Belgeler</div>
-      <div class="doc-grid" id="docGrid"></div>
-    </div>
-
-    <footer class="footer">
-      Belge Merkezi — Yazdır veya PDF olarak kaydet (Ctrl+P → PDF olarak kaydet)
-    </footer>
-  </div>
-
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/navigation.js"></script>
   <script src="../assets/js/documents.js"></script>
   <script>
   (function () {
     'use strict';
-
     let currentPeriod = 'all';
     let searchQuery = '';
+
+    const inner = `
+      <div class="belge-platform" style="max-width:100%;padding:0;">
+        <header class="belge-hero">
+          <h2>📁 Okul Evrakları</h2>
+          <p>İlkokul öğretmenlerinin eğitim-öğretim yılı boyunca ihtiyaç duyduğu tüm belgeleri oluşturun, yazdırın veya indirin.</p>
+          <span class="doc-count-badge" id="docCount"></span>
+        </header>
+        <div class="panel">
+          <input type="search" class="search-box" id="searchBox" placeholder="Belge ara... (ör. sınav, veli, plan)">
+          <div class="panel-title">Dönem Seçin</div>
+          <div class="period-grid" id="periodGrid"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title" id="docListTitle">Tüm Belgeler</div>
+          <div class="doc-grid" id="docGrid"></div>
+        </div>
+      </div>`;
+
+    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('okul-evraklari', inner);
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('q')) {
+      searchQuery = params.get('q');
+      document.getElementById('searchBox').value = searchQuery;
+    }
 
     function renderPeriods() {
       const grid = document.getElementById('periodGrid');
@@ -48,15 +52,12 @@
         const count = BelgeMerkezi.DOCUMENTS.filter(d => d.period === id).length;
         periods.push({ id, ...p, months: `${count} belge · ${p.months}` });
       });
-
       grid.innerHTML = periods.map(p => `
         <div class="period-card${p.id === currentPeriod ? ' active' : ''}" data-period="${p.id}">
           <div class="icon">${p.icon}</div>
           <div class="label">${p.label}</div>
           <div class="months">${p.months}</div>
-        </div>
-      `).join('');
-
+        </div>`).join('');
       grid.querySelectorAll('.period-card').forEach(card => {
         card.addEventListener('click', () => {
           currentPeriod = card.dataset.period;
@@ -70,26 +71,19 @@
       const grid = document.getElementById('docGrid');
       const title = document.getElementById('docListTitle');
       const q = searchQuery.toLowerCase().trim();
-
       let docs = BelgeMerkezi.DOCUMENTS;
       if (currentPeriod !== 'all') docs = docs.filter(d => d.period === currentPeriod);
-      if (q) docs = docs.filter(d =>
-        d.title.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q)
-      );
-
-      const periodLabel = currentPeriod === 'all' ? 'Tüm Belgeler' :
-        BelgeMerkezi.PERIODS[currentPeriod]?.label + ' Belgeleri';
-      title.textContent = q ? `Arama: "${searchQuery}" (${docs.length})` : periodLabel;
-
+      if (q) docs = docs.filter(d => d.title.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q));
+      title.textContent = q ? `Arama: "${searchQuery}" (${docs.length})` :
+        (currentPeriod === 'all' ? 'Tüm Belgeler' : BelgeMerkezi.PERIODS[currentPeriod]?.label + ' Belgeleri');
       grid.innerHTML = docs.map(d => `
         <article class="doc-card" data-id="${d.id}">
           <div class="icon">${d.icon}</div>
           <h3>${d.title}</h3>
           <p>${d.desc}</p>
           <span class="tag">${BelgeMerkezi.PERIODS[d.period]?.label || ''}</span>
-        </article>
-      `).join('') || '<p style="color:var(--text-soft);grid-column:1/-1;text-align:center;padding:24px;">Belge bulunamadı.</p>';
-
+        </article>`).join('') ||
+        '<p class="empty-state" style="grid-column:1/-1">Belge bulunamadı.</p>';
       grid.querySelectorAll('.doc-card').forEach(card => {
         card.addEventListener('click', () => {
           window.location.href = `olustur.html?id=${card.dataset.id}`;
@@ -102,9 +96,7 @@
       renderDocs();
     });
 
-    document.getElementById('docCount').textContent =
-      `${BelgeMerkezi.DOCUMENTS.length} belge şablonu`;
-
+    document.getElementById('docCount').textContent = `${BelgeMerkezi.DOCUMENTS.length} belge şablonu`;
     renderPeriods();
     renderDocs();
   })();

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayarlar — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+  (function () {
+    const settings = MiniBilgeStorage.getSettings();
+    const content = `
+      <div class="module-page">
+        <h1>⚙️ Ayarlar</h1>
+        <p class="lead">Varsayılan sınıf, ders ve platform tercihleri.</p>
+        <div id="msg"></div>
+        <div class="panel" style="background:var(--glass);padding:20px;border-radius:var(--radius);">
+          <div class="form-row">
+            <div class="form-field">
+              <label>Varsayılan Sınıf</label>
+              <select id="varsayilanSinif">
+                ${[1,2,3,4].map(s => `<option value="${s}" ${settings.varsayilanSinif == s ? 'selected' : ''}>${s}. Sınıf</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Varsayılan Ders</label>
+              <select id="varsayilanDers">
+                <option value="turkce" ${settings.varsayilanDers === 'turkce' ? 'selected' : ''}>Türkçe</option>
+                <option value="matematik" ${settings.varsayilanDers === 'matematik' ? 'selected' : ''}>Matematik</option>
+                <option value="hayatBilgisi" ${settings.varsayilanDers === 'hayatBilgisi' ? 'selected' : ''}>Hayat Bilgisi</option>
+              </select>
+            </div>
+          </div>
+          <button class="quick-btn primary" id="btnSave" type="button">💾 Kaydet</button>
+          <button class="quick-btn" id="btnClear" type="button" style="margin-left:8px;">🗑️ Tüm Verileri Temizle</button>
+        </div>
+      </div>`;
+    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('ayarlar', content);
+
+    document.getElementById('btnSave').addEventListener('click', () => {
+      MiniBilgeStorage.saveSettings({
+        varsayilanSinif: document.getElementById('varsayilanSinif').value,
+        varsayilanDers: document.getElementById('varsayilanDers').value
+      });
+      document.getElementById('msg').innerHTML = '<div class="alert alert-ok">✅ Ayarlar kaydedildi.</div>';
+    });
+
+    document.getElementById('btnClear').addEventListener('click', () => {
+      if (confirm('Tüm planlar, belgeler ve ayarlar silinecek. Emin misiniz?')) {
+        Object.values(MiniBilgeStorage.KEYS).forEach(k => localStorage.removeItem(k));
+        document.getElementById('msg').innerHTML = '<div class="alert alert-ok">Veriler temizlendi.</div>';
+      }
+    });
+  })();
+  </script>
+</body>
+</html>

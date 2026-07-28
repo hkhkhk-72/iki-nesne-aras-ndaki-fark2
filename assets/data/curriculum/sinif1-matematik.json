@@ -1,0 +1,72 @@
+{
+  "ders": "Matematik",
+  "dersId": "matematik",
+  "sinif": 1,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2025-2026",
+  "toplamHafta": 36,
+  "temalar": [
+    {
+      "id": "m1",
+      "ad": "Nesne Sayısı",
+      "hafta": 5,
+      "ogrenmeCiktilari": [
+        { "kod": "M.1.1.1", "aciklama": "20'ye kadar olan nesneleri sayar." },
+        { "kod": "M.1.1.2", "aciklama": "Sayıları okur ve yazar." },
+        { "kod": "M.1.1.3", "aciklama": "Sayıları karşılaştırır ve sıralar." }
+      ],
+      "icerikCercevesi": "Sayma, okuma-yazma, karşılaştırma",
+      "surecBilesenleri": ["Sayma", "Modelleme", "Problem çözme"],
+      "olcmeDegerlendirme": "Gözlem, yazılı çalışma"
+    },
+    {
+      "id": "m2",
+      "ad": "Toplama ve Çıkarma",
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        { "kod": "M.1.2.1", "aciklama": "20'ye kadar toplama işlemi yapar." },
+        { "kod": "M.1.2.2", "aciklama": "20'ye kadar çıkarma işlemi yapar." },
+        { "kod": "M.1.2.3", "aciklama": "Günlük hayat problemlerini çözer." }
+      ],
+      "icerikCercevesi": "Toplama-çıkarma, problem çözme",
+      "surecBilesenleri": ["İşlem", "Problem çözme", "Tahmin"],
+      "olcmeDegerlendirme": "Yazılı sınav, performans görevi"
+    },
+    {
+      "id": "m3",
+      "ad": "Geometrik Şekiller",
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "M.1.3.1", "aciklama": "Temel geometrik şekilleri tanır." },
+        { "kod": "M.1.3.2", "aciklama": "Şekillerin özelliklerini açıklar." }
+      ],
+      "icerikCercevesi": "Üçgen, kare, dikdörtgen, daire",
+      "surecBilesenleri": ["Gözlem", "Sınıflandırma"],
+      "olcmeDegerlendirme": "Performans görevi"
+    },
+    {
+      "id": "m4",
+      "ad": "Ölçme",
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "M.1.4.1", "aciklama": "Uzunluk ve ağırlık kavramlarını kullanır." },
+        { "kod": "M.1.4.2", "aciklama": "Zamanı okur ve kullanır." }
+      ],
+      "icerikCercevesi": "Uzunluk, ağırlık, zaman",
+      "surecBilesenleri": ["Ölçme", "Karşılaştırma"],
+      "olcmeDegerlendirme": "Gözlem, yazılı çalışma"
+    },
+    {
+      "id": "m5",
+      "ad": "Veri Toplama",
+      "hafta": 3,
+      "ogrenmeCiktilari": [
+        { "kod": "M.1.5.1", "aciklama": "Basit veri toplar ve düzenler." },
+        { "kod": "M.1.5.2", "aciklama": "Şekil ve nesne grafiği oluşturur." }
+      ],
+      "icerikCercevesi": "Veri toplama, grafik",
+      "surecBilesenleri": ["Toplama", "Düzenleme", "Yorumlama"],
+      "olcmeDegerlendirme": "Proje çalışması"
+    }
+  ]
+}

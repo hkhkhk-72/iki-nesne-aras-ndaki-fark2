@@ -51,6 +51,7 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 2b. **MB-UI-001** UI/UX v2 + TWE ✅
 2c. **MB-DS-001** Tasarım Sistemi ✅
 2d. **MB-UI-002** Sınıf odaklı ana ekran + hub ✅ → `docs/MB-UI-002-SINIF-ODAKLI-ANA-EKRAN.md`
+2e. **MD-026 / MB-UI-003** Sonraki nesil IA (ÖğretmenEvrak referansı, kopya değil) ✅
 3. **MB-DM-002** Entity Detay Spesifikasyonu ✅ → `docs/MB-DM-002-ENTITY-DETAY-SPESIFIKASYONU.md`
 3b. **Günlük Kazanımlar** (sınıf defteri) + Kazanım Cepte UX esini → `docs/ESIN-KAZANIM-CEPTE.md`
 4. **MB-TPM-001** 1. sınıf Türkçe domain ✅ → `docs/MB-TPM-001-SINIF1-TURKCE-DOMAIN-UYGULAMASI.md`

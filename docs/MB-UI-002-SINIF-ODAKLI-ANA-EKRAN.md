@@ -2,7 +2,7 @@
 
 **Sürüm:** 1.0  
 **Tarih:** 29 Temmuz 2026  
-**Durum:** Bağlayıcı ürün IA (UI-001 ana sayfa ilkesini **bu belgeyle günceller**)  
+**Durum:** Bağlayıcı ürün IA — **MB-UI-003 / MD-026 ile güncellendi** (5 hub: Planlar · Sınıf · Evraklar · Takvim · AI)  
 **Üst:** MB-DM-001 · MB-DM-002 · MB-ARCH-001 · MB-DS-001
 
 > MiniBilge bir belge indirme sitesi değildir.  

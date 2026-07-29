@@ -7,17 +7,19 @@
   margin-top: 20px;
 }
 
-.mbc-grade-tab {
+.mbc-grade-tab,
+.grade-tab {
   appearance: none;
   border: 1.5px solid rgba(11, 122, 106, 0.28);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(236, 250, 246, 0.78));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(220, 244, 238, 0.85));
   color: var(--mb-ink);
   font-family: var(--mb-font-ui);
-  font-size: clamp(0.95rem, 2.2vw, 1.08rem);
+  font-size: clamp(1.05rem, 2.6vw, 1.28rem);
   font-weight: 800;
-  padding: 15px 10px;
-  border-radius: 14px;
+  padding: 22px 12px;
+  border-radius: 16px;
   cursor: pointer;
+  min-height: 72px;
   transition: background 0.18s ease, border-color 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
 }
 
@@ -41,25 +43,14 @@
   gap: 10px;
   margin-top: 20px;
 }
-.grade-tab {
-  appearance: none;
-  border: 1.5px solid rgba(11, 122, 106, 0.28);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(236, 250, 246, 0.78));
-  color: var(--mb-ink);
-  font-family: var(--mb-font-ui);
-  font-size: clamp(0.95rem, 2.2vw, 1.08rem);
-  font-weight: 800;
-  padding: 15px 10px;
-  border-radius: 14px;
-  cursor: pointer;
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
-}
-.grade-tab:hover {
+.grade-tab:hover,
+.mbc-grade-tab:hover {
   transform: translateY(-2px);
   border-color: rgba(11, 122, 106, 0.5);
   box-shadow: 0 8px 18px rgba(11, 122, 106, 0.14);
 }
-.grade-tab.active {
+.grade-tab.active,
+.mbc-grade-tab.is-active {
   background: linear-gradient(145deg, #0E9B86 0%, #067A68 55%, #0A5F6E 100%);
   border-color: transparent;
   color: #fff;

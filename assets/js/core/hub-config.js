@@ -2,8 +2,8 @@
   'use strict';
 
   /**
-   * MB-UI-002 — Sınıf odaklı hub yapılandırması
-   * Rotalar mevcut modüllere bağlanır; yoksa yakinda:true
+   * MB-UI-003 / MD-026 — Sade hub (sonraki nesil)
+   * Planlar · Sınıf İşlemleri · Evraklar · Takvim · MiniBilge AI
    */
 
   const PROGRAM_DERSLERI = {
@@ -53,98 +53,93 @@
     {
       id: 'planlar',
       ad: 'Planlar',
-      lead: 'Yıllık, günlük ve destek planları — ilgili motorla.',
+      lead: 'Yalnızca planlar — her biri kendi motoruyla üretir.',
       items: [
         { ad: 'Yıllık Plan', href: 'modules/yillik-plan.html', motor: 'MB-YPM' },
         { ad: 'Günlük Plan', href: 'modules/gunluk-plan.html', motor: 'MB-GPM' },
+        { ad: 'Haftalık Plan', href: 'modules/gunluk-plan.html', motor: 'MB-GPM' },
         { ad: 'İYEP Planı', href: 'modules/iyep.html', motor: 'MB-İYEP' },
         { ad: 'BEP Planı', href: 'documents/olustur.html?id=bep', motor: 'MB-DEM' },
         { ad: 'Destek Eğitim Planı', href: 'modules/destek-egitim.html', motor: 'MB-DEM' },
         { ad: 'Egzersiz Planı', href: 'modules/egzersiz.html', motor: 'MB-EGZ' },
-        { ad: 'Kulüp Planı', href: 'modules/kulup.html', motor: 'MB-KEM' },
-        { ad: 'Rehberlik Planı', href: 'modules/rehberlik.html', motor: 'MB-RM' },
-        { ad: 'Tema / Ünite Planı', href: 'documents/olustur.html?id=unite-plani', motor: 'MB-YPM' }
+        { ad: 'Kulüp Planları', href: 'modules/kulup.html', motor: 'MB-KEM' },
+        { ad: 'Sosyal Etkinlik Planları', href: 'modules/belirli-gun.html', motor: 'MB-BM' },
+        { ad: 'Öğretim Programı', href: 'modules/ogretim-programi.html', motor: 'MB-TPM' }
       ]
     },
     {
       id: 'sinif-islemleri',
       ad: 'Sınıf İşlemleri',
-      lead: 'Sınıf içi belgeler ve takip yüzeyleri.',
+      lead: 'Sınıf içi işlemler — seçili sınıfa bağlı.',
       items: [
+        { ad: 'Yoklama', href: 'documents/olustur.html?id=devamsizlik-takip' },
+        { ad: 'Öğrenci Listesi', href: 'documents/olustur.html?id=sinif-listesi' },
         { ad: 'Oturma Planı', href: 'documents/index.html?q=oturma', yakinda: true },
-        { ad: 'Sınıf Listesi', href: 'documents/olustur.html?id=sinif-listesi' },
-        { ad: 'Yoklama / Devamsızlık', href: 'documents/olustur.html?id=devamsizlik-takip' },
-        { ad: 'Sınıf Defteri — Günlük Kazanımlar', href: 'modules/gunluk-kazanimlar.html', motor: 'KazanimEngine' },
-        { ad: 'Öğrenci Bilgileri', href: 'documents/olustur.html?id=ogrenci-gozlem' },
-        { ad: 'Kitaplık Defteri', href: 'documents/index.html?q=kitaplik', yakinda: true },
+        { ad: 'Rehberlik', href: 'modules/rehberlik.html' },
+        { ad: 'Gözlem', href: 'documents/olustur.html?id=ogrenci-gozlem' },
         { ad: 'Davranış Takibi', href: 'documents/olustur.html?id=davranis-takip' },
-        { ad: 'Rehberlik Çalışmaları', href: 'modules/rehberlik.html' },
-        { ad: 'Veli Görüşmeleri', href: 'documents/olustur.html?id=veli-gorusme' },
-        { ad: 'Gözlem Formları', href: 'documents/olustur.html?id=ogrenci-gozlem' },
-        { ad: 'Ödev Takibi', href: 'documents/olustur.html?id=odev-takip' }
+        { ad: 'Ölçme', href: 'modules/olcme.html', motor: 'MB-AIE' },
+        { ad: 'Süreç Değerlendirme', href: 'documents/olustur.html?id=performans-degerlendirme' },
+        { ad: 'Günlük Kazanımlar', href: 'modules/gunluk-kazanimlar.html', motor: 'KazanimEngine' }
       ]
     },
     {
-      id: 'ders-islemleri',
-      ad: 'Ders İşlemleri',
-      lead: 'Öğretim programı ve öğrenme çıktısı gezgini.',
-      items: [
-        { ad: 'Öğretim Programı', href: 'modules/ogretim-programi.html', motor: 'MB-TPM' },
-        { ad: 'Öğrenme Çıktıları / Kazanımlar', href: 'modules/gunluk-kazanimlar.html', motor: 'KazanimEngine' },
-        { ad: 'Ölçme ve Değerlendirme', href: 'modules/olcme.html' },
-        { ad: 'Rubrikler', href: 'documents/olustur.html?id=performans-degerlendirme' },
-        { ad: 'Kontrol Listeleri', href: 'documents/olustur.html?id=kontrol-listesi' },
-        { ad: 'İçerik Çerçevesi', href: 'modules/ogretim-programi.html' },
-        { ad: 'Beceriler / Değerler / Eğilimler', href: 'modules/ogretim-programi.html' }
-      ]
-    },
-    {
-      id: 'evrak-merkezi',
-      ad: 'Evrak Merkezi',
-      lead: 'Resmî evraklar — belge motoru ile.',
+      id: 'evraklar',
+      ad: 'Evraklar',
+      lead: 'Tüm resmî belgeler tek merkezde — dağılmaz.',
       items: [
         { ad: 'Tüm Evraklar', href: 'documents/index.html', motor: 'MB-BM' },
-        { ad: 'Zümre Evrakları', href: 'modules/zumre.html' },
-        { ad: 'ŞÖK Evrakları', href: 'documents/index.html?q=sok', yakinda: true },
-        { ad: 'Veli Evrakları', href: 'documents/index.html?q=veli' },
-        { ad: 'Kulüp Evrakları', href: 'modules/kulup.html' },
+        { ad: 'Zümre', href: 'modules/zumre.html' },
+        { ad: 'ŞÖK', href: 'documents/index.html?q=sok', yakinda: true },
+        { ad: 'Veli', href: 'documents/index.html?q=veli' },
+        { ad: 'Kulüp', href: 'modules/kulup.html' },
         { ad: 'Belirli Gün ve Haftalar', href: 'modules/belirli-gun.html' },
-        { ad: 'Tören Programları', href: 'documents/index.html?q=toren', yakinda: true },
+        { ad: 'Tören / Program', href: 'documents/index.html?q=toren', yakinda: true },
         { ad: 'Rehberlik Evrakları', href: 'modules/rehberlik.html' },
-        { ad: 'Resmî Yazılar / Dilekçeler', href: 'documents/index.html?q=resmi' },
-        { ad: 'Tutanaklar / Formlar', href: 'documents/index.html?q=tutanak' },
+        { ad: 'Resmî Yazı / Dilekçe', href: 'documents/index.html?q=resmi' },
+        { ad: 'Tutanak / Form', href: 'documents/index.html?q=tutanak' },
         { ad: 'Envanter', href: 'modules/envanter.html' }
       ]
     },
     {
-      id: 'raporlar',
-      ad: 'Raporlar',
-      lead: 'İlerleme, kapsama ve üretim özetleri.',
+      id: 'takvim',
+      ad: 'Takvim',
+      lead: 'Takvim Motoru — tatil, belirli gün, program.',
       items: [
-        { ad: 'Öğretmen / Genel Raporlar', href: 'modules/raporlar.html' },
-        { ad: 'Plan Raporları', href: 'modules/raporlar.html' },
-        { ad: 'Evrak Raporları', href: 'modules/raporlar.html' },
-        { ad: 'Ölçme Raporları', href: 'modules/olcme.html' }
+        { ad: 'Akademik Takvim', href: 'modules/takvim.html', motor: 'MB-TKM' },
+        { ad: 'Ders Programı', href: 'modules/hesabim.html' },
+        { ad: 'Nöbet', href: 'documents/index.html?q=nobet', yakinda: true },
+        { ad: 'Ajanda', href: 'modules/takvim.html', motor: 'MB-TKM' },
+        { ad: 'Belirli Gün ve Haftalar', href: 'modules/belirli-gun.html' },
+        { ad: 'Resmî Tatiller', href: 'modules/takvim.html', motor: 'MB-TKM' }
       ]
     },
     {
-      id: 'ayarlar',
-      ad: 'Ayarlar',
-      lead: 'Okul, öğretmen ve yazdırma bağlamı.',
+      id: 'ai',
+      ad: 'MiniBilge AI',
+      lead: 'Doğal dil ile plan, kazanım ve materyal üret.',
       items: [
-        { ad: 'Öğretmen Bilgileri', href: 'modules/hesabim.html' },
-        { ad: 'Okul Bilgileri', href: 'modules/hesabim.html' },
-        { ad: 'Platform Ayarları', href: 'modules/ayarlar.html' },
-        { ad: 'Akademik Takvim', href: 'modules/takvim.html' },
-        { ad: 'Components Lab', href: 'modules/components-lab.html' },
-        { ad: 'MiniBilge AI', href: 'modules/ai.html' }
+        { ad: 'AI Asistan', href: 'modules/ai.html', motor: 'MB-AI' },
+        { ad: 'Yıllık plan iste', href: 'modules/ai.html?q=yillik', motor: 'MB-AI' },
+        { ad: 'Günlük plan iste', href: 'modules/ai.html?q=gunluk', motor: 'MB-AI' },
+        { ad: 'Çalışma kâğıdı iste', href: 'modules/ai.html?q=calisma', motor: 'MB-AI' },
+        { ad: 'Components Lab', href: 'modules/components-lab.html' }
       ]
     }
+  ];
+
+  const PIPELINE = [
+    'Yıllık Plan',
+    'Günlük Plan',
+    'Ödev',
+    'Ölçme',
+    'Kazanım',
+    'Karne'
   ];
 
   function derslerForSinif(sinif) {
     return PROGRAM_DERSLERI[String(sinif)] || PROGRAM_DERSLERI['1'];
   }
 
-  window.MiniBilgeHub = { HUB, PROGRAM_DERSLERI, derslerForSinif };
+  window.MiniBilgeHub = { HUB, PROGRAM_DERSLERI, PIPELINE, derslerForSinif };
 })();

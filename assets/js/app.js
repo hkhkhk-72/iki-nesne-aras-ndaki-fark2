@@ -12,7 +12,6 @@
     ],
     tatiller: [],
     belirliGunler: [],
-    /* TTKB 09.05.2025 İlkokul haftalık ders çizelgesi — her sınıf 30 saat */
     haftalikDersSaati: {
       '1': { turkce: 10, matematik: 5, hayatBilgisi: 4, bedenEgitimi: 5, gorselSanatlar: 1, muzik: 1, serbestEtkinlikler: 4 },
       '2': { turkce: 10, matematik: 5, hayatBilgisi: 4, ingilizce: 2, bedenEgitimi: 5, gorselSanatlar: 1, muzik: 1, serbestEtkinlikler: 2 },
@@ -35,13 +34,6 @@
           <h1>Ana sayfa yüklenemedi</h1>
           <p class="dash-date">${esc(msg)}</p>
         </header>
-        <section class="mb-section">
-          <div class="quick-actions">
-            <a href="modules/yillik-plan.html" class="quick-btn primary">Yıllık Planlar</a>
-            <a href="modules/gunluk-plan.html" class="quick-btn primary">Günlük Planlar</a>
-            <a href="documents/index.html" class="quick-btn">Evrak Merkezi</a>
-          </div>
-        </section>
       </div>`;
     mount(window.MiniBilgeNav ? MiniBilgeNav.renderLayout('home', body) : body);
   }
@@ -53,14 +45,15 @@
     return `${href}${sep}sinif=${encodeURIComponent(sinif)}`;
   }
 
-  /** MB-UI-002 — Sınıf odaklı ana ekran */
+  function setupIncomplete(profile, school) {
+    return !profile.adSoyad || !(school.okulAdi || school.ad) || !school.il;
+  }
+
+  /** MB-UI-003 / MD-026 — Sonraki nesil ana ekran */
   async function initDashboard() {
     try {
-      if (!window.MiniBilgeNav || !window.MiniBilgeStorage) {
+      if (!window.MiniBilgeNav || !window.MiniBilgeStorage || !window.MiniBilgeHub) {
         throw new Error('Gerekli betikler yüklenemedi.');
-      }
-      if (!window.MiniBilgeHub) {
-        throw new Error('Hub yapılandırması yüklenemedi (hub-config.js).');
       }
 
       const profile = MiniBilgeStorage.getProfile();
@@ -69,9 +62,12 @@
       const settings = MiniBilgeStorage.getSettings();
       const egitimYili = school.egitimYili || '2025-2026';
       const sinif = String(settings.varsayilanSinif || '1');
+      const sube = settings.sube || 'A';
       const today = new Date();
       const gunAdi = GUNLER[today.getDay()];
-      const ad = profile.adSoyad ? profile.adSoyad : 'Öğretmen';
+      const ad = profile.adSoyad || 'Öğretmen';
+      const okulAdi = school.okulAdi || school.ad || 'Okul bilgisi girilmedi';
+      const needsSetup = setupIncomplete(profile, school);
 
       let cal = FALLBACK_CAL;
       try {
@@ -94,25 +90,53 @@
       const hours = (cal.haftalikDersSaati && cal.haftalikDersSaati[sinif]) || FALLBACK_CAL.haftalikDersSaati['1'];
       const dersler = MiniBilgeHub.derslerForSinif(sinif);
       const hasYillik = (plans || []).some(p => p.tur === 'yillik' && String(p.sinif) === sinif);
+      const pipeline = MiniBilgeHub.PIPELINE || [];
 
       const content = `
       <div class="dash">
-        <header class="dash-hero">
+        <header class="dash-hero dash-hero--os">
           <p class="brand-kicker">MiniBilge Öğretmen</p>
-          <h1>Merhaba ${esc(ad)}</h1>
-          <p class="dash-date">Önce sınıfı seçin — platform o sınıfa göre yeniden yapılanır.</p>
+          <h1>Eğitim İşletim Sistemi</h1>
+          <p class="dash-date">Sınıfı seçin — menü değil, motorlar çalışır.</p>
+
+          <div class="profile-strip" aria-label="Öğretmen bağlamı">
+            <div class="profile-cell">
+              <span class="profile-label">Öğretmen</span>
+              <strong>${esc(ad)}</strong>
+            </div>
+            <div class="profile-cell">
+              <span class="profile-label">Okul</span>
+              <strong>${esc(okulAdi)}</strong>
+            </div>
+            <div class="profile-cell">
+              <span class="profile-label">Eğitim Öğretim Yılı</span>
+              <strong>${esc(egitimYili)}</strong>
+            </div>
+            <div class="profile-cell">
+              <span class="profile-label">Aktif</span>
+              <strong>${esc(sinif)}. Sınıf / ${esc(sube)}</strong>
+            </div>
+          </div>
+
+          ${needsSetup ? `
+            <div class="setup-nudge">
+              <span>İlk kurulum eksik — okul ve öğretmen bilgisi bir kez kaydedilir, belgelerde tekrar sorulmaz.</span>
+              <a class="quick-btn primary compact" href="modules/hesabim.html">Kurulumu tamamla</a>
+            </div>` : ''}
+
+          <p class="grade-prompt">Hangi sınıf için çalışıyorsunuz?</p>
           ${renderGradeTabs(sinif)}
+
           <div class="hero-meta">
-            <span class="hero-chip">${esc(sinif)}. Sınıf aktif</span>
-            <span class="hero-chip sky">${esc(egitimYili)}</span>
+            <span class="hero-chip">${esc(sinif)}. Sınıf aktif — sistem yeniden yapılandı</span>
             ${currentWeek ? `<span class="hero-chip warm">Hafta ${currentWeek.hafta}</span>` : ''}
-            <span class="hero-chip">${gunAdi}, ${fmtToday(today)}</span>
+            <span class="hero-chip sky">${gunAdi}, ${fmtToday(today)}</span>
           </div>
         </header>
 
         <section class="mb-section">
           <h2>${esc(sinif)}. Sınıf Dersleri</h2>
-          <p class="section-lead">TTKB / TYMM program dersleri — belge seçmeden önce sınıf bağlamı sabitlendi.</p>
+          <p class="section-lead">TTKB’ye göre otomatik yüklendi — belge seçmeden önce sınıf bağlamı sabit.</p>
           <div class="lesson-strip">
             ${dersler.map(d => {
               const saat = hours[d.id];
@@ -134,15 +158,20 @@
 
         <section class="mb-section hub-section">
           <h2>Çalışma Alanı</h2>
-          <p class="section-lead">Her modül kendi motorunu açar; yalnızca gerekli alanları sorar.</p>
-          <div class="hub-grid">
+          <p class="section-lead">ÖğretmenEvrak sadeliği + MiniBilge motorları. Her madde bir motora açılır.</p>
+          <div class="data-pipeline" aria-label="Veri hattı">
+            ${pipeline.map((step, i) =>
+              `<span class="pipeline-step">${esc(step)}</span>${i < pipeline.length - 1 ? '<span class="pipeline-arrow" aria-hidden="true">→</span>' : ''}`
+            ).join('')}
+          </div>
+          <div class="hub-grid hub-grid--five">
             ${MiniBilgeHub.HUB.map(cat => renderHubCategory(cat, sinif)).join('')}
           </div>
         </section>
 
         <section class="mb-section">
-          <h2>Bugün İçin</h2>
-          <p class="section-lead">Seçili sınıf bağlamında kısa hatırlatmalar.</p>
+          <h2>Bugün — ${esc(sinif)}. Sınıf</h2>
+          <p class="section-lead">Aynı veri hattından devam eden kısa görevler.</p>
           <div class="task-list">
             ${renderTweTasks(hasYillik, currentWeek, sinif)}
           </div>
@@ -164,13 +193,8 @@
     return `
       <div class="grade-tabs" role="tablist" aria-label="Sınıf seçici">
         ${SINIFLAR.map(s => `
-          <button type="button"
-            class="grade-tab${s === active ? ' active' : ''}"
-            role="tab"
-            aria-selected="${s === active ? 'true' : 'false'}"
-            data-sinif="${s}">
-            ${s}. Sınıf
-          </button>`).join('')}
+          <button type="button" class="grade-tab${s === active ? ' active' : ''}" role="tab"
+            aria-selected="${s === active ? 'true' : 'false'}" data-sinif="${s}">${s}. Sınıf</button>`).join('')}
       </div>`;
   }
 
@@ -183,7 +207,7 @@
         if (!next) return;
         MiniBilgeStorage.saveSettings({ varsayilanSinif: next });
         if (window.MiniBilgeComponents && MiniBilgeComponents.notify) {
-          MiniBilgeComponents.notify.success(next + '. sınıf seçildi');
+          MiniBilgeComponents.notify.success(next + '. sınıf — sistem yeniden yapılandı');
         }
         initDashboard();
       });
@@ -200,7 +224,7 @@
         <ul class="hub-links">
           ${(cat.items || []).map(item => {
             if (item.yakinda) {
-              return `<li><span class="hub-link soon" title="Yakında">${esc(item.ad)}<em>yakında</em></span></li>`;
+              return `<li><span class="hub-link soon">${esc(item.ad)}<em>yakında</em></span></li>`;
             }
             const href = withSinif(item.href, sinif);
             const motor = item.motor ? `<span class="hub-motor">${esc(item.motor)}</span>` : '';
@@ -212,11 +236,11 @@
 
   function renderTweTasks(hasYillik, week, sinif) {
     const tasks = [
-      { done: hasYillik, text: `${sinif}. sınıf yıllık planı kontrol et`, href: withSinif('modules/yillik-plan.html', sinif) },
-      { done: false, text: `Hafta ${week?.hafta || '—'} günlük planları hazırla`, href: withSinif('modules/gunluk-plan.html', sinif) },
-      { done: false, text: 'Sınıf defteri — günlük kazanımlar', href: withSinif('modules/gunluk-kazanimlar.html', sinif) },
-      { done: false, text: 'Öğretim programını gözden geçir', href: withSinif('modules/ogretim-programi.html', sinif) },
-      { done: false, text: 'Evrak Merkezi', href: withSinif('documents/index.html', sinif) }
+      { done: hasYillik, text: `${sinif}. sınıf yıllık planı (YPM motoru)`, href: withSinif('modules/yillik-plan.html', sinif) },
+      { done: false, text: `Hafta ${week?.hafta || '—'} günlük plan (GPM)`, href: withSinif('modules/gunluk-plan.html', sinif) },
+      { done: false, text: 'Günlük kazanımlar / sınıf defteri', href: withSinif('modules/gunluk-kazanimlar.html', sinif) },
+      { done: false, text: 'Evraklar — tek merkez', href: withSinif('documents/index.html', sinif) },
+      { done: false, text: 'AI ile plan / materyal iste', href: withSinif('modules/ai.html', sinif) }
     ];
     return tasks.map(t => `
       <div class="task-row">

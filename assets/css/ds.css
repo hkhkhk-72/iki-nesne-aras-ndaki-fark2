@@ -305,14 +305,15 @@ a { color: inherit; text-decoration: none; }
 .grade-tab {
   appearance: none;
   border: 1.5px solid rgba(11, 122, 106, 0.28);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(236, 250, 246, 0.78));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(220, 244, 238, 0.85));
   color: var(--mb-ink);
   font-family: var(--mb-font-body);
-  font-size: clamp(0.95rem, 2.2vw, 1.08rem);
+  font-size: clamp(1.05rem, 2.6vw, 1.28rem);
   font-weight: 800;
-  padding: 15px 10px;
-  border-radius: 14px;
+  padding: 22px 12px;
+  border-radius: 16px;
   cursor: pointer;
+  min-height: 72px;
   transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
 }
 
@@ -342,6 +343,19 @@ a { color: inherit; text-decoration: none; }
   gap: 14px;
 }
 
+.hub-grid--five {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 1100px) {
+  .hub-grid--five {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .hub-grid--five .hub-block[data-hub="ai"] {
+    grid-column: span 1;
+  }
+}
+
 .hub-block {
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.88), rgba(236, 250, 246, 0.72));
   border: 1px solid rgba(11, 122, 106, 0.12);
@@ -365,13 +379,22 @@ a { color: inherit; text-decoration: none; }
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(214, 232, 248, 0.78));
   border-top-color: #3F8FD1;
 }
-.hub-block[data-hub="ders-islemleri"] {
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(255, 236, 204, 0.8));
-  border-top-color: #E8952A;
-}
+.hub-block[data-hub="evraklar"],
 .hub-block[data-hub="evrak-merkezi"] {
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(220, 228, 248, 0.78));
   border-top-color: #5B7FC4;
+}
+.hub-block[data-hub="takvim"] {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(255, 236, 204, 0.8));
+  border-top-color: #E8952A;
+}
+.hub-block[data-hub="ai"] {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.92), rgba(214, 240, 236, 0.85));
+  border-top-color: #067A68;
+}
+.hub-block[data-hub="ders-islemleri"] {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(255, 236, 204, 0.8));
+  border-top-color: #E8952A;
 }
 .hub-block[data-hub="raporlar"] {
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(214, 240, 228, 0.78));
@@ -380,6 +403,88 @@ a { color: inherit; text-decoration: none; }
 .hub-block[data-hub="ayarlar"] {
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(240, 232, 216, 0.78));
   border-top-color: #9A7B4F;
+}
+
+/* UI-003 — profil şeridi + sınıf kutuları */
+.profile-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0 8px;
+}
+
+.profile-cell {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(11, 122, 106, 0.14);
+  border-radius: 12px;
+  padding: 10px 12px;
+  min-width: 0;
+}
+
+.profile-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--mb-ink-soft);
+  margin-bottom: 4px;
+}
+
+.profile-cell strong {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--mb-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.setup-nudge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 12px 0 4px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(255, 236, 204, 0.9), rgba(255, 248, 230, 0.85));
+  border: 1px solid rgba(232, 149, 42, 0.35);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #7A4E12;
+}
+
+.grade-prompt {
+  margin: 16px 0 0;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #0A2F4A;
+}
+
+.data-pipeline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px dashed rgba(11, 122, 106, 0.28);
+}
+
+.pipeline-step {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #067A68;
+}
+
+.pipeline-arrow {
+  opacity: 0.45;
+  font-weight: 700;
 }
 
 .hub-block-head h3 {
@@ -946,7 +1051,11 @@ a.hub-link:hover {
   .grade-tabs {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .hub-section .hub-grid {
+  .profile-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .hub-section .hub-grid,
+  .hub-grid--five {
     grid-template-columns: 1fr;
   }
   .lesson-row {

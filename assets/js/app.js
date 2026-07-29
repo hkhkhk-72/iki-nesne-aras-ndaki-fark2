@@ -241,20 +241,21 @@
 
     const advancedBody = `
       <div class="wf-progress-head">
-        <div class="wf-progress-label">Genel ilerleme</div>
+        <div class="wf-progress-label">İş akışı ilerlemesi</div>
         <div class="wf-progress-bar" aria-valuenow="${progress.overall}" aria-valuemin="0" aria-valuemax="100">
           <span style="width:${progress.overall}%"></span>
         </div>
-        <strong>${progress.overall}%</strong>
+        <strong>${progress.overall}% tamam · ${100 - (progress.overall || 0)}% kaldı</strong>
       </div>
       <div class="wf-module-progress">
         ${(progress.modules || []).slice(0, 8).map(m => `
           <div class="wf-mod">
             <span>${esc(m.ad)}</span>
             <div class="wf-progress-bar slim"><span style="width:${m.percent}%"></span></div>
-            <em>${m.percent}%</em>
+            <em>${m.percent}% · kaldı ${100 - (m.percent || 0)}%</em>
           </div>`).join('')}
-      </div>`;
+      </div>
+      <div id="ds-progress-host" style="margin-top:12px;"></div>`;
 
     const advanced = T && T.AdvancedPanel
       ? T.AdvancedPanel({ id: 'wf-advanced', bodyHtml: advancedBody }).html

@@ -3,7 +3,8 @@
 **Sürüm:** 1.0  
 **Tarih:** 29 Temmuz 2026  
 **Durum:** Görsel dil freeze  
-**Bağımlılık:** `MB-UI-001`
+**Bağımlılık:** `MB-UI-001`  
+**İlerleme:** **90% tamam** · **10% kaldı** (`platform.css` migrate) · bkz. `docs/ILERLEME.md`
 
 > Tüm ekranlar bu sisteme uymak zorundadır.  
 > Amaç: tutarlı, resmî, sakin bir **öğretmen işletim sistemi** dili.

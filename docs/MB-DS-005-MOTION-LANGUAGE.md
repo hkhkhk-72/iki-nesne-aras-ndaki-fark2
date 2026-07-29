@@ -4,7 +4,8 @@
 **Tarih:** 29 Temmuz 2026  
 **Durum:** Bağlayıcı hareket anayasası  
 **Üst:** MB-DS-001 · MB-DS-003 (süreler) · MB-DS-004  
-**Kod:** `ML-001` … `ML-004` · Karar: **MD-044**
+**Kod:** `ML-001` … `ML-004` · Karar: **MD-044**  
+**İlerleme:** **100% tamam** · **0% kaldı** · `docs/ILERLEME.md`
 
 > Animasyon **gösteriş için kullanılmaz**.  
 > Yalnızca durum bildirir.  

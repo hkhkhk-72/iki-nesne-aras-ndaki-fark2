@@ -1,0 +1,69 @@
+{
+  "updated": "2026-07-29",
+  "rule": "Her teslimatta Tamam% ve Kaldı% güncellenir",
+  "designSystem": {
+    "averageComplete": 89,
+    "averageRemaining": 11,
+    "items": [
+      {
+        "id": "MB-DS-001",
+        "title": "Görsel dil",
+        "complete": 90,
+        "remaining": 10,
+        "left": "platform.css → DS token migrate"
+      },
+      {
+        "id": "MB-DS-002",
+        "title": "Teacher Experience (TXS)",
+        "complete": 85,
+        "remaining": 15,
+        "left": "Tüm modüllerde Gelişmiş paneli"
+      },
+      {
+        "id": "MB-DS-003",
+        "title": "Interaction Standards",
+        "complete": 85,
+        "remaining": 15,
+        "left": "Tüm listelerde infinite scroll"
+      },
+      {
+        "id": "MB-DS-004",
+        "title": "Accessibility",
+        "complete": 85,
+        "remaining": 15,
+        "left": "Tam SR denetim / CI"
+      },
+      {
+        "id": "MB-DS-005",
+        "title": "Motion Language",
+        "complete": 100,
+        "remaining": 0,
+        "left": "—"
+      }
+    ]
+  },
+  "roadmap": [
+    { "id": "MB-DM-001", "complete": 100, "remaining": 0 },
+    { "id": "MB-ARCH-001", "complete": 100, "remaining": 0 },
+    { "id": "MB-UI-001-003", "complete": 95, "remaining": 5 },
+    { "id": "MB-IA-001", "complete": 100, "remaining": 0 },
+    { "id": "MB-IA-002", "complete": 70, "remaining": 30 },
+    { "id": "MB-IA-003", "complete": 80, "remaining": 20 },
+    { "id": "MB-DOS-000-001", "complete": 55, "remaining": 45 },
+    { "id": "MD-038", "complete": 100, "remaining": 0 },
+    { "id": "MB-WFE-001", "complete": 90, "remaining": 10 },
+    { "id": "MB-DOS-003", "complete": 85, "remaining": 15 },
+    { "id": "FAZ-6-COMP", "complete": 75, "remaining": 25 },
+    { "id": "MB-DM-002", "complete": 100, "remaining": 0 },
+    { "id": "MB-TPM-001", "complete": 80, "remaining": 20 },
+    { "id": "MB-ARCH-002", "complete": 0, "remaining": 100 },
+    { "id": "MB-DB-APP", "complete": 0, "remaining": 100 }
+  ],
+  "webSpine": { "complete": 86, "remaining": 14 },
+  "nextPriority": {
+    "id": "MB-DOS-001",
+    "title": "Document DNA katalog genişletme",
+    "complete": 55,
+    "remaining": 45
+  }
+}

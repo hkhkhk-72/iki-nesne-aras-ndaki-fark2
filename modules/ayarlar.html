@@ -13,6 +13,7 @@
   <script src="../assets/js/core/storage.js"></script>
   <script src="../assets/js/core/offline-sync.js"></script>
   <script src="../assets/js/components/interaction.js"></script>
+  <script src="../assets/js/components/progress-board.js"></script>
   <script src="../assets/js/components/txs.js"></script>
   <script src="../assets/js/navigation.js"></script>
   <script>
@@ -74,11 +75,18 @@
         </section>
 
         <section class="mb-section">
+          <h2>İlerleme (Tamam% / Kaldı%)</h2>
+          <p class="section-lead">Her teslimatta güncellenir · docs/ILERLEME.md</p>
+          <div id="progress-board"></div>
+        </section>
+
+        <section class="mb-section">
           <h2>Gelişmiş</h2>
           <button class="quick-btn" id="btnClear" type="button">Tüm verileri temizle</button>
         </section>
       </div>`;
     document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('ayarlar', content);
+    if (window.MiniBilgeProgress) MiniBilgeProgress.mount('#progress-board');
 
     function refreshOfflineHint() {
       const el = document.getElementById('offlineHint');

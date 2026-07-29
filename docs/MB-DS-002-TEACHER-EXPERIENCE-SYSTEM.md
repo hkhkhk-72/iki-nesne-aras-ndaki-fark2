@@ -4,7 +4,8 @@
 **Tarih:** 29 Temmuz 2026  
 **Durum:** Bağlayıcı deneyim anayasası  
 **Üst:** MB-DS-001 (görsel dil) · MB-IA-001 · MD-039 · MD-038 · MB-WFE-001  
-**Kod:** `TXS-001` … `TXS-010`
+**Kod:** `TXS-001` … `TXS-010`  
+**İlerleme:** **85% tamam** · **15% kaldı** (tüm modüllerde Gelişmiş) · `docs/ILERLEME.md`
 
 > MiniBilge’nin tasarım sistemi yalnızca renk, buton ve kartlardan oluşmaz.  
 > Tüm ekranlar öğretmenin **günlük çalışma akışına** göre tasarlanır.  

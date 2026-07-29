@@ -94,6 +94,17 @@ Web prototip bileşenleri: `assets/js/components/` · vitrin: `modules/component
 
 Motor dosyaları: `assets/js/core/*-engine.js`
 
+### İlerleme (zorunlu raporlama)
+
+Her teslimatta: **hangi kalem · % tamam · % kaldı**.  
+→ `docs/ILERLEME.md` · `assets/data/progress.json`
+
+| Paket | Tamam | Kaldı |
+|-------|------:|------:|
+| MB-DS-001…005 | 89% | 11% |
+| Web omurgası | 86% | 14% |
+| DOS-001 DNA katalog (sonraki) | 55% | 45% |
+
 ---
 
-*Son güncelleme: FAZ 6 açılışı — 29 Temmuz 2026*
+*Son güncelleme: İlerleme panosu — 29 Temmuz 2026*

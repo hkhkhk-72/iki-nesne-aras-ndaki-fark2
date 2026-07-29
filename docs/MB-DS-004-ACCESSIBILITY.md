@@ -4,7 +4,8 @@
 **Tarih:** 29 Temmuz 2026  
 **Durum:** Bağlayıcı erişilebilirlik anayasası  
 **Üst:** MB-DS-001 · MB-DS-002 · MB-DS-003  
-**Kod:** `A11Y-001` … `A11Y-008` · Karar: **MD-043**
+**Kod:** `A11Y-001` … `A11Y-008` · Karar: **MD-043**  
+**İlerleme:** **85% tamam** · **15% kaldı** (SR denetim/CI) · `docs/ILERLEME.md`
 
 > MiniBilge Öğretmen her öğretmen için kullanılabilir olmalıdır.  
 > Erişilebilirlik sonradan eklenmez — varsayılan kalitedir.

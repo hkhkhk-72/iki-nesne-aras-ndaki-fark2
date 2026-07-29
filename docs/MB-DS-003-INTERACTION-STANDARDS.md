@@ -4,7 +4,8 @@
 **Tarih:** 29 Temmuz 2026  
 **Durum:** Bağlayıcı etkileşim anayasası  
 **Üst:** MB-DS-001 (görsel) · MB-DS-002 (deneyim / TXS)  
-**Kod:** `IS-001` … `IS-011` · Karar: **MD-042**
+**Kod:** `IS-001` … `IS-011` · Karar: **MD-042**  
+**İlerleme:** **85% tamam** · **15% kaldı** (infinite scroll kapsaması) · `docs/ILERLEME.md`
 
 > Hareket ve geri bildirim gürültü değil; **güven ve hız** sinyali verir.  
 > Tüm süreler CSS değişkenleri + `MiniBilgeInteraction` üzerinden tek kaynaktan okunur.

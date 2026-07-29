@@ -107,8 +107,18 @@
       const dersler = (cacheAgg && cacheAgg.dersProgrami && cacheAgg.dersProgrami.length)
         ? cacheAgg.dersProgrami
         : MiniBilgeHub.derslerForSinif(sinif);
-      const hasYillik = (plans || []).some(p => p.tur === 'yillik' && String(p.sinif) === sinif);
       const motorFlow = MiniBilgeHub.MOTOR_FLOW || [];
+
+      let wf = null;
+      if (window.WorkflowEngine) {
+        wf = await WorkflowEngine.bootstrap({
+          cal,
+          week: currentWeek,
+          plans,
+          documents: MiniBilgeStorage.getDocuments(),
+          today
+        });
+      }
 
       const content = `
       <div class="dash">
@@ -124,24 +134,25 @@
             </div>` : ''}
 
           <p class="grade-prompt">Sınıfını Seç</p>
-          <p class="section-lead" style="margin-top:4px;margin-bottom:0;">Belge aramayın — işi seçin. Belge kendiliğinden oluşur.</p>
+          <p class="section-lead" style="margin-top:4px;margin-bottom:0;">Workflow First — belge seçmeyin; doğru zamanda doğru iş gelir.</p>
           ${renderClassContext(siniflar, sinif, sube)}
 
           <div class="hero-meta">
-            <span class="hero-chip">${esc(ctx.label)} aktif — bağlam yüklendi</span>
+            <span class="hero-chip">${esc(ctx.label)} aktif</span>
             ${currentWeek ? `<span class="hero-chip warm">Hafta ${currentWeek.hafta}</span>` : ''}
-            <span class="hero-chip sky">${gunAdi}, ${fmtToday(today)}</span>
+            ${wf && wf.stage ? `<span class="hero-chip sky">${esc(wf.stage.ad)}</span>` : ''}
+            <span class="hero-chip">${gunAdi}, ${fmtToday(today)}</span>
           </div>
 
-          <div class="context-loaded" aria-label="Context Cache (MD-038)">
+          <div class="context-loaded" aria-label="Context Cache + TWE">
             <span>Cache yüklü</span>
-            <span>Öğretmen / Okul</span>
-            <span>Sınıf / Şube</span>
-            <span>Ders programı</span>
-            <span>Haftalık saatler</span>
+            <span>TWE v2</span>
+            <span>Workflow First</span>
             <span>Load Once</span>
           </div>
         </header>
+
+        ${renderWorkflowBoard(wf)}
 
         <section class="mb-section">
           <h2>${esc(ctx.label)} Dersleri</h2>
@@ -167,7 +178,7 @@
 
         <section class="mb-section hub-section">
           <h2>Ana Modüller</h2>
-          <p class="section-lead">Sekiz iş alanı — her madde bir motor zinciri başlatır.</p>
+          <p class="section-lead">Derin rotalar — birincil yönlendirme Workflow görevleridir.</p>
           <div class="data-pipeline motor-flow" aria-label="Motor akışı">
             <span class="pipeline-step">İş</span>
             <span class="pipeline-arrow">→</span>
@@ -179,14 +190,6 @@
             ${MiniBilgeHub.HUB.map(cat => renderHubCategory(cat, sinif, sube)).join('')}
           </div>
         </section>
-
-        <section class="mb-section">
-          <h2>Bugün — ${esc(ctx.label)}</h2>
-          <p class="section-lead">Aynı merkezî veriden devam eden işler.</p>
-          <div class="task-list">
-            ${renderTweTasks(hasYillik, currentWeek, sinif, sube)}
-          </div>
-        </section>
       </div>`;
 
       mount(MiniBilgeNav.renderLayout('home', content));
@@ -195,6 +198,71 @@
       console.error(err);
       showBootError(err);
     }
+  }
+
+  function renderWorkflowBoard(wf) {
+    if (!wf) {
+      return `
+        <section class="mb-section">
+          <h2>Bugünkü İşler</h2>
+          <p class="section-lead">Workflow Engine yüklenemedi.</p>
+        </section>`;
+    }
+    const tasks = (wf.tasks || []).slice(0, 7);
+    const overdue = (wf.deadlines && wf.deadlines.overdue) || [];
+    const soon = (wf.deadlines && wf.deadlines.soon) || [];
+    const suggestions = wf.suggestions || [];
+    const progress = wf.progress || { overall: 0, modules: [] };
+
+    return `
+      <section class="mb-section wf-board">
+        <h2>Workflow — ${esc(wf.stage.ad)}</h2>
+        <p class="section-lead">MD-039 Workflow First · görevler zamanında gelir; belgeyi workflow önerir.</p>
+
+        <div class="wf-progress-head">
+          <div class="wf-progress-label">Genel ilerleme</div>
+          <div class="wf-progress-bar" aria-valuenow="${progress.overall}" aria-valuemin="0" aria-valuemax="100">
+            <span style="width:${progress.overall}%"></span>
+          </div>
+          <strong>${progress.overall}%</strong>
+        </div>
+        <div class="wf-module-progress">
+          ${(progress.modules || []).slice(0, 8).map(m => `
+            <div class="wf-mod">
+              <span>${esc(m.ad)}</span>
+              <div class="wf-progress-bar slim"><span style="width:${m.percent}%"></span></div>
+              <em>${m.percent}%</em>
+            </div>`).join('')}
+        </div>
+
+        ${overdue.length || soon.length ? `
+          <div class="wf-deadlines">
+            ${overdue.map(d => `<span class="wf-pill overdue">Geciken: ${esc(d.text)}</span>`).join('')}
+            ${soon.map(d => `<span class="wf-pill soon">Yaklaşan: ${esc(d.text)}</span>`).join('')}
+          </div>` : ''}
+
+        <h3 class="wf-subhead">Bugünkü görevler</h3>
+        <div class="task-list">
+          ${tasks.map(t => `
+            <div class="task-row">
+              <span class="task-check${t.done ? ' done' : ''}">${t.done ? '✓' : ''}</span>
+              <span class="task-text${t.done ? ' done' : ''}">${esc(t.text)}
+                <small class="wf-prio">Öncelik ${t.priority || '—'}</small>
+              </span>
+              <a class="text-link" href="${t.href}">Aç</a>
+            </div>`).join('')}
+        </div>
+
+        ${suggestions.length ? `
+          <h3 class="wf-subhead">Workflow belge önerileri</h3>
+          <div class="wf-suggestions">
+            ${suggestions.map(s => `
+              <a class="wf-suggest" href="${s.href}">
+                <strong>${esc(s.docHint || 'Belge')}</strong>
+                <span>${esc(s.text)}</span>
+              </a>`).join('')}
+          </div>` : ''}
+      </section>`;
   }
 
   function renderClassContext(siniflar, activeSinif, activeSube) {
@@ -252,22 +320,6 @@
           }).join('')}
         </ul>
       </article>`;
-  }
-
-  function renderTweTasks(hasYillik, week, sinif, sube) {
-    const tasks = [
-      { done: hasYillik, text: `${sinif}/${sube} yıllık planı`, href: withSinif('modules/yillik-plan.html', sinif, sube) },
-      { done: false, text: `Hafta ${week?.hafta || '—'} günlük plan`, href: withSinif('modules/gunluk-plan.html', sinif, sube) },
-      { done: false, text: 'Sınıf yönetimi — yoklama / öğrenciler', href: withSinif('documents/olustur.html?id=sinif-listesi', sinif, sube) },
-      { done: false, text: 'Resmî evraklar', href: withSinif('documents/index.html', sinif, sube) },
-      { done: false, text: 'AI ile iş başlat', href: withSinif('modules/ai.html', sinif, sube) }
-    ];
-    return tasks.map(t => `
-      <div class="task-row">
-        <span class="task-check${t.done ? ' done' : ''}">${t.done ? '✓' : ''}</span>
-        <span class="task-text${t.done ? ' done' : ''}">${esc(t.text)}</span>
-        <a class="text-link" href="${t.href}">Aç</a>
-      </div>`).join('');
   }
 
   function esc(s) {

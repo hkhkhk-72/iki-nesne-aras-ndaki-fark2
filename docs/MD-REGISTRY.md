@@ -21,13 +21,15 @@
 | **MD-035** | Document DNA | Document OS | ✅ freeze |
 | **MD-036** | Official Lock | Document OS | ✅ freeze |
 | **MD-038** | Context Cache Engine | Document OS | ✅ freeze |
+| **MD-039** | Workflow First | Teacher Workflow | ✅ freeze |
 
 ### Numara notu
 
 Taslakta Document OS ilkeleri MD-025…030 diye anılmıştı.  
 **MD-025 / MD-026** zaten dolu olduğu için Document OS ilkeleri **MD-031…036** olarak donduruldu. Anlam aynıdır.
 
-**MD-038** — Context Cache: Load Once — Use Everywhere.
+**MD-038** — Context Cache: Load Once — Use Everywhere.  
+**MD-039** — Workflow First: belge seçilmez; TWE doğru işi zamanında önerir.
 
 ---
 
@@ -56,5 +58,9 @@ MEB korumalı alanlar kilitli (ör. kazanımlar); öğretmen alanı esnek (ör. 
 TeacherContext bir kez yüklenir; session boyunca tüm motorlar aynı cache’i kullanır.  
 `ContextCacheService` · `TeacherContextAggregate` · `TeacherContextLoaded`.  
 Detay: `docs/MD-038-CONTEXT-CACHE-ENGINE.md`
+
+### MD-039 — Workflow First
+Kullanıcı belge seçmez. Workflow Engine doğru zamanda doğru belgeyi önerir.  
+Detay: `docs/MD-039-WORKFLOW-FIRST.md` · `docs/MB-WFE-001-TEACHER-WORKFLOW-ENGINE-V2.md`
 
 Detay: `docs/MB-IA-003-AKILLI-BELGE-URETIM-MOTORU.md` · `docs/MB-DOS-000-DOCUMENT-OS.md`

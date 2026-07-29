@@ -57,6 +57,7 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 2h. **MB-IA-003** Akıllı Belge Üretim Motoru ✅ → `docs/MB-IA-003-AKILLI-BELGE-URETIM-MOTORU.md`
 2i. **MB-DOS-000/001** Document OS + DNA katalog tohumu 🔵
 2j. **MD-038** Context Cache Engine ✅ → `docs/MD-038-CONTEXT-CACHE-ENGINE.md`
+2k. **MB-WFE-001** Teacher Workflow Engine v2 + MD-039 Workflow First ✅
 3. **MB-DM-002** Entity Detay Spesifikasyonu ✅ → `docs/MB-DM-002-ENTITY-DETAY-SPESIFIKASYONU.md`
 3b. **Günlük Kazanımlar** (sınıf defteri) + Kazanım Cepte UX esini → `docs/ESIN-KAZANIM-CEPTE.md`
 4. **MB-TPM-001** 1. sınıf Türkçe domain ✅ → `docs/MB-TPM-001-SINIF1-TURKCE-DOMAIN-UYGULAMASI.md`

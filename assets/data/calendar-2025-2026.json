@@ -28,9 +28,9 @@
     { "ad": "Çevre Haftası", "baslangic": "2026-06-01", "bitis": "2026-06-07", "tur": "belirli-hafta" }
   ],
   "haftalikDersSaati": {
-    "1": { "turkce": 10, "matematik": 5, "hayatBilgisi": 4, "gorselSanatlar": 1, "muzik": 1, "bedenEgitimi": 5, "serbestEtkinlikler": 4 },
-    "2": { "turkce": 10, "matematik": 5, "hayatBilgisi": 4, "ingilizce": 2, "gorselSanatlar": 1, "muzik": 1, "bedenEgitimi": 5, "serbestEtkinlikler": 2 },
-    "3": { "turkce": 8, "matematik": 5, "hayatBilgisi": 3, "fen": 3, "ingilizce": 2, "gorselSanatlar": 1, "muzik": 1, "bedenEgitimi": 5, "serbestEtkinlikler": 2 },
-    "4": { "turkce": 8, "matematik": 5, "fen": 3, "sosyal": 3, "ingilizce": 2, "dinKulturu": 2, "gorselSanatlar": 1, "muzik": 1, "bedenEgitimi": 2, "trafikGuvenligi": 1, "insanHaklari": 2 }
+    "1": { "turkce": 10, "matematik": 5, "hayatBilgisi": 4, "bedenEgitimi": 5, "gorselSanatlar": 1, "muzik": 1, "serbestEtkinlikler": 4 },
+    "2": { "turkce": 10, "matematik": 5, "hayatBilgisi": 4, "ingilizce": 2, "bedenEgitimi": 5, "gorselSanatlar": 1, "muzik": 1, "serbestEtkinlikler": 2 },
+    "3": { "turkce": 8, "matematik": 5, "fen": 3, "hayatBilgisi": 3, "ingilizce": 2, "bedenEgitimi": 5, "gorselSanatlar": 1, "muzik": 1, "serbestEtkinlikler": 2 },
+    "4": { "turkce": 8, "matematik": 5, "fen": 3, "sosyal": 3, "ingilizce": 2, "dinKulturu": 2, "insanHaklari": 2, "trafikGuvenligi": 1, "bedenEgitimi": 2, "gorselSanatlar": 1, "muzik": 1 }
   }
 }

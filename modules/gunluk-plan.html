@@ -46,11 +46,14 @@
     const DERS_ADI = {
       turkce: 'Türkçe', matematik: 'Matematik', hayatBilgisi: 'Hayat Bilgisi',
       fen: 'Fen Bilimleri', sosyal: 'Sosyal Bilgiler', gorselSanatlar: 'Görsel Sanatlar',
-      muzik: 'Müzik', bedenEgitimi: 'Beden Eğitimi ve Oyun', ingilizce: 'İngilizce',
+      muzik: 'Müzik', bedenEgitimi: 'Oyun ve Fiziki Etkinlikler',
+      ingilizce: 'Yabancı Dil (İngilizce)',
       dinKulturu: 'Din Kültürü ve Ahlak Bilgisi', serbestEtkinlikler: 'Serbest Etkinlikler',
       trafikGuvenligi: 'Trafik Güvenliği',
       insanHaklari: 'İnsan Hakları, Vatandaşlık ve Demokrasi'
     };
+    if (Number(sinif) === 1) DERS_ADI.bedenEgitimi = 'Beden Eğitimi ve Oyun (Oyun ve Fiziki Etkinlikler)';
+    if (Number(sinif) === 2) DERS_ADI.bedenEgitimi = 'Oyun ve Fiziki Etkinlikler (Beden Eğitimi)';
 
     function annualForDers(dersId) {
       return plans.find(p => p.dersId === dersId || (p.data && p.data.dersId === dersId))

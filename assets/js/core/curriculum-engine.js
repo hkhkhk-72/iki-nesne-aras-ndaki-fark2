@@ -74,15 +74,23 @@
     return plan;
   }
 
-  async function listAvailableCourses(sinif) {
+  function resolveDersAdi(m, dersId, sinif) {
+    const g = String(sinif || '');
+    const by = m.dersAdlariBySinif && m.dersAdlariBySinif[g];
+    if (by && by[dersId]) return by[dersId];
+    return (m.dersAdlari && m.dersAdlari[dersId]) || dersId;
+  }
+
+  async function listAvailableCourses(sinif, opts) {
     const m = await loadManifest();
     const sinifKey = String(sinif);
-    const dersler = m.siniflar[sinifKey];
-    if (!dersler) return [];
-    return Object.keys(dersler).map(id => ({
-      id,
-      ad: m.dersAdlari[id] || id
-    }));
+    const onlyProgram = opts && opts.onlyProgram;
+    const ordered = onlyProgram && m.programDersleri && m.programDersleri[sinifKey]
+      ? m.programDersleri[sinifKey]
+      : Object.keys(m.siniflar[sinifKey] || {});
+    return ordered
+      .filter(id => m.siniflar[sinifKey] && m.siniflar[sinifKey][id])
+      .map(id => ({ id, ad: resolveDersAdi(m, id, sinifKey) }));
   }
 
   async function listAvailableGrades() {
@@ -90,8 +98,9 @@
     return Object.keys(m.siniflar).sort();
   }
 
-  function getDersAdi(dersId) {
-    return manifest?.dersAdlari?.[dersId] || dersId;
+  function getDersAdi(dersId, sinif) {
+    if (!manifest) return dersId;
+    return resolveDersAdi(manifest, dersId, sinif);
   }
 
   window.CurriculumEngine = {

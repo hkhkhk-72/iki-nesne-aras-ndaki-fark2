@@ -13,12 +13,29 @@
   <script src="../assets/js/navigation.js"></script>
   <script>
     const siniflar = [1, 2, 3, 4];
-    /* TTKB 09.05.2025 İlkokul zorunlu + serbest etkinlikler */
+    /* İlkokul program dersleri (serbest etkinlikler çizelge saatidir, burada yok) */
     const dersler = {
-      1: ['Türkçe', 'Matematik', 'Hayat Bilgisi', 'Görsel Sanatlar', 'Müzik', 'Beden Eğitimi ve Oyun', 'Serbest Etkinlikler'],
-      2: ['Türkçe', 'Matematik', 'Hayat Bilgisi', 'İngilizce', 'Görsel Sanatlar', 'Müzik', 'Beden Eğitimi ve Oyun', 'Serbest Etkinlikler'],
-      3: ['Türkçe', 'Matematik', 'Hayat Bilgisi', 'Fen Bilimleri', 'İngilizce', 'Görsel Sanatlar', 'Müzik', 'Beden Eğitimi ve Oyun', 'Serbest Etkinlikler'],
-      4: ['Türkçe', 'Matematik', 'Fen Bilimleri', 'Sosyal Bilgiler', 'İngilizce', 'Din Kültürü ve Ahlak Bilgisi', 'Görsel Sanatlar', 'Müzik', 'Beden Eğitimi ve Oyun', 'Trafik Güvenliği', 'İnsan Hakları, Vatandaşlık ve Demokrasi']
+      1: [
+        'Türkçe', 'Matematik', 'Hayat Bilgisi',
+        'Beden Eğitimi ve Oyun (Oyun ve Fiziki Etkinlikler)',
+        'Görsel Sanatlar', 'Müzik'
+      ],
+      2: [
+        'Türkçe', 'Matematik', 'Hayat Bilgisi', 'Yabancı Dil (İngilizce)',
+        'Oyun ve Fiziki Etkinlikler (Beden Eğitimi)',
+        'Görsel Sanatlar', 'Müzik'
+      ],
+      3: [
+        'Türkçe', 'Matematik', 'Fen Bilimleri', 'Hayat Bilgisi',
+        'Yabancı Dil (İngilizce)', 'Oyun ve Fiziki Etkinlikler',
+        'Görsel Sanatlar', 'Müzik'
+      ],
+      4: [
+        'Türkçe', 'Matematik', 'Fen Bilimleri', 'Sosyal Bilgiler',
+        'Yabancı Dil (İngilizce)', 'Din Kültürü ve Ahlak Bilgisi',
+        'İnsan Hakları, Vatandaşlık ve Demokrasi', 'Trafik Güvenliği',
+        'Oyun ve Fiziki Etkinlikler', 'Görsel Sanatlar', 'Müzik'
+      ]
     };
     let sinif = 1;
     function render() {

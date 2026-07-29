@@ -13,10 +13,10 @@
     belirliGunler: [],
     /* TTKB 09.05.2025 İlkokul haftalık ders çizelgesi — her sınıf 30 saat */
     haftalikDersSaati: {
-      '1': { turkce: 10, matematik: 5, hayatBilgisi: 4, gorselSanatlar: 1, muzik: 1, bedenEgitimi: 5, serbestEtkinlikler: 4 },
-      '2': { turkce: 10, matematik: 5, hayatBilgisi: 4, ingilizce: 2, gorselSanatlar: 1, muzik: 1, bedenEgitimi: 5, serbestEtkinlikler: 2 },
-      '3': { turkce: 8, matematik: 5, hayatBilgisi: 3, fen: 3, ingilizce: 2, gorselSanatlar: 1, muzik: 1, bedenEgitimi: 5, serbestEtkinlikler: 2 },
-      '4': { turkce: 8, matematik: 5, fen: 3, sosyal: 3, ingilizce: 2, dinKulturu: 2, gorselSanatlar: 1, muzik: 1, bedenEgitimi: 2, trafikGuvenligi: 1, insanHaklari: 2 }
+      '1': { turkce: 10, matematik: 5, hayatBilgisi: 4, bedenEgitimi: 5, gorselSanatlar: 1, muzik: 1, serbestEtkinlikler: 4 },
+      '2': { turkce: 10, matematik: 5, hayatBilgisi: 4, ingilizce: 2, bedenEgitimi: 5, gorselSanatlar: 1, muzik: 1, serbestEtkinlikler: 2 },
+      '3': { turkce: 8, matematik: 5, fen: 3, hayatBilgisi: 3, ingilizce: 2, bedenEgitimi: 5, gorselSanatlar: 1, muzik: 1, serbestEtkinlikler: 2 },
+      '4': { turkce: 8, matematik: 5, fen: 3, sosyal: 3, ingilizce: 2, dinKulturu: 2, insanHaklari: 2, trafikGuvenligi: 1, bedenEgitimi: 2, gorselSanatlar: 1, muzik: 1 }
     }
   };
 
@@ -101,7 +101,7 @@
             ${Object.keys(hours).map(id => `
               <div class="lesson-row">
                 <div>
-                  <div class="lesson-name">${dersAdi(id)}</div>
+                  <div class="lesson-name">${dersAdi(id, sinif)}</div>
                   <div class="lesson-meta">${hours[id]} saat / hafta · ${esc(sinif)}. sınıf</div>
                 </div>
                 <a class="quick-btn primary compact" href="modules/gunluk-plan.html?ders=${encodeURIComponent(id)}">Oluştur</a>
@@ -183,16 +183,22 @@
     return rows.join('');
   }
 
-  function dersAdi(id) {
+  function dersAdi(id, sinif) {
     const map = {
       turkce: 'Türkçe', matematik: 'Matematik', hayatBilgisi: 'Hayat Bilgisi',
       fen: 'Fen Bilimleri', sosyal: 'Sosyal Bilgiler', gorselSanatlar: 'Görsel Sanatlar',
-      muzik: 'Müzik', bedenEgitimi: 'Beden Eğitimi ve Oyun', ingilizce: 'İngilizce',
+      muzik: 'Müzik', bedenEgitimi: 'Oyun ve Fiziki Etkinlikler',
+      ingilizce: 'Yabancı Dil (İngilizce)',
       dinKulturu: 'Din Kültürü ve Ahlak Bilgisi', serbestEtkinlikler: 'Serbest Etkinlikler',
       trafikGuvenligi: 'Trafik Güvenliği',
       insanHaklari: 'İnsan Hakları, Vatandaşlık ve Demokrasi'
     };
-    return map[id] || id;
+    const bySinif = {
+      1: { bedenEgitimi: 'Beden Eğitimi ve Oyun (Oyun ve Fiziki Etkinlikler)' },
+      2: { bedenEgitimi: 'Oyun ve Fiziki Etkinlikler (Beden Eğitimi)' }
+    };
+    const g = String(sinif || '');
+    return (bySinif[g] && bySinif[g][id]) || map[id] || id;
   }
 
   function esc(s) { return s ? String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;') : ''; }

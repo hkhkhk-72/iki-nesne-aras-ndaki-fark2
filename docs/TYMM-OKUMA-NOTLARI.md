@@ -256,11 +256,11 @@ Kaynak: Talim ve Terbiye Kurulu Başkanlığı, 09/05/2025 sayılı 04 nolu kara
 | Hayat Bilgisi | 4 | 4 | 3 | — |
 | Fen Bilimleri | — | — | 3 | 3 |
 | Sosyal Bilgiler | — | — | — | 3 |
-| Yabancı Dil | — | 2 | 2 | 2 |
+| Yabancı Dil (İngilizce) | — | 2 | 2 | 2 |
 | Din Kültürü ve Ahlak Bilgisi | — | — | — | 2 |
 | Görsel Sanatlar | 1 | 1 | 1 | 1 |
 | Müzik | 1 | 1 | 1 | 1 |
-| Beden Eğitimi ve Oyun | 5 | 5 | 5 | 2 |
+| Oyun ve Fiziki Etkinlikler (Beden Eğitimi ve Oyun) | 5 | 5 | 5 | 2 |
 | Trafik Güvenliği | — | — | — | 1 |
 | İnsan Hakları, Vatandaşlık ve Demokrasi | — | — | — | 2 |
 | Serbest Etkinlikler | 4 | 2 | 2 | — |
@@ -277,6 +277,15 @@ Açıklama (çizelge notu): 1. sınıfta serbest etkinliklerin 2 saati; 2 ve 3. 
 - **4. sınıf:** Hayat Bilgisi kalkar; Sosyal Bilgiler, Din Kültürü, Trafik Güvenliği ve İHVD eklenir.
 
 Platform dosyaları: `assets/data/calendar-*.json` → `haftalikDersSaati`; `assets/data/curriculum/index.json`.
+
+**Program dersi sırası / adları** (`programDersleri` + `dersAdlariBySinif`):
+
+1. Türkçe · Matematik · Hayat Bilgisi · Beden Eğitimi ve Oyun (Oyun ve Fiziki Etkinlikler) · Görsel Sanatlar · Müzik  
+2. Türkçe · Matematik · Hayat Bilgisi · Yabancı Dil (İngilizce) · Oyun ve Fiziki Etkinlikler (Beden Eğitimi) · Görsel Sanatlar · Müzik  
+3. Türkçe · Matematik · Fen Bilimleri · Hayat Bilgisi · Yabancı Dil (İngilizce) · Oyun ve Fiziki Etkinlikler · Görsel Sanatlar · Müzik  
+4. Türkçe · Matematik · Fen Bilimleri · Sosyal Bilgiler · Yabancı Dil (İngilizce) · Din Kültürü ve Ahlak Bilgisi · İnsan Hakları, Vatandaşlık ve Demokrasi · Trafik Güvenliği · Oyun ve Fiziki Etkinlikler · Görsel Sanatlar · Müzik  
+
+Serbest Etkinlikler çizelge saatidir; branş/program dersi listesinde yer almaz.
 
 ---
 

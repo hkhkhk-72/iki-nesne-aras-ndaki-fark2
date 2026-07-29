@@ -111,7 +111,7 @@ Kalıcı giriş (doğal dil → plan/belge üretim komutu).
 ### 5.1 Yıllık Plan
 Sınıf → Ders seçimi sonrası üretim. Ders listesi örnekleri:
 
-Türkçe, Matematik, Hayat Bilgisi, Fen, İngilizce (2+), Görsel Sanatlar, Müzik, Beden Eğitimi ve Oyun, Din Kültürü (program kapsamına göre).
+Türkçe, Matematik, Hayat Bilgisi, Fen, Sosyal (4), Yabancı Dil/İngilizce (2+), Görsel Sanatlar, Müzik, Oyun ve Fiziki Etkinlikler (Beden Eğitimi ve Oyun), Din Kültürü / İHVD / Trafik (4; program kapsamına göre).
 
 Akış: **Sınıf → Ders → Bilgiler → Üret** (değişmez).
 

@@ -15,6 +15,7 @@
 | MB-AI-001 | Gözlem & karar motoru | `docs/11-…` · `src/ai/` |
 | GRS-001C | Figma Foundation (ürün) | `src/design-tokens/` + Figma `01 Tokens` |
 | MB-LAB-001 | Az/Çok/Eşit bilimsel temel | `src/lab/` · `src/qa/lab-qa.ts` · `docs/16-…` |
+| MBA-BENCHMARK-001 | Küresel üretim eşiği v1.1 | `src/benchmark/` · `src/qa/benchmark-qa.ts` · `docs/17-…` |
 
 ## Sahne sırası (modül içi)
 

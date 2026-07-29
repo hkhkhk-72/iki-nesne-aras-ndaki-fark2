@@ -104,10 +104,11 @@ export const shadow = {
   },
 } as const;
 
+/** MBA-BENCHMARK-001: minimum 64×64 px. */
 export const touchTarget = {
-  min: 48,
-  comfortable: 56,
-  large: 72,
+  min: 64,
+  comfortable: 72,
+  large: 88,
 } as const;
 
 /** Karar 234 — görsel kompozisyon bütçesi. */

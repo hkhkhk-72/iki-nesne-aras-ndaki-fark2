@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { TOUCH_TARGET_MIN_PX } from '@/benchmark';
 
 /**
  * Erişilebilirlik ve performans ayarları.
@@ -34,7 +35,8 @@ export const defaultSettings: AppSettings = {
   textScale: 'normal',
   colorMode: 'normal',
   motorAssist: false,
-  timePressureEnabled: true,
+  /** MBA-BENCHMARK-001: zaman baskısı kapalı (child safety). */
+  timePressureEnabled: false,
 };
 
 export const TEXT_SCALE_FACTOR: Record<TextScale, number> = {
@@ -67,9 +69,13 @@ export async function updateSetting<K extends keyof AppSettings>(
   return next;
 }
 
-/** Motor beceri desteği açıkken dokunma hedefi büyür. */
+/**
+ * Dokunma hedefi — MBA-BENCHMARK-001 minimum 64 px.
+ * Motor beceri desteği açıkken hedef büyür.
+ */
 export function touchTargetFor(settings: AppSettings, base: number): number {
-  return settings.motorAssist ? Math.round(base * 1.35) : base;
+  const floored = Math.max(base, TOUCH_TARGET_MIN_PX);
+  return settings.motorAssist ? Math.round(floored * 1.35) : floored;
 }
 
 export function scaleFont(settings: AppSettings, size: number): number {

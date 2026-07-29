@@ -6,6 +6,7 @@ import { colors, radius, spacing, typography } from '@/theme';
 import type { AppSettings } from '@/core/settings-store';
 import { scaleFont, touchTargetFor } from '@/core/settings-store';
 import { isConceptualCount, naturalLayout, pickGrouping } from '@/lab';
+import { TOUCH_TARGET_MIN_PX } from '@/benchmark';
 
 /** Karakter repliği — sahnenin duygusal taşıyıcısı. */
 export function SpeechBubble({
@@ -56,8 +57,8 @@ export function GroupDisplay({
   settings: AppSettings;
   layoutSeed?: number;
 }) {
-  const size = touchTargetFor(settings, 34);
-  const field = 120;
+  const size = touchTargetFor(settings, TOUCH_TARGET_MIN_PX);
+  const field = Math.max(160, size * 2 + 48);
   const groups = useMemo(
     () => (isConceptualCount(count) ? pickGrouping(count, layoutSeed) : [count]),
     [count, layoutSeed],

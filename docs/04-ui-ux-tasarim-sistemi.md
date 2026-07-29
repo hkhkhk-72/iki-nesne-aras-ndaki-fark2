@@ -3,11 +3,12 @@
 ## Tasarım İlkeleri
 
 1. **Sade** — Az yazı, güçlü görseller
-2. **Büyük dokunma alanları** — Min 48px, tercih 56px
+2. **Büyük dokunma alanları** — Min **64×64 px** (MBA-BENCHMARK-001)
 3. **Yüksek erişilebilirlik** — Kontrast, accessibilityLabel
-4. **Düşük donanım performansı** — Hafif animasyonlar
-5. **Oyun hissi** — Ders değil macera
+4. **Düşük donanım performansı** — Mikro animasyon 250–450 ms; gecikme &lt;50 ms
+5. **Oyun hissi** — Ders değil macera; merak + karakter yardımına dayalı motivasyon
 6. **Dünya önce** — Arayüz dünyayı bastırmaz (Karar 234)
+7. **Control of Error** — Sistem “yanlış” demez; nesne doğal döner, çocuk keşfeder
 
 ## Mikro Deneyim Görsel Kompozisyonu
 
@@ -66,5 +67,7 @@ Her modun kendine özgü ikon ve rengi vardır (`activityModeLabels`).
 ## Haptic Geri Bildirim
 
 - Dokunma: Light impact
-- Doğru: Success notification
-- Yanlış: Error notification
+- Başarı anı: Success notification (isteğe bağlı, yumuşak)
+- Düzeltme (Control of Error): Error alarm **yok** — Light impact
+
+Ayrıntı: [docs/17-mba-benchmark-001.md](./17-mba-benchmark-001.md)

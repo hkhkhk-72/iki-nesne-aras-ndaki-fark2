@@ -29,7 +29,8 @@ function DragDropEngine({ payload, onComplete, onProgress }: EngineProps<DragDro
 
     if (correctZone !== zoneId) {
       mistakes.current.push(`${selectedItem}->${zoneId}`);
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      // MBA-BENCHMARK-001 Control of Error — alarm yok
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     }

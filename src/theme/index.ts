@@ -53,10 +53,11 @@ export const typography = {
   button: { fontSize: 18, fontWeight: '700' as const, lineHeight: 24 },
 };
 
+/** MBA-BENCHMARK-001: minimum 64×64 px. */
 export const touchTarget = {
-  min: 48,
-  comfortable: 56,
-  large: 72,
+  min: 64,
+  comfortable: 72,
+  large: 88,
 };
 
 export const shadows = {

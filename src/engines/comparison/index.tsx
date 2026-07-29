@@ -25,7 +25,8 @@ function ComparisonEngine({ payload, onComplete }: EngineProps<ComparisonPayload
     if (isCorrect) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     } else {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      // MBA-BENCHMARK-001 Control of Error — alarm yok
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
 
     setTimeout(() => {

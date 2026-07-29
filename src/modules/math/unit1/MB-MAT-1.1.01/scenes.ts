@@ -181,7 +181,7 @@ export const scenes: SceneSpec[] = [
       guidance: 'Ben buradayım.',
       speaker: 'findik',
     },
-    estimatedSeconds: 18,
+    estimatedSeconds: 20,
     maxTouches: 1,
     atmosphere: {
       season: 'sonbahar',

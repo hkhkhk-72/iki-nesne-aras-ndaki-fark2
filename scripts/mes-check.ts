@@ -18,7 +18,15 @@ import {
   personalizationOnly,
 } from '@/ai/decision-engine';
 import { runLabQaForScenes } from '@/qa/lab-qa';
-import { storyTokens, eduTokens, motionTokens, aiTokens } from '@/design-tokens';
+import { runBenchmarkQaForScenes, runMotionTokenBenchmark } from '@/qa/benchmark-qa';
+import {
+  BENCHMARK_ID,
+  BENCHMARK_VERSION,
+  TOUCH_TARGET_MIN_PX,
+  INTERACTION_LATENCY_MAX_MS,
+  PRIMARY_MOTIVATION,
+} from '@/benchmark';
+import { storyTokens, eduTokens, motionTokens, aiTokens, touchTarget } from '@/design-tokens';
 import type { SceneBehavior } from '@/ai/observer';
 import type { MicroExperience, CharacterId } from '@/mes/types';
 
@@ -194,6 +202,32 @@ for (const exp of MATH_EXPERIENCES) {
   console.log(`  ${exp.code} Lab QA: ${lab.ok ? 'GEÇTİ' : 'BAŞARISIZ'}`);
   if (!lab.ok) {
     console.log('  Lab sorunlar:', lab.issues);
+    failed = true;
+  }
+}
+
+// ── MBA-BENCHMARK-001 Global Standards ──
+console.log(`\n${BENCHMARK_ID} v${BENCHMARK_VERSION}`);
+const uxFloorOk =
+  TOUCH_TARGET_MIN_PX >= 64 &&
+  touchTarget.min >= 64 &&
+  INTERACTION_LATENCY_MAX_MS <= 50 &&
+  PRIMARY_MOTIVATION === 'curiosity';
+console.log(`  UX / motivasyon tabanı: ${uxFloorOk ? 'GEÇTİ' : 'BAŞARISIZ'}`);
+if (!uxFloorOk) failed = true;
+
+const motionBench = runMotionTokenBenchmark();
+console.log(`  Motion 250–450ms: ${motionBench.ok ? 'GEÇTİ' : 'BAŞARISIZ'}`);
+if (!motionBench.ok) {
+  console.log('  Motion sorunlar:', motionBench.issues);
+  failed = true;
+}
+
+for (const exp of MATH_EXPERIENCES) {
+  const bench = runBenchmarkQaForScenes(exp.scenes);
+  console.log(`  ${exp.code} Benchmark QA: ${bench.ok ? 'GEÇTİ' : 'BAŞARISIZ'}`);
+  if (!bench.ok) {
+    console.log('  Benchmark sorunlar:', bench.issues);
     failed = true;
   }
 }

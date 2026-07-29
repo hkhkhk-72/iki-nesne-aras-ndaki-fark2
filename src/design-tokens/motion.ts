@@ -1,5 +1,6 @@
 /**
  * Motion Tokens — varlık için hareket; gürültü değil.
+ * MBA-BENCHMARK-001: mikro etkileşim 250–450 ms.
  */
 
 export type MotionTokenId =
@@ -23,13 +24,13 @@ export interface MotionToken {
 export const motionTokens: Record<MotionTokenId, MotionToken> = {
   'motion.gentle': {
     id: 'motion.gentle',
-    durationMs: 600,
+    durationMs: 400,
     easing: 'ease-in-out',
     reduceMotionFallback: 'none',
   },
   'motion.rise': {
     id: 'motion.rise',
-    durationMs: 500,
+    durationMs: 400,
     easing: 'ease-out',
     reduceMotionFallback: 'instant',
   },
@@ -41,7 +42,7 @@ export const motionTokens: Record<MotionTokenId, MotionToken> = {
   },
   'motion.fade': {
     id: 'motion.fade',
-    durationMs: 400,
+    durationMs: 350,
     easing: 'linear',
     reduceMotionFallback: 'none',
   },
@@ -51,28 +52,28 @@ export const motionTokens: Record<MotionTokenId, MotionToken> = {
     easing: 'linear',
     reduceMotionFallback: 'none',
   },
-  /** LS-006 — güven tepkisi: yavaş, sıcak, baskısız. */
+  /** LS-006 — güven tepkisi: sıcak, baskısız (benchmark mikro aralık). */
   'motion.trust': {
     id: 'motion.trust',
-    durationMs: 900,
+    durationMs: 450,
     easing: 'ease-in-out',
     reduceMotionFallback: 'instant',
   },
   'motion.deepBreath': {
     id: 'motion.deepBreath',
-    durationMs: 1400,
+    durationMs: 450,
     easing: 'ease-in-out',
     reduceMotionFallback: 'none',
   },
   'motion.softBounce': {
     id: 'motion.softBounce',
-    durationMs: 520,
+    durationMs: 400,
     easing: 'ease-out',
     reduceMotionFallback: 'instant',
   },
   'motion.observe': {
     id: 'motion.observe',
-    durationMs: 1100,
+    durationMs: 420,
     easing: 'linear',
     reduceMotionFallback: 'none',
   },

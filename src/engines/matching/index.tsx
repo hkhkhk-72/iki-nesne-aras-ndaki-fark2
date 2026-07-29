@@ -52,7 +52,8 @@ function MatchingEngine({ payload, onComplete, onProgress }: EngineProps<Matchin
       } else {
         mistakes.current.push(`${selectedLeft}-${rightId}`);
         setWrongPair(rightId);
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        // MBA-BENCHMARK-001 Control of Error — alarm yok; yumuşak dokunuş
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         setTimeout(() => {
           setSelectedLeft(null);
           setWrongPair(null);

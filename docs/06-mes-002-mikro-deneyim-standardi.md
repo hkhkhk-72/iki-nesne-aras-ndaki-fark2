@@ -22,7 +22,7 @@ yayınlanamaz (`validateExperience` kontrolü).
 | Geri Bildirim | `feedback` | Olumlu ve yönlendirici replik |
 | Yeniden Oynanabilirlik | `replay` | Değişkenlik havuzu |
 | Erişilebilirlik | `accessibilityLabel` | Ekran okuyucu özeti |
-| Süre | `estimatedSeconds` | 20-60 sn |
+| Süre | `estimatedSeconds` | Öğrenme LS: **20–45 sn** (MBA-BENCHMARK-001); bağ/kutlama: 15–60 sn |
 | Dokunuş | `maxTouches` | ≤ 3 |
 
 ## 60 Saniye Kuralı
@@ -52,7 +52,7 @@ sahneleri bütçeye dahil edilmez.
 | Tür | Pedagojik işlev |
 |-----|-----------------|
 | `narrative` | Duygusal bağ, hikâye kurulumu. Doğru cevap yok. |
-| `discover` | Dokunarak keşif, birebir sayma. |
+| `discover` | Dokunarak keşif / subitizing (1–4 saydırılmaz). |
 | `observe` | Gözlem. Doğru cevap yok, fark etme var. |
 | `pair` | Birebir eşleştirme; artan taraf kavramı sezdirir. |
 | `choose` | Kavram kararı. Yanlışta sahne değişmez, ipucu güçlenir. |

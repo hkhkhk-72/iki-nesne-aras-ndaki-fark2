@@ -27,7 +27,7 @@ Her üretim:
 2. Design Token + Story Token kullan (`src/design-tokens/`)
 3. Character DNA (FN-001 Fındık, BO-001 Bilge) kurallarına uy
 4. Learning Scene standardında üret (LS-xxx)
-5. Quality Gate düşüncesiyle bırak (ölçülebilir, test edilebilir)
+5. Quality Gate: MB-LAB-001 + **MBA-BENCHMARK-001** (`npm run mes:check`)
 6. React Native + Expo SDK 57
 7. Hat: Figma → Kod → Test → QA → Release
 

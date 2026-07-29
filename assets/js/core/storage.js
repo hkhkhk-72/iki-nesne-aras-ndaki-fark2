@@ -84,6 +84,7 @@
     return read(KEYS.settings, {
       varsayilanSinif: '1',
       varsayilanDers: 'turkce',
+      sube: 'A',
       tema: 'default'
     });
   }

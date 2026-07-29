@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yıllık Plan — MiniBilge Öğretmen</title>
+  <title>Yıllık Planlar — MiniBilge Öğretmen</title>
   <link rel="stylesheet" href="../assets/css/platform.css">
-<link rel="stylesheet" href="../assets/css/belgeler.css">
+  <link rel="stylesheet" href="../assets/css/belgeler.css">
   <link rel="stylesheet" href="../assets/css/ds.css">
 </head>
 <body>
   <div id="app"></div>
-
   <script>window.MINIBILGE_BASE = '../';</script>
   <script src="../assets/js/core/storage.js"></script>
   <script src="../assets/js/core/calendar-engine.js"></script>
@@ -30,7 +29,12 @@
     const grades = await CurriculumEngine.listAvailableGrades();
     let step = 1;
     let currentPlan = null;
-    const state = { sinif: settings.varsayilanSinif || '1', dersId: 'turkce' };
+    let cal = null;
+    const state = {
+      sinif: settings.varsayilanSinif || '1',
+      dersId: settings.varsayilanDers || 'turkce',
+      sube: settings.sube || 'A'
+    };
     let courseList = [];
 
     async function loadCourses() {
@@ -38,109 +42,199 @@
       if (!courseList.find(c => c.id === state.dersId)) state.dersId = courseList[0]?.id || 'turkce';
     }
 
+    async function loadCal(yil) {
+      try {
+        CalendarEngine.setYear(yil || school.egitimYili || '2025-2026');
+        cal = await CalendarEngine.loadCalendar();
+      } catch (e) {
+        cal = null;
+      }
+    }
+
+    await loadCourses();
+    await loadCal();
+
     function render() {
+      const weeks = cal ? CalendarEngine.getTeachingWeeks(cal) : [];
+      const tatilCount = cal?.tatiller?.length || 0;
+      const gunCount = cal?.belirliGunler?.length || 0;
       const content = `
-        <div class="module-page">
-          <h1>📆 Plan Motoru — Yıllık Plan</h1>
-          <p class="lead">Sınıf → Ders → Bilgiler → Üret akışıyla TYMM uyumlu yıllık plan oluşturun.</p>
+      <div class="dash plan-layout">
+        <div class="plan-main">
+          <header class="dash-hero">
+            <p class="brand-kicker">Yıllık Planlar</p>
+            <h1>TYMM uyumlu yıllık plan</h1>
+            <p class="dash-date">Sınıf → Ders → Bilgiler → Üret · Program ≠ Plan ≠ Belge</p>
+          </header>
+
           ${UretimWizard.render(step)}
           <div id="alerts"></div>
-          <div class="panel" style="background:var(--glass);padding:20px;border-radius:var(--radius);margin-bottom:16px;">
+
+          <section class="mb-section">
+            <h2>${stepTitle()}</h2>
+            <p class="section-lead">${stepLead()}</p>
             ${step === 1 ? stepSinif() : ''}
             ${step === 2 ? stepDers() : ''}
             ${step === 3 ? stepBilgiler() : ''}
-            ${step === 4 ? stepUret() : ''}
-          </div>
+            ${step === 4 ? stepUret(weeks, tatilCount, gunCount) : ''}
+          </section>
+
           <div class="quick-actions no-print">
-            ${step > 1 ? '<button class="quick-btn" id="btnPrev" type="button">← Geri</button>' : ''}
-            ${step < 4 ? '<button class="quick-btn primary" id="btnNext" type="button">İleri →</button>' : ''}
+            ${step > 1 ? '<button class="quick-btn" id="btnPrev" type="button">Geri</button>' : ''}
+            ${step < 4 ? '<button class="quick-btn primary" id="btnNext" type="button">İleri</button>' : ''}
           </div>
-          <div class="preview-panel" id="previewPanel" style="display:none;margin-top:16px;">
-            <div class="preview-frame"><div class="preview-content" id="preview"></div></div>
+
+          <div id="previewPanel" style="display:none">
+            <section class="mb-section">
+              <h2>Üretilen plan</h2>
+              <p class="section-lead">Önizleme · PDF / Word / HTML olarak indirebilirsiniz.</p>
+              <div class="plan-preview" id="preview"></div>
+            </section>
           </div>
-        </div>`;
+        </div>
+
+        <aside class="plan-aside no-print">
+          <h3>AI önerileri</h3>
+          <p class="hint">Komutlar motorları tetikler; hazır plan kopyalamaz.</p>
+          <button type="button" class="ai-chip" data-ai="uret">Bu bağlamla yıllık planı üret</button>
+          <button type="button" class="ai-chip" data-ai="takvim">Takvim çakışmalarını kontrol et</button>
+          <button type="button" class="ai-chip" data-ai="otp">OTP / pekiştirme haftalarını ayır</button>
+          <a class="text-link" href="ai.html" style="display:inline-block;margin-top:10px">MiniBilge AI’ya git</a>
+        </aside>
+      </div>`;
       document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('yillik-plan', content);
       bindEvents();
     }
 
+    function stepTitle() {
+      return ['Sınıf seçimi', 'Ders seçimi', 'Okul ve öğretmen bilgileri', 'Üretim'][step - 1];
+    }
+    function stepLead() {
+      return [
+        'Hangi sınıf için yıllık plan üreteceksiniz?',
+        'Ders, öğretim programı motorundan (MB-TPM) gelir.',
+        'Bu bilgiler belgenin üst bilgisine yazılır.',
+        'Takvim otomatik bağlanır; ardından plan üretilir.'
+      ][step - 1];
+    }
+
     function stepSinif() {
-      return `<div class="form-field"><label>Sınıf Seçin</label>
-        <select id="sinif">
-          ${['1','2','3','4'].map(g => {
+      return `<div class="ctx-grid">
+        <div class="form-field"><label>Sınıf</label>
+          <select id="sinif">${['1','2','3','4'].map(g => {
             const avail = grades.includes(g);
             return `<option value="${g}" ${state.sinif === g ? 'selected' : ''} ${avail ? '' : 'disabled'}>${g}. Sınıf${avail ? '' : ' (yakında)'}</option>`;
-          }).join('')}
-        </select>
-        <p class="empty-state" style="text-align:left;margin-top:8px;">1. sınıf: 7 ders · 2. sınıf: 4 ders (İngilizce 2. sınıftan başlar)</p></div>`;
+          }).join('')}</select>
+        </div>
+        <div class="form-field"><label>Şube</label>
+          <input id="sube" value="${state.sube}" maxlength="2">
+        </div>
+      </div>`;
     }
 
     function stepDers() {
-      return `<div class="form-field"><label>Ders Seçin (${state.sinif}. Sınıf)</label>
-        <select id="ders">${courseList.map(c =>
-          `<option value="${c.id}" ${state.dersId === c.id ? 'selected' : ''}>${c.ad}</option>`).join('')}
-        </select></div>`;
+      return `<div class="ctx-grid">
+        <div class="form-field"><label>Ders (${state.sinif}. Sınıf)</label>
+          <select id="ders">${courseList.map(c =>
+            `<option value="${c.id}" ${state.dersId === c.id ? 'selected' : ''}>${c.ad}</option>`).join('')}
+          </select>
+        </div>
+      </div>`;
     }
 
     function stepBilgiler() {
-      return `<div class="form-row">
-        <div class="form-field"><label>Okul Adı</label><input id="okulAdi" value="${school.okulAdi || ''}"></div>
+      return `<div class="ctx-grid">
+        <div class="form-field"><label>Okul</label><input id="okulAdi" value="${school.okulAdi || ''}"></div>
+        <div class="form-field"><label>İl</label><input id="il" value="${school.il || ''}"></div>
+        <div class="form-field"><label>İlçe</label><input id="ilce" value="${school.ilce || ''}"></div>
         <div class="form-field"><label>Öğretmen</label><input id="ogretmenAdi" value="${profile.adSoyad || ''}"></div>
-        <div class="form-field"><label>Eğitim Yılı</label>
+        <div class="form-field"><label>Sınıf</label><input value="${state.sinif}" disabled></div>
+        <div class="form-field"><label>Şube</label><input id="sube2" value="${state.sube}"></div>
+        <div class="form-field"><label>Yıl</label>
           <select id="egitimYili">
-            <option value="2025-2026" ${school.egitimYili === '2025-2026' ? 'selected' : ''}>2025-2026</option>
+            <option value="2025-2026" ${school.egitimYili !== '2026-2027' ? 'selected' : ''}>2025-2026</option>
             <option value="2026-2027" ${school.egitimYili === '2026-2027' ? 'selected' : ''}>2026-2027</option>
-          </select></div>
+          </select>
+        </div>
       </div>
-      <p class="empty-state" style="text-align:left;">Eksik bilgiler <a href="hesabim.html">Hesabım</a> sayfasından da kaydedilebilir.</p>`;
+      <p class="empty-state" style="text-align:left;margin-top:10px">Kalıcı kayıt için <a class="text-link" href="hesabim.html">Hesabım</a>.</p>`;
     }
 
-    function stepUret() {
-      return `<p>Plan üretmeye hazırsınız. Aşağıdaki butona tıklayın.</p>
-        <button class="quick-btn primary" id="btnGenerate" type="button">⚡ Yıllık Planı Üret</button>
-        <div class="quick-actions" style="margin-top:12px;">
-          <button class="quick-btn" id="btnPrint" type="button" disabled>🖨️ PDF</button>
-          <button class="quick-btn" id="btnWord" type="button" disabled>📄 Word</button>
-          <button class="quick-btn" id="btnHtml" type="button" disabled>⬇️ HTML</button>
+    function stepUret(weeks, tatilCount, gunCount) {
+      const dersAd = courseList.find(c => c.id === state.dersId)?.ad || state.dersId;
+      return `
+        <div class="cal-strip" style="margin-bottom:16px">
+          <div class="cal-pill"><strong>Öğretim haftası</strong><span>${weeks.length || '—'}</span></div>
+          <div class="cal-pill"><strong>Tatil kaydı</strong><span>${tatilCount}</span></div>
+          <div class="cal-pill"><strong>Belirli gün</strong><span>${gunCount}</span></div>
+          <div class="cal-pill"><strong>Bağlam</strong><span>${state.sinif}/${state.sube} · ${dersAd}</span></div>
+        </div>
+        <div class="quick-actions">
+          <button class="quick-btn primary" id="btnGenerate" type="button">Yıllık Planı Üret</button>
+          <button class="quick-btn" id="btnPrint" type="button" disabled>PDF / Yazdır</button>
+          <button class="quick-btn" id="btnWord" type="button" disabled>Word</button>
+          <button class="quick-btn" id="btnHtml" type="button" disabled>HTML</button>
         </div>`;
     }
 
-    function getCtx() {
+    function collectCtx() {
+      const yil = document.getElementById('egitimYili')?.value || school.egitimYili || '2025-2026';
+      state.sube = document.getElementById('sube2')?.value || document.getElementById('sube')?.value || state.sube;
       return {
         sinif: state.sinif,
         dersId: state.dersId,
-        okul: { okulAdi: document.getElementById('okulAdi')?.value || school.okulAdi, egitimYili: document.getElementById('egitimYili')?.value || school.egitimYili },
+        sube: state.sube,
+        okul: {
+          okulAdi: document.getElementById('okulAdi')?.value || school.okulAdi,
+          il: document.getElementById('il')?.value || school.il,
+          ilce: document.getElementById('ilce')?.value || school.ilce,
+          egitimYili: yil
+        },
         ogretmen: { adSoyad: document.getElementById('ogretmenAdi')?.value || profile.adSoyad }
       };
+    }
+
+    async function generate() {
+      const alerts = document.getElementById('alerts');
+      const ctx = collectCtx();
+      await loadCal(ctx.okul.egitimYili);
+      const result = await PlanEngine.uretYillikPlan(ctx);
+      if (!result.success) {
+        alerts.innerHTML = result.errors.map(e => `<div class="alert alert-error">${e}</div>`).join('');
+        return;
+      }
+      currentPlan = result.plan;
+      currentPlan.sube = ctx.sube;
+      document.getElementById('preview').innerHTML = PlanEngine.renderYillikPlan(currentPlan);
+      document.getElementById('previewPanel').style.display = 'block';
+      ['btnPrint', 'btnWord', 'btnHtml'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.disabled = false;
+      });
+      MiniBilgeStorage.addPlan({
+        tur: 'yillik', sinif: currentPlan.sinif, ders: currentPlan.ders,
+        dersId: currentPlan.dersId, sube: ctx.sube, data: currentPlan
+      });
+      MiniBilgeStorage.saveSettings({ varsayilanSinif: state.sinif, varsayilanDers: state.dersId, sube: state.sube });
+      alerts.innerHTML = `<div class="alert alert-ok">${currentPlan.toplamHafta} haftalık yıllık plan üretildi.</div>`;
     }
 
     function bindEvents() {
       document.getElementById('btnNext')?.addEventListener('click', async () => {
         if (step === 1) {
           state.sinif = document.getElementById('sinif')?.value || state.sinif;
+          state.sube = document.getElementById('sube')?.value || state.sube;
           await loadCourses();
         }
         if (step === 2) state.dersId = document.getElementById('ders')?.value || state.dersId;
+        if (step === 3) {
+          const yil = document.getElementById('egitimYili')?.value;
+          await loadCal(yil);
+        }
         if (step < 4) { step++; render(); }
       });
       document.getElementById('btnPrev')?.addEventListener('click', () => { if (step > 1) { step--; render(); } });
-
-      document.getElementById('btnGenerate')?.addEventListener('click', async () => {
-        const alerts = document.getElementById('alerts');
-        const ctx = getCtx();
-        CalendarEngine.setYear(ctx.okul.egitimYili);
-        const result = await PlanEngine.uretYillikPlan(ctx);
-        if (!result.success) {
-          alerts.innerHTML = result.errors.map(e => `<div class="alert alert-error">${e}</div>`).join('');
-          return;
-        }
-        currentPlan = result.plan;
-        document.getElementById('preview').innerHTML = PlanEngine.renderYillikPlan(currentPlan);
-        document.getElementById('previewPanel').style.display = 'block';
-        ['btnPrint','btnWord','btnHtml'].forEach(id => document.getElementById(id).disabled = false);
-        MiniBilgeStorage.addPlan({ tur: 'yillik', sinif: currentPlan.sinif, ders: currentPlan.ders, dersId: currentPlan.dersId, data: currentPlan });
-        alerts.innerHTML = `<div class="alert alert-ok">✅ ${currentPlan.toplamHafta} haftalık plan üretildi.</div>`;
-      });
-
+      document.getElementById('btnGenerate')?.addEventListener('click', generate);
       document.getElementById('btnPrint')?.addEventListener('click', () => {
         EvrakEngine.yazdir(PlanEngine.renderYillikPlan(currentPlan), 'Yıllık Plan');
       });
@@ -149,6 +243,20 @@
       });
       document.getElementById('btnHtml')?.addEventListener('click', () => {
         EvrakEngine.indirHtml(PlanEngine.renderYillikPlan(currentPlan), 'yillik-plan', 'Yıllık Plan');
+      });
+      document.querySelectorAll('[data-ai]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const k = btn.getAttribute('data-ai');
+          if (k === 'uret') {
+            if (step !== 4) { step = 4; render(); setTimeout(generate, 50); }
+            else generate();
+          } else if (k === 'takvim') {
+            location.href = 'takvim.html';
+          } else {
+            const alerts = document.getElementById('alerts');
+            alerts.innerHTML = '<div class="alert alert-warn">OTP / pekiştirme haftaları plan motorunda MB-ALG-001 ile ayrılacak.</div>';
+          }
+        });
       });
     }
 

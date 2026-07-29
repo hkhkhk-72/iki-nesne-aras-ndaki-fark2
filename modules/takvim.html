@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Takvim — MiniBilge Öğretmen</title>
+  <title>Akademik Takvim — MiniBilge Öğretmen</title>
   <link rel="stylesheet" href="../assets/css/platform.css">
   <link rel="stylesheet" href="../assets/css/ds.css">
 </head>
@@ -16,32 +16,104 @@
   <script>
     (async function () {
       const school = MiniBilgeStorage.getSchool();
-      const yil = school.egitimYili || '2025-2026';
-      CalendarEngine.setYear(yil);
-      const cal = await CalendarEngine.loadCalendar();
-      const today = new Date();
-      const week = CalendarEngine.getCurrentWeek(cal, today);
-      const upcoming = CalendarEngine.getUpcomingEvents(cal, today, 8);
-      const tatiller = (cal.tatiller || []).slice(0, 8);
+      let yil = school.egitimYili || '2025-2026';
+      let cal, week, upcoming, weeks;
 
-      document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('takvim', `
-        <header class="page-header">
-          <h1>Akademik Takvim</h1>
-          <p class="lead">${yil} · MB-TKM · Hafta ${week?.hafta || '—'}</p>
-        </header>
-        <section class="panel">
-          <h2>Yaklaşan Günler</h2>
-          ${upcoming.length ? upcoming.map(e => `
-            <div class="list-item"><span>${e.ad}</span><span class="meta">${e.tarih || (e.baslangic || '')}</span></div>
-          `).join('') : '<p class="empty-state">Yaklaşan kayıt yok.</p>'}
-        </section>
-        <section class="panel">
-          <h2>Tatiller</h2>
-          ${tatiller.map(t => `
-            <div class="list-item"><span>${t.ad}</span><span class="meta">${t.baslangic}${t.bitis && t.bitis !== t.baslangic ? ' – ' + t.bitis : ''}</span></div>
-          `).join('')}
-        </section>
-      `);
+      async function load() {
+        CalendarEngine.setYear(yil);
+        try {
+          cal = await CalendarEngine.loadCalendar();
+        } catch {
+          cal = { donemler: [], tatiller: [], belirliGunler: [] };
+        }
+        const today = new Date();
+        week = CalendarEngine.getCurrentWeek(cal, today);
+        upcoming = CalendarEngine.getUpcomingEvents(cal, today, 10);
+        weeks = CalendarEngine.getTeachingWeeks(cal);
+        render();
+      }
+
+      function render() {
+        document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('takvim', `
+        <div class="dash">
+          <header class="dash-hero">
+            <p class="brand-kicker">Akademik Takvim</p>
+            <h1>${yil}</h1>
+            <p class="dash-date">MB-TKM · Hafta ${week?.hafta || '—'} · Yıllık ve günlük plan motorları buradan beslenir</p>
+          </header>
+
+          <section class="mb-section">
+            <h2>Yıl seçimi</h2>
+            <div class="quick-actions">
+              <button type="button" class="quick-btn${yil === '2025-2026' ? ' primary' : ''}" data-yil="2025-2026">2025-2026</button>
+              <button type="button" class="quick-btn${yil === '2026-2027' ? ' primary' : ''}" data-yil="2026-2027">2026-2027</button>
+            </div>
+          </section>
+
+          <section class="mb-section">
+            <h2>Özet</h2>
+            <div class="cal-strip">
+              <div class="cal-pill"><strong>Öğretim haftası</strong><span>${weeks.length}</span></div>
+              <div class="cal-pill"><strong>Dönem</strong><span>${(cal.donemler || []).length}</span></div>
+              <div class="cal-pill"><strong>Tatil</strong><span>${(cal.tatiller || []).length}</span></div>
+              <div class="cal-pill"><strong>Belirli gün</strong><span>${(cal.belirliGunler || []).length}</span></div>
+            </div>
+          </section>
+
+          <section class="mb-section">
+            <h2>Dönemler</h2>
+            <div class="lesson-strip">
+              ${(cal.donemler || []).map(d => `
+                <div class="lesson-row">
+                  <div>
+                    <div class="lesson-name">${d.ad}</div>
+                    <div class="lesson-meta">${d.baslangic} – ${d.bitis}</div>
+                  </div>
+                </div>`).join('') || '<p class="empty-state">Dönem verisi yok.</p>'}
+            </div>
+          </section>
+
+          <section class="mb-section">
+            <h2>Yaklaşan işler</h2>
+            <p class="section-lead">Belirli günler, tatiller ve hatırlatmalar.</p>
+            ${upcoming.length ? `
+              <div class="timeline">
+                ${upcoming.map(e => `
+                  <div class="timeline-item">
+                    <span class="timeline-dot"></span>
+                    <div>
+                      <div class="t-title">${e.ad}</div>
+                      <div class="t-meta">${e.tur || 'takvim'}</div>
+                    </div>
+                    <div class="t-when">${e.tarih || ''}</div>
+                  </div>`).join('')}
+              </div>` : '<p class="empty-state">Yaklaşan kayıt yok.</p>'}
+          </section>
+
+          <section class="mb-section">
+            <h2>Tatiller</h2>
+            <div class="lesson-strip">
+              ${(cal.tatiller || []).map(t => `
+                <div class="lesson-row">
+                  <div>
+                    <div class="lesson-name">${t.ad}</div>
+                    <div class="lesson-meta">${t.baslangic}${t.bitis && t.bitis !== t.baslangic ? ' – ' + t.bitis : ''} · ${t.tur || ''}</div>
+                  </div>
+                </div>`).join('') || '<p class="empty-state">Tatil kaydı yok.</p>'}
+            </div>
+          </section>
+        </div>`);
+
+        document.querySelectorAll('[data-yil]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            yil = btn.getAttribute('data-yil');
+            MiniBilgeStorage.saveSchool({ egitimYili: yil });
+            load();
+          });
+        });
+      }
+
+      load();
     })();
   </script>
 </body>

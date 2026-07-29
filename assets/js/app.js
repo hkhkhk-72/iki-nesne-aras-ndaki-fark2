@@ -91,7 +91,12 @@
         <header class="dash-hero">
           <p class="brand-kicker">MiniBilge Öğretmen</p>
           <h1>Merhaba ${esc(ad)}</h1>
-          <p class="dash-date">Bugün ${gunAdi}, ${fmtToday(today)} · ${esc(sinif)}. Sınıf · ${esc(egitimYili)}${currentWeek ? ' · Hafta ' + currentWeek.hafta : ''}</p>
+          <p class="dash-date">Bugün ${gunAdi}, ${fmtToday(today)}</p>
+          <div class="hero-meta">
+            <span class="hero-chip">${esc(sinif)}. Sınıf</span>
+            <span class="hero-chip sky">${esc(egitimYili)}</span>
+            ${currentWeek ? `<span class="hero-chip warm">Hafta ${currentWeek.hafta}</span>` : ''}
+          </div>
         </header>
 
         <section class="mb-section">

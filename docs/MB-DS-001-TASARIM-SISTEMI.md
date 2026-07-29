@@ -22,9 +22,10 @@
 | Yuvarlak hap rozet yığını | Yok |
 | Klasik kart ızgarası (dashboard’da) | Yok — bölüm + ayırıcı |
 
-**Atmosfer:** yumuşak buz-mavisi → taş grisi gradient + ince kâğıt dokusu  
+**Atmosfer:** yumuşak buz-mavisi + teal ışık + hafif kehribar sıcaklık (rahatsız etmeyen renkli alan)  
 **Mürekkep:** lacivert-siyah  
 **Aksiyon:** deniz yeşili (teal)  
+**İkincil sıcaklık:** kontrollü kehribar / gökyüzü mavisi (hero chip, timeline)  
 **Uyarı:** kontrollü kehribar
 
 ---

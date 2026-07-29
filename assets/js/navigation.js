@@ -2,8 +2,8 @@
   'use strict';
 
   /**
-   * MB-UI-001 v2 — Öğretmen düşünme sırası
-   * Program → Plan → Evrak
+   * MB-UI-002 — Derin rotalar (bağlam sınıf sekmelerinden gelir)
+   * Ana ekran hub: Planlar · Sınıf · Ders · Evrak · Rapor · Ayarlar
    */
   const MENU = [
     { id: 'home', label: 'Ana Sayfa', icon: 'AS', path: 'index.html' },
@@ -47,15 +47,25 @@
     return path;
   }
 
+  function activeSinif() {
+    try {
+      if (window.MiniBilgeStorage) {
+        return String(MiniBilgeStorage.getSettings().varsayilanSinif || '1');
+      }
+    } catch (e) { /* ignore */ }
+    return '1';
+  }
+
   function renderSidebar(activeId) {
     const path = window.location.pathname;
+    const sinif = activeSinif();
     return `
       <aside class="sidebar no-print">
         <div class="sidebar-brand">
           <span class="brand-mark">MB</span>
           <div>
             <strong>MiniBilge</strong>
-            <small>Öğretmen</small>
+            <small>Öğretmen · ${sinif}. Sınıf</small>
           </div>
         </div>
         <nav class="sidebar-nav">
@@ -69,7 +79,7 @@
             </a>`;
           }).join('')}
         </nav>
-        <div class="sidebar-footer">TYMM · Eğitim İşletim Sistemi</div>
+        <div class="sidebar-footer">TYMM · ${sinif}. Sınıf bağlamı</div>
       </aside>`;
   }
 
@@ -81,5 +91,5 @@
       </div>`;
   }
 
-  window.MiniBilgeNav = { MENU, EVRAK_ALT, renderSidebar, renderLayout, resolveHref };
+  window.MiniBilgeNav = { MENU, EVRAK_ALT, renderSidebar, renderLayout, resolveHref, activeSinif };
 })();

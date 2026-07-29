@@ -5,7 +5,8 @@
 **Tarih:** 29 Temmuz 2026  
 **Durum:** Architecture Freeze (menü v2 için bkz. MB-UI-001)  
 **Bağımlılık:** `MB-DM-001` (Domain Model) tamamlanmış kabul edilir  
-**Güncelleme:** Menü ve dashboard düzeni **MB-UI-001 v2.0** ile genişletildi; görsel dil **MB-DS-001**.
+**Güncelleme:** Menü ve dashboard düzeni **MB-UI-001 v2.0** ile genişletildi; görsel dil **MB-DS-001**.  
+**Ana ekran IA:** **MB-UI-002** (sınıf odaklı hub) UI-001 ana sayfa ilkesinin yerini alır.
 
 > Domain kuralları (`Program ≠ Plan ≠ Belge`) bozulamaz.  
 > Sol menü için güncel freeze: `docs/MB-UI-001-UI-UX-MIMARISI-V2.md`.

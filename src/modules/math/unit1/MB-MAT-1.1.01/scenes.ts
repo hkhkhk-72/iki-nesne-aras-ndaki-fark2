@@ -137,10 +137,60 @@ export const scenes: SceneSpec[] = [
       'İki ağaç. Birinin altında az, diğerinin altında daha fazla palamut var. Hangisinde daha fazla olduğunu seçiyorsun.',
   },
 
+  // ── LS-006 — Trust (GRP-001 APPROVED) ──────────────────────
+  {
+    id: 'ls006',
+    order: 3,
+    title: 'Güven',
+    learningSceneId: 'LS-006',
+    storyToken: 'story.trust',
+    motionToken: 'motion.trust',
+    pedagogicalGoal:
+      'İlk anlamlı karardan sonra güven duygusu oluşturmak. ' +
+      'Puan, ödül popup ve doğru/yanlış geri bildirimi yoktur — yalnızca destekleyici duygusal tepki.',
+    targetEmotion: 'guven',
+    opening: {
+      visual: '🐿️✨',
+      line: 'Yanımda olduğun için teşekkür ederim.',
+      speaker: 'findik',
+      animation: 'rise',
+    },
+    interaction: {
+      kind: 'trust',
+      line: 'Birlikte bakmak… bana güven veriyor.',
+      continueLabel: 'Devam edelim',
+    },
+    aiObservation: {
+      concept: 'guven',
+      signals: ['first_success', 'decision_confidence', 'touch_latency'],
+      misconceptions: [],
+    },
+    feedback: {
+      positive: 'Birlikte bakmak… bana güven veriyor.',
+      guidance: 'Ben buradayım.',
+      speaker: 'findik',
+    },
+    estimatedSeconds: 18,
+    maxTouches: 1,
+    atmosphere: {
+      season: 'sonbahar',
+      worldCue: 'Sıcak ışık (FX010). Fındık küçük gülümser (AN006) ve hafif baş sallar (AN007). Soft bell (SFX006).',
+    },
+    soundBudget: {
+      ambient: 'orman_sessiz',
+      character: 'findik_guven',
+      interaction: 'karar_dalga',
+      success: 'SFX006_soft_bell',
+    },
+    visualComposition: { world: 70, interaction: 20, ui: 10 },
+    accessibilityLabel:
+      'Fındık Sincap güvenle gülümsüyor. Puan veya ödül yok; yalnızca sıcak bir teşekkür.',
+  },
+
   // ── SAHNE 3 — Palamutları keşfetme ─────────────────────────
   {
     id: 'scene03',
-    order: 3,
+    order: 4,
     title: 'Palamutları Keşfet',
     pedagogicalGoal:
       'Birebir sayma becerisini dokunarak deneyimletmek. Sayı söylenmez, çocuk kendi sayar.',
@@ -187,7 +237,7 @@ export const scenes: SceneSpec[] = [
   // ── SAHNE 4 — İki grubu inceleme ───────────────────────────
   {
     id: 'scene04',
-    order: 4,
+    order: 5,
     title: 'İki Kovayı İncele',
     pedagogicalGoal:
       'Karşılaştırma öncesi gözlem. Bu sahnede doğru cevap yoktur; amaç iki grubu fark etmek.',
@@ -232,7 +282,7 @@ export const scenes: SceneSpec[] = [
   // ── SAHNE 5 — Birebir eşleştirme ───────────────────────────
   {
     id: 'scene05',
-    order: 5,
+    order: 6,
     title: 'Birebir Eşleştir',
     pedagogicalGoal:
       'Sayı saymadan karşılaştırma: birebir eşleştirme sonucu artan taraf kavramı sezdirir. ' +
@@ -280,7 +330,7 @@ export const scenes: SceneSpec[] = [
   // ── SAHNE 6 — Daha fazla (eşleştirme sonrası doğrulama) ────
   {
     id: 'scene06',
-    order: 6,
+    order: 7,
     title: 'Daha Çok Olan',
     pedagogicalGoal:
       '"Daha çok" kavramını eşleştirme deneyiminin üzerine oturtmak. ' +
@@ -335,7 +385,7 @@ export const scenes: SceneSpec[] = [
   // ── SAHNE 7 — Daha az ──────────────────────────────────────
   {
     id: 'scene07',
-    order: 7,
+    order: 8,
     title: 'Daha Az Olan',
     pedagogicalGoal:
       '"Daha az" kavramını "daha çok"un karşıtı olarak kurmak. Aynı görsel bağlam korunur.',
@@ -389,7 +439,7 @@ export const scenes: SceneSpec[] = [
   // ── SAHNE 8 — Eşit ─────────────────────────────────────────
   {
     id: 'scene08',
-    order: 8,
+    order: 9,
     title: 'Eşit Olunca',
     pedagogicalGoal:
       '"Eşit" kavramını birebir eşleştirmede artan olmaması olarak kurmak.',
@@ -444,7 +494,7 @@ export const scenes: SceneSpec[] = [
   // ── SAHNE 9 — Kutlama ──────────────────────────────────────
   {
     id: 'scene09',
-    order: 9,
+    order: 10,
     title: 'Kış Hazır!',
     pedagogicalGoal:
       'Emeği görünür kılmak ve tekrar gelme isteği oluşturmak. Puan gösterilmez, hikâye kapanır.',

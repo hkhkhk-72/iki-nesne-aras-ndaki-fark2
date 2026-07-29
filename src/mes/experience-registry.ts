@@ -50,7 +50,9 @@ export function validateExperience(exp: MicroExperience): { ok: boolean; issues:
 
   exp.scenes.forEach((s) => {
     const isBondOrCelebrate =
-      s.interaction.kind === 'narrative' || s.interaction.kind === 'celebrate';
+      s.interaction.kind === 'narrative' ||
+      s.interaction.kind === 'celebrate' ||
+      s.interaction.kind === 'trust';
     const minSec = isBondOrCelebrate ? 15 : 20;
     if (s.estimatedSeconds < minSec || s.estimatedSeconds > 60) {
       issues.push(`${s.id}: süre ${minSec}-60 sn dışında (${s.estimatedSeconds})`);

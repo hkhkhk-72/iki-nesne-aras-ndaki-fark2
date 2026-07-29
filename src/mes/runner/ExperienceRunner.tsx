@@ -11,6 +11,9 @@ import { colors, radius, spacing, typography } from '@/theme';
 import type { AppSettings } from '@/core/settings-store';
 import { scaleFont } from '@/core/settings-store';
 import { SceneStage, GroupDisplay, SpeechBubble } from './SceneStage';
+import { TrustReaction, DecisionRipple, SceneTransition } from '@/components/scene';
+import { registerFirstSuccess } from '@/ai/analytics';
+import { motionTokens, storyTokens } from '@/design-tokens';
 
 interface RunnerProps {
   experience: MicroExperience;
@@ -120,6 +123,8 @@ function SceneView({
       return <ChooseScene scene={scene} settings={settings} observer={observer} onAdvance={onAdvance} />;
     case 'celebrate':
       return <CelebrateScene scene={scene} settings={settings} onAdvance={onAdvance} />;
+    case 'trust':
+      return <TrustScene scene={scene} settings={settings} observer={observer} onAdvance={onAdvance} />;
   }
 }
 
@@ -470,6 +475,55 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
   );
 }
 
+// ─── LS-006 Trust — puan/ödül/doğru-yanlış YOK ───────────────
+function TrustScene({ scene, settings, observer, onAdvance }: SceneProps) {
+  const i = scene.interaction as Extract<SceneSpec['interaction'], { kind: 'trust' }>;
+  const [ready, setReady] = useState(false);
+  const logged = useRef(false);
+  const story = storyTokens['story.trust'];
+  const motion = motionTokens['motion.trust'];
+
+  useEffect(() => {
+    if (logged.current) return;
+    logged.current = true;
+    const prevChoice = [...observer.getObservations()]
+      .reverse()
+      .find((o) => o.type === 'first_choice');
+    registerFirstSuccess(observer, scene.id, prevChoice?.latencyMs ?? null);
+    observer.record(scene.id, 'touch', 'trust_presence');
+  }, [observer, scene.id]);
+
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), settings.reduceMotion ? 0 : motion.durationMs * 0.6);
+    return () => clearTimeout(t);
+  }, [motion.durationMs, settings.reduceMotion]);
+
+  return (
+    <SceneStage
+      scene={scene}
+      settings={settings}
+      footer={
+        ready ? (
+          <Button title={i.continueLabel} onPress={onAdvance} fullWidth size="lg" />
+        ) : (
+          <Text style={styles.hintText}>{story.childFeel}</Text>
+        )
+      }
+    >
+      <View style={styles.trustStage}>
+        <DecisionRipple active reduceMotion={settings.reduceMotion} />
+        <SceneTransition visible reduceMotion={settings.reduceMotion}>
+          <TrustReaction line={i.line} reduceMotion={settings.reduceMotion} />
+        </SceneTransition>
+        <Text style={styles.tokenChip}>
+          {scene.learningSceneId ?? 'LS-006'} · {scene.storyToken ?? story.id} ·{' '}
+          {scene.motionToken ?? motion.id}
+        </Text>
+      </View>
+    </SceneStage>
+  );
+}
+
 // ─── Kutlama ─────────────────────────────────────────────────
 function CelebrateScene({
   scene,
@@ -575,6 +629,19 @@ const styles = StyleSheet.create({
   celebrateTitle: { color: colors.text, fontWeight: '800', textAlign: 'center' },
   celebrateMessage: { color: colors.textSecondary, textAlign: 'center', lineHeight: 24 },
   celebrateCharacter: { fontSize: 44, marginTop: spacing.sm },
+
+  trustStage: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 240,
+    width: '100%',
+  },
+  tokenChip: {
+    ...typography.caption,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    marginTop: spacing.sm,
+  },
 
   bondBox: { alignItems: 'center', gap: spacing.sm, paddingVertical: spacing.md },
   bondStars: { fontSize: 28 },

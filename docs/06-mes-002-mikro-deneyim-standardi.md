@@ -108,7 +108,8 @@ Her mikro deneyim bağımsız klasörde yaşar.
 |-------|-----|------|-----------|-----------|
 | 1 | İlk Bakış | 20s | narrative | Duygusal bağ |
 | 2 | İki Ağaç | 30s | choose (sezgisel) | Daha fazla |
-| 3 | Palamutları Keşfet | 30s | discover | Birebir sayma |
+| 3 | **LS-006 Güven** | 18s | trust | Güven (puan yok) |
+| 4 | Palamutları Keşfet | 30s | discover | Birebir sayma |
 | 4 | İki Kovayı İncele | 30s | observe | Grup farkındalığı |
 | 5 | Birebir Eşleştir | 45s | pair | Artan taraf |
 | 6 | Daha Çok Olan | 40s | choose | Daha çok |

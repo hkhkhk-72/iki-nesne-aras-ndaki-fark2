@@ -7,7 +7,8 @@ export type MotionTokenId =
   | 'motion.rise'
   | 'motion.pop'
   | 'motion.fade'
-  | 'motion.none';
+  | 'motion.none'
+  | 'motion.trust';
 
 export interface MotionToken {
   id: MotionTokenId;
@@ -46,5 +47,12 @@ export const motionTokens: Record<MotionTokenId, MotionToken> = {
     durationMs: 0,
     easing: 'linear',
     reduceMotionFallback: 'none',
+  },
+  /** LS-006 — güven tepkisi: yavaş, sıcak, baskısız. */
+  'motion.trust': {
+    id: 'motion.trust',
+    durationMs: 900,
+    easing: 'ease-in-out',
+    reduceMotionFallback: 'instant',
   },
 };

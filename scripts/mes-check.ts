@@ -42,6 +42,9 @@ function collectLines(exp: MicroExperience): { line: string; speaker: CharacterI
       lines.push({ line: i.title, speaker: 'findik' });
       lines.push({ line: i.message, speaker: 'findik' });
     }
+    if (i.kind === 'trust') {
+      lines.push({ line: i.line, speaker: s.feedback.speaker });
+    }
     if (i.kind === 'discover' || i.kind === 'observe') {
       lines.push({ line: i.prompt, speaker: s.opening.speaker });
     }
@@ -59,6 +62,8 @@ function stubBehavior(partial: Partial<SceneBehavior>): SceneBehavior {
     hintsShown: 0,
     idleEvents: 0,
     firstChoiceCorrect: null,
+    firstSuccess: false,
+    decisionConfidence: null,
     misconceptions: [],
     durationMs: 1000,
     ...partial,

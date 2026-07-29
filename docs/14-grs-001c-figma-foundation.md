@@ -66,6 +66,19 @@ import { storyTokens, color, composition, audioGrs001 } from '@/design-tokens';
 
 Mevcut UI `@/theme` üzerinden aynı visual token’ları kullanır (breaking change yok).
 
+## LS-006 Trust frame (APPROVED)
+
+`07 Scenes / LS-006_Trust`
+
+| Layer | Asset / Token |
+|-------|----------------|
+| Trust Overlay | `story.trust` |
+| Warm Glow | FX010 |
+| Smile State | AN006 + `pose.smile_small` |
+| Transition Layer | `motion.trust` + SceneTransition |
+
+QA: puan yok · ödül popup yok · doğru/yanlış yok · yalnızca destekleyici duygu.
+
 ## Sonraki ürün adımları
 
 ② UI Kit · ③ Scene Kit · ④ Animation Kit · ⑤ Çalışan prototip (Expo 57)

@@ -10,7 +10,8 @@ export type StoryTokenId =
   | 'story.excited'
   | 'story.calm'
   | 'story.proud'
-  | 'story.together';
+  | 'story.together'
+  | 'story.trust';
 
 export interface StoryToken {
   id: StoryTokenId;
@@ -63,5 +64,11 @@ export const storyTokens: Record<StoryTokenId, StoryToken> = {
     emotion: 'ortaklık',
     childFeel: 'Bilge yanımda.',
     cue: 'Bilge sıcak ton; yargı yok',
+  },
+  'story.trust': {
+    id: 'story.trust',
+    emotion: 'güven',
+    childFeel: 'Kararım değerli; Fındık bana güveniyor.',
+    cue: 'Küçük gülümseme, sıcak ışık, yumuşak zil — puan/ödül yok',
   },
 };

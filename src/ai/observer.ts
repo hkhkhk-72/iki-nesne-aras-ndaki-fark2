@@ -16,7 +16,9 @@ export type ObservationType =
   | 'retry'
   | 'misconception'
   | 'idle'
-  | 'hint_shown';
+  | 'hint_shown'
+  | 'first_success'
+  | 'decision_confidence';
 
 export interface Observation {
   sceneId: string;
@@ -39,6 +41,10 @@ export interface SceneBehavior {
   idleEvents: number;
   /** İlk seçim doğru muydu? Kavramın oturup oturmadığını gösterir. */
   firstChoiceCorrect: boolean | null;
+  /** Modüldeki ilk anlamlı başarı kaydedildi mi? */
+  firstSuccess: boolean;
+  /** Karar güveni: high | medium | low (puan değil, nitel). */
+  decisionConfidence: 'high' | 'medium' | 'low' | null;
   misconceptions: string[];
   durationMs: number;
 }
@@ -83,6 +89,13 @@ export class ExperienceObserver {
       const exit = events.find((e) => e.type === 'scene_exit');
       const start = this.sceneStart.get(sceneId) ?? this.startedAt;
 
+      const confidence = events.find((e) => e.type === 'decision_confidence');
+      const confDetail = confidence?.detail;
+      const decisionConfidence =
+        confDetail === 'high' || confDetail === 'medium' || confDetail === 'low'
+          ? confDetail
+          : null;
+
       return {
         sceneId,
         concept: this.sceneConcept.get(sceneId) ?? '',
@@ -92,6 +105,8 @@ export class ExperienceObserver {
         hintsShown: events.filter((e) => e.type === 'hint_shown').length,
         idleEvents: events.filter((e) => e.type === 'idle').length,
         firstChoiceCorrect: firstChoice ? firstChoice.detail === 'correct' : null,
+        firstSuccess: events.some((e) => e.type === 'first_success'),
+        decisionConfidence,
         misconceptions: events
           .filter((e) => e.type === 'misconception' && e.detail)
           .map((e) => e.detail as string),
@@ -145,6 +160,8 @@ export function coversSignals(behavior: SceneBehavior, signals: AISignal[]): boo
       case 'audio_listen':
       case 'error_type':
       case 'success_trend':
+      case 'first_success':
+      case 'decision_confidence':
         return true;
       default:
         return true;

@@ -117,6 +117,16 @@ export type SceneInteraction =
       title: string;
       message: string;
       reward: string;
+    }
+  | {
+      /**
+       * LS-006 Trust — duygusal güven tepkisi.
+       * Puan / ödül popup / doğru-yanlış geri bildirimi YOKTUR.
+       */
+      kind: 'trust';
+      /** Destekleyici duygusal satır (sonuç övgüsü değil). */
+      line: string;
+      continueLabel: string;
     };
 
 export type InteractionKind = SceneInteraction['kind'];
@@ -143,7 +153,11 @@ export type AISignal =
   /** Ekranı inceleme süresi — İlk Bakış telemetrisi. */
   | 'screen_dwell'
   /** Karakter/ortam sesini dinleme süresi. */
-  | 'audio_listen';
+  | 'audio_listen'
+  /** Modüldeki ilk anlamlı başarı (puan yok). */
+  | 'first_success'
+  /** Karar güveni (tereddüt vs akıcı seçim). */
+  | 'decision_confidence';
 
 // ─── Geri bildirim ───────────────────────────────────────────
 export interface SceneFeedback {
@@ -248,6 +262,13 @@ export interface SceneSpec {
   atmosphere?: SceneAtmosphere;
   soundBudget?: SoundBudget;
   visualComposition?: VisualComposition;
+
+  /** Golden Reference Learning Scene kimliği (ör. LS-006). */
+  learningSceneId?: string;
+  /** Story token (ör. story.trust). */
+  storyToken?: string;
+  /** Motion token (ör. motion.trust). */
+  motionToken?: string;
 }
 
 // ─── Mikro deneyim (ders) ────────────────────────────────────

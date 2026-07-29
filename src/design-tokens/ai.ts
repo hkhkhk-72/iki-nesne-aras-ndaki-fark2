@@ -11,7 +11,9 @@ export type AiTokenId =
   | 'ai.help_request'
   | 'ai.effort'
   | 'ai.screen_dwell'
-  | 'ai.audio_listen';
+  | 'ai.audio_listen'
+  | 'ai.first_success'
+  | 'ai.decision_confidence';
 
 export interface AiToken {
   id: AiTokenId;
@@ -59,5 +61,15 @@ export const aiTokens: Record<AiTokenId, AiToken> = {
     id: 'ai.audio_listen',
     signal: 'audio_listen',
     purpose: 'Ses dinleme süresi',
+  },
+  'ai.first_success': {
+    id: 'ai.first_success',
+    signal: 'first_success',
+    purpose: 'Modüldeki ilk anlamlı başarı — güven anı (puan yok)',
+  },
+  'ai.decision_confidence': {
+    id: 'ai.decision_confidence',
+    signal: 'decision_confidence',
+    purpose: 'Karar güveni — tereddüt vs akıcı seçim',
   },
 };

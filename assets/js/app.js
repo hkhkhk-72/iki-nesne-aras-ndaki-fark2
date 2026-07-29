@@ -223,8 +223,12 @@
     }
   }
 
-  function renderWorkflowBoard(wf) {
+  function renderWorkflowBoard(wf, sectionPct) {
     const T = window.MiniBilgeTxs;
+    const badge = (n) => (window.MiniBilgeProgress ? MiniBilgeProgress.badge(n) : '');
+    const bugunPct = sectionPct != null
+      ? sectionPct
+      : (wf && wf.progress ? wf.progress.overall : 90);
     if (!wf) {
       const empty = T && T.EmptyState
         ? T.EmptyState({
@@ -237,7 +241,10 @@
             ]
           }).html
         : '<p class="section-lead">Workflow Engine yüklenemedi.</p>';
-      return `<section class="mb-section"><h2>Bugün</h2>${empty}</section>`;
+      return `<section class="mb-section">
+        <h2 class="mb-heading-with-pct"><span class="mb-heading-text">Bugün</span>${badge(bugunPct)}</h2>
+        ${empty}
+      </section>`;
     }
     const tasks = (wf.tasks || []).slice(0, 7);
     const overdue = (wf.deadlines && wf.deadlines.overdue) || [];
@@ -292,7 +299,10 @@
 
     return `
       <section class="mb-section wf-board">
-        <h2>Bugün</h2>
+        <h2 class="mb-heading-with-pct">
+          <span class="mb-heading-text">Bugün</span>
+          ${badge(bugunPct)}
+        </h2>
         <p class="section-lead">${esc(wf.stage.ad)} · TXS-008 iş yaptırır — belgeyi workflow üretir.</p>
 
         ${overdue.length || soon.length ? `
@@ -354,11 +364,18 @@
     });
   }
 
-  function renderHubCategory(cat, sinif, sube) {
+  function renderHubCategory(cat, sinif, sube, prog) {
+    const hubPct = window.MiniBilgeProgress
+      ? MiniBilgeProgress.hubPct(prog, cat.id, cat)
+      : 0;
+    const badge = window.MiniBilgeProgress ? MiniBilgeProgress.badge(hubPct) : '';
     return `
-      <article class="hub-block hub-block--module" data-hub="${esc(cat.id)}">
+      <article class="hub-block hub-block--module" data-hub="${esc(cat.id)}" data-pct="${hubPct}">
         <header class="hub-block-head">
-          <h3>${esc(cat.ad)}</h3>
+          <h3 class="mb-heading-with-pct">
+            <span class="mb-heading-text">${esc(cat.ad)}</span>
+            ${badge}
+          </h3>
           <p>${esc(cat.lead || '')}</p>
         </header>
         <ul class="hub-links">

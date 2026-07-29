@@ -347,12 +347,25 @@ a { color: inherit; text-decoration: none; }
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.hub-grid--eight {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 @media (min-width: 1100px) {
   .hub-grid--five {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .hub-grid--five .hub-block[data-hub="ai"] {
     grid-column: span 1;
+  }
+  .hub-grid--eight {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1099px) {
+  .hub-grid--eight {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -375,10 +388,16 @@ a { color: inherit; text-decoration: none; }
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(210, 245, 236, 0.75));
   border-top-color: #0E9B86;
 }
+.hub-block[data-hub="sinif-yonetimi"],
 .hub-block[data-hub="sinif-islemleri"] {
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(214, 232, 248, 0.78));
   border-top-color: #3F8FD1;
 }
+.hub-block[data-hub="olcme"] {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(255, 236, 204, 0.82));
+  border-top-color: #E8952A;
+}
+.hub-block[data-hub="resmi-evraklar"],
 .hub-block[data-hub="evraklar"],
 .hub-block[data-hub="evrak-merkezi"] {
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(220, 228, 248, 0.78));
@@ -386,7 +405,15 @@ a { color: inherit; text-decoration: none; }
 }
 .hub-block[data-hub="takvim"] {
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(255, 236, 204, 0.8));
-  border-top-color: #E8952A;
+  border-top-color: #D4891A;
+}
+.hub-block[data-hub="etkinlikler"] {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(230, 245, 220, 0.8));
+  border-top-color: #4A9B5C;
+}
+.hub-block[data-hub="raporlar"] {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(214, 240, 228, 0.78));
+  border-top-color: #2F9B78;
 }
 .hub-block[data-hub="ai"] {
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.92), rgba(214, 240, 236, 0.85));
@@ -396,13 +423,29 @@ a { color: inherit; text-decoration: none; }
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(255, 236, 204, 0.8));
   border-top-color: #E8952A;
 }
-.hub-block[data-hub="raporlar"] {
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(214, 240, 228, 0.78));
-  border-top-color: #2F9B78;
-}
 .hub-block[data-hub="ayarlar"] {
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(240, 232, 216, 0.78));
   border-top-color: #9A7B4F;
+}
+
+.context-loaded {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.context-loaded span {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(11, 122, 106, 0.18);
+  color: #0A4A40;
+}
+
+.hub-block--module .hub-block-head h3 {
+  font-size: 1.15rem;
 }
 
 /* UI-003 — profil şeridi + sınıf kutuları */
@@ -1055,7 +1098,8 @@ a.hub-link:hover {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .hub-section .hub-grid,
-  .hub-grid--five {
+  .hub-grid--five,
+  .hub-grid--eight {
     grid-template-columns: 1fr;
   }
   .lesson-row {

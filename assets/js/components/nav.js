@@ -27,6 +27,41 @@
     });
   };
 
+  /** MB-IA-001 — Sınıf/şube bağlam seçici (1/A) */
+  C.ClassContext = function ClassContext(opts) {
+    const o = opts || {};
+    const classes = o.classes || [
+      { sinif: '1', sube: 'A', label: '1/A' },
+      { sinif: '2', sube: 'A', label: '2/A' },
+      { sinif: '3', sube: 'A', label: '3/A' },
+      { sinif: '4', sube: 'A', label: '4/A' }
+    ];
+    const activeSinif = String(o.activeSinif || '1');
+    const activeSube = String(o.activeSube || 'A');
+    const html = `
+      <div class="mbc-grade-tabs mbc-class-context" role="tablist" aria-label="${esc(o.ariaLabel || 'Sınıfını seç')}">
+        ${classes.map(c => {
+          const on = String(c.sinif) === activeSinif && String(c.sube) === activeSube;
+          return `
+          <button type="button"
+            class="mbc-grade-tab${on ? ' is-active' : ''}"
+            role="tab"
+            aria-selected="${on ? 'true' : 'false'}"
+            data-sinif="${esc(c.sinif)}"
+            data-sube="${esc(c.sube)}">${esc(c.label || `${c.sinif}/${c.sube}`)}</button>`;
+        }).join('')}
+      </div>`;
+    return component(html, (root) => {
+      root.querySelectorAll('.mbc-grade-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (typeof o.onChange === 'function') {
+            o.onChange(btn.getAttribute('data-sinif'), btn.getAttribute('data-sube'));
+          }
+        });
+      });
+    });
+  };
+
   C.Breadcrumb = function Breadcrumb(opts) {
     const crumbs = (opts && opts.crumbs) || [];
     const html = `

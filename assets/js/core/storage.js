@@ -87,12 +87,55 @@
       varsayilanSinif: '1',
       varsayilanDers: 'turkce',
       sube: 'A',
+      aktifSinif: '1',
+      aktifSube: 'A',
+      siniflar: [
+        { sinif: '1', sube: 'A' },
+        { sinif: '2', sube: 'A' },
+        { sinif: '3', sube: 'A' },
+        { sinif: '4', sube: 'A' }
+      ],
       tema: 'default'
     });
   }
 
   function saveSettings(data) {
-    write(KEYS.settings, { ...getSettings(), ...data });
+    const next = { ...getSettings(), ...data };
+    if (next.aktifSinif != null) next.varsayilanSinif = String(next.aktifSinif);
+    if (next.aktifSube != null) next.sube = String(next.aktifSube);
+    if (next.varsayilanSinif != null && data.aktifSinif == null) next.aktifSinif = String(next.varsayilanSinif);
+    if (next.sube != null && data.aktifSube == null) next.aktifSube = String(next.sube);
+    write(KEYS.settings, next);
+  }
+
+  /** MB-IA-001 — aktif sınıf/şube bağlamı */
+  function getClassContext() {
+    const s = getSettings();
+    const sinif = String(s.aktifSinif || s.varsayilanSinif || '1');
+    const sube = String(s.aktifSube || s.sube || 'A');
+    return { sinif, sube, label: `${sinif}/${sube}` };
+  }
+
+  function setClassContext(sinif, sube) {
+    saveSettings({
+      aktifSinif: String(sinif),
+      aktifSube: String(sube || 'A'),
+      varsayilanSinif: String(sinif),
+      sube: String(sube || 'A')
+    });
+    return getClassContext();
+  }
+
+  function getSiniflar() {
+    const s = getSettings();
+    if (Array.isArray(s.siniflar) && s.siniflar.length) {
+      return s.siniflar.map(x => ({
+        sinif: String(x.sinif),
+        sube: String(x.sube || 'A'),
+        label: `${x.sinif}/${x.sube || 'A'}`
+      }));
+    }
+    return ['1', '2', '3', '4'].map(n => ({ sinif: n, sube: 'A', label: `${n}/A` }));
   }
 
   /** Favori sınıf+ders çiftleri (Kazanım Cepte esini) */
@@ -150,6 +193,9 @@
     addDocument,
     getSettings,
     saveSettings,
+    getClassContext,
+    setClassContext,
+    getSiniflar,
     getFavorites,
     saveFavorites,
     toggleFavorite,

@@ -50,22 +50,25 @@
   function activeSinif() {
     try {
       if (window.MiniBilgeStorage) {
-        return String(MiniBilgeStorage.getSettings().varsayilanSinif || '1');
+        if (MiniBilgeStorage.getClassContext) {
+          return MiniBilgeStorage.getClassContext().label;
+        }
+        return String(MiniBilgeStorage.getSettings().varsayilanSinif || '1') + '. Sınıf';
       }
     } catch (e) { /* ignore */ }
-    return '1';
+    return '1. Sınıf';
   }
 
   function renderSidebar(activeId) {
     const path = window.location.pathname;
-    const sinif = activeSinif();
+    const sinifLabel = activeSinif();
     return `
       <aside class="sidebar no-print">
         <div class="sidebar-brand">
           <span class="brand-mark">MB</span>
           <div>
             <strong>MiniBilge</strong>
-            <small>Öğretmen · ${sinif}. Sınıf</small>
+            <small>Öğretmen · ${sinifLabel}</small>
           </div>
         </div>
         <nav class="sidebar-nav">
@@ -79,7 +82,7 @@
             </a>`;
           }).join('')}
         </nav>
-        <div class="sidebar-footer">TYMM · ${sinif}. Sınıf bağlamı</div>
+        <div class="sidebar-footer">IA-001 · ${sinifLabel}</div>
       </aside>`;
   }
 

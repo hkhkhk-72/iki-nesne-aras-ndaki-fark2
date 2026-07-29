@@ -65,15 +65,17 @@ Bağlayıcı sıra:
 2. **MB-ARCH-001** — Platform Mimari Freeze ✅  
 2b–2d. **MB-UI-001 / DS-001 / UI-002** ✅  
 2e. **MD-026 / MB-UI-003** — ÖğretmenEvrak referansı → sonraki nesil ana ekran ✅  
+2f. **MB-IA-001** — Bilgi mimarisi (iş akışı merkezli, 8 modül) ✅ → `docs/MB-IA-001-BILGI-MIMARISI.md`  
+2g. **MB-IA-002** — Belge yaşam döngüsü *(iskelet / sıradaki)* → `docs/MB-IA-002-BELGE-YASAM-DONGUSU.md`  
 3. **MB-DM-002** — Entity Detay ✅  
 4. **MB-TPM-001** — 1. sınıf Türkçe domain ✅  
 5. **FAZ 6 / MB-COMP-001…008** — Bileşen mimarisi *(aktif)*  
-6. **MB-ARCH-002** — Flutter Proje Mimarisi *(sıradaki büyük hedef)*  
+6. **MB-ARCH-002** — Flutter Proje Mimarisi  
 7. **MB-DB-001** — Fiziksel veri tabanı  
 8. **MB-JSON-001** → **MB-ALG-001** → **MB-APP-001**
 
-> Mevcut `MB-ARCH-001` web freeze’tir. Flutter Clean Architecture paketi **`MB-ARCH-002`** adıyla açılır.  
-> Ana hub (UI-003): Planlar · Sınıf İşlemleri · Evraklar · Takvim · MiniBilge AI.
+> Ana ilke (IA-001): Öğretmen belge aramaz; işi seçer; belge kendiliğinden oluşur.  
+> 8 modül: Planlar · Sınıf Yönetimi · Ölçme · Resmî Evraklar · Takvim · Etkinlikler · Raporlar · MiniBilge AI.
 
 ---
 

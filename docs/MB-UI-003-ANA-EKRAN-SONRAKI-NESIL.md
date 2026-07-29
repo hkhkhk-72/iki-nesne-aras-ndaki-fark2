@@ -2,8 +2,10 @@
 
 **Sürüm:** 1.0  
 **Tarih:** 29 Temmuz 2026  
-**Durum:** Bağlayıcı (UI-002’yi bu belgeyle günceller)  
-**Karar:** MD-026
+**Durum:** MB-IA-001 ile genişletildi (8 modül + sınıf/şube bağlamı)
+
+> Ana ilke: Öğretmen belge aramaz; işi seçer; belge oluşur.  
+> Detay: `docs/MB-IA-001-BILGI-MIMARISI.md`
 
 ---
 

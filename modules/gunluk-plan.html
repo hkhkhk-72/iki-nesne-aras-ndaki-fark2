@@ -76,6 +76,11 @@
           <p class="dash-date">${fmt(today)} · ${sinif}. Sınıf · Hafta ${week?.hafta || '—'} · Bir derse Oluştur deyin</p>
         </header>
 
+        <div class="quick-actions" style="margin-bottom:1rem;">
+          <a class="quick-btn primary" href="gunluk-kazanimlar.html">Günlük Kazanımlar</a>
+          <a class="quick-btn" href="yillik-plan.html">Yıllık Planlar</a>
+        </div>
+
         ${!plans.length ? `<div class="alert alert-warn">Önce <a class="text-link" href="yillik-plan.html">yıllık plan</a> üretin; günlük plan ondan beslenir.</div>` : ''}
 
         <section class="mb-section">

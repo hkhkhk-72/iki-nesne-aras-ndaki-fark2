@@ -104,7 +104,10 @@
                   <div class="lesson-name">${dersAdi(id, sinif)}</div>
                   <div class="lesson-meta">${hours[id]} saat / hafta · ${esc(sinif)}. sınıf</div>
                 </div>
-                <a class="quick-btn primary compact" href="modules/gunluk-plan.html?ders=${encodeURIComponent(id)}">Oluştur</a>
+                <div class="quick-actions" style="gap:0.35rem;">
+                  <a class="quick-btn compact" href="modules/gunluk-kazanimlar.html?ders=${encodeURIComponent(id)}&sinif=${encodeURIComponent(sinif)}">Günlük Kazanımlar</a>
+                  <a class="quick-btn primary compact" href="modules/gunluk-plan.html?ders=${encodeURIComponent(id)}">Oluştur</a>
+                </div>
               </div>
             `).join('')}
           </div>
@@ -154,6 +157,7 @@
     const tasks = [
       { done: hasYillik, text: 'Yıllık planı kontrol et / oluştur', href: 'modules/yillik-plan.html' },
       { done: false, text: `Hafta ${week?.hafta || '—'} günlük planları hazırla`, href: 'modules/gunluk-plan.html' },
+      { done: false, text: 'Sınıf defteri — günlük kazanımlar', href: 'modules/gunluk-kazanimlar.html' },
       { done: false, text: 'Rehberlik etkinliğini gözden geçir', href: 'modules/rehberlik.html' },
       { done: false, text: 'Kulüp / belirli gün hazırlığı', href: 'modules/belirli-gun.html' },
       { done: false, text: 'Yoklama ve sınıf evrakları', href: 'documents/index.html' }

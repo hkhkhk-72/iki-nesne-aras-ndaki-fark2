@@ -87,7 +87,12 @@
         '<p class="empty-state" style="grid-column:1/-1">Belge bulunamadı.</p>';
       grid.querySelectorAll('.doc-card').forEach(card => {
         card.addEventListener('click', () => {
-          window.location.href = `olustur.html?id=${card.dataset.id}`;
+          const id = card.dataset.id;
+          if (id === 'gunluk-kazanimlar') {
+            window.location.href = '../modules/gunluk-kazanimlar.html';
+            return;
+          }
+          window.location.href = `olustur.html?id=${id}`;
         });
       });
     }

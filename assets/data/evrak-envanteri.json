@@ -75,6 +75,7 @@
       "id": "sinif-evraklari",
       "ad": "Sınıf Evrakları",
       "evraklar": [
+        { "id": "gunluk-kazanimlar", "ad": "Günlük Kazanımlar (Sınıf Defteri)", "durum": "aktif", "modul": "modules/gunluk-kazanimlar.html" },
         { "id": "devamsizlik", "ad": "Devamsızlık Takip Çizelgesi", "durum": "aktif", "modul": "documents/olustur.html?id=devamsizlik-takip" },
         { "id": "odev-takip", "ad": "Ödev Takip Çizelgesi", "durum": "aktif", "modul": "documents/olustur.html?id=odev-takip" },
         { "id": "davranis-takip", "ad": "Davranış Takip Formu", "durum": "aktif", "modul": "documents/olustur.html?id=davranis-takip" },
@@ -83,8 +84,8 @@
     }
   ],
   "ozet": {
-    "toplam": 39,
-    "aktif": 30,
+    "toplam": 40,
+    "aktif": 31,
     "kismi": 2,
     "yakinda": 7
   }

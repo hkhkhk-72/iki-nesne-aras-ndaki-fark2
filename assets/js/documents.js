@@ -155,6 +155,19 @@
         <div class="sign-row"><span>Öğretmen: ${esc(d.ogretmenAdi)}</span><span>İmza: _______________</span></div>`
     },
     {
+      id: 'gunluk-kazanimlar',
+      title: 'Günlük Kazanımlar (Sınıf Defteri)',
+      icon: '📓',
+      period: 'donem-ici',
+      desc: 'Sınıf, ders ve tarihe göre günlük öğrenme çıktıları — sınıf defteri için.',
+      fields: [...COMMON_FIELDS],
+      render: (d) => docHeader(d, 'GÜNLÜK KAZANIMLAR') + `
+        <p class="doc-meta">Bu belge dinamik üretilir. <a href="../modules/gunluk-kazanimlar.html">Günlük Kazanımlar</a> ekranını açın.</p>
+        <p>Sınıf: <strong>${esc(d.sinif)}</strong> · Ders: <strong>${esc(d.ders)}</strong> · Tarih: ${fmtDate(d.tarih)}</p>
+        <div class="line tall"></div>
+        <p class="doc-footer">Öğretmen: ${esc(d.ogretmenAdi)}</p>`
+    },
+    {
       id: 'gunluk-ders-plani',
       title: 'Günlük Ders Planı',
       icon: '📖',

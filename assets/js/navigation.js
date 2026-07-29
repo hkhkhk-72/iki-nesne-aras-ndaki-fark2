@@ -20,6 +20,7 @@
 
   const EVRAK_ALT = [
     { id: 'planlar', label: 'Planlar', path: 'documents/index.html?grup=planlar' },
+    { id: 'gunluk-kazanimlar', label: 'Günlük Kazanımlar', path: 'modules/gunluk-kazanimlar.html' },
     { id: 'zumre', label: 'Zümre', path: 'modules/zumre.html' },
     { id: 'rehberlik', label: 'Rehberlik', path: 'modules/rehberlik.html' },
     { id: 'kulup', label: 'Kulüpler', path: 'modules/kulup.html' },

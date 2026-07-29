@@ -169,7 +169,8 @@
                 </div>
                 <div class="quick-actions" style="gap:0.35rem;">
                   <a class="quick-btn compact" href="${withSinif(`modules/gunluk-kazanimlar.html?ders=${encodeURIComponent(d.id)}`, sinif, sube)}">Kazanımlar</a>
-                  <a class="quick-btn primary compact" href="${withSinif(`modules/gunluk-plan.html?ders=${encodeURIComponent(d.id)}`, sinif, sube)}">Günlük Plan</a>
+                  <a class="quick-btn primary compact" href="${withSinif(`modules/ders-yurutme.html?ders=${encodeURIComponent(d.id)}`, sinif, sube)}">Dersi Başlat</a>
+                  <a class="quick-btn compact" href="${withSinif(`modules/gunluk-plan.html?ders=${encodeURIComponent(d.id)}`, sinif, sube)}">Plan</a>
                 </div>
               </div>`;
             }).join('')}

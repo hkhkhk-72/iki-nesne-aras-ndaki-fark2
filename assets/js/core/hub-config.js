@@ -73,6 +73,7 @@
       lead: 'Öğrenciler ve sınıf içi işlemler.',
       items: [
         { ad: 'Öğrenciler', href: 'documents/olustur.html?id=sinif-listesi' },
+        { ad: 'Ders Yürütme (LEE)', href: 'modules/ders-yurutme.html', motor: 'MB-LEE' },
         { ad: 'Yoklama', href: 'documents/olustur.html?id=devamsizlik-takip' },
         { ad: 'Oturma Planı', href: 'documents/index.html?q=oturma', yakinda: true },
         { ad: 'Rehberlik', href: 'modules/rehberlik.html' },

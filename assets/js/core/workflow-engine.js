@@ -13,6 +13,8 @@
     TeacherWeekStarted: 'TeacherWeekStarted',
     LessonStarted: 'LessonStarted',
     LessonCompleted: 'LessonCompleted',
+    LessonPostponed: 'LessonPostponed',
+    LessonCancelled: 'LessonCancelled',
     DocumentGenerated: 'DocumentGenerated',
     DocumentApproved: 'DocumentApproved',
     AssessmentCompleted: 'AssessmentCompleted',

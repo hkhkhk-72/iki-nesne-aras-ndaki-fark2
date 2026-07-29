@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ders Yürütme — MiniBilge LEE</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/core/hub-config.js"></script>
+  <script src="../assets/js/core/calendar-engine.js"></script>
+  <script src="../assets/js/core/context-cache.js"></script>
+  <script src="../assets/js/core/context-engine.js"></script>
+  <script src="../assets/js/core/smart-task-engine.js"></script>
+  <script src="../assets/js/core/deadline-engine.js"></script>
+  <script src="../assets/js/core/progress-engine.js"></script>
+  <script src="../assets/js/core/workflow-engine.js"></script>
+  <script src="../assets/js/core/reflection-ai.js"></script>
+  <script src="../assets/js/core/evidence-collector.js"></script>
+  <script src="../assets/js/core/dynamic-shift-engine.js"></script>
+  <script src="../assets/js/core/lesson-replay.js"></script>
+  <script src="../assets/js/core/lesson-execution-engine.js"></script>
+  <script src="../assets/js/components/mb-components.js"></script>
+  <script src="../assets/js/components/nav.js"></script>
+  <script src="../assets/js/components/status.js"></script>
+  <script src="../assets/js/components/notify.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+    (function () {
+      const params = new URLSearchParams(location.search);
+      const LEE = LessonExecutionEngine;
+
+      async function boot() {
+        if (window.ContextCacheService) await ContextCacheService.load({ force: false });
+        const ctx = ContextCacheService && ContextCacheService.isLoaded()
+          ? ContextCacheService.get()
+          : { label: '1/A', sinif: '1', sube: 'A', varsayilanDers: 'turkce', dersProgrami: [] };
+        const dersId = params.get('ders') || ctx.varsayilanDers || 'turkce';
+        const dersler = ctx.dersProgrami && ctx.dersProgrami.length
+          ? ctx.dersProgrami
+          : (MiniBilgeHub ? MiniBilgeHub.derslerForSinif(ctx.sinif) : []);
+        const dersAd = (dersler.find(d => d.id === dersId) || {}).ad || dersId;
+
+        const body = `
+          <div class="dash">
+            <header class="dash-hero">
+              <p class="brand-kicker">MB-DOS-003 · LEE</p>
+              <h1>Ders Yürütme</h1>
+              <p class="dash-date">${esc(ctx.label)} · ${esc(dersAd)} — Ders Defteri bağımsız belge değildir.</p>
+              <div id="lee-crumb"></div>
+            </header>
+
+            <section class="mb-section">
+              <h2>LessonExecution</h2>
+              <p class="section-lead">MD-040 SSOT · tamamlanınca Class Log, Yoklama, Kanıt, Ölçme ve Yansıtma otomatik oluşur.</p>
+              <div class="mbc-smart-form">
+                <div class="mbc-smart-grid">
+                  <label class="mbc-field">
+                    <span class="mbc-field-label">Ders</span>
+                    <select id="lee-ders" class="mbc-input">
+                      ${dersler.map(d => `<option value="${d.id}" ${d.id===dersId?'selected':''}>${esc(d.ad)}</option>`).join('')}
+                    </select>
+                  </label>
+                  <label class="mbc-field">
+                    <span class="mbc-field-label">Durum</span>
+                    <input id="lee-status" class="mbc-input" readonly value="—">
+                  </label>
+                </div>
+                <label class="mbc-field" style="margin-top:12px;">
+                  <span class="mbc-field-label">Öğretmen yansıtması</span>
+                  <textarea id="lee-reflection" class="mbc-input" rows="3" placeholder="Ders nasıl geçti?"></textarea>
+                </label>
+                <div class="quick-actions" style="margin-top:14px;flex-wrap:wrap;gap:8px;">
+                  <button type="button" class="quick-btn primary" id="btn-start">Dersi Başlat</button>
+                  <button type="button" class="quick-btn primary" id="btn-complete">Tamamla → Defter Oluştur</button>
+                  <button type="button" class="quick-btn" id="btn-postpone">Ertele (POSTPONED)</button>
+                  <button type="button" class="quick-btn" id="btn-cancel">İptal</button>
+                </div>
+                <p id="lee-ai" class="section-lead" style="margin-top:12px;"></p>
+              </div>
+            </section>
+
+            <section class="mb-section">
+              <h2>Son yürütmeler (LessonReplay)</h2>
+              <div id="lee-replay"></div>
+            </section>
+          </div>`;
+
+        document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('gunluk-plan', body);
+        if (MiniBilgeComponents.Breadcrumb) {
+          MiniBilgeComponents.Breadcrumb({
+            crumbs: [
+              { label: 'Ana Sayfa', href: '../index.html' },
+              { label: 'Ders Yürütme' }
+            ]
+          }).mount('#lee-crumb');
+        }
+
+        let current = null;
+        const statusEl = document.getElementById('lee-status');
+        const aiEl = document.getElementById('lee-ai');
+
+        function refreshReplay() {
+          const rows = LessonReplay.listRecent(8);
+          document.getElementById('lee-replay').innerHTML = rows.length
+            ? rows.map(r => `
+              <div class="doc-row">
+                <span>${esc(r.title)} · ${esc(r.status)}</span>
+                <span class="meta">${r.classLogReady ? 'Defter hazır' : 'Defter yok'}</span>
+              </div>`).join('')
+            : '<p class="empty-state">Henüz LessonExecution yok.</p>';
+        }
+
+        function setCurrent(exec) {
+          current = exec;
+          statusEl.value = exec ? exec.executionStatus : '—';
+          aiEl.textContent = exec && exec.aiRecommendation
+            ? 'AI: ' + exec.aiRecommendation + (exec.nextLessonAction ? ' → ' + exec.nextLessonAction : '')
+            : '';
+          refreshReplay();
+        }
+
+        document.getElementById('btn-start').onclick = () => {
+          const lessonId = document.getElementById('lee-ders').value;
+          const exec = LEE.start({
+            lessonId,
+            classId: ctx.label,
+            teacherId: ctx.ogretmen ? ctx.ogretmen.adSoyad : undefined
+          });
+          setCurrent(exec);
+          MiniBilgeComponents.notify.success('LessonStarted — ders başladı');
+        };
+
+        document.getElementById('btn-complete').onclick = () => {
+          if (!current) {
+            MiniBilgeComponents.notify.warn('Önce dersi başlatın');
+            return;
+          }
+          // Rule-003: COMPLETED olmadan defter yok
+          const exec = LEE.complete(current.id, {
+            reflection: document.getElementById('lee-reflection').value
+          });
+          setCurrent(exec);
+          if (exec.executionStatus === 'COMPLETED') {
+            MiniBilgeComponents.notify.success('COMPLETED — Ders Defteri + yoklama + kanıt otomatik');
+          } else {
+            MiniBilgeComponents.notify.info('PARTIAL — Defter henüz oluşmadı (Rule-003)');
+          }
+        };
+
+        document.getElementById('btn-postpone').onclick = () => {
+          if (!current) current = LEE.createPlanned({ lessonId: document.getElementById('lee-ders').value, classId: ctx.label });
+          const exec = LEE.postpone(current.id, 'Öğretmen erteledi');
+          setCurrent(exec);
+          MiniBilgeComponents.notify.warn('POSTPONED — Workflow + Takvim kaydırma tetiklendi');
+        };
+
+        document.getElementById('btn-cancel').onclick = () => {
+          if (!current) return;
+          setCurrent(LEE.cancel(current.id, 'İptal'));
+          MiniBilgeComponents.notify.info('LessonCancelled');
+        };
+
+        refreshReplay();
+      }
+
+      function esc(s) {
+        return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;') : '';
+      }
+
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+      else boot();
+    })();
+  </script>
+</body>
+</html>

@@ -8,7 +8,8 @@
     documents: 'minibilgeDocuments',
     settings: 'minibilgeSettings',
     favorites: 'minibilgeFavorites',
-    weekNotes: 'minibilgeWeekNotes'
+    weekNotes: 'minibilgeWeekNotes',
+    lessonExecutions: 'minibilgeLessonExecutions'
   };
 
   function read(key, fallback) {
@@ -181,6 +182,25 @@
     write(KEYS.weekNotes, map);
   }
 
+  /** MB-DOS-003 — LessonExecution SSOT */
+  function getLessonExecutions() {
+    return read(KEYS.lessonExecutions, []);
+  }
+
+  function getLessonExecution(id) {
+    return getLessonExecutions().find(x => x.id === id) || null;
+  }
+
+  function saveLessonExecution(exec) {
+    const list = getLessonExecutions();
+    const i = list.findIndex(x => x.id === exec.id);
+    const row = Object.assign({}, exec, { updatedAt: new Date().toISOString() });
+    if (i >= 0) list[i] = row;
+    else list.unshift(row);
+    write(KEYS.lessonExecutions, list.slice(0, 200));
+    return row;
+  }
+
   window.MiniBilgeStorage = {
     KEYS,
     getProfile,
@@ -202,6 +222,9 @@
     isFavorite,
     getWeekNotes,
     getWeekNote,
-    saveWeekNote
+    saveWeekNote,
+    getLessonExecutions,
+    getLessonExecution,
+    saveLessonExecution
   };
 })();

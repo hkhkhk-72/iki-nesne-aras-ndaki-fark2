@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiniBilge — Components Lab (MB-COMP-001)</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/core/hub-config.js"></script>
+  <script src="../assets/js/core/calendar-engine.js"></script>
+  <script src="../assets/js/components/mb-components.js"></script>
+  <script src="../assets/js/components/nav.js"></script>
+  <script src="../assets/js/components/status.js"></script>
+  <script src="../assets/js/components/notify.js"></script>
+  <script src="../assets/js/components/ai.js"></script>
+  <script src="../assets/js/components/forms.js"></script>
+  <script src="../assets/js/components/table.js"></script>
+  <script src="../assets/js/components/document.js"></script>
+  <script src="../assets/js/components/dashboard.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+    (function () {
+      const C = MiniBilgeComponents;
+      const body = `
+        <div class="dash mbc-lab-grid">
+          <header class="dash-hero">
+            <p class="brand-kicker">MiniBilge Öğretmen</p>
+            <h1>Components Lab</h1>
+            <p class="dash-date">FAZ 6 · MB-COMP-001 — Everything is a Component (MD-025)</p>
+            <div id="lab-tabs"></div>
+          </header>
+
+          <section class="mbc-lab-section">
+            <h2>Navigation</h2>
+            <div id="lab-nav"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>Status (COMP-005)</h2>
+            <div class="mbc-lab-row" id="lab-status"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>AI (COMP-004)</h2>
+            <div class="mbc-lab-row" id="lab-ai"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>Notifications (COMP-006)</h2>
+            <div id="lab-banner"></div>
+            <div class="mbc-lab-row" id="lab-notify-btns"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>Smart Forms</h2>
+            <div id="lab-school" style="margin-bottom:14px;"></div>
+            <div id="lab-lesson" style="margin-bottom:14px;"></div>
+            <div id="lab-date" style="margin-bottom:14px;"></div>
+            <div id="lab-student"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>Universal Table (COMP-003)</h2>
+            <div id="lab-table"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>Document Builder (COMP-002)</h2>
+            <div id="lab-doc"></div>
+          </section>
+        </div>`;
+
+      document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('home', body);
+
+      let active = (MiniBilgeStorage.getSettings().varsayilanSinif || '1');
+      function mountTabs() {
+        C.ClassTabs({
+          active,
+          onChange(s) {
+            active = s;
+            MiniBilgeStorage.saveSettings({ varsayilanSinif: s });
+            C.notify.success(s + '. sınıf bağlamı ayarlandı');
+            mountTabs();
+            C.LessonSelector({ sinif: s }).mount('#lab-lesson');
+          }
+        }).mount('#lab-tabs');
+      }
+      mountTabs();
+
+      C.Breadcrumb({
+        crumbs: [
+          { label: 'Ana Sayfa', href: '../index.html' },
+          { label: 'Components Lab' }
+        ]
+      }).mount('#lab-nav');
+
+      ['ready', 'editing', 'updated', 'missing'].forEach(s => {
+        document.getElementById('lab-status').insertAdjacentHTML('beforeend', C.StatusBadge({ status: s }).html);
+      });
+
+      ['AiCreate', 'AiSuggest', 'AiFix', 'AiUpdate', 'AiCheck'].forEach(name => {
+        const node = document.createElement('div');
+        document.getElementById('lab-ai').appendChild(node);
+        C[name]({
+          onClick() { C.notify.info(name + ' tetiklendi (demo)'); }
+        }).mount(node);
+      });
+
+      C.Banner({ type: 'info', message: 'Bildirimler tek tasarım dilini kullanır.' }).mount('#lab-banner');
+      const btns = document.getElementById('lab-notify-btns');
+      ['info', 'success', 'warn', 'critical'].forEach(t => {
+        const b = document.createElement('button');
+        b.className = 'mbc-btn-ghost';
+        b.textContent = t;
+        b.addEventListener('click', () => C.notify[t]('Örnek ' + t + ' bildirimi'));
+        btns.appendChild(b);
+      });
+
+      C.SchoolSelector({}).mount('#lab-school');
+      C.LessonSelector({ sinif: active }).mount('#lab-lesson');
+      C.DateSelector({}).mount('#lab-date');
+      C.StudentSelector({}).mount('#lab-student');
+
+      C.UniversalTable({
+        exportName: 'ornek-sinif-listesi',
+        selectable: true,
+        columns: [
+          { id: 'ad', label: 'Öğrenci' },
+          { id: 'no', label: 'No', sortable: true },
+          { id: 'durum', label: 'Durum' }
+        ],
+        rows: [
+          { id: '1', ad: 'Ayşe Yılmaz', no: 1, durum: 'Aktif' },
+          { id: '2', ad: 'Mehmet Demir', no: 2, durum: 'Aktif' },
+          { id: '3', ad: 'Elif Kara', no: 3, durum: 'İzinli' }
+        ]
+      }).mount('#lab-table');
+
+      C.DocumentBuilder({
+        documentType: 'ornek-tutanak',
+        motorId: 'MB-BM',
+        title: 'Örnek Zümre Tutanağı',
+        status: 'editing',
+        blocks: [
+          { type: 'meta', items: [
+            { label: 'Sınıf', value: active + '. Sınıf' },
+            { label: 'Eğitim Yılı', value: '2025-2026' }
+          ]},
+          { type: 'heading', level: 3, text: 'Gündem' },
+          { type: 'paragraph', text: 'Universal Document Builder iskeleti — tüm belgeler aynı gövdeyi kullanır.' },
+          { type: 'signature', roles: ['Öğretmen', 'Müdür'] }
+        ],
+        onExport(fmt) { C.notify.success('Dışa aktarma: ' + fmt); }
+      }).mount('#lab-doc');
+    })();
+  </script>
+</body>
+</html>

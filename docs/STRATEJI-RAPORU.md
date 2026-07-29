@@ -8,13 +8,15 @@
 
 **Proje Felsefesi:** *"Önce Güvenilir Bilgi Motoru, Sonra Akıllı Algoritma, En Son Arayüz."* Sistem, hazır şablonları kopyalamaz; Türkiye Yüzyılı Maarif Modeli'ni ve MEB mevzuatını anlık olarak işleyerek resmî evrakları ve planları dinamik olarak üretir.
 
+**Ürün evresi:** Fikir üretme → **kurumsal ürün geliştirme** (FAZ 6 aktif).
+
 ---
 
 ## 1. Projenin Vizyonu ve Mimari Hedefleri
 
 MiniBilge Öğretmen, klasik bir belge indirme platformu değildir. Amacımız, Türkiye'deki bir ilkokul öğretmeninin eğitim-öğretim yılı boyunca hazırlamak, kullanmak ve idareye sunmak zorunda olduğu **tüm resmî evrakları** hatasız, mevzuata tam uygun ve saniyeler içinde üretebilen akıllı bir **Öğretmen Bilgi ve Otomasyon Sistemi** kurmaktır.
 
-Proje bir belge indirme sitesi değil; **Öğretim Programı İşletim Sistemi** olarak tasarlanır.
+Proje bir belge indirme sitesi değil; **Öğretim Programı İşletim Sistemi** / **Dijital Öğretmen İşletim Sistemi** olarak tasarlanır.
 
 Üç katman asla karıştırılmaz: **Program ≠ Plan ≠ Belge**.
 
@@ -29,14 +31,18 @@ Anayasa: `docs/MB-DM-001-OGRETIM-PROGRAMI-DOMAIN-MODELI.md`
 
 ---
 
-## 2. Şimdiye Kadar Yapılan Çalışmalar
+## 2. Tamamlanan fazlar (FAZ 1–5)
 
-- Mimari ve felsefi altyapı kuruldu
-- Maarif Modeli yapısı analiz edildi
-- 1. sınıf Türkçe, Matematik, Hayat Bilgisi ön veri setleri oluşturuldu
-- Resmî evrak envanteri kategorize edildi
-- UX akışı netleştirildi: **Ana Sayfa → Sınıf → Ders → Bilgiler → Üret**
-- Prototip motorlar kodlandı ve test edildi
+| Faz | Konu | Durum |
+|-----|------|--------|
+| 1 | Platform Vizyonu | ✅ |
+| 2 | Domain Model (MB-DM) | ✅ |
+| 3 | Motor Mimarisi | ✅ |
+| 4 | UI/UX (UI-001 / UI-002) | ✅ |
+| 5 | Design System (DS-001) | ✅ |
+| **6** | **Component Architecture** | **🔵 aktif** |
+
+Karar: **MD-025 — Everything is a Component** → `docs/FAZ-6-COMPONENT-ARCHITECTURE.md`
 
 ---
 
@@ -51,38 +57,30 @@ Anayasa: `docs/MB-DM-001-OGRETIM-PROGRAMI-DOMAIN-MODELI.md`
 
 ---
 
-## 4. Yol Haritası (Domain-First)
-
-> **Karar (29 Temmuz 2026):** JSON / dosya yazımı durduruldu. Önce kavramsal domain modeli, sonra şema ve algoritma.
+## 4. Yol Haritası
 
 Bağlayıcı sıra:
 
-1. **MB-DM-001** — Öğretim Programı Domain Modeli *(anayasa — tamamlandı)* → `docs/MB-DM-001-OGRETIM-PROGRAMI-DOMAIN-MODELI.md`
-2. **MB-ARCH-001** — Platform Mimari Freeze *(tamamlandı)*
-2b. **MB-UI-001** — UI/UX v2.0 + MB-TWE *(tamamlandı)* → `docs/MB-UI-001-UI-UX-MIMARISI-V2.md`
-2c. **MB-DS-001** — Tasarım Sistemi *(tamamlandı)* → `docs/MB-DS-001-TASARIM-SISTEMI.md`
-2d. **MB-UI-002** — Sınıf odaklı ana ekran + hub *(tamamlandı)* → `docs/MB-UI-002-SINIF-ODAKLI-ANA-EKRAN.md`
-3. **MB-DM-002** — Entity Detay Spesifikasyonu *(tamamlandı)* → `docs/MB-DM-002-ENTITY-DETAY-SPESIFIKASYONU.md`
-4. **MB-TPM-001** — 1. Sınıf Türkçe domain uygulaması *(tamamlandı)* → `docs/MB-TPM-001-SINIF1-TURKCE-DOMAIN-UYGULAMASI.md`
-5. **MB-DB-001** — Fiziksel veri tabanı *(sıradaki)*
-6. **MB-JSON-001** — Makine tarafından işlenebilir JSON şeması
-7. **MB-ALG-001** — Yıllık plan üretim algoritması
-8. **MB-APP-001** — Uygulama entegrasyonu (freeze IA’ya göre)
+1. **MB-DM-001** — Domain Modeli ✅  
+2. **MB-ARCH-001** — Platform Mimari Freeze ✅  
+2b–2d. **MB-UI-001 / DS-001 / UI-002** ✅  
+3. **MB-DM-002** — Entity Detay ✅  
+4. **MB-TPM-001** — 1. sınıf Türkçe domain ✅  
+5. **FAZ 6 / MB-COMP-001…008** — Bileşen mimarisi *(aktif)*  
+6. **MB-ARCH-002** — Flutter Proje Mimarisi *(sıradaki büyük hedef)*  
+7. **MB-DB-001** — Fiziksel veri tabanı  
+8. **MB-JSON-001** → **MB-ALG-001** → **MB-APP-001**
 
-**Freeze menü (8):** Ana Sayfa · Yıllık Plan · Günlük Plan · Evrak Merkezi · Öğretim Programı · Takvim · Hesabım · Ayarlar
-
-Mevcut `assets/data/curriculum/*.json` dosyaları geçici keşif verisidir; kanonik şema değildir.
+> Mevcut `MB-ARCH-001` web freeze’tir. Flutter Clean Architecture paketi **`MB-ARCH-002`** adıyla açılır.
 
 ---
 
 ## 5. Teknik Uygulama Durumu
 
-| Motor | Dosya | Durum |
-|-------|-------|-------|
-| Öğretim Programı Motoru | `assets/js/core/curriculum-engine.js` | 1. sınıf 3 ders |
-| Takvim Motoru | `assets/js/core/calendar-engine.js` | 2025-26, 2026-27 |
-| Plan Motoru | `assets/js/core/plan-engine.js` | Yıllık + günlük |
-| Evrak Motoru | `assets/js/core/evrak-engine.js` | HTML/PDF, Word yol haritasında |
-| Kontrol Motoru | `assets/js/core/validation-engine.js` | Aktif |
+Web prototip bileşenleri: `assets/js/components/` · vitrin: `modules/components-lab.html`
 
-Evrak envanteri: `assets/data/evrak-envanteri.json`
+Motor dosyaları: `assets/js/core/*-engine.js`
+
+---
+
+*Son güncelleme: FAZ 6 açılışı — 29 Temmuz 2026*

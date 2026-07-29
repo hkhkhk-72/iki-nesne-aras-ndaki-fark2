@@ -158,6 +158,9 @@
   }
 
   function renderGradeTabs(active) {
+    if (window.MiniBilgeComponents && MiniBilgeComponents.ClassTabs) {
+      return MiniBilgeComponents.ClassTabs({ active: active }).html;
+    }
     return `
       <div class="grade-tabs" role="tablist" aria-label="Sınıf seçici">
         ${SINIFLAR.map(s => `
@@ -172,11 +175,16 @@
   }
 
   function bindGradeTabs() {
-    document.querySelectorAll('.grade-tab').forEach(btn => {
+    const root = document.querySelector('.mbc-grade-tabs, .grade-tabs');
+    if (!root) return;
+    root.querySelectorAll('.mbc-grade-tab, .grade-tab').forEach(btn => {
       btn.addEventListener('click', () => {
         const next = btn.getAttribute('data-sinif');
         if (!next) return;
         MiniBilgeStorage.saveSettings({ varsayilanSinif: next });
+        if (window.MiniBilgeComponents && MiniBilgeComponents.notify) {
+          MiniBilgeComponents.notify.success(next + '. sınıf seçildi');
+        }
         initDashboard();
       });
     });

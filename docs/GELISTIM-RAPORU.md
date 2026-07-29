@@ -44,7 +44,7 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 
 ---
 
-## Yol Haritası (Domain-First)
+## Yol Haritası (Domain-First → Kurumsal Ürün)
 
 1. **MB-DM-001** Domain Model ✅
 2. **MB-ARCH-001** Mimari Freeze ✅
@@ -54,9 +54,11 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 3. **MB-DM-002** Entity Detay Spesifikasyonu ✅ → `docs/MB-DM-002-ENTITY-DETAY-SPESIFIKASYONU.md`
 3b. **Günlük Kazanımlar** (sınıf defteri) + Kazanım Cepte UX esini → `docs/ESIN-KAZANIM-CEPTE.md`
 4. **MB-TPM-001** 1. sınıf Türkçe domain ✅ → `docs/MB-TPM-001-SINIF1-TURKCE-DOMAIN-UYGULAMASI.md`
-5. **MB-DB-001** *(sıradaki)* → MB-JSON-001 → MB-ALG-001 → MB-APP-001
+5. **FAZ 6 / MB-COMP** Component Architecture 🔵 → `docs/FAZ-6-COMPONENT-ARCHITECTURE.md`
+6. **MB-ARCH-002** Flutter Proje Mimarisi *(sıradaki)*
+7. **MB-DB-001** → MB-JSON-001 → MB-ALG-001 → MB-APP-001
 
-> JSON en son ürün olacaktır. Ana ekran: sınıf sekmeleri → hub kategorileri (UI-002).
+> MD-025: Everything is a Component. Ana ekran: sınıf sekmeleri → hub (UI-002). Components Lab: `modules/components-lab.html`.
 
 Detay: `docs/STRATEJI-RAPORU.md`
 

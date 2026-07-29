@@ -136,6 +136,7 @@
         { ad: 'Okul Bilgileri', href: 'modules/hesabim.html' },
         { ad: 'Platform Ayarları', href: 'modules/ayarlar.html' },
         { ad: 'Akademik Takvim', href: 'modules/takvim.html' },
+        { ad: 'Components Lab', href: 'modules/components-lab.html' },
         { ad: 'MiniBilge AI', href: 'modules/ai.html' }
       ]
     }

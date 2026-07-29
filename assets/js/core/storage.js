@@ -6,7 +6,9 @@
     school: 'minibilgeSchool',
     plans: 'minibilgePlans',
     documents: 'minibilgeDocuments',
-    settings: 'minibilgeSettings'
+    settings: 'minibilgeSettings',
+    favorites: 'minibilgeFavorites',
+    weekNotes: 'minibilgeWeekNotes'
   };
 
   function read(key, fallback) {
@@ -93,6 +95,49 @@
     write(KEYS.settings, { ...getSettings(), ...data });
   }
 
+  /** Favori sınıf+ders çiftleri (Kazanım Cepte esini) */
+  function getFavorites() {
+    return read(KEYS.favorites, []);
+  }
+
+  function saveFavorites(list) {
+    write(KEYS.favorites, list.slice(0, 20));
+  }
+
+  function toggleFavorite(sinif, dersId) {
+    const key = `${sinif}:${dersId}`;
+    let list = getFavorites();
+    if (list.some(f => f.key === key)) {
+      list = list.filter(f => f.key !== key);
+    } else {
+      list.unshift({ key, sinif: String(sinif), dersId, addedAt: new Date().toISOString() });
+    }
+    saveFavorites(list);
+    return list;
+  }
+
+  function isFavorite(sinif, dersId) {
+    return getFavorites().some(f => f.key === `${sinif}:${dersId}`);
+  }
+
+  /** Haftalık öğretmen notu: key = egitimYili|sinif|dersId|hafta */
+  function getWeekNotes() {
+    return read(KEYS.weekNotes, {});
+  }
+
+  function getWeekNote(egitimYili, sinif, dersId, hafta) {
+    const map = getWeekNotes();
+    return map[`${egitimYili}|${sinif}|${dersId}|${hafta}`] || '';
+  }
+
+  function saveWeekNote(egitimYili, sinif, dersId, hafta, text) {
+    const map = getWeekNotes();
+    const key = `${egitimYili}|${sinif}|${dersId}|${hafta}`;
+    if (!text) delete map[key];
+    else map[key] = text;
+    write(KEYS.weekNotes, map);
+  }
+
   window.MiniBilgeStorage = {
     KEYS,
     getProfile,
@@ -104,6 +149,13 @@
     getDocuments,
     addDocument,
     getSettings,
-    saveSettings
+    saveSettings,
+    getFavorites,
+    saveFavorites,
+    toggleFavorite,
+    isFavorite,
+    getWeekNotes,
+    getWeekNote,
+    saveWeekNote
   };
 })();

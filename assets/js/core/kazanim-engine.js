@@ -131,6 +131,36 @@
     }
   }
 
+  /** Hafta numarasına göre çöz (Kazanım Cepte: hafta gezinme) */
+  async function resolveByWeek(opts) {
+    const { sinif, dersId, hafta, cal, plans, sube } = opts;
+    const weeks = CalendarEngine.getTeachingWeeks(cal);
+    const week = weeks.find(w => Number(w.hafta) === Number(hafta)) || weeks[0];
+    if (!week) {
+      throw new Error('Öğretim haftası bulunamadı');
+    }
+    const tarih = toIso(week.baslangic);
+    const result = await resolveGunlukKazanımlar({
+      sinif, dersId, tarih, cal, plans, sube
+    });
+    return {
+      ...result,
+      hafta: week.hafta,
+      haftaBaslangic: toIso(week.baslangic),
+      haftaBitis: toIso(week.bitis),
+      tarih
+    };
+  }
+
+  function toIso(d) {
+    if (!d) return '';
+    if (typeof d === 'string') return d.slice(0, 10);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
   async function resolveGunlukTumDersler(opts) {
     const { sinif, tarih, cal, plans, sube } = opts;
     await CurriculumEngine.loadManifest();
@@ -219,11 +249,13 @@
 
   window.KazanimEngine = {
     resolveGunlukKazanımlar,
+    resolveByWeek,
     resolveGunlukTumDersler,
     renderDefterHTML,
     renderDefterGunHTML,
     toPlainText,
     parseOutcomeText,
-    findAnnualPlan
+    findAnnualPlan,
+    toIso
   };
 })();

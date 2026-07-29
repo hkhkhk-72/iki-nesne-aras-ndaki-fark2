@@ -24,22 +24,12 @@
     const profile = MiniBilgeStorage.getProfile();
     const plans = MiniBilgeStorage.getPlans();
     const params = new URLSearchParams(location.search);
+    const egitimYili = school.egitimYili || '2025-2026';
 
     const today = new Date();
-    const todayIso = today.toISOString().slice(0, 10);
+    const todayIso = KazanimEngine.toIso(today);
 
-    let state = {
-      sinif: params.get('sinif') || settings.varsayilanSinif || '1',
-      dersId: params.get('ders') || settings.varsayilanDers || 'turkce',
-      tarih: params.get('tarih') || todayIso,
-      sube: settings.sube || 'A',
-      mode: 'tek', // tek | tum
-      result: null,
-      results: null,
-      courses: []
-    };
-
-    CalendarEngine.setYear(school.egitimYili || '2025-2026');
+    CalendarEngine.setYear(egitimYili);
     let cal;
     try {
       cal = await CalendarEngine.loadCalendar();
@@ -47,30 +37,79 @@
       cal = { donemler: [], tatiller: [], belirliGunler: [], haftalikDersSaati: {} };
     }
 
+    const weeks = CalendarEngine.getTeachingWeeks(cal);
+    const currentWeek = CalendarEngine.getCurrentWeek(cal, today) || weeks[0] || { hafta: 1 };
+
+    let state = {
+      sinif: params.get('sinif') || settings.varsayilanSinif || '1',
+      dersId: params.get('ders') || settings.varsayilanDers || 'turkce',
+      tarih: params.get('tarih') || todayIso,
+      sube: settings.sube || 'A',
+      hafta: Number(params.get('hafta') || currentWeek.hafta || 1),
+      mode: 'tek',
+      result: null,
+      results: null,
+      courses: [],
+      note: '',
+      alertHtml: ''
+    };
+
     await CurriculumEngine.loadManifest();
     state.courses = await CurriculumEngine.listAvailableCourses(state.sinif, { onlyProgram: true });
     if (!state.courses.find(c => c.id === state.dersId)) {
       state.dersId = state.courses[0]?.id || 'turkce';
     }
+    state.note = MiniBilgeStorage.getWeekNote(egitimYili, state.sinif, state.dersId, state.hafta);
 
     const meta = {
       okulAdi: school.okulAdi || 'OKUL ADI',
       ogretmenAdi: profile.adSoyad || '',
-      egitimYili: school.egitimYili || '2025-2026'
+      egitimYili
     };
 
+    function weekMeta(h) {
+      const w = weeks.find(x => Number(x.hafta) === Number(h));
+      if (!w) return { hafta: h, label: `${h}. hafta` };
+      return {
+        hafta: w.hafta,
+        label: `${w.hafta}. hafta · ${CalendarEngine.fmtDate(w.baslangic)} – ${CalendarEngine.fmtDate(w.bitis)}`,
+        baslangic: w.baslangic,
+        bitis: w.bitis
+      };
+    }
+
+    function favLabel(f) {
+      const ad = CurriculumEngine.getDersAdi(f.dersId, f.sinif);
+      return `${f.sinif}. Sınıf · ${ad}`;
+    }
+
     function render() {
+      const wm = weekMeta(state.hafta);
+      const fav = MiniBilgeStorage.isFavorite(state.sinif, state.dersId);
+      const favorites = MiniBilgeStorage.getFavorites();
+
       document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('evrak-merkezi', `
         <div class="dash">
           <header class="dash-hero">
             <p class="brand-kicker">Sınıf Defteri</p>
             <h1>Günlük Kazanımlar</h1>
-            <p class="dash-date">Sınıf · ders · tarihe göre öğrenme çıktıları — deftere yazmak için</p>
+            <p class="dash-date">Hafta bazlı öğrenme çıktıları — açılışta bu hafta · favori · not</p>
           </header>
+
+          ${favorites.length ? `
+          <section class="mb-section">
+            <h2>Favoriler</h2>
+            <p class="section-lead">Sık kullandığınız sınıf + ders çiftleri.</p>
+            <div class="quick-actions" style="flex-wrap:wrap;gap:0.5rem;">
+              ${favorites.map(f => `
+                <button type="button" class="quick-btn${f.sinif === String(state.sinif) && f.dersId === state.dersId ? ' primary' : ''}" data-fav="${esc(f.key)}">${esc(favLabel(f))}</button>
+              `).join('')}
+            </div>
+          </section>` : ''}
 
           <section class="mb-section">
             <h2>Seçim</h2>
-            <p class="section-lead">Sınıf ve dersi seçin, tarihi girin, ardından Günlük Kazanımlar’a basın.</p>
+            <p class="section-lead">Sınıf ve ders seçin; hafta oklarıyla gezin. Kazanımlar otomatik yüklenir.</p>
             <div class="ctx-grid">
               <div class="form-field">
                 <label for="sinif">Sınıf</label>
@@ -93,27 +132,42 @@
                 </select>
               </div>
               <div class="form-field">
-                <label for="tarih">Tarih</label>
+                <label for="tarih">Tarih (günlük defter)</label>
                 <input id="tarih" type="date" value="${esc(state.tarih)}">
               </div>
             </div>
-            <div class="quick-actions" style="margin-top:1rem;flex-wrap:wrap;gap:0.5rem;">
+
+            <div class="quick-actions" style="margin-top:1rem;flex-wrap:wrap;gap:0.5rem;align-items:center;">
+              <button type="button" class="quick-btn" id="weekPrev" ${state.hafta <= 1 ? 'disabled' : ''}>← Önceki hafta</button>
+              <span class="cal-pill" style="min-width:14rem;text-align:center;"><strong>Hafta ${state.hafta}</strong><span>${esc(wm.label.replace(/^\d+\. hafta · /, ''))}</span></span>
+              <button type="button" class="quick-btn" id="weekNext" ${state.hafta >= weeks.length ? 'disabled' : ''}>Sonraki hafta →</button>
+              <button type="button" class="quick-btn" id="weekNow">Bu hafta</button>
+            </div>
+
+            <div class="quick-actions" style="margin-top:0.75rem;flex-wrap:wrap;gap:0.5rem;">
               <button type="button" class="quick-btn${state.mode === 'tek' ? ' primary' : ''}" id="modeTek">Tek ders</button>
               <button type="button" class="quick-btn${state.mode === 'tum' ? ' primary' : ''}" id="modeTum">Günün tüm dersleri</button>
+              <button type="button" class="quick-btn" id="btnFav">${fav ? '★ Favoriden çıkar' : '☆ Favoriye ekle'}</button>
               <button type="button" class="quick-btn primary" id="btnKazanımlar">Günlük Kazanımlar</button>
             </div>
-            <div id="alerts" style="margin-top:0.75rem;"></div>
+            <div id="alerts" style="margin-top:0.75rem;">${state.alertHtml || ''}</div>
           </section>
 
           <section class="mb-section" id="resultSection" style="${state.result || state.results ? '' : 'display:none'}">
             <h2>Defter kaydı</h2>
-            <p class="section-lead">Kopyalayın, yazdırın veya kaydedin.</p>
+            <p class="section-lead">Kopyala · yazdır · kaydet — sınıf defterine işlemek için.</p>
             <div class="quick-actions" style="margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
               <button type="button" class="quick-btn" id="btnCopy">Kopyala</button>
               <button type="button" class="quick-btn" id="btnPrint">Yazdır</button>
               <button type="button" class="quick-btn primary" id="btnSave">Deftere kaydet</button>
             </div>
             <div id="preview" class="doc-preview"></div>
+            ${state.mode === 'tek' ? `
+            <div class="form-field" style="margin-top:1.25rem;">
+              <label for="weekNote">Bu haftaya özel notum</label>
+              <textarea id="weekNote" rows="3" placeholder="Etkinlik, eksik kalan, yarın devam…">${esc(state.note)}</textarea>
+              <button type="button" class="quick-btn compact" id="btnNoteSave" style="margin-top:0.5rem;">Notu kaydet</button>
+            </div>` : ''}
           </section>
         </div>
       `);
@@ -137,7 +191,8 @@
       state.sinif = document.getElementById('sinif')?.value || state.sinif;
       state.sube = document.getElementById('sube')?.value || 'A';
       state.dersId = document.getElementById('ders')?.value || state.dersId;
-      state.tarih = document.getElementById('tarih')?.value || state.tarih;
+      const t = document.getElementById('tarih')?.value;
+      if (t) state.tarih = t;
     }
 
     async function onSinifChange() {
@@ -146,14 +201,23 @@
       if (!state.courses.find(c => c.id === state.dersId)) {
         state.dersId = state.courses[0]?.id || 'turkce';
       }
-      state.result = null;
-      state.results = null;
+      state.note = MiniBilgeStorage.getWeekNote(egitimYili, state.sinif, state.dersId, state.hafta);
+      await generate();
+      render();
+    }
+
+    async function setWeek(h) {
+      const max = weeks.length || 36;
+      state.hafta = Math.max(1, Math.min(max, Number(h) || 1));
+      const w = weeks.find(x => Number(x.hafta) === state.hafta);
+      if (w) state.tarih = KazanimEngine.toIso(w.baslangic);
+      state.note = MiniBilgeStorage.getWeekNote(egitimYili, state.sinif, state.dersId, state.hafta);
+      await generate();
       render();
     }
 
     async function generate() {
       readForm();
-      const alerts = document.getElementById('alerts');
       try {
         if (state.mode === 'tum') {
           state.results = await KazanimEngine.resolveGunlukTumDersler({
@@ -164,51 +228,108 @@
             sube: state.sube
           });
           state.result = null;
+          const first = state.results.find(r => r.hafta != null);
+          if (first) state.hafta = first.hafta;
           const warn = state.results.find(r => r.uyari && (r.weekend || r.holiday));
-          alerts.innerHTML = warn
+          state.alertHtml = warn
             ? `<div class="alert alert-warn">${esc(warn.uyari)}</div>`
-            : `<div class="alert alert-ok">${state.results.filter(r => r.kazanimlar.length).length} ders için kazanım hazır.</div>`;
+            : `<div class="alert alert-ok">${state.results.filter(r => r.kazanimlar.length).length} ders için kazanım · hafta ${state.hafta}</div>`;
         } else {
-          state.result = await KazanimEngine.resolveGunlukKazanımlar({
+          state.result = await KazanimEngine.resolveByWeek({
             sinif: state.sinif,
             dersId: state.dersId,
-            tarih: state.tarih,
+            hafta: state.hafta,
             cal,
             plans,
             sube: state.sube
           });
+          // Defter tarihi: seçili gün (haftanın günlerinden biri)
+          if (state.tarih) state.result.tarih = state.tarih;
           state.results = null;
           if (state.result.uyari && !state.result.kazanimlar.length) {
-            alerts.innerHTML = `<div class="alert alert-warn">${esc(state.result.uyari)}</div>`;
+            state.alertHtml = `<div class="alert alert-warn">${esc(state.result.uyari)}</div>`;
           } else if (state.result.uyari) {
-            alerts.innerHTML = `<div class="alert alert-warn">${esc(state.result.uyari)}</div>`;
+            state.alertHtml = `<div class="alert alert-warn">${esc(state.result.uyari)}</div>`;
           } else {
-            alerts.innerHTML = `<div class="alert alert-ok">${state.result.kazanimlar.length} kazanım bulundu (hafta ${state.result.hafta}).</div>`;
+            state.alertHtml = `<div class="alert alert-ok">${state.result.kazanimlar.length} kazanım · hafta ${state.result.hafta}</div>`;
           }
         }
-        document.getElementById('resultSection').style.display = '';
-        paintPreview();
         MiniBilgeStorage.saveSettings({
           varsayilanSinif: state.sinif,
           varsayilanDers: state.dersId,
           sube: state.sube
         });
       } catch (err) {
-        alerts.innerHTML = `<div class="alert alert-error">${esc(err.message || err)}</div>`;
+        state.alertHtml = `<div class="alert alert-error">${esc(err.message || err)}</div>`;
       }
     }
 
     function bind() {
       document.getElementById('sinif')?.addEventListener('change', onSinifChange);
-      document.getElementById('modeTek')?.addEventListener('click', () => {
+      document.getElementById('ders')?.addEventListener('change', async () => {
+        readForm();
+        state.note = MiniBilgeStorage.getWeekNote(egitimYili, state.sinif, state.dersId, state.hafta);
+        await generate();
+        render();
+      });
+      document.getElementById('tarih')?.addEventListener('change', async () => {
+        readForm();
+        const d = CalendarEngine.parseDate(state.tarih);
+        const w = CalendarEngine.getCurrentWeek(cal, d);
+        if (w) state.hafta = w.hafta;
+        state.note = MiniBilgeStorage.getWeekNote(egitimYili, state.sinif, state.dersId, state.hafta);
+        await generate();
+        render();
+      });
+
+      document.getElementById('weekPrev')?.addEventListener('click', () => setWeek(state.hafta - 1));
+      document.getElementById('weekNext')?.addEventListener('click', () => setWeek(state.hafta + 1));
+      document.getElementById('weekNow')?.addEventListener('click', () => setWeek(currentWeek.hafta));
+
+      document.getElementById('modeTek')?.addEventListener('click', async () => {
         state.mode = 'tek';
+        await generate();
         render();
       });
-      document.getElementById('modeTum')?.addEventListener('click', () => {
+      document.getElementById('modeTum')?.addEventListener('click', async () => {
         state.mode = 'tum';
+        await generate();
         render();
       });
-      document.getElementById('btnKazanımlar')?.addEventListener('click', generate);
+
+      document.getElementById('btnFav')?.addEventListener('click', () => {
+        readForm();
+        MiniBilgeStorage.toggleFavorite(state.sinif, state.dersId);
+        render();
+      });
+
+      document.querySelectorAll('[data-fav]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const key = btn.getAttribute('data-fav');
+          const f = MiniBilgeStorage.getFavorites().find(x => x.key === key);
+          if (!f) return;
+          state.sinif = f.sinif;
+          state.dersId = f.dersId;
+          state.courses = await CurriculumEngine.listAvailableCourses(state.sinif, { onlyProgram: true });
+          state.note = MiniBilgeStorage.getWeekNote(egitimYili, state.sinif, state.dersId, state.hafta);
+          await generate();
+          render();
+        });
+      });
+
+      document.getElementById('btnKazanımlar')?.addEventListener('click', async () => {
+        await generate();
+        render();
+      });
+
+      document.getElementById('btnNoteSave')?.addEventListener('click', () => {
+        const text = document.getElementById('weekNote')?.value || '';
+        state.note = text;
+        MiniBilgeStorage.saveWeekNote(egitimYili, state.sinif, state.dersId, state.hafta, text);
+        state.alertHtml = '<div class="alert alert-ok">Hafta notu kaydedildi.</div>';
+        const alerts = document.getElementById('alerts');
+        if (alerts) alerts.innerHTML = state.alertHtml;
+      });
 
       document.getElementById('btnCopy')?.addEventListener('click', async () => {
         let text = '';
@@ -216,19 +337,25 @@
           text = state.results.map(r => KazanimEngine.toPlainText(r)).join('\n\n---\n\n');
         } else if (state.result) {
           text = KazanimEngine.toPlainText(state.result);
+          if (state.note) text += `\n\nNot: ${state.note}`;
         }
         try {
           await navigator.clipboard.writeText(text);
-          document.getElementById('alerts').innerHTML = '<div class="alert alert-ok">Panoya kopyalandı.</div>';
+          state.alertHtml = '<div class="alert alert-ok">Panoya kopyalandı.</div>';
         } catch {
-          document.getElementById('alerts').innerHTML = '<div class="alert alert-warn">Kopyalama desteklenmiyor; yazdırı kullanın.</div>';
+          state.alertHtml = '<div class="alert alert-warn">Kopyalama desteklenmiyor; yazdırı kullanın.</div>';
         }
+        const alerts = document.getElementById('alerts');
+        if (alerts) alerts.innerHTML = state.alertHtml;
       });
 
       document.getElementById('btnPrint')?.addEventListener('click', () => {
-        const html = state.mode === 'tum' && state.results
+        let html = state.mode === 'tum' && state.results
           ? KazanimEngine.renderDefterGunHTML(state.results, meta)
           : KazanimEngine.renderDefterHTML(state.result, meta);
+        if (state.mode === 'tek' && state.note) {
+          html += `<p><strong>Öğretmen notu:</strong> ${esc(state.note)}</p>`;
+        }
         EvrakEngine.yazdir(html, 'Günlük Kazanımlar — Sınıf Defteri');
       });
 
@@ -239,13 +366,17 @@
           tur: 'gunluk-kazanimlar',
           baslik: state.mode === 'tum'
             ? `Günlük Kazanımlar · ${state.sinif}/${state.sube} · ${state.tarih}`
-            : `Günlük Kazanımlar · ${state.result.dersAd} · ${state.tarih}`,
+            : `Günlük Kazanımlar · hafta ${state.hafta} · ${state.result.dersAd}`,
           sinif: state.sinif,
           sube: state.sube,
           tarih: state.tarih,
+          hafta: state.hafta,
+          not: state.note,
           data: payload
         });
-        document.getElementById('alerts').innerHTML = '<div class="alert alert-ok">Defter kaydı saklandı.</div>';
+        state.alertHtml = '<div class="alert alert-ok">Defter kaydı saklandı.</div>';
+        const alerts = document.getElementById('alerts');
+        if (alerts) alerts.innerHTML = state.alertHtml;
       });
     }
 
@@ -253,6 +384,8 @@
       return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
     }
 
+    // Kazanım Cepte esini: açılışta bu haftanın kazanımı otomatik
+    await generate();
     render();
   })();
   </script>

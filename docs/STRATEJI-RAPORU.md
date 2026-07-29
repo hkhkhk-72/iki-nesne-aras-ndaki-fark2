@@ -75,6 +75,7 @@ Bağlayıcı sıra:
 2m. **MB-DS-002 / MD-041** — Teacher Experience System (TXS-001…010) ✅  
 2n. **MB-DS-003 / MD-042** — Interaction Standards (IS-001…011) ✅  
 2o. **MB-DS-004 / MD-043** — Accessibility (A11Y-001…008) ✅  
+2p. **MB-DS-005 / MD-044** — Motion Language (ML-001…004 · max 300ms) ✅  
 3. **MB-DM-002** — Entity Detay ✅  
 4. **MB-TPM-001** — 1. sınıf Türkçe domain ✅  
 5. **FAZ 6 / MB-COMP-001…008** — Bileşen mimarisi *(aktif)*  

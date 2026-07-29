@@ -101,13 +101,11 @@ Kart (border+shadow+radius) **yalnızca** etkileşimli form/sihirbaz adımların
 
 ## 7. Hareket
 
-En az 2–3 bilinçli hareket:
+Bağlayıcı anayasa: **`docs/MB-DS-005-MOTION-LANGUAGE.md`** (MD-044)
 
-1. Sayfa girişinde selamlama fade/slide (180ms)  
-2. Görev tamamlanınca checkbox scale  
-3. Ders satırı hover’da CTA belirginleşir  
-
-Gürültülü parallax / glow yok.
+- Yalnızca: Başarılı · Hata · Yükleniyor · Geçiş  
+- Maksimum **300 ms** — öğretmeni bekletmez  
+- Gösteriş / dekoratif blob / uzun stagger yok  
 
 ---
 

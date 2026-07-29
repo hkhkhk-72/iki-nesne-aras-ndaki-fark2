@@ -96,7 +96,8 @@
     setTimeout(() => {
       if (window.MiniBilgeTxs) MiniBilgeTxs.attach({ screen: activeId });
       const main = document.querySelector('.main-content');
-      if (main && window.MiniBilgeInteraction) MiniBilgeInteraction.markPageEnter(main);
+      if (main && window.MiniBilgeMotion) MiniBilgeMotion.pageEnter(main);
+      else if (main && window.MiniBilgeInteraction) MiniBilgeInteraction.markPageEnter(main);
       if (window.MiniBilgeA11y) {
         MiniBilgeA11y.ensureSkipLink();
         MiniBilgeA11y.ensureMainId();

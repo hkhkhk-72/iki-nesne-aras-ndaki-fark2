@@ -19,6 +19,7 @@
 | Deneyim dili | MB-DS-002 (TXS) |
 | Etkileşim zamanlaması | **MB-DS-003** |
 | Erişilebilirlik | MB-DS-004 |
+| Hareket | MB-DS-005 · max 300 ms |
 
 ---
 

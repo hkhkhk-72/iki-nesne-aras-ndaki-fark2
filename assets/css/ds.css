@@ -30,7 +30,7 @@
   /* MB-DS-003 Interaction Standards */
   --mb-is-hover: 180ms;
   --mb-is-click: 100ms;
-  --mb-is-page: 250ms;
+  --mb-is-page: 250ms; /* ≤ MB-DS-005 max 300ms */
   --mb-is-drawer: 300ms;
   --mb-is-dialog: 200ms;
   --mb-is-snackbar-ms: 3000;
@@ -44,6 +44,14 @@
   --mb-touch: 44px;
   --mb-focus: #0B7A6A;
   --mb-focus-ring: 0 0 0 3px rgba(11, 122, 106, 0.45);
+
+  /* MB-DS-005 Motion Language — max 300ms; only status */
+  --mb-motion-max: 300ms;
+  --mb-motion-success: 240ms;
+  --mb-motion-error: 240ms;
+  --mb-motion-loading: 300ms;
+  --mb-motion-transition: 250ms;
+  --mb-motion-play: var(--mb-motion-max);
 
   /* legacy bridge */
   --bg1: var(--mb-bg1);
@@ -209,24 +217,14 @@ a { color: inherit; text-decoration: none; }
   max-width: 1120px;
 }
 
-/* Dashboard — no card grid */
+/* Dashboard — no card grid · ML-004 transition ≤300ms */
 .dash {
-  animation: mbEnter 0.35s ease-out;
+  animation: mb-motion-in var(--mb-motion-transition) ease-out;
 }
 
-@keyframes mbEnter {
-  from { opacity: 0; transform: translateY(10px); }
+@keyframes mb-motion-in {
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes mbRise {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes mbWash {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
 }
 
 .dash-hero {
@@ -246,7 +244,7 @@ a { color: inherit; text-decoration: none; }
   box-shadow:
     0 12px 32px rgba(15, 90, 100, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  animation: mbWash 0.45s ease-out;
+  /* MB-DS-005: dekoratif wash/blob yok — statik atmosfer */
 }
 
 .dash-hero::before {
@@ -259,7 +257,6 @@ a { color: inherit; text-decoration: none; }
   border-radius: 50%;
   background: radial-gradient(circle, rgba(14, 168, 148, 0.38), transparent 68%);
   pointer-events: none;
-  animation: mbBlob 8s ease-in-out infinite alternate;
 }
 
 .dash-hero::after {
@@ -272,12 +269,6 @@ a { color: inherit; text-decoration: none; }
   border-radius: 50%;
   background: radial-gradient(circle, rgba(245, 168, 68, 0.34), transparent 70%);
   pointer-events: none;
-  animation: mbBlob 10s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes mbBlob {
-  from { transform: translate(0, 0) scale(1); }
-  to { transform: translate(12px, -10px) scale(1.06); }
 }
 
 .dash-hero > * { position: relative; z-index: 1; }
@@ -747,13 +738,8 @@ a.hub-link:hover {
 .mb-section {
   padding: 20px 0 22px;
   border-bottom: 1px solid var(--mb-line);
-  animation: mbRise 0.4s ease-out both;
+  /* MB-DS-005: bölüm stagger yok — öğretmeni bekletmez */
 }
-
-.mb-section:nth-of-type(1) { animation-delay: 0.05s; }
-.mb-section:nth-of-type(2) { animation-delay: 0.12s; }
-.mb-section:nth-of-type(3) { animation-delay: 0.18s; }
-.mb-section:nth-of-type(4) { animation-delay: 0.24s; }
 
 .mb-section:last-child { border-bottom: none; }
 
@@ -1444,7 +1430,7 @@ html[data-theme="dark"] .quick-btn.primary {
 }
 
 .mb-is-page-enter {
-  animation: mb-is-page-in var(--mb-is-page) ease both;
+  animation: mb-is-page-in var(--mb-motion-transition) ease both;
 }
 @keyframes mb-is-page-in {
   from { opacity: 0; transform: translateY(8px); }
@@ -1476,7 +1462,7 @@ html[data-theme="dark"] .quick-btn.primary {
   border-radius: 6px;
   background: linear-gradient(90deg, rgba(15,39,68,0.06), rgba(11,122,106,0.12), rgba(15,39,68,0.06));
   background-size: 200% 100%;
-  animation: mb-is-skel 1.2s ease-in-out infinite;
+  animation: mb-is-skel var(--mb-motion-loading) ease-in-out infinite;
 }
 @keyframes mb-is-skel {
   0% { background-position: 100% 0; }
@@ -1489,9 +1475,58 @@ html[data-theme="dark"] .quick-btn.primary {
   border-radius: 50%;
   border: 2px solid rgba(11,122,106,0.2);
   border-top-color: var(--mb-accent);
-  animation: mb-is-spin 0.7s linear infinite;
+  animation: mb-is-spin var(--mb-motion-loading) linear infinite;
 }
 @keyframes mb-is-spin { to { transform: rotate(360deg); } }
+
+/* ===== MB-DS-005 Motion Language classes ===== */
+
+.mb-motion-success {
+  animation: mb-ml-success var(--mb-motion-play, var(--mb-motion-success)) ease both;
+}
+@keyframes mb-ml-success {
+  0% { box-shadow: 0 0 0 0 rgba(47, 125, 74, 0); }
+  40% { box-shadow: 0 0 0 4px rgba(47, 125, 74, 0.28); }
+  100% { box-shadow: 0 0 0 0 rgba(47, 125, 74, 0); }
+}
+
+.mb-motion-error {
+  animation: mb-ml-error var(--mb-motion-play, var(--mb-motion-error)) ease both;
+}
+@keyframes mb-ml-error {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(2px); }
+}
+
+.mb-motion-loading {
+  position: relative;
+}
+.mb-motion-loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(11,122,106,0.08), transparent);
+  background-size: 200% 100%;
+  animation: mb-is-skel var(--mb-motion-loading) ease-in-out infinite;
+}
+
+.mb-motion-transition {
+  animation: mb-motion-in var(--mb-motion-play, var(--mb-motion-transition)) ease both;
+}
+
+.task-check.done {
+  animation: mb-ml-check var(--mb-motion-success) ease both;
+}
+@keyframes mb-ml-check {
+  0% { transform: scale(0.85); }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
 
 .mb-is-undo-btn {
   appearance: none;
@@ -1513,7 +1548,13 @@ html[data-theme="dark"] .quick-btn.primary {
 @media (prefers-reduced-motion: reduce) {
   .mb-is-page-enter,
   .mb-is-skel-line,
-  .mb-is-spinner {
+  .mb-is-spinner,
+  .dash,
+  .mb-motion-success,
+  .mb-motion-error,
+  .mb-motion-loading::after,
+  .mb-motion-transition,
+  .task-check.done {
     animation: none !important;
   }
   .quick-btn:active,

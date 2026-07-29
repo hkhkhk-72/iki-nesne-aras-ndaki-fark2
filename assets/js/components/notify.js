@@ -33,8 +33,17 @@
       wrap.innerHTML = html;
       const node = wrap.firstElementChild;
       h.appendChild(node);
+      // MB-DS-005 — toast giriş success/error motion; bekletmez
+      if (window.MiniBilgeMotion) {
+        if (type === 'critical' || type === 'warn') MiniBilgeMotion.error(node, { persist: true });
+        else if (type === 'success') MiniBilgeMotion.success(node, { persist: true });
+      }
       if (timeout > 0) {
-        const leave = (window.MiniBilgeInteraction && MiniBilgeInteraction.TIMINGS.dialog) || 200;
+        const leave = Math.min(
+          (window.MiniBilgeMotion && MiniBilgeMotion.DURATIONS.transition) || 250,
+          (window.MiniBilgeInteraction && MiniBilgeInteraction.TIMINGS.dialog) || 200,
+          300
+        );
         setTimeout(() => {
           node.classList.add('is-leaving');
           setTimeout(() => node.remove(), leave);

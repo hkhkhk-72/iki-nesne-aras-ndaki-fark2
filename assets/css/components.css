@@ -132,9 +132,9 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  animation: mbcToastIn 0.22s ease-out;
+  animation: mbcToastIn var(--mb-motion-success, 240ms) ease-out;
 }
-.mbc-toast.is-leaving { opacity: 0; transform: translateY(6px); transition: 0.2s ease; }
+.mbc-toast.is-leaving { opacity: 0; transform: translateY(6px); transition: var(--mb-motion-transition, 250ms) ease; }
 .mbc-toast strong { font-size: 0.82rem; }
 .mbc-toast span { font-size: 0.88rem; color: var(--mb-ink-soft); }
 .mbc-toast--success { border-left: 4px solid var(--mb-ok); }

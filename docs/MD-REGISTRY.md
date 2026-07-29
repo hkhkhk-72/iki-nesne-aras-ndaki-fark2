@@ -26,6 +26,7 @@
 | **MD-041** | Teacher Experience System (TXS) | UX / MB-DS-002 | ✅ freeze |
 | **MD-042** | Interaction Standards | UX / MB-DS-003 | ✅ freeze |
 | **MD-043** | Accessibility | UX / MB-DS-004 | ✅ freeze |
+| **MD-044** | Motion Language | UX / MB-DS-005 | ✅ freeze |
 
 ### Numara notu
 

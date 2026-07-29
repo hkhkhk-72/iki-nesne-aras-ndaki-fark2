@@ -22,8 +22,16 @@ export interface EduToken {
   /** Önce sezgi, sonra sayı */
   phase: 'intuition' | 'count' | 'bond';
   mebHint: string;
-  /** MB-LAB-001 kural köprüsü */
-  labRule?: 'MB-268' | 'MB-269' | 'MB-270' | 'MB-271' | 'MB-272';
+  /** Mavi Kitap / LAB kural köprüsü */
+  labRule?:
+    | 'MB-268'
+    | 'MB-269'
+    | 'MB-270'
+    | 'MB-271'
+    | 'MB-272'
+    | 'MB-273'
+    | 'MB-274'
+    | 'MB-275';
 }
 
 export const eduTokens: Record<EduTokenId, EduToken> = {
@@ -38,40 +46,41 @@ export const eduTokens: Record<EduTokenId, EduToken> = {
     concept: 'anlik_miktar',
     phase: 'intuition',
     mebHint: 'Perceptual subitizing — 1–4 saymadan',
-    labRule: 'MB-269',
+    labRule: 'MB-274',
   },
   'edu.partWhole': {
     id: 'edu.partWhole',
     concept: 'parca_butun',
     phase: 'intuition',
     mebHint: 'Conceptual subitizing — parçadan bütüne',
-    labRule: 'MB-270',
+    labRule: 'MB-275',
   },
   'edu.visualCompare': {
     id: 'edu.visualCompare',
     concept: 'gorsel_karsilastirma',
     phase: 'intuition',
-    mebHint: 'Görerek karşılaştır — saymadan',
-    labRule: 'MB-268',
+    mebHint: 'Karşılaştırma saymadan önce (MB-269)',
+    labRule: 'MB-269',
   },
   'edu.grouping': {
     id: 'edu.grouping',
     concept: 'alt_grup',
     phase: 'intuition',
     mebHint: '5+ doğal kümeler (3+2, 4+1…)',
-    labRule: 'MB-270',
+    labRule: 'MB-275',
   },
   'edu.compare': {
     id: 'edu.compare',
     concept: 'karsilastirma',
     phase: 'intuition',
-    mebHint: 'Az / çok / eşit sezgisi',
+    mebHint: 'Az / çok / eşit sezgisi — saymadan önce',
+    labRule: 'MB-269',
   },
   'edu.count': {
     id: 'edu.count',
     concept: 'birebir_sayma',
     phase: 'count',
-    mebHint: 'Dokunarak birebir sayma',
+    mebHint: 'Sayma — karşılaştırmadan sonra',
   },
   'edu.pair': {
     id: 'edu.pair',

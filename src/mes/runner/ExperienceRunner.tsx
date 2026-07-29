@@ -225,7 +225,7 @@ function NarrativeScene({ scene, settings, observer, onAdvance }: SceneProps) {
   );
 }
 
-// ─── Keşif: dokunarak toplama (MB-269: 1–4 saydırılmaz) ───────
+// ─── Keşif: dokunarak toplama (MB-274: 1–4 saydırılmaz) ───────
 function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
   const i = scene.interaction as Extract<SceneSpec['interaction'], { kind: 'discover' }>;
   const [found, setFound] = useState<Set<string>>(new Set());
@@ -257,7 +257,7 @@ function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
     setFound((prev) => new Set(prev).add(id));
   };
 
-  /** MB-269: 1–4’te sayaç asla açılmaz. */
+  /** MB-274: 1–4’te sayaç asla açılmaz. */
   const mayRevealCount = Boolean(i.revealCount) && !isPerceptualCount(i.items.length);
 
   return (
@@ -348,7 +348,7 @@ function ObserveScene({ scene, settings, observer, onAdvance }: SceneProps) {
             emoji={g.emoji}
             count={g.count}
             highlighted={looked.has(g.id)}
-            /** MB-268/269: gözlemde sayı gösterilmez — önce gör. */
+            /** MB-269/273: gözlemde sayı gösterilmez — önce gör. */
             showCount={false}
             onPress={() => look(g.id)}
             settings={settings}
@@ -415,38 +415,68 @@ function PairScene({ scene, settings, observer, onAdvance }: SceneProps) {
   );
 }
 
-// ─── Seçim: yanlışta sahne değişmez, ipucu güçlenir ──────────
+// ─── Seçim: Karar 268/269/270 — güvenli ilk karar, dünya geri bildirimi ──
 function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
   const i = scene.interaction as Extract<SceneSpec['interaction'], { kind: 'choose' }>;
   const [attempts, setAttempts] = useState(0);
   const [solved, setSolved] = useState(false);
   const [hintIndex, setHintIndex] = useState(-1);
+  const [worldCue, setWorldCue] = useState<string | null>(null);
   const firstChoiceRecorded = useRef(false);
+  const firstMathSafe = Boolean(scene.firstMathDecision);
+  const worldFeedback = scene.worldFeedback !== false;
 
   const choose = (optionId: string) => {
     if (solved) return;
-    const correct = optionId === i.answerId;
+    const aligned = optionId === i.answerId;
 
     if (!firstChoiceRecorded.current) {
-      observer.record(scene.id, 'first_choice', correct ? 'correct' : 'incorrect');
+      // Karar 268: ilk karar "incorrect/wrong" etiketi almaz — yalnızca gözlem.
+      const detail = firstMathSafe
+        ? aligned
+          ? 'aligned'
+          : 'explored'
+        : aligned
+          ? 'correct'
+          : 'incorrect';
+      observer.record(scene.id, 'first_choice', detail);
       firstChoiceRecorded.current = true;
     }
     observer.record(scene.id, 'touch', optionId);
 
-    if (correct) {
+    if (aligned) {
       setSolved(true);
+      setWorldCue(scene.atmosphere?.worldCue ?? 'Yapraklar hafifçe kıpırdar…');
       if (!settings.reduceMotion) {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       }
       return;
     }
 
-    // Yanlış cevap: sahne değişmez, yalnızca rehberlik güçlenir.
+    // Karar 268: ilk matematiksel kararda misconception / "yanlış" yolu yok.
+    if (firstMathSafe && attempts === 0) {
+      observer.record(scene.id, 'observe_pattern', 'first_decision_safe');
+      const nextHint = Math.min(0, i.hints.length - 1);
+      setHintIndex(nextHint);
+      if (nextHint >= 0) observer.record(scene.id, 'hint_shown');
+      setWorldCue('Fındık gülümseyerek iki yığına tekrar bakar…');
+      if (!settings.reduceMotion) {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }
+      setAttempts((a) => a + 1);
+      return;
+    }
+
+    // Sonraki denemeler: sahne değişmez; dünya/karakter yönlendirir (Karar 270).
     observer.record(scene.id, 'retry', optionId);
     observer.record(scene.id, 'misconception', `${i.answerId}_yerine_${optionId}`);
     const nextHint = Math.min(hintIndex + 1, i.hints.length - 1);
     setHintIndex(nextHint);
     if (nextHint >= 0) observer.record(scene.id, 'hint_shown');
+    setWorldCue('Yığınlar yerinde durur; Fındık merakla bekler…');
+    if (!settings.reduceMotion) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
     setAttempts((a) => a + 1);
   };
 
@@ -471,7 +501,13 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
       settings={settings}
       footer={
         solved ? (
-          <Button title="Devam" onPress={onAdvance} fullWidth size="lg" variant="success" />
+          <Button
+            title="Devam"
+            onPress={onAdvance}
+            fullWidth
+            size="lg"
+            variant={worldFeedback ? 'primary' : 'success'}
+          />
         ) : undefined
       }
     >
@@ -484,7 +520,7 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
             label={g.label}
             emoji={g.emoji}
             count={g.count}
-            /** MB-269: 1–4 nesnede sayı asla gösterilmez. */
+            /** MB-274: 1–4 nesnede sayı asla gösterilmez. */
             showCount={baseShowCount && !isPerceptualCount(g.count)}
             settings={settings}
             layoutSeed={scene.order * 13 + gi + attempts}
@@ -502,7 +538,8 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
               disabled={solved}
               style={[
                 styles.option,
-                solved && isAnswer && styles.optionCorrect,
+                // Karar 270: UI "doğru" rozeti yok — dünya/karakter konuşur.
+                !worldFeedback && solved && isAnswer && styles.optionCorrect,
               ]}
               accessibilityLabel={opt.label}
             >
@@ -514,6 +551,8 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
           );
         })}
       </View>
+
+      {worldCue ? <Text style={styles.worldCue}>{worldCue}</Text> : null}
 
       {solved ? (
         <SpeechBubble

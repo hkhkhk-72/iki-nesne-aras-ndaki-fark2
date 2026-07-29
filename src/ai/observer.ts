@@ -108,7 +108,10 @@ export class ExperienceObserver {
         retries: events.filter((e) => e.type === 'retry').length,
         hintsShown: events.filter((e) => e.type === 'hint_shown').length,
         idleEvents: events.filter((e) => e.type === 'idle').length,
-        firstChoiceCorrect: firstChoice ? firstChoice.detail === 'correct' : null,
+        // 'aligned' = Karar 268 güvenli ilk karar (doğru etiket yok, gözlem dili)
+        firstChoiceCorrect: firstChoice
+          ? firstChoice.detail === 'correct' || firstChoice.detail === 'aligned'
+          : null,
         firstSuccess: events.some((e) => e.type === 'first_success'),
         decisionConfidence,
         misconceptions: events

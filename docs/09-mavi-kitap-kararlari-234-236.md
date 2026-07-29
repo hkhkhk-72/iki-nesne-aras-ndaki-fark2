@@ -111,25 +111,32 @@ ve öğrenme stratejisine yöneliktir.
 
 ---
 
-## 📘 Karar No: 268 — Gör → Hisset → İsimlendir *(MB-LAB-001)*
+## 📘 Karar No: 268 — İlk Karar Güvenli Olmalıdır
 
-Matematik önce görülür, sonra hissedilir, en son isimlendirilir.
+Çocuğun verdiği ilk matematiksel karar hiçbir zaman "yanlış" olarak
+etiketlenmez. Sistem, ilk kararları öğrenme sürecinin doğal bir parçası
+olarak kabul eder ve yalnızca gözlemler.
 
----
-
-## 📘 Karar No: 269 — 1–4 Asla Saydırılmaz
-
-1–4 nesne perceptual subitizing ile hissedilir; sayma istemi yasaktır.
-
-**Kod:** `mayPromptCount()` · discover `revealCount: false` (1–4).
+**Kod:** `firstMathDecision` · `src/world/mavi-kitap-268-270.ts` · ChooseScene güvenli yol.
 
 ---
 
-## 📘 Karar No: 270 — 5+ Alt Grup
+## 📘 Karar No: 269 — Karşılaştırma Saymadan Önce Gelir
 
-5 ve üzeri nesnelerde doğal kümeler: 3+2, 4+1, 2+2+1…
+Karşılaştırma becerisi, sayma becerisinden önce geliştirilir. Çocuk önce
+miktar farkını hisseder, daha sonra semboller ve sayılarla tanışır.
 
-**Kod:** `pickGrouping()` · `edu.grouping` / `edu.partWhole`.
+**Kod:** `countVisibility: 'never'` (ilk karşılaştırma) · `edu.visualCompare` / `edu.compare`.
+
+---
+
+## 📘 Karar No: 270 — Dünya Geri Bildirim Verir
+
+Geri bildirimi arayüz değil, dünyanın kendisi verir. Yaprakların hareketi,
+Fındık'ın bakışı ve nesnelerin doğal animasyonları; "doğru/yanlış"
+mesajlarının yerini alır.
+
+**Kod:** `worldFeedback` · dünya cue + karakter repliği; UI rozeti yok.
 
 ---
 
@@ -144,5 +151,27 @@ Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
 ## 📘 Karar No: 272 — Her LS CPA Destekler
 
 Concrete → Pictorial → Abstract. Her Learning Scene bu zinciri destekler.
+
+---
+
+## 📘 Karar No: 273 — Gör → Hisset → İsimlendir *(MB-LAB-001)*
+
+Matematik önce görülür, sonra hissedilir, en son isimlendirilir.
+
+---
+
+## 📘 Karar No: 274 — 1–4 Asla Saydırılmaz *(MB-LAB-001)*
+
+1–4 nesne perceptual subitizing ile hissedilir; sayma istemi yasaktır.
+
+**Kod:** `mayPromptCount()` · discover `revealCount: false` (1–4).
+
+---
+
+## 📘 Karar No: 275 — 5+ Alt Grup *(MB-LAB-001)*
+
+5 ve üzeri nesnelerde doğal kümeler: 3+2, 4+1, 2+2+1…
+
+**Kod:** `pickGrouping()` · `edu.grouping` / `edu.partWhole`.
 
 Ayrıntı: [docs/16-mb-lab-001-scientific-foundation.md](./16-mb-lab-001-scientific-foundation.md)

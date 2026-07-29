@@ -83,9 +83,13 @@ export const scenes: SceneSpec[] = [
     learningSceneId: 'LS-004',
     storyToken: 'story.observe',
     motionToken: 'motion.observe',
+    /** Karar 268 — ilk matematiksel karar; asla "yanlış" etiketlenmez. */
+    firstMathDecision: true,
+    /** Karar 270 — geri bildirimi dünya verir. */
+    worldFeedback: true,
     pedagogicalGoal:
-      'Sayı saymadan sezgisel karşılaştırma (MB-268/269/270): 3 perceptual, 6 conceptual (3+3). ' +
-      'Sayma dili kullanılmaz. Hız baskısı yok (MB-271).',
+      'Karar 268/269: ilk güvenli karar + saymadan karşılaştırma. ' +
+      '3 perceptual, 6 conceptual (3+3). Hız baskısı yok (MB-271).',
     targetEmotion: 'merak',
     opening: {
       visual: '🌳🌳',
@@ -206,8 +210,8 @@ export const scenes: SceneSpec[] = [
     storyToken: 'story.discover',
     motionToken: 'motion.softBounce',
     pedagogicalGoal:
-      '1–4 perceptual subitizing (MB-269): sayma istemez, sayaç göstermez. ' +
-      'Dokunarak toplama — miktar hissedilir (CPA concrete).',
+      '1–4 perceptual subitizing (MB-274): sayma istemez, sayaç göstermez. ' +
+      'Dokunarak toplama — miktar hissedilir (CPA concrete · MB-272).',
     targetEmotion: 'kesif',
     opening: {
       visual: '🌳',
@@ -223,7 +227,7 @@ export const scenes: SceneSpec[] = [
         { id: 'p2', emoji: '🌰', label: 'palamut' },
         { id: 'p3', emoji: '🌰', label: 'palamut' },
       ],
-      /** MB-269: 1–4’te sayı sayacı gösterilmez. */
+      /** MB-274: 1–4’te sayı sayacı gösterilmez. */
       revealCount: false,
     },
     aiObservation: {
@@ -257,8 +261,9 @@ export const scenes: SceneSpec[] = [
     storyToken: 'story.notice',
     motionToken: 'motion.deepBreath',
     pedagogicalGoal:
-      'Karşılaştırma öncesi gözlem (MB-268): önce gör. 5 conceptual (3+2), 3 perceptual. ' +
-      'Doğru cevap yok; miktar isimlendirilmez.',
+      'Karşılaştırma öncesi gözlem (MB-269/273): önce gör. 5 conceptual (3+2), 3 perceptual. ' +
+      'Doğru cevap yok; miktar isimlendirilmez. Dünya geri bildirir (MB-270).',
+    worldFeedback: true,
     targetEmotion: 'merak',
     opening: {
       visual: '🪣',
@@ -306,8 +311,9 @@ export const scenes: SceneSpec[] = [
     storyToken: 'story.discover',
     motionToken: 'motion.softBounce',
     pedagogicalGoal:
-      'Sayı saymadan karşılaştırma (MB-268/269): birebir eşleştirme artan tarafı sezdirir. ' +
-      'CPA concrete — az/çok somut temeli.',
+      'Sayı saymadan karşılaştırma (MB-269/274): birebir eşleştirme artan tarafı sezdirir. ' +
+      'CPA concrete — az/çok somut temeli (MB-272).',
+    worldFeedback: true,
     targetEmotion: 'kesif',
     opening: {
       visual: '🤝',
@@ -356,8 +362,9 @@ export const scenes: SceneSpec[] = [
     storyToken: 'story.notice',
     motionToken: 'motion.observe',
     pedagogicalGoal:
-      '"Daha çok"u eşleştirme deneyiminin üzerine oturtmak (MB-268). ' +
-      '3 perceptual saydırılmaz (MB-269); 5 conceptual alt grup (MB-270).',
+      '"Daha çok"u eşleştirme deneyiminin üzerine oturtmak (MB-269/273). ' +
+      '3 perceptual saydırılmaz (MB-274); 5 conceptual alt grup (MB-275).',
+    worldFeedback: true,
     targetEmotion: 'basari',
     opening: {
       visual: '🐿️',
@@ -381,7 +388,7 @@ export const scenes: SceneSpec[] = [
         'Az önce eşleştirmiştik. Hangi kovada eşi olmayan palamutlar kalmıştı?',
         'Kırmızı kovadaki yığına bir daha bak, sonra mavi kovadakine.',
       ],
-      /** MB-269: grupta 1–4 varken sayı asla görünmez. */
+      /** MB-274: grupta 1–4 varken sayı asla görünmez. */
       countVisibility: 'never',
     },
     aiObservation: {
@@ -422,8 +429,9 @@ export const scenes: SceneSpec[] = [
     storyToken: 'story.notice',
     motionToken: 'motion.observe',
     pedagogicalGoal:
-      '"Daha az"ı "daha çok"un karşıtı olarak kurmak (MB-268). ' +
-      'Sayma dili yok; görsel yığın karşılaştırması (MB-269).',
+      '"Daha az"ı "daha çok"un karşıtı olarak kurmak (MB-269/273). ' +
+      'Sayma dili yok; görsel yığın karşılaştırması (MB-274).',
+    worldFeedback: true,
     targetEmotion: 'guven',
     opening: {
       visual: '🪣',
@@ -485,8 +493,9 @@ export const scenes: SceneSpec[] = [
     storyToken: 'story.discover',
     motionToken: 'motion.softBounce',
     pedagogicalGoal:
-      '"Eşit"i birebir eşleştirmede artan olmaması olarak kurmak (MB-268). ' +
-      'Her iki taraf 5 — conceptual subitizing / alt grup (MB-270).',
+      '"Eşit"i birebir eşleştirmede artan olmaması olarak kurmak (MB-269/273). ' +
+      'Her iki taraf 5 — conceptual subitizing / alt grup (MB-275).',
+    worldFeedback: true,
     targetEmotion: 'basari',
     opening: {
       visual: '⚖️',

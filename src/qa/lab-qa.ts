@@ -10,6 +10,7 @@ import {
   PEDAGOGICAL_RULES,
   LAB_ID,
 } from '@/lab/foundations';
+import { isForbiddenDecisionLabel } from '@/world/mavi-kitap-268-270';
 
 export interface LabQaResult {
   ok: boolean;
@@ -89,11 +90,11 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
     issues.push(`${scene.id}: MB-271 ihlali — hız baskısı ifadesi (${LAB_ID})`);
   }
 
-  // MB-269: 1–4 için sayma istemi
+  // MB-274: 1–4 için sayma istemi
   const perceptual = counts.filter(isPerceptualCount);
   if (perceptual.length && hasCountPrompt(scene)) {
     issues.push(
-      `${scene.id}: MB-269 ihlali — 1–4 nesne saydırılıyor (${PEDAGOGICAL_RULES['MB-269'].title})`,
+      `${scene.id}: MB-274 ihlali — 1–4 nesne saydırılıyor (${PEDAGOGICAL_RULES['MB-274'].title})`,
     );
   }
 
@@ -104,17 +105,22 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
     isPerceptualCount(scene.interaction.items.length)
   ) {
     issues.push(
-      `${scene.id}: MB-269 riski — 1–4 discover’da revealCount açık (sayma hissi)`,
+      `${scene.id}: MB-274 riski — 1–4 discover’da revealCount açık (sayma hissi)`,
     );
   }
 
-  // choose: 1–4 varken sayı görünürlüğü
+  // choose: 1–4 varken sayı görünürlüğü (MB-274) + karşılaştırma saymadan (MB-269)
   if (scene.interaction.kind === 'choose') {
     const hasPerceptual = scene.interaction.groups.some((g) => isPerceptualCount(g.count));
     const vis = scene.interaction.countVisibility ?? 'after_attempt';
     if (hasPerceptual && vis !== 'never') {
       issues.push(
-        `${scene.id}: MB-269 ihlali — 1–4 grup varken countVisibility=${vis} (olmalı: never)`,
+        `${scene.id}: MB-274 ihlali — 1–4 grup varken countVisibility=${vis} (olmalı: never)`,
+      );
+    }
+    if (scene.firstMathDecision && vis !== 'never') {
+      issues.push(
+        `${scene.id}: MB-269 ihlali — ilk matematiksel kararda sayılar görünür (countVisibility=${vis})`,
       );
     }
   }
@@ -159,6 +165,11 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
   }
   if (!checklist.cpa) {
     issues.push(`${scene.id}: MB-272 CPA desteği yetersiz`);
+  }
+
+  // Karar 268 / 270 — çocuk yüzü etiketleri
+  if (isForbiddenDecisionLabel(childFacingBlob(scene))) {
+    issues.push(`${scene.id}: MB-268/270 ihlali — doğru/yanlış etiket dili`);
   }
 
   return {

@@ -26,6 +26,7 @@ import {
   INTERACTION_LATENCY_MAX_MS,
   PRIMARY_MOTIVATION,
 } from '@/benchmark';
+import { KARAR_268, KARAR_269, KARAR_270 } from '@/world/mavi-kitap-268-270';
 import { storyTokens, eduTokens, motionTokens, aiTokens, touchTarget } from '@/design-tokens';
 import type { SceneBehavior } from '@/ai/observer';
 import type { MicroExperience, CharacterId } from '@/mes/types';
@@ -202,6 +203,36 @@ for (const exp of MATH_EXPERIENCES) {
   console.log(`  ${exp.code} Lab QA: ${lab.ok ? 'GEÇTİ' : 'BAŞARISIZ'}`);
   if (!lab.ok) {
     console.log('  Lab sorunlar:', lab.issues);
+    failed = true;
+  }
+}
+
+// ── Mavi Kitap 268–270 ──
+console.log('\nMavi Kitap Karar 268–270');
+for (const exp of MATH_EXPERIENCES) {
+  const firstChoose = exp.scenes.find((s) => s.interaction.kind === 'choose');
+  const k268 =
+    firstChoose?.firstMathDecision === true &&
+    (firstChoose.interaction.kind === 'choose'
+      ? firstChoose.interaction.countVisibility === 'never'
+      : false);
+  const k269 = exp.scenes
+    .filter((s) => s.interaction.kind === 'choose')
+    .every((s) =>
+      s.interaction.kind === 'choose'
+        ? s.interaction.countVisibility === 'never' ||
+          s.interaction.groups.every((g) => g.count >= 5)
+        : true,
+    );
+  const k270 = exp.scenes
+    .filter((s) => s.interaction.kind === 'choose' || s.interaction.kind === 'observe')
+    .every((s) => s.worldFeedback !== false);
+  const ok = k268 && k269 && k270;
+  console.log(
+    `  ${exp.code}: ${KARAR_268.id}/${KARAR_269.id}/${KARAR_270.id} → ${ok ? 'GEÇTİ' : 'BAŞARISIZ'}`,
+  );
+  if (!ok) {
+    console.log('  Detay:', { k268, k269, k270, first: firstChoose?.id });
     failed = true;
   }
 }

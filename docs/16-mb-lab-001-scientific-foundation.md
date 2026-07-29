@@ -14,8 +14,8 @@ Yeni anayasa değildir; laboratuvarın ürün üretim standardıdır.
 
 | # | Temel | MiniBilge karşılığı |
 |---|--------|---------------------|
-| 1 | **Perceptual Subitizing** (1–4 nesne) | `edu.subitize` · sayma yok |
-| 2 | **Conceptual Subitizing** (5+ alt gruplar) | `edu.partWhole` · `edu.grouping` |
+| 1 | **Perceptual Subitizing** (1–4 nesne) | `edu.subitize` · MB-274 |
+| 2 | **Conceptual Subitizing** (5+ alt gruplar) | `edu.partWhole` · `edu.grouping` · MB-275 |
 | 3 | **CPA** Concrete → Pictorial → Abstract | Her LS CPA destekler (MB-272) |
 | 4 | **Montessori Sensory Learning** | Doğal dizilim, dokunma, baskısız tempo |
 | 5 | **Finland Play-Based Mathematics** | Hikâye + oyun; test hissi yok |
@@ -23,19 +23,19 @@ Yeni anayasa değildir; laboratuvarın ürün üretim standardıdır.
 
 ---
 
-## 2. Pedagojik Kurallar (MB-268 … MB-272)
+## 2. Pedagojik Kurallar (Mavi Kitap + LAB)
 
-### MB-268 — Gör → Hisset → İsimlendir
+### MB-268 — İlk Karar Güvenli Olmalıdır
 
-Matematik önce **görülür**, sonra **hissedilir**, en son **isimlendirilir**.
+İlk matematiksel karar asla "yanlış" etiketlenmez; sistem yalnızca gözlemler.
 
-### MB-269 — 1–4 Asla Saydırılmaz
+### MB-269 — Karşılaştırma Saymadan Önce Gelir
 
-1–4 nesne **ASLA** saydırılmaz. Çocuk miktarı doğrudan hisseder (perceptual subitizing).
+Önce miktar farkı hissedilir; sembol ve sayılar sonra gelir.
 
-### MB-270 — 5+ Alt Grup
+### MB-270 — Dünya Geri Bildirim Verir
 
-5+ nesnede doğal kümeler: `3+2`, `4+1`, `2+2+1` vb. (`edu.grouping` / `edu.partWhole`).
+Geri bildirimi arayüz değil dünya verir (bakış, yaprak, doğal hareket).
 
 ### MB-271 — Hız Baskısı Yasak
 
@@ -46,6 +46,18 @@ Hiçbir LS çocuğu hızlı cevaba zorlayamaz.
 ### MB-272 — Her LS CPA Destekler
 
 Concrete → Picture → Abstract. Her Learning Scene bu zinciri desteklemek zorundadır.
+
+### MB-273 — Gör → Hisset → İsimlendir
+
+Matematik önce **görülür**, sonra **hissedilir**, en son **isimlendirilir**.
+
+### MB-274 — 1–4 Asla Saydırılmaz
+
+1–4 nesne **ASLA** saydırılmaz (perceptual subitizing).
+
+### MB-275 — 5+ Alt Grup
+
+5+ nesnede doğal kümeler: `3+2`, `4+1`, `2+2+1` vb.
 
 ---
 

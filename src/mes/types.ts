@@ -273,6 +273,16 @@ export interface SceneSpec {
   storyToken?: string;
   /** Motion token (ör. motion.trust). */
   motionToken?: string;
+  /**
+   * Karar 268 — bu sahnedeki ilk matematiksel karar asla "yanlış" etiketlenmez.
+   * Sistem yalnızca gözlemler.
+   */
+  firstMathDecision?: boolean;
+  /**
+   * Karar 270 — geri bildirim dünya üzerinden (UI doğru/yanlış mesajı yok).
+   * Varsayılan: true (MES sahneleri).
+   */
+  worldFeedback?: boolean;
 }
 
 // ─── Mikro deneyim (ders) ────────────────────────────────────

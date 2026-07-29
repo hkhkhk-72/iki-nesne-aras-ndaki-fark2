@@ -98,6 +98,12 @@
           </section>
 
           <section class="mbc-lab-section">
+            <h2>İlerleme — Tamam% / Kaldı%</h2>
+            <p class="section-lead">docs/ILERLEME.md · her teslimatta güncellenir</p>
+            <div id="lab-progress"></div>
+          </section>
+
+          <section class="mbc-lab-section">
             <h2>ML — Motion Language (MB-DS-005)</h2>
             <p class="section-lead">Yalnızca başarı · hata · yükleme · geçiş · max 300ms · bekletmez</p>
             <div id="lab-ml-target" class="mb-section" style="padding:16px;border:1px solid var(--mb-line);border-radius:12px;margin-bottom:12px;">
@@ -180,6 +186,8 @@
           bodyHtml: '<p>İleri düzey seçenekler yalnızca ihtiyaç halinde açılır (TXS-006).</p>'
         }).mount('#lab-txs-advanced');
       }
+
+      if (window.MiniBilgeProgress) MiniBilgeProgress.mount('#lab-progress');
 
       if (window.MiniBilgeMotion) {
         const M = MiniBilgeMotion;

@@ -188,6 +188,10 @@
 
       mount(MiniBilgeNav.renderLayout('home', content));
       bindClassContext();
+      if (window.MiniBilgeProgress) {
+        const host = document.getElementById('ds-progress-host');
+        if (host) MiniBilgeProgress.mount(host);
+      }
     } catch (err) {
       console.error(err);
       showBootError(err);

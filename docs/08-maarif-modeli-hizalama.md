@@ -82,6 +82,13 @@ Biçim: `MAT.{sınıf}.{öğrenme alanı}.{çıktı}`
 
 Ayrıca sayma üst sınırı 20'den **100'e** çıkarılmıştır.
 
+## Tema Sırası Notu (MEB)
+
+Resmî program 1. sınıfta **7 tema** sırası kullanır (Geometri → Sayılar → …
+→ Veri). MiniBilge ünite listesi 4 öğrenme alanı olarak gruplar; öğretmen
+panelindeki **haftalık plan** (`src/teacher/weekly-plan.ts`) MEB tema/saat
+sırasına yaklaştırır. Ayrıntı: [docs/12-kazanim-cepte-inceleme-istifade.md](./12-kazanim-cepte-inceleme-istifade.md).
+
 ## Kimlik Değişimi ve Veri Güvenliği
 
 Yeniden yapılandırma kazanım kimliklerinin anlamını değiştirdi. Örneğin

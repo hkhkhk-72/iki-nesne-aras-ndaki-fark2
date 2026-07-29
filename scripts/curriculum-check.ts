@@ -7,6 +7,7 @@
  */
 import { getAllCurricula } from '@/core/content-loader';
 import { getAllExperiences } from '@/mes/experience-registry';
+import { GRADE1_THEME_BLOCKS, getWeekPlan, estimateSchoolWeek } from '@/teacher/weekly-plan';
 
 let failed = false;
 
@@ -63,6 +64,25 @@ for (const exp of getAllExperiences()) {
     console.log(`  ${exp.code} → ${exp.outcomeId} ✓`);
   }
 }
+
+// Haftalık plan (Kazanım Cepte istifadesi) — outcome id'leri geçerli mi?
+console.log('\nHaftalık plan (1. sınıf MEB tema iskeleti)');
+const planned = new Set<string>();
+for (const block of GRADE1_THEME_BLOCKS) {
+  if (block.weekStart > block.weekEnd) fail(`${block.id} hafta aralığı geçersiz`);
+  for (const oid of block.outcomeIds) {
+    if (!allOutcomeIds.has(oid)) fail(`Haftalık plan tanımsız kazanım: ${oid}`);
+    planned.add(oid);
+  }
+}
+const g1 = getAllCurricula().find((c) => c.grade === 1);
+const missing = g1?.outcomes.map((o) => o.id).filter((id) => !planned.has(id)) ?? [];
+if (missing.length) {
+  console.log(`  Uyarı: plana henüz bağlanmamış kazanımlar: ${missing.join(', ')}`);
+}
+const sample = getWeekPlan(1, estimateSchoolWeek());
+console.log(`  Tema bloğu: ${GRADE1_THEME_BLOCKS.length}  Bu hafta: ${sample.week} · ${sample.themeTitle}`);
+console.log(`  Planlanan kazanım: ${planned.size}/${g1?.outcomes.length ?? 0}`);
 
 console.log(`\nSonuç: ${failed ? 'BAŞARISIZ' : 'MÜFREDAT BÜTÜNLÜĞÜ GEÇTİ'}`);
 process.exit(failed ? 1 : 0);

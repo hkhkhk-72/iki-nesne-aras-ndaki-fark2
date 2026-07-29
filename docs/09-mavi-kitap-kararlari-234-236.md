@@ -140,23 +140,32 @@ mesajlarının yerini alır.
 
 ---
 
-## 📘 Karar No: 271 — Hız Baskısı Yasak
+## 📘 Karar No: 271 — Sessizlik de Bir Geri Bildirimdir
 
-Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
+Her geri bildirim ses veya metin olmak zorunda değildir. Gerektiğinde
+karakterin beklemesi ve dünyanın doğal akışı, çocuğu düşünmeye teşvik
+eden en güçlü pedagojik araçtır.
 
-**Kod:** `FORBIDDEN_PRESSURE` · `runLabQa()`.
-
----
-
-## 📘 Karar No: 272 — Her LS CPA Destekler
-
-Concrete → Pictorial → Abstract. Her Learning Scene bu zinciri destekler.
+**Kod:** `decideIntervention` sessizlik / bakış · Karar 237 ile uyumlu · `src/world/mavi-kitap-271-273.ts`.
 
 ---
 
-## 📘 Karar No: 273 — Gör → Hisset → İsimlendir *(MB-LAB-001)*
+## 📘 Karar No: 272 — Hata Söylenmez, Hissettirilir
 
-Matematik önce görülür, sonra hissedilir, en son isimlendirilir.
+MiniBilge hiçbir zaman "yanlış" demez. Sistem, çocuğun kendi gözlemiyle
+kararını yeniden değerlendirebilmesi için doğal ipuçları sunar.
+
+**Kod:** `FORBIDDEN_DECISION_LABELS` · Control of Error · dünya cue (Karar 270).
+
+---
+
+## 📘 Karar No: 273 — Düşünme Süresi Başarı Süresinden Değerlidir
+
+Bir çocuğun düşünmek için ayırdığı zaman, doğru cevabı verme hızından daha
+değerli bir öğrenme göstergesidir. AI motoru öncelikle **Reflection Time**
+metriğini izler.
+
+**Kod:** `reflectionTimeMs` · `reflection_time` sinyali · `PRIMARY_AI_METRICS`.
 
 ---
 
@@ -173,5 +182,25 @@ Matematik önce görülür, sonra hissedilir, en son isimlendirilir.
 5 ve üzeri nesnelerde doğal kümeler: 3+2, 4+1, 2+2+1…
 
 **Kod:** `pickGrouping()` · `edu.grouping` / `edu.partWhole`.
+
+---
+
+## 📘 Karar No: 276 — Hız Baskısı Yasak
+
+Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
+
+**Kod:** `FORBIDDEN_PRESSURE` · `runLabQa()`.
+
+---
+
+## 📘 Karar No: 277 — Her LS CPA Destekler
+
+Concrete → Pictorial → Abstract. Her Learning Scene bu zinciri destekler.
+
+---
+
+## 📘 Karar No: 278 — Gör → Hisset → İsimlendir *(MB-LAB-001)*
+
+Matematik önce görülür, sonra hissedilir, en son isimlendirilir.
 
 Ayrıntı: [docs/16-mb-lab-001-scientific-foundation.md](./16-mb-lab-001-scientific-foundation.md)

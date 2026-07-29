@@ -33,7 +33,9 @@ export type TrackedBehavior =
   | 'first_choice'
   | 'touch_latency'
   | 'drag_active'
-  | 'explore_active';
+  | 'explore_active'
+  /** Karar 273 — birincil metrik. */
+  | 'reflection_time';
 
 /** Her sinyalin pedagojik anlamı. */
 export const TRACKED_BEHAVIOR_MEANING: Record<TrackedBehavior, string> = {
@@ -47,7 +49,16 @@ export const TRACKED_BEHAVIOR_MEANING: Record<TrackedBehavior, string> = {
   touch_latency: 'İlk bakış / bağ telemetrisi',
   drag_active: 'Sürükleme sırasında sus (Karar 237)',
   explore_active: 'Keşif sırasında sus (Karar 237)',
+  reflection_time: 'Düşünme süresi — hızdan değerli (Karar 273)',
 };
+
+/** Karar 273 — AI birincil izleme sırası. */
+export const PRIMARY_AI_METRICS: TrackedBehavior[] = [
+  'reflection_time',
+  'wait_time',
+  'effort_history',
+  'first_choice',
+];
 
 // ─── Veri sınıflandırması ────────────────────────────────────
 export type DataAudience = 'teacher_panel' | 'personalization_only' | 'both' | 'never_leave_device';
@@ -67,6 +78,7 @@ export const DATA_ROUTING: Record<TrackedBehavior, DataAudience> = {
   touch_latency: 'personalization_only',
   drag_active: 'never_leave_device',
   explore_active: 'never_leave_device',
+  reflection_time: 'both',
 };
 
 export function teacherVisible(signal: TrackedBehavior): boolean {
@@ -202,16 +214,21 @@ export function decideIntervention(ctx: DecisionContext): InterventionDecision {
     };
   }
 
-  // ── Çaba övgüsü (Karar 239) — sonuç değil süreç ──
+  // ── Çaba övgüsü (Karar 239 + 273) — hız değil; düşünme süresi değerli ──
   if (b.firstChoiceCorrect === true && b.retries === 0) {
+    const reflectedWell = (b.reflectionTimeMs ?? 0) >= 2000;
     return {
       kind: 'effort_praise',
       helpLevel: null,
-      reason: 'Akıcı ilerleme; süreç övgüsü.',
+      reason: reflectedWell
+        ? 'Reflection Time güçlü; düşünme süresi övülür (Karar 273).'
+        : 'Akıcı ilerleme; süreç övgüsü.',
       bilge: {
         trigger: 'after_effort',
         motivation: 'cabaya',
-        line: EFFORT_PRAISE[b.totalTouches % EFFORT_PRAISE.length],
+        line: reflectedWell
+          ? 'Dikkatlice düşündün.'
+          : EFFORT_PRAISE[b.totalTouches % EFFORT_PRAISE.length],
       },
     };
   }
@@ -225,7 +242,7 @@ export function decideIntervention(ctx: DecisionContext): InterventionDecision {
       return {
         kind: 'gaze',
         helpLevel: 1,
-        reason: 'Takılma var; Bilge önce sessiz bakış (MB-LAB-001).',
+        reason: 'Takılma var; Bilge önce sessiz bakış (Karar 271).',
         bilge: {
           trigger: 'silence',
           silenceReason: 'child_is_thinking',
@@ -237,7 +254,7 @@ export function decideIntervention(ctx: DecisionContext): InterventionDecision {
     return fromHelpLevel(2, 'İlk takılma — küçük ipucu.', b);
   }
 
-  // ── Bekleme / idle ──
+  // ── Bekleme / idle — Karar 271: sessizlik de geri bildirim ──
   const wait = ctx.msSinceLastTouch ?? b.firstTouchLatencyMs ?? 0;
 
   if (b.idleEvents > 0 || (b.durationMs > t.idleInterveneMs && b.totalTouches === 0)) {
@@ -245,7 +262,7 @@ export function decideIntervention(ctx: DecisionContext): InterventionDecision {
       return {
         kind: 'gaze',
         helpLevel: 1,
-        reason: 'Bekleme; Bilge henüz konuşmaz.',
+        reason: 'Bekleme; sessizlik geri bildirimdir (Karar 271).',
         bilge: {
           trigger: 'silence',
           silenceReason: 'child_is_thinking',

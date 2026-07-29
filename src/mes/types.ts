@@ -161,7 +161,9 @@ export type AISignal =
   | 'observe_pattern'
   | 'subitize_attempt'
   | 'grouping_strategy'
-  | 'visual_focus';
+  | 'visual_focus'
+  /** Karar 273 — Reflection Time. */
+  | 'reflection_time';
 
 // ─── Geri bildirim ───────────────────────────────────────────
 export interface SceneFeedback {

@@ -80,11 +80,14 @@ Amaç çok oyun yapmak değil; **çocukların matematiği sevmesini sağlamak**.
 | 268 | İlk karar güvenli olmalıdır |
 | 269 | Karşılaştırma saymadan önce gelir |
 | 270 | Dünya geri bildirim verir |
-| 271 | Timer / hız baskısı yasak |
-| 272 | Her LS CPA destekler |
-| 273 | Gör → Hisset → İsimlendir |
+| 271 | Sessizlik de bir geri bildirimdir |
+| 272 | Hata söylenmez, hissettirilir |
+| 273 | Düşünme süresi başarı süresinden değerlidir (Reflection Time) |
 | 274 | 1–4 asla saydırılmaz |
 | 275 | 5+ alt grup (3+2, 4+1…) |
+| 276 | Timer / hız baskısı yasak |
+| 277 | Her LS CPA destekler |
+| 278 | Gör → Hisset → İsimlendir |
 
 Ayrıntı: [docs/09…](./09-mavi-kitap-kararlari-234-236.md)
 · [MB-CHAR-002](./10-mb-char-002-bilge-rehberlik-sistemi.md)

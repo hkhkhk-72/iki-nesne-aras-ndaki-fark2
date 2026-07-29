@@ -16,7 +16,7 @@ Yeni anayasa değildir; laboratuvarın ürün üretim standardıdır.
 |---|--------|---------------------|
 | 1 | **Perceptual Subitizing** (1–4 nesne) | `edu.subitize` · MB-274 |
 | 2 | **Conceptual Subitizing** (5+ alt gruplar) | `edu.partWhole` · `edu.grouping` · MB-275 |
-| 3 | **CPA** Concrete → Pictorial → Abstract | Her LS CPA destekler (MB-272) |
+| 3 | **CPA** Concrete → Pictorial → Abstract | Her LS CPA destekler (MB-277) |
 | 4 | **Montessori Sensory Learning** | Doğal dizilim, dokunma, baskısız tempo |
 | 5 | **Finland Play-Based Mathematics** | Hikâye + oyun; test hissi yok |
 | 6 | **OECD Starting Strong** | Erken matematik = ilişki, dil, oyun |
@@ -37,19 +37,17 @@ Yeni anayasa değildir; laboratuvarın ürün üretim standardıdır.
 
 Geri bildirimi arayüz değil dünya verir (bakış, yaprak, doğal hareket).
 
-### MB-271 — Hız Baskısı Yasak
+### MB-271 — Sessizlik de Bir Geri Bildirimdir
 
-Hiçbir LS çocuğu hızlı cevaba zorlayamaz.
+Ses/metin zorunlu değildir; bekleme ve doğal akış düşünmeye teşvik eder.
 
-**Yasak:** Timer · Countdown · LeaderBoard · Speed Bonus
+### MB-272 — Hata Söylenmez, Hissettirilir
 
-### MB-272 — Her LS CPA Destekler
+Asla "yanlış" denmez; doğal ipucu ile çocuk yeniden değerlendirir.
 
-Concrete → Picture → Abstract. Her Learning Scene bu zinciri desteklemek zorundadır.
+### MB-273 — Düşünme Süresi Başarı Süresinden Değerlidir
 
-### MB-273 — Gör → Hisset → İsimlendir
-
-Matematik önce **görülür**, sonra **hissedilir**, en son **isimlendirilir**.
+AI öncelikle **Reflection Time** izler; hız övülmez.
 
 ### MB-274 — 1–4 Asla Saydırılmaz
 
@@ -58,6 +56,18 @@ Matematik önce **görülür**, sonra **hissedilir**, en son **isimlendirilir**.
 ### MB-275 — 5+ Alt Grup
 
 5+ nesnede doğal kümeler: `3+2`, `4+1`, `2+2+1` vb.
+
+### MB-276 — Hız Baskısı Yasak
+
+Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
+
+### MB-277 — Her LS CPA Destekler
+
+Concrete → Picture → Abstract. Her Learning Scene bu zinciri destekler.
+
+### MB-278 — Gör → Hisset → İsimlendir
+
+Matematik önce **görülür**, sonra **hissedilir**, en son **isimlendirilir**.
 
 ---
 

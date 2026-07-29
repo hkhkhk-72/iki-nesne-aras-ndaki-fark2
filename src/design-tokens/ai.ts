@@ -17,7 +17,8 @@ export type AiTokenId =
   | 'ai.observe_pattern'
   | 'ai.subitize_attempt'
   | 'ai.grouping_strategy'
-  | 'ai.visual_focus';
+  | 'ai.visual_focus'
+  | 'ai.reflection_time';
 
 export interface AiToken {
   id: AiTokenId;
@@ -95,5 +96,10 @@ export const aiTokens: Record<AiTokenId, AiToken> = {
     id: 'ai.visual_focus',
     signal: 'visual_focus',
     purpose: 'Görsel odak — hangi kümeye bakıldı',
+  },
+  'ai.reflection_time': {
+    id: 'ai.reflection_time',
+    signal: 'reflection_time',
+    purpose: 'Düşünme süresi — hızdan değerli (Karar 273)',
   },
 };

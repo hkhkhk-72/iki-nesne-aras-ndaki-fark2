@@ -17,6 +17,7 @@
 | MB-LAB-001 | Az/Çok/Eşit bilimsel temel | `src/lab/` · `src/qa/lab-qa.ts` · `docs/16-…` |
 | MBA-BENCHMARK-001 | Küresel üretim eşiği v1.1 | `src/benchmark/` · `src/qa/benchmark-qa.ts` · `docs/17-…` |
 | Karar 268–270 | İlk karar güvenli · karşılaştırma önce · dünya feedback | `src/world/mavi-kitap-268-270.ts` · ChooseScene |
+| Karar 271–273 | Sessizlik · hata hissettirilir · Reflection Time | `src/world/mavi-kitap-271-273.ts` · `reflectionTimeMs` |
 
 ## Sahne sırası (modül içi)
 

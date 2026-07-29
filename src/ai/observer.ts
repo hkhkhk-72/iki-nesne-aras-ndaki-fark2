@@ -22,7 +22,9 @@ export type ObservationType =
   | 'observe_pattern'
   | 'subitize_attempt'
   | 'grouping_strategy'
-  | 'visual_focus';
+  | 'visual_focus'
+  /** Karar 273 — düşünme / yansıma süresi. */
+  | 'reflection_time';
 
 export interface Observation {
   sceneId: string;
@@ -49,6 +51,12 @@ export interface SceneBehavior {
   firstSuccess: boolean;
   /** Karar güveni: high | medium | low (puan değil, nitel). */
   decisionConfidence: 'high' | 'medium' | 'low' | null;
+  /**
+   * Karar 273 — Reflection Time (ms).
+   * İlk anlamlı dokunuşa / karara kadar düşünme süresi.
+   * Hız değil; birincil öğrenme göstergesi.
+   */
+  reflectionTimeMs: number | null;
   misconceptions: string[];
   durationMs: number;
 }
@@ -100,6 +108,14 @@ export class ExperienceObserver {
           ? confDetail
           : null;
 
+      // Karar 273: Reflection Time — hız değil, düşünme süresi birincil metrik
+      const explicitReflection = events.find((e) => e.type === 'reflection_time');
+      const reflectionTimeMs =
+        explicitReflection?.latencyMs ??
+        firstChoice?.latencyMs ??
+        touches[0]?.latencyMs ??
+        null;
+
       return {
         sceneId,
         concept: this.sceneConcept.get(sceneId) ?? '',
@@ -114,6 +130,7 @@ export class ExperienceObserver {
           : null,
         firstSuccess: events.some((e) => e.type === 'first_success'),
         decisionConfidence,
+        reflectionTimeMs,
         misconceptions: events
           .filter((e) => e.type === 'misconception' && e.detail)
           .map((e) => e.detail as string),
@@ -173,6 +190,7 @@ export function coversSignals(behavior: SceneBehavior, signals: AISignal[]): boo
       case 'subitize_attempt':
       case 'grouping_strategy':
       case 'visual_focus':
+      case 'reflection_time':
         return true;
       default:
         return true;

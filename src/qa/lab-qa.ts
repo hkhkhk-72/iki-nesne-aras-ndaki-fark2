@@ -87,7 +87,7 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
 
   const hasTimerPressure = FORBIDDEN_PRESSURE.some((p) => blob.includes(p));
   if (hasTimerPressure) {
-    issues.push(`${scene.id}: MB-271 ihlali — hız baskısı ifadesi (${LAB_ID})`);
+    issues.push(`${scene.id}: MB-276 ihlali — hız baskısı ifadesi (${LAB_ID})`);
   }
 
   // MB-274: 1–4 için sayma istemi
@@ -164,12 +164,12 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
     issues.push(`${scene.id}: Saymadan çözülebilirlik zayıf`);
   }
   if (!checklist.cpa) {
-    issues.push(`${scene.id}: MB-272 CPA desteği yetersiz`);
+    issues.push(`${scene.id}: MB-277 CPA desteği yetersiz`);
   }
 
-  // Karar 268 / 270 — çocuk yüzü etiketleri
+  // Karar 268 / 270 / 272 — çocuk yüzü etiketleri ("yanlış" yok)
   if (isForbiddenDecisionLabel(childFacingBlob(scene))) {
-    issues.push(`${scene.id}: MB-268/270 ihlali — doğru/yanlış etiket dili`);
+    issues.push(`${scene.id}: MB-268/270/272 ihlali — doğru/yanlış etiket dili`);
   }
 
   return {

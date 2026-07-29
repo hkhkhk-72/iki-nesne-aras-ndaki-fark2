@@ -27,6 +27,8 @@ import {
   PRIMARY_MOTIVATION,
 } from '@/benchmark';
 import { KARAR_268, KARAR_269, KARAR_270 } from '@/world/mavi-kitap-268-270';
+import { KARAR_271, KARAR_272, KARAR_273, REFLECTION_TIME_METRIC } from '@/world/mavi-kitap-271-273';
+import { PRIMARY_AI_METRICS } from '@/ai/decision-engine';
 import { storyTokens, eduTokens, motionTokens, aiTokens, touchTarget } from '@/design-tokens';
 import type { SceneBehavior } from '@/ai/observer';
 import type { MicroExperience, CharacterId } from '@/mes/types';
@@ -75,6 +77,7 @@ function stubBehavior(partial: Partial<SceneBehavior>): SceneBehavior {
     firstChoiceCorrect: null,
     firstSuccess: false,
     decisionConfidence: null,
+    reflectionTimeMs: null,
     misconceptions: [],
     durationMs: 1000,
     ...partial,
@@ -150,23 +153,35 @@ const dragSilent = decideIntervention({
 const effort = decideIntervention({
   behavior: stubBehavior({ firstChoiceCorrect: true, retries: 0, totalTouches: 2 }),
 });
+const reflectionPraise = decideIntervention({
+  behavior: stubBehavior({
+    firstChoiceCorrect: true,
+    retries: 0,
+    totalTouches: 2,
+    reflectionTimeMs: 3500,
+  }),
+});
 
 const aiOk =
   silentThink.kind === 'silence' &&
   (gaze.kind === 'gaze' || gaze.helpLevel === 1) &&
   dragSilent.kind === 'silence' &&
   effort.kind === 'effort_praise' &&
+  reflectionPraise.kind === 'effort_praise' &&
+  reflectionPraise.bilge?.line === 'Dikkatlice düşündün.' &&
   DEFAULT_THRESHOLDS.gazeHintAfterMs < DEFAULT_THRESHOLDS.softHintAfterMs &&
   !teacherVisible('help_request') &&
   personalizationOnly('effort_history');
 
-console.log(`  Sessizlik / bakış / sürükleme / süreç övgüsü: ${aiOk ? 'GEÇTİ' : 'BAŞARISIZ'}`);
+console.log(`  Sessizlik / bakış / sürükleme / Reflection Time: ${aiOk ? 'GEÇTİ' : 'BAŞARISIZ'}`);
 if (!aiOk) {
   console.log('  Detay:', {
     silentThink: silentThink.kind,
     gaze: gaze.kind,
     dragSilent: dragSilent.kind,
     effort: effort.kind,
+    reflectionPraise: reflectionPraise.kind,
+    reflectionLine: reflectionPraise.bilge?.line,
   });
   failed = true;
 }
@@ -207,8 +222,14 @@ for (const exp of MATH_EXPERIENCES) {
   }
 }
 
-// ── Mavi Kitap 268–270 ──
-console.log('\nMavi Kitap Karar 268–270');
+// ── Mavi Kitap 268–273 ──
+console.log('\nMavi Kitap Karar 268–273');
+const reflectionPrimary = PRIMARY_AI_METRICS[0] === REFLECTION_TIME_METRIC;
+console.log(
+  `  ${KARAR_273.id} Reflection Time birincil: ${reflectionPrimary ? 'GEÇTİ' : 'BAŞARISIZ'}`,
+);
+if (!reflectionPrimary) failed = true;
+
 for (const exp of MATH_EXPERIENCES) {
   const firstChoose = exp.scenes.find((s) => s.interaction.kind === 'choose');
   const k268 =
@@ -227,12 +248,16 @@ for (const exp of MATH_EXPERIENCES) {
   const k270 = exp.scenes
     .filter((s) => s.interaction.kind === 'choose' || s.interaction.kind === 'observe')
     .every((s) => s.worldFeedback !== false);
-  const ok = k268 && k269 && k270;
+  const k271 = KARAR_271.title.includes('Sessizlik');
+  const k272 = KARAR_272.title.includes('Hata');
+  const k273 =
+    firstChoose?.aiObservation.signals.includes('reflection_time') === true;
+  const ok = k268 && k269 && k270 && k271 && k272 && k273;
   console.log(
-    `  ${exp.code}: ${KARAR_268.id}/${KARAR_269.id}/${KARAR_270.id} → ${ok ? 'GEÇTİ' : 'BAŞARISIZ'}`,
+    `  ${exp.code}: ${KARAR_268.id}…${KARAR_273.id} → ${ok ? 'GEÇTİ' : 'BAŞARISIZ'}`,
   );
   if (!ok) {
-    console.log('  Detay:', { k268, k269, k270, first: firstChoose?.id });
+    console.log('  Detay:', { k268, k269, k270, k271, k272, k273, first: firstChoose?.id });
     failed = true;
   }
 }

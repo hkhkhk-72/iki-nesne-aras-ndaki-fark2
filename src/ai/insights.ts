@@ -80,8 +80,12 @@ export function buildInsights(code: string, behaviors: SceneBehavior[]): Experie
         level === 'guclu' ? 'Yeni bir maceraya geçebilirsin.' : 'Aynı sahneyi birlikte tekrar keşfedelim.',
     });
 
-    // Öğretmene: davranış temelli, uygulanabilir
+    // Öğretmene: davranış temelli — Karar 273 Reflection Time birincil
     const teacherDetail: string[] = [];
+    const avgReflection = related.reduce((s, x) => s + (x.reflectionTimeMs ?? 0), 0) / related.length;
+    if (avgReflection >= 2000) {
+      teacherDetail.push(`reflection time ~${Math.round(avgReflection / 1000)}sn (değerli düşünme)`);
+    }
     if (hesitated) teacherDetail.push('karar vermeden önce uzun süre bekliyor');
     if (idled) teacherDetail.push('sahnede dikkat dağınıklığı gözlendi');
     if (misconceptions.length) teacherDetail.push(`kavram yanılgısı: ${misconceptions.join(', ')}`);

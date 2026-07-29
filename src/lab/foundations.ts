@@ -1,7 +1,7 @@
 /**
  * MB-LAB-001 Scientific Foundation v1.2 — APPROVED
  *
- * Mavi Kitap 268–270 + LAB pedagoji 271–275.
+ * Mavi Kitap 268–273 + LAB pedagoji 274–278.
  */
 
 export const LAB_ID = 'MB-LAB-001' as const;
@@ -53,7 +53,10 @@ export type PedagogicalRuleId =
   | 'MB-272'
   | 'MB-273'
   | 'MB-274'
-  | 'MB-275';
+  | 'MB-275'
+  | 'MB-276'
+  | 'MB-277'
+  | 'MB-278';
 
 export const PEDAGOGICAL_RULES: Record<
   PedagogicalRuleId,
@@ -73,16 +76,16 @@ export const PEDAGOGICAL_RULES: Record<
     rule: 'Geri bildirimi arayüz değil dünya verir (bakış, yaprak, doğal hareket).',
   },
   'MB-271': {
-    title: 'Hız Baskısı Yasak',
-    rule: 'Timer, Countdown, LeaderBoard, Speed Bonus yasaktır.',
+    title: 'Sessizlik de Bir Geri Bildirimdir',
+    rule: 'Bekleme ve doğal akış; ses/metin zorunlu değildir.',
   },
   'MB-272': {
-    title: 'Her LS CPA Destekler',
-    rule: 'Concrete → Picture → Abstract zinciri her LS’te desteklenir.',
+    title: 'Hata Söylenmez, Hissettirilir',
+    rule: 'Asla "yanlış" denmez; doğal ipucu ile çocuk yeniden değerlendirir.',
   },
   'MB-273': {
-    title: 'Gör → Hisset → İsimlendir',
-    rule: 'Matematik önce görülür, sonra hissedilir, en son isimlendirilir.',
+    title: 'Düşünme Süresi Başarı Süresinden Değerlidir',
+    rule: 'AI öncelikle Reflection Time izler; hız övülmez.',
   },
   'MB-274': {
     title: '1–4 Asla Saydırılmaz',
@@ -92,9 +95,21 @@ export const PEDAGOGICAL_RULES: Record<
     title: '5+ Alt Grup',
     rule: '5+ nesnede doğal kümeler kullanılır (3+2, 4+1, 2+2+1…).',
   },
+  'MB-276': {
+    title: 'Hız Baskısı Yasak',
+    rule: 'Timer, Countdown, LeaderBoard, Speed Bonus yasaktır.',
+  },
+  'MB-277': {
+    title: 'Her LS CPA Destekler',
+    rule: 'Concrete → Picture → Abstract zinciri her LS’te desteklenir.',
+  },
+  'MB-278': {
+    title: 'Gör → Hisset → İsimlendir',
+    rule: 'Matematik önce görülür, sonra hissedilir, en son isimlendirilir.',
+  },
 };
 
-/** MB-271 — yasaklı hız baskısı kalıpları (içerik + UI metni). */
+/** MB-276 — yasaklı hız baskısı kalıpları (içerik + UI metni). */
 export const FORBIDDEN_PRESSURE = [
   'timer',
   'countdown',

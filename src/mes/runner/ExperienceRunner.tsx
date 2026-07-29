@@ -348,7 +348,7 @@ function ObserveScene({ scene, settings, observer, onAdvance }: SceneProps) {
             emoji={g.emoji}
             count={g.count}
             highlighted={looked.has(g.id)}
-            /** MB-269/273: gözlemde sayı gösterilmez — önce gör. */
+            /** MB-269/278: gözlemde sayı gösterilmez — önce gör. */
             showCount={false}
             onPress={() => look(g.id)}
             settings={settings}
@@ -440,6 +440,8 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
           ? 'correct'
           : 'incorrect';
       observer.record(scene.id, 'first_choice', detail);
+      // Karar 273: Reflection Time — hız değil, düşünme süresi
+      observer.record(scene.id, 'reflection_time', detail);
       firstChoiceRecorded.current = true;
     }
     observer.record(scene.id, 'touch', optionId);

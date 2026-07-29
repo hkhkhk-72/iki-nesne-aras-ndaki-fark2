@@ -31,7 +31,10 @@ export interface EduToken {
     | 'MB-272'
     | 'MB-273'
     | 'MB-274'
-    | 'MB-275';
+    | 'MB-275'
+    | 'MB-276'
+    | 'MB-277'
+    | 'MB-278';
 }
 
 export const eduTokens: Record<EduTokenId, EduToken> = {

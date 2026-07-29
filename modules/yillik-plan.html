@@ -38,7 +38,7 @@
     let courseList = [];
 
     async function loadCourses() {
-      courseList = await CurriculumEngine.listAvailableCourses(state.sinif);
+      courseList = await CurriculumEngine.listAvailableCourses(state.sinif, { onlyProgram: true });
       if (!courseList.find(c => c.id === state.dersId)) state.dersId = courseList[0]?.id || 'turkce';
     }
 

@@ -2,6 +2,11 @@
 
 Dünyanın en iyi ilkokul matematik öğrenme platformu. React Native + Expo + TypeScript ile geliştirilmiştir.
 
+> **Faz:** PRODUCT PHASE (Kurucu dönem tamamlandı)  
+> **Otorite:** [`docs/00-master-project-status.md`](docs/00-master-project-status.md)  
+> **Aktif:** GRP-001 · GRS-001 / LS-001 · MB-MAT-1.1.01  
+> **Sonraki:** GRS-001C Figma Foundation → UI / Scene / Animation Kit → prototip
+
 ## Başlangıç
 
 ### MiniBilge OS — Canlı Web Arayüzü

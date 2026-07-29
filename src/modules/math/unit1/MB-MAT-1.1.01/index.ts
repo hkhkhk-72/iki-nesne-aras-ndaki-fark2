@@ -10,6 +10,8 @@ import { scenes } from './scenes';
  * Mikro Deneyim 01 "İlk Bakış" — bağ (matematik yok).
  * Mikro Deneyim 02 "İki Ağaç" — sezgisel "daha fazla" (Karar 231).
  *
+ * Golden Reference: GRP-001 · GRS-001 / LS-001 (Fındık ile Tanışma).
+ *
  * Kazanım köprüsü: MAT.1.1.1 — Nesne gruplarını azlık-çokluk ve eşitlik
  * bakımından karşılaştırır (out-1-1-1).
  */
@@ -27,6 +29,13 @@ export const MB_MAT_1_1_01: MicroExperience = {
   location: 'kesif_ormani',
   characters: ['findik', 'bilge'],
   scenes,
+
+  /** GRP-001 kimlik köprüsü — yeni kural değil, eşleme. */
+  goldenRef: {
+    program: 'GRP-001',
+    scene: 'GRS-001',
+    learningScene: 'LS-001',
+  },
 
   pdfOutputs: [
     { kind: 'etkinlik', title: 'Palamutları Karşılaştır', difficulty: 'kolay', concept: 'az_cok_esit' },

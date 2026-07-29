@@ -273,6 +273,13 @@ export interface MicroExperience {
 
   /** Toplam tahmini süre (saniye). */
   totalSeconds: number;
+
+  /** Golden Reference kimlik köprüsü (GRP / GRS / LS). */
+  goldenRef?: {
+    program: string;
+    scene: string;
+    learningScene: string;
+  };
 }
 
 // ─── Çalıştırma sonucu ──────────────────────────────────────

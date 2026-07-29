@@ -1,0 +1,50 @@
+/**
+ * Motion Tokens — varlık için hareket; gürültü değil.
+ */
+
+export type MotionTokenId =
+  | 'motion.gentle'
+  | 'motion.rise'
+  | 'motion.pop'
+  | 'motion.fade'
+  | 'motion.none';
+
+export interface MotionToken {
+  id: MotionTokenId;
+  durationMs: number;
+  easing: string;
+  reduceMotionFallback: 'none' | 'instant';
+}
+
+export const motionTokens: Record<MotionTokenId, MotionToken> = {
+  'motion.gentle': {
+    id: 'motion.gentle',
+    durationMs: 600,
+    easing: 'ease-in-out',
+    reduceMotionFallback: 'none',
+  },
+  'motion.rise': {
+    id: 'motion.rise',
+    durationMs: 500,
+    easing: 'ease-out',
+    reduceMotionFallback: 'instant',
+  },
+  'motion.pop': {
+    id: 'motion.pop',
+    durationMs: 280,
+    easing: 'ease-out',
+    reduceMotionFallback: 'instant',
+  },
+  'motion.fade': {
+    id: 'motion.fade',
+    durationMs: 400,
+    easing: 'linear',
+    reduceMotionFallback: 'none',
+  },
+  'motion.none': {
+    id: 'motion.none',
+    durationMs: 0,
+    easing: 'linear',
+    reduceMotionFallback: 'none',
+  },
+};

@@ -63,21 +63,21 @@
     const path = window.location.pathname;
     const sinifLabel = activeSinif();
     return `
-      <aside class="sidebar no-print">
+      <aside class="sidebar no-print" role="complementary" aria-label="Kenar menü">
         <div class="sidebar-brand">
-          <span class="brand-mark">MB</span>
+          <span class="brand-mark" aria-hidden="true">MB</span>
           <div>
             <strong>MiniBilge</strong>
             <small>Öğretmen · ${sinifLabel}</small>
           </div>
         </div>
-        <nav class="sidebar-nav">
+        <nav class="sidebar-nav" aria-label="Ana menü">
           ${MENU.map(item => {
             const href = resolveHref(item.path);
             const file = item.path.split('?')[0].split('/').pop();
             const active = activeId === item.id || path.endsWith(file);
-            return `<a href="${href}" class="nav-item${active ? ' active' : ''}">
-              <span class="nav-icon">${item.icon}</span>
+            return `<a href="${href}" class="nav-item${active ? ' active' : ''}"${active ? ' aria-current="page"' : ''}>
+              <span class="nav-icon" aria-hidden="true">${item.icon}</span>
               <span class="nav-label">${item.label}</span>
             </a>`;
           }).join('')}
@@ -90,13 +90,18 @@
     const html = `
       <div class="app-layout">
         ${renderSidebar(activeId)}
-        <main class="main-content">${content}</main>
+        <main id="mb-main" class="main-content" role="main" tabindex="-1">${content}</main>
       </div>`;
-    // TXS-005 — AI Everywhere · IS-003 page enter
+    // TXS-005 · IS-003 · A11Y boot landmarks
     setTimeout(() => {
       if (window.MiniBilgeTxs) MiniBilgeTxs.attach({ screen: activeId });
       const main = document.querySelector('.main-content');
       if (main && window.MiniBilgeInteraction) MiniBilgeInteraction.markPageEnter(main);
+      if (window.MiniBilgeA11y) {
+        MiniBilgeA11y.ensureSkipLink();
+        MiniBilgeA11y.ensureMainId();
+      }
+      if (window.MiniBilgeOffline) MiniBilgeOffline.renderBanner();
     }, 0);
     return html;
   }

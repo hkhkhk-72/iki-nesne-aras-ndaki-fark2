@@ -18,6 +18,7 @@
 | Görsel dil | MB-DS-001 |
 | Deneyim dili | MB-DS-002 (TXS) |
 | Etkileşim zamanlaması | **MB-DS-003** |
+| Erişilebilirlik | MB-DS-004 |
 
 ---
 

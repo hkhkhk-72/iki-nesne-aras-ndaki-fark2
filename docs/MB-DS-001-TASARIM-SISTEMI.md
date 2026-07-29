@@ -113,9 +113,10 @@ Gürültülü parallax / glow yok.
 
 ## 8. Erişilebilirlik
 
-- Metin kontrastı WCAG AA  
-- Odak halkası teal  
-- Dokunma hedefi ≥ 40px  
+Bağlayıcı anayasa: **`docs/MB-DS-004-ACCESSIBILITY.md`** (MD-043)
+
+- Min font 14 px · Touch 44×44 · Keyboard + SR  
+- WCAG AA · Dark mode · Large text 125/150/200% · Offline sync  
 
 ---
 
@@ -137,6 +138,7 @@ Görsel dil bu belgededir.
 |--------|--------|
 | Deneyim (TXS) | `docs/MB-DS-002-TEACHER-EXPERIENCE-SYSTEM.md` |
 | Etkileşim süreleri (IS) | `docs/MB-DS-003-INTERACTION-STANDARDS.md` |
+| Erişilebilirlik (A11Y) | `docs/MB-DS-004-ACCESSIBILITY.md` |
 
 ---
 

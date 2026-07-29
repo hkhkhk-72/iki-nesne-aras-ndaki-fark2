@@ -38,6 +38,13 @@
   --mb-is-undo-ms: 5000;
   --mb-is-autosave-ms: 30000;
 
+  /* MB-DS-004 Accessibility */
+  --mb-text-scale: 1;
+  --mb-font-min: 14px;
+  --mb-touch: 44px;
+  --mb-focus: #0B7A6A;
+  --mb-focus-ring: 0 0 0 3px rgba(11, 122, 106, 0.45);
+
   /* legacy bridge */
   --bg1: var(--mb-bg1);
   --bg2: var(--mb-bg2);
@@ -54,9 +61,13 @@
 }
 
 html { font-size: 16px; }
+html[data-text-scale="125"] { --mb-text-scale: 1.25; }
+html[data-text-scale="150"] { --mb-text-scale: 1.5; }
+html[data-text-scale="200"] { --mb-text-scale: 2; }
 
 body {
   font-family: var(--mb-font-ui);
+  font-size: max(var(--mb-font-min), 1rem);
   color: var(--mb-ink);
   min-height: 100dvh;
   background:
@@ -1229,6 +1240,180 @@ a.hub-link:hover {
     padding-left: 0;
     padding-top: 18px;
   }
+}
+
+/* ===== MB-DS-004 Accessibility ===== */
+
+.mb-sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+.mb-skip-link {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 2000;
+  padding: 10px 14px;
+  min-height: var(--mb-touch);
+  background: var(--mb-ink);
+  color: #fff;
+  font-weight: 800;
+  border-radius: 10px;
+  transform: translateY(-160%);
+  transition: transform var(--mb-is-dialog) ease;
+}
+.mb-skip-link:focus {
+  transform: translateY(0);
+  outline: none;
+  box-shadow: var(--mb-focus-ring);
+}
+
+:focus-visible {
+  outline: 3px solid var(--mb-focus);
+  outline-offset: 2px;
+}
+
+.quick-btn,
+.nav-item,
+.grade-tab,
+.mbc-grade-tab,
+.txs-fab,
+.txs-help-btn,
+.mbc-btn-ghost,
+button.quick-btn,
+input[type="checkbox"],
+input[type="radio"] {
+  min-height: var(--mb-touch);
+  min-width: var(--mb-touch);
+}
+
+.quick-btn,
+.nav-item,
+.grade-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.nav-item {
+  justify-content: flex-start;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* Küçük metin tabanı — A11Y-001 */
+.hero-chip,
+.sidebar-footer,
+.nav-icon,
+.lesson-meta,
+.wf-prio,
+.txs-conf,
+.mbc-field-hint,
+.section-lead,
+.brand-kicker,
+.dash-date {
+  font-size: max(var(--mb-font-min), 0.875rem) !important;
+}
+
+.mb-offline-banner {
+  position: sticky;
+  top: 0;
+  z-index: 1500;
+  padding: 10px 16px;
+  min-height: var(--mb-touch);
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: max(var(--mb-font-min), 0.9rem);
+  background: #F3E2C2;
+  color: #5C3B0A;
+  border-bottom: 1px solid rgba(92, 59, 10, 0.2);
+}
+html[data-theme="dark"] .mb-offline-banner {
+  background: #4A3514;
+  color: #F6E2B8;
+  border-bottom-color: rgba(246, 226, 184, 0.2);
+}
+
+/* Dark mode — A11Y-006 (varsayılan açık kalır) */
+html[data-theme="dark"] {
+  --mb-ink: #E8EEF4;
+  --mb-ink-soft: #A8B6C6;
+  --mb-paper: #0F1720;
+  --mb-surface: rgba(22, 32, 44, 0.92);
+  --mb-line: rgba(232, 238, 244, 0.14);
+  --mb-accent: #3DB8A4;
+  --mb-accent-2: #5AD0BC;
+  --mb-accent-soft: rgba(61, 184, 164, 0.18);
+  --mb-warm: #E0A888;
+  --mb-warm-soft: rgba(224, 168, 136, 0.18);
+  --mb-sky: #7EB0D4;
+  --mb-sky-soft: rgba(126, 176, 212, 0.18);
+  --mb-warn: #E0A04A;
+  --mb-danger: #E07070;
+  --mb-ok: #5CBF7A;
+  --mb-bg1: #1A3A48;
+  --mb-bg2: #1A4038;
+  --mb-bg3: #3A3420;
+  --mb-focus: #5AD0BC;
+  --mb-focus-ring: 0 0 0 3px rgba(90, 208, 188, 0.5);
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(900px 520px at 8% -8%, rgba(30, 120, 110, 0.35), transparent 55%),
+    radial-gradient(800px 480px at 96% 0%, rgba(80, 60, 30, 0.35), transparent 50%),
+    linear-gradient(155deg, #0B1218 0%, #122028 40%, #15241E 70%, #1A1810 100%);
+  color: var(--mb-ink);
+}
+
+html[data-theme="dark"] .sidebar,
+html[data-theme="dark"] .mb-section,
+html[data-theme="dark"] .hub-block,
+html[data-theme="dark"] .task-row,
+html[data-theme="dark"] .lesson-row,
+html[data-theme="dark"] .txs-panel,
+html[data-theme="dark"] .mbc-toast {
+  background: var(--mb-surface);
+  color: var(--mb-ink);
+}
+
+html[data-theme="dark"] .quick-btn {
+  border-color: var(--mb-line);
+  color: var(--mb-ink);
+}
+html[data-theme="dark"] .quick-btn.primary {
+  background: var(--mb-accent);
+  color: #06241F;
+  border-color: transparent;
+}
+
+.a11y-panel {
+  display: grid;
+  gap: 14px;
+  max-width: 520px;
+}
+.a11y-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 700;
+  font-size: max(var(--mb-font-min), 0.9rem);
+}
+.a11y-panel select {
+  min-height: var(--mb-touch);
+  font-size: max(var(--mb-font-min), 1rem);
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--mb-line);
+  background: var(--mb-surface);
+  color: var(--mb-ink);
 }
 
 /* ===== MB-DS-003 Interaction Standards ===== */

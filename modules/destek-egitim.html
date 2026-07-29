@@ -6,11 +6,13 @@
   <title>Destek Eğitim — MiniBilge Öğretmen</title>
   <link rel="stylesheet" href="../assets/css/platform.css">
   <link rel="stylesheet" href="../assets/css/ds.css">
+  <script src="../assets/js/components/a11y.js"></script>
 </head>
 <body>
   <div id="app"></div>
   <script src="../assets/js/components/txs.js"></script>
-  <script src="../assets/js/navigation.js"></script>
+    <script src="../assets/js/core/offline-sync.js"></script>
+<script src="../assets/js/navigation.js"></script>
   <script>
   document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('destek-egitim', `
     <div class="module-page">

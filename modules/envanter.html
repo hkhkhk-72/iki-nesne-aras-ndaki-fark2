@@ -6,12 +6,14 @@
   <title>Evrak Envanteri — MiniBilge Öğretmen</title>
   <link rel="stylesheet" href="../assets/css/platform.css">
   <link rel="stylesheet" href="../assets/css/ds.css">
+  <script src="../assets/js/components/a11y.js"></script>
 </head>
 <body>
   <div id="app"></div>
   <script>window.MINIBILGE_BASE = '../';</script>
   <script src="../assets/js/components/txs.js"></script>
-  <script src="../assets/js/navigation.js"></script>
+    <script src="../assets/js/core/offline-sync.js"></script>
+<script src="../assets/js/navigation.js"></script>
   <script>
   (async function () {
     const res = await fetch('../assets/data/evrak-envanteri.json');

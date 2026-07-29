@@ -47,7 +47,9 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 ## Yol Haritası (Domain-First)
 
 1. **MB-DM-001** Domain Model ✅
-2. **MB-ARCH-001** Mimari + Ana Ekran Freeze ✅ — `docs/MB-ARCH-001-PLATFORM-MIMARI-VE-ANA-EKRAN.md`
+2. **MB-ARCH-001** Mimari Freeze ✅
+2b. **MB-UI-001** UI/UX v2 + TWE ✅
+2c. **MB-DS-001** Tasarım Sistemi ✅
 3. **MB-DM-002** Entity Detay Spesifikasyonu
 4. MB-TPM-001 → MB-DB-001 → MB-JSON-001 → MB-ALG-001 → MB-APP-001
 

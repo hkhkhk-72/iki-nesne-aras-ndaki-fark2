@@ -3,12 +3,12 @@
 
 **Sürüm:** 1.0  
 **Tarih:** 29 Temmuz 2026  
-**Durum:** Architecture Freeze  
-**Bağımlılık:** `MB-DM-001` (Domain Model) tamamlanmış kabul edilir
+**Durum:** Architecture Freeze (menü v2 için bkz. MB-UI-001)  
+**Bağımlılık:** `MB-DM-001` (Domain Model) tamamlanmış kabul edilir  
+**Güncelleme:** Menü ve dashboard düzeni **MB-UI-001 v2.0** ile genişletildi; görsel dil **MB-DS-001**.
 
-> Bu doküman arayüz ve ürün bilgisinin **donmuş** mimarisidir.  
-> Ekran eklemek / menü değiştirmek için bu sürümün revizyonu gerekir.  
-> Domain kuralları (`Program ≠ Plan ≠ Belge`) bozulamaz.
+> Domain kuralları (`Program ≠ Plan ≠ Belge`) bozulamaz.  
+> Sol menü için güncel freeze: `docs/MB-UI-001-UI-UX-MIMARISI-V2.md`.
 
 ---
 

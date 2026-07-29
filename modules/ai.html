@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiniBilge AI — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script>window.MINIBILGE_BASE = '../';</script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('ai', `
+      <div class="dash">
+        <header class="dash-hero">
+          <p class="brand-kicker">MiniBilge AI</p>
+          <h1>Doğal dil ile üret</h1>
+          <p class="dash-date">Komutlar domain motorlarını tetikler; hazır plan kopyalamaz.</p>
+        </header>
+        <section class="mb-section">
+          <h2>Komut</h2>
+          <p class="section-lead">Örnek: 1. sınıf Türkçe için yıllık plan oluştur.</p>
+          <form id="aiForm" class="ai-stub" style="max-width:640px">
+            <input type="text" id="aiInput" placeholder="Bugünkü Matematik günlük planını hazırla" style="flex:1">
+            <button class="quick-btn primary" type="submit">Çalıştır</button>
+          </form>
+          <p id="aiOut" class="empty-state" style="text-align:left;margin-top:12px"></p>
+        </section>
+        <section class="mb-section">
+          <h2>Örnek komutlar</h2>
+          <div class="task-list">
+            <div class="task-row"><span class="task-text">1. sınıf Türkçe yıllık plan</span><a class="text-link" href="yillik-plan.html">YP</a></div>
+            <div class="task-row"><span class="task-text">Bugünkü günlük plan</span><a class="text-link" href="gunluk-plan.html">GP</a></div>
+            <div class="task-row"><span class="task-text">29 Ekim programı</span><a class="text-link" href="belirli-gun.html">BG</a></div>
+            <div class="task-row"><span class="task-text">Zümre tutanağı</span><a class="text-link" href="zumre.html">ZM</a></div>
+          </div>
+        </section>
+      </div>
+    `);
+    document.getElementById('aiForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = document.getElementById('aiInput').value.trim();
+      const out = document.getElementById('aiOut');
+      if (!q) return;
+      out.textContent = 'MB-AI katmanı MB-TPM / MB-YPM hazır olunca bağlanacak. Şimdilik ilgili modüle yönlendiriliyorsunuz.';
+      if (/yıllık|yillik/i.test(q)) location.href = 'yillik-plan.html';
+      else if (/günlük|gunluk/i.test(q)) location.href = 'gunluk-plan.html';
+      else if (/ekim|belirli|program/i.test(q)) location.href = 'belirli-gun.html';
+      else if (/zümre|zumre/i.test(q)) location.href = 'zumre.html';
+      else if (/bep|destek/i.test(q)) location.href = 'destek-egitim.html';
+    });
+  </script>
+</body>
+</html>

@@ -2,30 +2,31 @@
   'use strict';
 
   /**
-   * MB-ARCH-001 Freeze Menü — 8 üst seviye.
-   * Zümre / kulüp / İYEP vb. Evrak Merkezi altındadır.
+   * MB-UI-001 v2 — Öğretmen düşünme sırası
+   * Program → Plan → Evrak
    */
   const MENU = [
-    { id: 'home', label: 'Ana Sayfa', icon: '⌂', path: 'index.html' },
-    { id: 'yillik-plan', label: 'Yıllık Plan', icon: '☰', path: 'modules/yillik-plan.html' },
-    { id: 'gunluk-plan', label: 'Günlük Plan', icon: '✎', path: 'modules/gunluk-plan.html' },
-    { id: 'evrak-merkezi', label: 'Evrak Merkezi', icon: '▤', path: 'documents/index.html' },
-    { id: 'ogretim-programi', label: 'Öğretim Programı', icon: '◎', path: 'modules/ogretim-programi.html' },
-    { id: 'takvim', label: 'Takvim', icon: '▦', path: 'modules/takvim.html' },
-    { id: 'hesabim', label: 'Hesabım', icon: '☺', path: 'modules/hesabim.html' },
-    { id: 'ayarlar', label: 'Ayarlar', icon: '⚙', path: 'modules/ayarlar.html' }
+    { id: 'home', label: 'Ana Sayfa', icon: 'AS', path: 'index.html' },
+    { id: 'ogretim-programi', label: 'Öğretim Programı', icon: 'OP', path: 'modules/ogretim-programi.html' },
+    { id: 'yillik-plan', label: 'Yıllık Planlar', icon: 'YP', path: 'modules/yillik-plan.html' },
+    { id: 'gunluk-plan', label: 'Günlük Planlar', icon: 'GP', path: 'modules/gunluk-plan.html' },
+    { id: 'evrak-merkezi', label: 'Evrak Merkezi', icon: 'EM', path: 'documents/index.html' },
+    { id: 'takvim', label: 'Akademik Takvim', icon: 'AT', path: 'modules/takvim.html' },
+    { id: 'ai', label: 'MiniBilge AI', icon: 'AI', path: 'modules/ai.html' },
+    { id: 'raporlar', label: 'Raporlar', icon: 'RP', path: 'modules/raporlar.html' },
+    { id: 'hesabim', label: 'Hesabım', icon: 'HS', path: 'modules/hesabim.html' },
+    { id: 'ayarlar', label: 'Ayarlar', icon: 'AY', path: 'modules/ayarlar.html' }
   ];
 
-  /** Evrak Merkezi alt grupları (ARCH-001) — deep-link hedefleri */
   const EVRAK_ALT = [
     { id: 'planlar', label: 'Planlar', path: 'documents/index.html?grup=planlar' },
-    { id: 'zumre', label: 'Zümre Evrakları', path: 'modules/zumre.html' },
+    { id: 'zumre', label: 'Zümre', path: 'modules/zumre.html' },
     { id: 'rehberlik', label: 'Rehberlik', path: 'modules/rehberlik.html' },
     { id: 'kulup', label: 'Kulüpler', path: 'modules/kulup.html' },
     { id: 'belirli-gun', label: 'Belirli Gün ve Haftalar', path: 'modules/belirli-gun.html' },
-    { id: 'olcme', label: 'Ölçme Değerlendirme', path: 'modules/olcme.html' },
-    { id: 'destek', label: 'Destek Eğitim / İYEP', path: 'modules/destek-egitim.html' },
-    { id: 'envanter', label: 'Evrak Envanteri', path: 'modules/envanter.html' }
+    { id: 'olcme', label: 'Ölçme', path: 'modules/olcme.html' },
+    { id: 'destek', label: 'Destek / İYEP', path: 'modules/destek-egitim.html' },
+    { id: 'envanter', label: 'Envanter', path: 'modules/envanter.html' }
   ];
 
   function resolveHref(path) {
@@ -67,9 +68,7 @@
             </a>`;
           }).join('')}
         </nav>
-        <div class="sidebar-footer">
-          <small>TYMM · Eğitim İşletim Sistemi</small>
-        </div>
+        <div class="sidebar-footer">TYMM · Eğitim İşletim Sistemi</div>
       </aside>`;
   }
 

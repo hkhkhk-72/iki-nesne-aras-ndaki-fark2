@@ -5,27 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Öğretim Programı — MiniBilge Öğretmen</title>
   <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
 </head>
 <body>
   <div id="app"></div>
   <script>window.MINIBILGE_BASE = '../';</script>
   <script src="../assets/js/navigation.js"></script>
   <script>
-    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('ogretim-programi', `
-      <header class="page-header">
-        <h1>Öğretim Programı</h1>
-        <p class="lead">Türkiye Yüzyılı Maarif Modeli — platformun kalbi. Program ≠ Plan ≠ Belge.</p>
-      </header>
-      <section class="panel">
-        <h2>Gezgin (MB-DM-001)</h2>
-        <p>Sınıf → Ders → Program Birimi (tema / öğrenme alanı / ünite) → Öğrenme Çıktısı → Beceri · Değer · Eğilim · İçerik · Süreç · Ölçme</p>
-        <p class="meta">Kanonik veri MB-DM-002 ve MB-JSON-001 sonrası bağlanacak. Mevcut curriculum JSON’ları geçici keşif verisidir.</p>
-        <div class="quick-actions" style="margin-top:1rem">
-          <a class="quick-btn primary" href="yillik-plan.html">Yıllık Plan Üret</a>
-          <a class="quick-btn" href="../documents/index.html">Evrak Merkezi</a>
+    const siniflar = [1, 2, 3, 4];
+    const dersler = {
+      1: ['Türkçe', 'Matematik', 'Hayat Bilgisi', 'Görsel Sanatlar', 'Müzik', 'Beden Eğitimi'],
+      2: ['Türkçe', 'Matematik', 'Hayat Bilgisi', 'İngilizce'],
+      3: ['Türkçe', 'Matematik', 'Hayat Bilgisi', 'Fen Bilimleri'],
+      4: ['Türkçe', 'Matematik', 'Fen Bilimleri', 'Sosyal Bilgiler']
+    };
+    let sinif = 1;
+    function render() {
+      document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('ogretim-programi', `
+        <div class="dash">
+          <header class="dash-hero">
+            <p class="brand-kicker">Öğretim Programı</p>
+            <h1>Müfredat Tarayıcısı</h1>
+            <p class="dash-date">Sınıf → Ders → Tema/Alan → Öğrenme Çıktısı → İçerik → Beceri → Değer → Ölçme</p>
+          </header>
+          <section class="mb-section">
+            <h2>Sınıf</h2>
+            <div class="quick-actions" id="sinifBar">
+              ${siniflar.map(s => `
+                <button type="button" class="quick-btn${s === sinif ? ' primary' : ''}" data-sinif="${s}">${s}. Sınıf</button>
+              `).join('')}
+            </div>
+          </section>
+          <section class="mb-section">
+            <h2>${sinif}. Sınıf Dersleri</h2>
+            <p class="section-lead">Ders seçince program birimleri (MB-DM-001) listelenecek.</p>
+            <div class="lesson-strip">
+              ${(dersler[sinif] || []).map(d => `
+                <div class="lesson-row">
+                  <div>
+                    <div class="lesson-name">${d}</div>
+                    <div class="lesson-meta">ProgramUnit → LearningOutcome gezgini</div>
+                  </div>
+                  <a class="quick-btn compact" href="yillik-plan.html">Yıllık Plana Git</a>
+                </div>
+              `).join('')}
+            </div>
+          </section>
         </div>
-      </section>
-    `);
+      `);
+      document.querySelectorAll('#sinifBar [data-sinif]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sinif = Number(btn.getAttribute('data-sinif'));
+          render();
+        });
+      });
+    }
+    render();
   </script>
 </body>
 </html>

@@ -534,10 +534,16 @@ a { color: inherit; text-decoration: none; }
   flex: 1;
   min-width: 200px;
   padding: 10px 12px;
-  border: 1px solid var(--border, #d0d5dd);
+  border: 1px solid rgba(255,255,255,0.35);
   border-radius: 8px;
+  background: rgba(255,255,255,0.14);
+  color: #fff;
   font: inherit;
 }
+
+.ai-stub input::placeholder { color: rgba(255,255,255,0.55); }
+
+.ai-stub button { cursor: pointer; border: none; }
 
 .sidebar-nav {
   display: flex;

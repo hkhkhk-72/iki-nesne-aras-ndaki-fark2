@@ -6,14 +6,57 @@
   <title>MiniBilge Öğretmen — Ana Sayfa</title>
   <link rel="stylesheet" href="assets/css/platform.css">
   <link rel="stylesheet" href="assets/css/belgeler.css">
+  <style>
+    .boot-shell {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+    .boot-shell strong { display: block; font-size: 1.4rem; margin-bottom: 8px; }
+    .boot-shell span { color: rgba(255,255,255,0.85); }
+  </style>
 </head>
 <body>
-  <div id="app"></div>
+  <div id="app">
+    <div class="boot-shell">
+      <div>
+        <strong>MiniBilge Öğretmen</strong>
+        <span>Ana sayfa yükleniyor…</span>
+      </div>
+    </div>
+  </div>
 
-  <script>window.MINIBILGE_BASE = '';</script>
+  <script>
+    (function () {
+      // fetch() için kök yolu — script href'leri göreli kalır
+      if (location.protocol === 'file:') {
+        window.MINIBILGE_BASE = '';
+        return;
+      }
+      if (/\.github\.io$/i.test(location.hostname)) {
+        var seg = location.pathname.split('/').filter(Boolean)[0] || '';
+        window.MINIBILGE_BASE = seg ? '/' + seg + '/' : '/';
+        return;
+      }
+      var path = location.pathname || '/';
+      if (/\/[^/]+\.html$/i.test(path)) {
+        path = path.replace(/\/[^/]+\.html$/i, '/');
+      }
+      if (!path.endsWith('/')) path += '/';
+      window.MINIBILGE_BASE = (path === '/') ? '' : path;
+    })();
+  </script>
   <script src="assets/js/core/storage.js"></script>
   <script src="assets/js/core/calendar-engine.js"></script>
   <script src="assets/js/navigation.js"></script>
   <script src="assets/js/app.js"></script>
+  <noscript>
+    <main style="padding:24px;color:#fff;font-family:sans-serif">
+      MiniBilge Öğretmen için JavaScript gereklidir.
+    </main>
+  </noscript>
 </body>
 </html>

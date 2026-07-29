@@ -19,7 +19,11 @@
     const file = calendarYear === '2026-2027'
       ? 'calendar-2026-2027.json'
       : 'calendar-2025-2026.json';
-    const res = await fetch(getBase() + 'assets/data/' + file);
+    const url = getBase() + 'assets/data/' + file;
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error('Takvim yüklenemedi (' + res.status + '): ' + url);
+    }
     calendarData = await res.json();
     return calendarData;
   }

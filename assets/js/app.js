@@ -3,26 +3,101 @@
 
   const GUNLER = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
 
+  /** Takvim yüklenemezse bile ana ekran görünsün */
+  const FALLBACK_CAL = {
+    egitimYili: '2025-2026',
+    donemler: [
+      { ad: '1. Dönem', baslangic: '2025-09-08', bitis: '2026-01-16' },
+      { ad: '2. Dönem', baslangic: '2026-02-02', bitis: '2026-06-19' }
+    ],
+    tatiller: [],
+    belirliGunler: [],
+    haftalikDersSaati: {
+      '1': { turkce: 10, matematik: 5, hayatBilgisi: 4, gorselSanatlar: 2, muzik: 2, bedenEgitimi: 2, rehberlik: 1 },
+      '2': { turkce: 10, matematik: 5, hayatBilgisi: 4, gorselSanatlar: 2, muzik: 2, bedenEgitimi: 2, ingilizce: 2, rehberlik: 1 },
+      '3': { turkce: 8, matematik: 5, fen: 3, hayatBilgisi: 3, gorselSanatlar: 2, muzik: 2, bedenEgitimi: 2, ingilizce: 2, rehberlik: 1 },
+      '4': { turkce: 8, matematik: 5, fen: 3, sosyal: 3, gorselSanatlar: 2, muzik: 2, bedenEgitimi: 2, ingilizce: 2, rehberlik: 1 }
+    }
+  };
+
+  function mount(html) {
+    const root = document.getElementById('app');
+    if (!root) return;
+    root.innerHTML = html;
+  }
+
+  function showBootError(err) {
+    const msg = (err && err.message) ? err.message : String(err || 'Bilinmeyen hata');
+    const body = `
+      <div class="dashboard-header">
+        <p class="brand-kicker">MiniBilge Öğretmen</p>
+        <h1>Ana Sayfa yüklenemedi</h1>
+        <p>${esc(msg)}</p>
+      </div>
+      <section class="dashboard-card">
+        <h3>Hızlı İşlemler</h3>
+        <div class="quick-actions">
+          <a href="modules/yillik-plan.html" class="quick-btn primary">Yıllık Plan</a>
+          <a href="modules/gunluk-plan.html" class="quick-btn primary">Günlük Plan</a>
+          <a href="documents/index.html" class="quick-btn">Evrak Merkezi</a>
+          <a href="modules/hesabim.html" class="quick-btn">Hesabım</a>
+        </div>
+      </section>`;
+    if (window.MiniBilgeNav) mount(MiniBilgeNav.renderLayout('home', body));
+    else mount(`<main class="main-content">${body}</main>`);
+  }
+
   /** MB-ARCH-001 Ana Sayfa — 7 bileşen */
   async function initDashboard() {
-    const profile = MiniBilgeStorage.getProfile();
-    const school = MiniBilgeStorage.getSchool();
-    const plans = MiniBilgeStorage.getPlans();
-    const docs = MiniBilgeStorage.getDocuments();
-    const egitimYili = school.egitimYili || '2025-2026';
-    CalendarEngine.setYear(egitimYili);
-    const cal = await CalendarEngine.loadCalendar();
-    const today = new Date();
-    const currentWeek = CalendarEngine.getCurrentWeek(cal, today);
-    const upcoming = CalendarEngine.getUpcomingEvents(cal, today, 6);
-    const gunAdi = GUNLER[today.getDay()];
-    const sinif = MiniBilgeStorage.getSettings().varsayilanSinif || '1';
+    try {
+      if (!window.MiniBilgeNav || !window.MiniBilgeStorage) {
+        throw new Error('Gerekli betikler yüklenemedi (navigation/storage).');
+      }
 
-    const content = `
+      const profile = MiniBilgeStorage.getProfile();
+      const school = MiniBilgeStorage.getSchool();
+      const plans = MiniBilgeStorage.getPlans();
+      const docs = MiniBilgeStorage.getDocuments();
+      const settings = MiniBilgeStorage.getSettings();
+      const egitimYili = school.egitimYili || '2025-2026';
+      const sinif = settings.varsayilanSinif || '1';
+      const today = new Date();
+      const gunAdi = GUNLER[today.getDay()];
+
+      let cal = FALLBACK_CAL;
+      let calWarning = '';
+      try {
+        if (window.CalendarEngine) {
+          CalendarEngine.setYear(egitimYili);
+          cal = await CalendarEngine.loadCalendar();
+          if (!cal || !cal.haftalikDersSaati) {
+            cal = FALLBACK_CAL;
+            calWarning = 'Takvim verisi eksik; varsayılan ders saatleri kullanılıyor.';
+          }
+        } else {
+          calWarning = 'Takvim motoru yüklenemedi; varsayılan veri kullanılıyor.';
+        }
+      } catch (calErr) {
+        console.warn('Takvim yükleme hatası:', calErr);
+        cal = FALLBACK_CAL;
+        calWarning = 'Takvim dosyası okunamadı; varsayılan veri ile devam ediliyor.';
+      }
+
+      let currentWeek = null;
+      let upcoming = [];
+      try {
+        currentWeek = CalendarEngine.getCurrentWeek(cal, today);
+        upcoming = CalendarEngine.getUpcomingEvents(cal, new Date(today), 6);
+      } catch (e) {
+        console.warn('Takvim hesaplama hatası:', e);
+      }
+
+      const content = `
       <div class="dashboard-header">
         <p class="brand-kicker">MiniBilge Öğretmen</p>
         <h1>Merhaba${profile.adSoyad ? ', ' + esc(profile.adSoyad) : ''}</h1>
-        <p>${gunAdi}, ${fmtToday(today)} · ${egitimYili} · Hafta ${currentWeek?.hafta || '—'} · ${sinif}. Sınıf</p>
+        <p>${gunAdi}, ${fmtToday(today)} · ${esc(egitimYili)} · Hafta ${currentWeek?.hafta || '—'} · ${esc(sinif)}. Sınıf</p>
+        ${calWarning ? `<p class="meta" style="margin-top:8px">${esc(calWarning)}</p>` : ''}
       </div>
 
       <div class="dashboard-grid home-arch">
@@ -68,29 +143,33 @@
           <h3>7. Yapay Zekâ Asistanı</h3>
           <p class="meta">Motorlar (MB-TPM / MB-YPM) hazır olunca doğal dil komutları burada çalışacak.</p>
           <form id="aiStubForm" class="ai-stub">
-            <input type="text" id="aiPrompt" placeholder='Örn. "1. sınıf matematik günlük plan oluştur"' autocomplete="off">
+            <input type="text" id="aiPrompt" placeholder="1. sınıf matematik günlük plan oluştur" autocomplete="off">
             <button type="submit" class="quick-btn">Gönder</button>
           </form>
           <p id="aiStubMsg" class="empty-state" style="text-align:left;margin-top:8px;"></p>
         </section>
-      </div>
-    `;
+      </div>`;
 
-    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('home', content);
-    document.getElementById('aiStubForm')?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const q = document.getElementById('aiPrompt').value.trim();
-      const msg = document.getElementById('aiStubMsg');
-      if (!q) return;
-      msg.textContent = 'Asistan henüz MB-AI katmanına bağlı değil. Komut kaydedildi; şimdilik ilgili modüle yönlendiriliyorsunuz.';
-      if (/günlük|gunluk/i.test(q)) setTimeout(() => { location.href = 'modules/gunluk-plan.html'; }, 900);
-      else if (/yıllık|yillik/i.test(q)) setTimeout(() => { location.href = 'modules/yillik-plan.html'; }, 900);
-      else if (/evrak|belge|zümre|zumre/i.test(q)) setTimeout(() => { location.href = 'documents/index.html'; }, 900);
-    });
+      mount(MiniBilgeNav.renderLayout('home', content));
+
+      document.getElementById('aiStubForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const q = document.getElementById('aiPrompt').value.trim();
+        const msg = document.getElementById('aiStubMsg');
+        if (!q) return;
+        msg.textContent = 'Asistan henüz MB-AI katmanına bağlı değil. İlgili modüle yönlendiriliyorsunuz.';
+        if (/günlük|gunluk/i.test(q)) setTimeout(() => { location.href = 'modules/gunluk-plan.html'; }, 700);
+        else if (/yıllık|yillik/i.test(q)) setTimeout(() => { location.href = 'modules/yillik-plan.html'; }, 700);
+        else if (/evrak|belge|zümre|zumre/i.test(q)) setTimeout(() => { location.href = 'documents/index.html'; }, 700);
+      });
+    } catch (err) {
+      console.error('Ana sayfa hatası:', err);
+      showBootError(err);
+    }
   }
 
   function renderTodaySchedule(cal, sinif) {
-    const hours = CalendarEngine.getWeeklyHours(cal, sinif);
+    const hours = (cal && cal.haftalikDersSaati && cal.haftalikDersSaati[String(sinif)]) || FALLBACK_CAL.haftalikDersSaati['1'];
     const entries = Object.entries(hours);
     if (!entries.length) return '<p class="empty-state">Ders programı Hesabım’da tanımlanacak.</p>';
     return entries.map(([id]) => `
@@ -101,7 +180,8 @@
   }
 
   function renderTasks(plans, week) {
-    const hasYillik = plans.some(p => p.tur === 'yillik');
+    const list = Array.isArray(plans) ? plans : [];
+    const hasYillik = list.some(p => p.tur === 'yillik');
     const items = [
       { ok: hasYillik, text: hasYillik ? 'Yıllık plan mevcut' : 'Yıllık plan oluştur', href: 'modules/yillik-plan.html' },
       { ok: false, text: `Hafta ${week?.hafta || '—'} günlük planı hazırla`, href: 'modules/gunluk-plan.html' },
@@ -117,13 +197,13 @@
 
   function renderRecentWork(plans, docs) {
     const rows = [];
-    plans.slice(0, 4).forEach(p => {
+    (plans || []).slice(0, 4).forEach(p => {
       rows.push(`<div class="list-item">
         <span>${p.tur === 'yillik' ? 'Yıllık' : 'Günlük'} · ${esc(p.ders || p.title)} · ${esc(String(p.sinif))}. sınıf</span>
         <span class="meta">${fmtRelative(p.createdAt)}</span>
       </div>`);
     });
-    docs.slice(0, 2).forEach(d => {
+    (docs || []).slice(0, 2).forEach(d => {
       rows.push(`<div class="list-item"><span>Evrak · ${esc(d.title)}</span><span class="meta">${fmtRelative(d.downloadedAt)}</span></div>`);
     });
     if (!rows.length) {
@@ -134,7 +214,7 @@
 
   function renderAlerts(plans, sinif) {
     const alerts = [];
-    if (!plans.some(p => p.tur === 'yillik')) {
+    if (!(plans || []).some(p => p.tur === 'yillik')) {
       alerts.push(`${sinif}. sınıf için yıllık plan henüz üretilmedi.`);
     }
     alerts.push('Öğretim Programı ekranı domain modeline (MB-DM) bağlanacak.');

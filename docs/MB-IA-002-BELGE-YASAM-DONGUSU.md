@@ -1,15 +1,16 @@
 # MB-IA-002 — Belge Yaşam Döngüsü
 
-**Sürüm:** 0.1 (iskelet — bağlayıcı yön)  
+**Sürüm:** 1.0  
 **Tarih:** 29 Temmuz 2026  
-**Durum:** Sonraki kritik aşama  
-**Üst:** MB-IA-001 · MB-COMP-002 · MB-BM
+**Durum:** 🔒 **Architecture Freeze**  
+**Üst:** MB-IA-001 · MB-COMP-002 · MB-BM  
+**Üst katman:** MB-IA-003 (Smart Document Engine)
 
-> MiniBilge yalnızca belge üretmez; öğretmenin resmî doküman sürecini yöneten bir **Belge İşletim Sistemi**dir.
+> MiniBilge yalnızca belge üretmez; öğretmenin resmî doküman sürecini yöneten bir **Document Operating System** çekirdeğidir.
 
 ---
 
-## 1. Yaşam döngüsü
+## 1. Yaşam döngüsü (freeze)
 
 ```
 Oluştur → Doğrula → Önizle → Düzenle
@@ -17,40 +18,59 @@ Oluştur → Doğrula → Önizle → Düzenle
   → Güncelle → Sürüm Takibi
 ```
 
-| Aşama | Anlam | Bileşen / motor |
+| Aşama | Anlam | Motor / bileşen |
 |-------|--------|------------------|
-| Oluştur | İş seçildi → motor zinciri | TPM/YPM/GPM/BM… |
-| Doğrula | Eksik alan, mevzuat, tutarlılık | ValidationEngine |
-| Önizle | DocumentBuilder önizleme | COMP-002 |
-| Düzenle | Kontrollü alan düzenleme | DocumentBuilder |
-| Aktar | HTML / Word / PDF / Yazdır | ExportMenu |
-| Paylaş | Okul / veli / zümre (sonra) | — |
-| Arşivle | Yıl sonu / kapanış | Document store |
-| Güncelle | Takvim veya program değişince | Motor re-run |
+| Oluştur | İş + bağlam → üretim | IA-003 Generation |
+| Doğrula | Eksik alan, mevzuat, DNA kuralları | ValidationEngine |
+| Önizle | Official + Editable katmanlar | Preview Engine |
+| Düzenle | Yalnızca kilitli olmayan alanlar (MD-036) | DocumentBuilder |
+| Aktar | HTML / Word / PDF / Yazdır | Export Engine |
+| Paylaş | Okul / veli / zümre | Sync (sonra) |
+| Arşivle | Yıl sonu / kapanış | Archive Engine |
+| Güncelle | Program/takvim değişince re-run | Generation |
 | Sürüm | v1, v2… geri alınabilir | Document.version |
 
----
-
-## 2. Durum modeli (COMP-005 ile hizalı)
-
-`draft` → `validating` → `ready` → `exported` → `shared` → `archived`  
-Yan yollar: `editing` · `missing` · `outdated`
+Bu sıra **değiştirilmez**. Yeni özellikler aşamalara eklenir; sıra bozulmaz.
 
 ---
 
-## 3. Gelecek kancalar
+## 2. Durum modeli (freeze)
+
+```
+draft → validating → ready → exported → shared → archived
+```
+
+Yan yollar: `editing` · `missing` · `outdated` · `locked_official`
+
+COMP-005 rozetleri bu durumlarla eşlenir.
+
+---
+
+## 3. Katman ayrımı (IA-003 ile)
+
+| Katman | Kim | Düzenlenebilir? |
+|--------|-----|-----------------|
+| **Official Layer** | MEB / TYMM / kilitli DNA | Hayır (MD-036) |
+| **Editable Layer** | Öğretmen | Evet |
+
+---
+
+## 4. Gelecek kancalar (sıra dışı özellik)
+
+Freeze bozulmadan eklenecek kancalar:
 
 - e-imza  
-- okul yönetim sistemi (e-Okul vb.) entegrasyonu  
-- AI destekli otomatik güncelleme (program/takvim değişince)
+- e-Okul / okul YS entegrasyonu  
+- AI Enhancement (Preview sonrası, Export öncesi)  
+- otomatik güncelleme (program/takvim değişimi)
 
 ---
 
-## 4. v1.0’da doldurulacaklar
+## 5. Değişiklik politikası
 
-- Durum geçiş diyagramı (sert kurallar)  
-- Sürüm şeması (DM-002 uyumu)  
-- Arşiv saklama politikası  
-- Paylaşım rolleri  
+IA-002 freeze sonrası değişiklik = **yeni MD + versiyon bump** (1.1…).  
+Uygulama ayrıntıları IA-003 ve DOS-001 kataloğunda yaşar.
 
-*Şimdilik yön belgesi; uygulama COMP-002 + BM ile kademeli bağlanır.*
+---
+
+*Freeze tarihi: 29 Temmuz 2026.*

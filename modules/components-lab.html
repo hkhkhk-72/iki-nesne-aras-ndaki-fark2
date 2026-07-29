@@ -14,6 +14,8 @@
   <script src="../assets/js/core/storage.js"></script>
   <script src="../assets/js/core/hub-config.js"></script>
   <script src="../assets/js/core/calendar-engine.js"></script>
+  <script src="../assets/js/core/document-dna.js"></script>
+  <script src="../assets/js/core/context-engine.js"></script>
   <script src="../assets/js/components/mb-components.js"></script>
   <script src="../assets/js/components/nav.js"></script>
   <script src="../assets/js/components/status.js"></script>
@@ -73,6 +75,11 @@
           <section class="mbc-lab-section">
             <h2>Document Builder (COMP-002)</h2>
             <div id="lab-doc"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>Document OS — DNA + Smart Form (IA-003)</h2>
+            <div id="lab-dna"></div>
           </section>
         </div>`;
 
@@ -158,6 +165,35 @@
         ],
         onExport(fmt) { C.notify.success('Dışa aktarma: ' + fmt); }
       }).mount('#lab-doc');
+
+      (async function dnaDemo() {
+        const host = document.getElementById('lab-dna');
+        if (!host || !window.DocumentDNA || !window.ContextEngine) {
+          if (host) host.innerHTML = '<p class="empty-state">DNA motoru yüklenemedi.</p>';
+          return;
+        }
+        await DocumentDNA.load();
+        const samples = ['yillik-plan', 'gunluk-plan', 'zumre-toplanti', 'bep'];
+        const rows = samples.map(id => {
+          const dna = DocumentDNA.get(id);
+          if (!dna) return '';
+          const pack = ContextEngine.buildDocumentContext({ docId: id, dna });
+          const inputs = pack.userInputs.length
+            ? pack.userInputs.map(u => u.label).join(' · ')
+            : '0 soru (Zero Input)';
+          const locked = (dna.officialLocked || []).join(', ') || '—';
+          return `<div class="mbc-doc-card" style="margin-bottom:10px;">
+            <div class="mbc-doc-card-top">
+              <h3>${dna.code} — ${dna.name}</h3>
+              <span class="mbc-status mbc-status--ready">${dna.status}</span>
+            </div>
+            <p class="mbc-doc-meta">Motor: ${(dna.motors || []).join(', ')}</p>
+            <p class="mbc-doc-meta">Smart Form: ${inputs}</p>
+            <p class="mbc-doc-meta">Official Lock: ${locked}</p>
+          </div>`;
+        }).join('');
+        host.innerHTML = rows || '<p class="empty-state">Katalog boş.</p>';
+      })();
     })();
   </script>
 </body>

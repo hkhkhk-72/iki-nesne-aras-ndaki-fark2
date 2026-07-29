@@ -53,7 +53,9 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 2d. **MB-UI-002** Sınıf odaklı ana ekran + hub ✅ → `docs/MB-UI-002-SINIF-ODAKLI-ANA-EKRAN.md`
 2e. **MD-026 / MB-UI-003** Sonraki nesil IA (ÖğretmenEvrak referansı, kopya değil) ✅
 2f. **MB-IA-001** Bilgi mimarisi — iş akışı merkezli 8 modül ✅ → `docs/MB-IA-001-BILGI-MIMARISI.md`
-2g. **MB-IA-002** Belge yaşam döngüsü (iskelet) → `docs/MB-IA-002-BELGE-YASAM-DONGUSU.md`
+2g. **MB-IA-002** Belge yaşam döngüsü 🔒 Architecture Freeze → `docs/MB-IA-002-BELGE-YASAM-DONGUSU.md`
+2h. **MB-IA-003** Akıllı Belge Üretim Motoru ✅ → `docs/MB-IA-003-AKILLI-BELGE-URETIM-MOTORU.md`
+2i. **MB-DOS-000/001** Document OS + DNA katalog tohumu 🔵
 3. **MB-DM-002** Entity Detay Spesifikasyonu ✅ → `docs/MB-DM-002-ENTITY-DETAY-SPESIFIKASYONU.md`
 3b. **Günlük Kazanımlar** (sınıf defteri) + Kazanım Cepte UX esini → `docs/ESIN-KAZANIM-CEPTE.md`
 4. **MB-TPM-001** 1. sınıf Türkçe domain ✅ → `docs/MB-TPM-001-SINIF1-TURKCE-DOMAIN-UYGULAMASI.md`

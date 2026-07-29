@@ -66,7 +66,9 @@ Bağlayıcı sıra:
 2b–2d. **MB-UI-001 / DS-001 / UI-002** ✅  
 2e. **MD-026 / MB-UI-003** — ÖğretmenEvrak referansı → sonraki nesil ana ekran ✅  
 2f. **MB-IA-001** — Bilgi mimarisi (iş akışı merkezli, 8 modül) ✅ → `docs/MB-IA-001-BILGI-MIMARISI.md`  
-2g. **MB-IA-002** — Belge yaşam döngüsü *(iskelet / sıradaki)* → `docs/MB-IA-002-BELGE-YASAM-DONGUSU.md`  
+2g. **MB-IA-002** — Belge yaşam döngüsü 🔒 **Architecture Freeze** → `docs/MB-IA-002-BELGE-YASAM-DONGUSU.md`  
+2h. **MB-IA-003** — Akıllı Belge Üretim Motoru ✅ → `docs/MB-IA-003-AKILLI-BELGE-URETIM-MOTORU.md`  
+2i. **MB-DOS-000 / DOS-001** — Document OS + katalog şeması (tohum) 🔵  
 3. **MB-DM-002** — Entity Detay ✅  
 4. **MB-TPM-001** — 1. sınıf Türkçe domain ✅  
 5. **FAZ 6 / MB-COMP-001…008** — Bileşen mimarisi *(aktif)*  
@@ -74,8 +76,8 @@ Bağlayıcı sıra:
 7. **MB-DB-001** — Fiziksel veri tabanı  
 8. **MB-JSON-001** → **MB-ALG-001** → **MB-APP-001**
 
-> Ana ilke (IA-001): Öğretmen belge aramaz; işi seçer; belge kendiliğinden oluşur.  
-> 8 modül: Planlar · Sınıf Yönetimi · Ölçme · Resmî Evraklar · Takvim · Etkinlikler · Raporlar · MiniBilge AI.
+> Document OS ilkeleri: **MD-031…036** (Context First, Zero Input, Smart Form, Dynamic Form, Document DNA, Official Lock).  
+> Kayıt: `docs/MD-REGISTRY.md`. Taslak MD-025…030 numaraları mevcut MD-025/026 ile çakıştığı için kaydırıldı.
 
 ---
 

@@ -160,7 +160,7 @@
         { ad: 'Günlük plan iste', href: 'modules/ai.html?q=gunluk', motor: 'MB-AI' },
         { ad: 'Tutanak iste', href: 'modules/ai.html?q=tutanak', motor: 'MB-AI' },
         { ad: 'Çalışma kâğıdı iste', href: 'modules/ai.html?q=calisma', motor: 'MB-AI' },
-        { ad: 'Components Lab', href: 'modules/components-lab.html' }
+        { ad: 'Components Lab / DNA', href: 'modules/components-lab.html' }
       ]
     }
   ];

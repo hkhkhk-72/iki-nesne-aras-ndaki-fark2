@@ -137,6 +137,7 @@ Görsel dil bu belgededir.
 | Deneyim (TXS) | `docs/MB-DS-002-TEACHER-EXPERIENCE-SYSTEM.md` |
 | Etkileşim süreleri (IS) | `docs/MB-DS-003-INTERACTION-STANDARDS.md` |
 | Erişilebilirlik (A11Y) | `docs/MB-DS-004-ACCESSIBILITY.md` |
+| Hareket (ML) | `docs/MB-DS-005-MOTION-LANGUAGE.md` |
 
 ---
 

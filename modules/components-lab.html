@@ -180,6 +180,25 @@
         }).mount('#lab-txs-advanced');
       }
 
+      if (window.MiniBilgeMotion) {
+        const M = MiniBilgeMotion;
+        const target = '#lab-ml-target';
+        const row = document.getElementById('lab-ml-btns');
+        [
+          ['Başarılı', () => M.success(target)],
+          ['Hata', () => M.error(target)],
+          ['Yükleniyor', () => { M.loading(target); setTimeout(() => M.stopLoading(target), 900); }],
+          ['Geçiş', () => M.transition(target)]
+        ].forEach(([label, fn]) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'quick-btn compact';
+          b.textContent = label;
+          b.addEventListener('click', fn);
+          row.appendChild(b);
+        });
+      }
+
       if (window.MiniBilgeInteraction) {
         const I = MiniBilgeInteraction;
         I.Skeleton({ lines: 4 }).mount('#lab-is-skel');

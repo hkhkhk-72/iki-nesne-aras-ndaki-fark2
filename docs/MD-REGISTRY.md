@@ -38,7 +38,8 @@ Taslakta Document OS ilkeleri MD-025…030 diye anılmıştı.
 **MD-040** — LessonExecution tek doğruluk kaynağı; Ders Defteri bağımsız belge değildir.  
 **MD-041** — Teacher Experience System: Context/Workflow First, Zero Load, One Click, AI Everywhere, Never Empty, Action Dashboard, AI Confidence.  
 **MD-042** — Interaction Standards: hover/click/page/drawer/dialog süreleri, snackbar 3 sn, skeleton, debounce, infinite scroll, undo 5 sn, autosave 30 sn.  
-**MD-043** — Accessibility: min 14px, 44×44, klavye/SR, WCAG AA, dark mode, large text, offline sync.
+**MD-043** — Accessibility: min 14px, 44×44, klavye/SR, WCAG AA, dark mode, large text, offline sync.  
+**MD-044** — Motion Language: yalnızca success/error/loading/transition · max 300 ms · bekletmez.
 
 ---
 
@@ -87,5 +88,9 @@ Detay: `docs/MB-DS-003-INTERACTION-STANDARDS.md` · `docs/MD-042-INTERACTION-STA
 ### MD-043 — Accessibility
 Min font 14px · touch 44×44 · keyboard/SR · WCAG AA · dark · large text · offline.  
 Detay: `docs/MB-DS-004-ACCESSIBILITY.md` · `docs/MD-043-ACCESSIBILITY.md`
+
+### MD-044 — Motion Language
+Animasyon gösteriş değil; durum bildirir. Max 300 ms.  
+Detay: `docs/MB-DS-005-MOTION-LANGUAGE.md` · `docs/MD-044-MOTION-LANGUAGE.md`
 
 Detay: `docs/MB-IA-003-AKILLI-BELGE-URETIM-MOTORU.md` · `docs/MB-DOS-000-DOCUMENT-OS.md`

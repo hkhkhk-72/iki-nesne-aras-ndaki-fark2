@@ -23,6 +23,7 @@
 | **MD-038** | Context Cache Engine | Document OS | ✅ freeze |
 | **MD-039** | Workflow First | Teacher Workflow | ✅ freeze |
 | **MD-040** | LessonExecution SSOT | Document OS / LEE | ✅ freeze |
+| **MD-041** | Teacher Experience System (TXS) | UX / MB-DS-002 | ✅ freeze |
 
 ### Numara notu
 
@@ -31,7 +32,8 @@ Taslakta Document OS ilkeleri MD-025…030 diye anılmıştı.
 
 **MD-038** — Context Cache: Load Once — Use Everywhere.  
 **MD-039** — Workflow First: belge seçilmez; TWE doğru işi zamanında önerir.  
-**MD-040** — LessonExecution tek doğruluk kaynağı; Ders Defteri bağımsız belge değildir.
+**MD-040** — LessonExecution tek doğruluk kaynağı; Ders Defteri bağımsız belge değildir.  
+**MD-041** — Teacher Experience System: Context/Workflow First, Zero Load, One Click, AI Everywhere, Never Empty, Action Dashboard, AI Confidence.
 
 ---
 
@@ -68,5 +70,9 @@ Detay: `docs/MD-039-WORKFLOW-FIRST.md` · `docs/MB-WFE-001-TEACHER-WORKFLOW-ENGI
 ### MD-040 — LessonExecution SSOT
 Ders Defteri LessonExecution projeksiyonudur. COMPLETED olmadan defter yok.  
 Detay: `docs/MD-040-LESSON-EXECUTION-SSOT.md` · `docs/MB-DOS-003-LESSON-EXECUTION-ENGINE.md`
+
+### MD-041 — Teacher Experience System (TXS)
+Tasarım sistemi yalnızca görsel dil değildir; öğretmen akışına göre yönlendirir.  
+TXS-001…010 · `docs/MB-DS-002-TEACHER-EXPERIENCE-SYSTEM.md` · `assets/js/components/txs.js`
 
 Detay: `docs/MB-IA-003-AKILLI-BELGE-URETIM-MOTORU.md` · `docs/MB-DOS-000-DOCUMENT-OS.md`

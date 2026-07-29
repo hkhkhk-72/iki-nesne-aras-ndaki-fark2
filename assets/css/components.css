@@ -391,6 +391,8 @@
   .mbc-db-sign { grid-template-columns: 1fr; }
 }
 
+/* MB-DS-002 TXS stilleri → assets/css/ds.css (.txs-*) */
+
 @media (prefers-reduced-motion: reduce) {
   .mbc-grade-tab,
   .grade-tab,

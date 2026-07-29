@@ -1220,6 +1220,189 @@ a.hub-link:hover {
   }
 }
 
+/* ===== MB-DS-002 Teacher Experience System (TXS) ===== */
+
+.txs-root {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+.txs-root > * { pointer-events: auto; }
+
+.txs-fab {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 16px;
+  cursor: pointer;
+  font-family: var(--mb-font-ui);
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(145deg, #0E9B86 0%, #0A5F6E 100%);
+  box-shadow: 0 10px 24px rgba(6, 122, 104, 0.28);
+}
+.txs-fab-mark {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.2);
+  font-size: 0.72rem;
+}
+.txs-fab-label { font-size: 0.9rem; }
+
+.txs-panel {
+  width: min(320px, calc(100vw - 36px));
+  background: linear-gradient(165deg, #fff, #E8F7F2);
+  border: 1px solid rgba(11,122,106,0.18);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 16px 36px rgba(15, 90, 100, 0.18);
+}
+.txs-panel[hidden] { display: none !important; }
+.txs-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.txs-panel-head strong {
+  display: block;
+  font-family: var(--mb-font-display);
+  margin-bottom: 4px;
+}
+.txs-panel-close {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--mb-ink-soft);
+}
+.txs-panel-lead {
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  color: var(--mb-ink-soft);
+  font-weight: 600;
+}
+.txs-panel-list {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.txs-help-btn {
+  appearance: none;
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(11,122,106,0.16);
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  color: var(--mb-ink);
+}
+.txs-help-btn:hover,
+.txs-help-btn.is-used {
+  border-color: rgba(11,122,106,0.4);
+  background: rgba(11,122,106,0.06);
+}
+.txs-panel-link {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--mb-accent);
+}
+
+.txs-conf {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.txs-conf--resmi {
+  background: rgba(47,125,74,0.16);
+  color: #1F5C34;
+}
+.txs-conf--oneri {
+  background: rgba(91,143,184,0.2);
+  color: #1F4F78;
+}
+.txs-conf--taslak {
+  background: rgba(201,132,47,0.18);
+  color: #8A4E0A;
+}
+
+.txs-empty {
+  padding: 18px 16px;
+  border-radius: 14px;
+  background: linear-gradient(165deg, rgba(255,255,255,0.92), rgba(224,245,238,0.8));
+  border: 1px dashed rgba(11,122,106,0.28);
+}
+.txs-empty strong {
+  display: block;
+  font-family: var(--mb-font-display);
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+.txs-empty p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--mb-ink-soft);
+  font-weight: 600;
+}
+.txs-empty-hint {
+  margin-top: 8px !important;
+  font-size: 0.8rem !important;
+}
+
+.txs-advanced {
+  margin-top: 12px;
+  border: 1px solid rgba(11,122,106,0.14);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.55);
+  padding: 0 12px;
+}
+.txs-advanced summary {
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 0.88rem;
+  padding: 12px 0;
+  color: var(--mb-ink-soft);
+  list-style: none;
+}
+.txs-advanced summary::-webkit-details-marker { display: none; }
+.txs-advanced-body {
+  padding: 0 0 14px;
+  font-size: 0.88rem;
+}
+
+@media (max-width: 720px) {
+  .txs-fab-label { display: none; }
+  .txs-fab { padding: 14px; border-radius: 50%; }
+  .txs-root { right: 14px; bottom: 14px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dash,
   .dash-hero,

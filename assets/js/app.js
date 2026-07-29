@@ -134,7 +134,7 @@
             </div>` : ''}
 
           <p class="grade-prompt">Sınıfını Seç</p>
-          <p class="section-lead" style="margin-top:4px;margin-bottom:0;">Workflow First — belge seçmeyin; doğru zamanda doğru iş gelir.</p>
+          <p class="section-lead" style="margin-top:4px;margin-bottom:0;">TXS — bağlam seçilir; sistem yönlendirir. Belge menüsü değil, bugünkü iş.</p>
           ${renderClassContext(siniflar, sinif, sube)}
 
           <div class="hero-meta">
@@ -142,13 +142,6 @@
             ${currentWeek ? `<span class="hero-chip warm">Hafta ${currentWeek.hafta}</span>` : ''}
             ${wf && wf.stage ? `<span class="hero-chip sky">${esc(wf.stage.ad)}</span>` : ''}
             <span class="hero-chip">${gunAdi}, ${fmtToday(today)}</span>
-          </div>
-
-          <div class="context-loaded" aria-label="Context Cache + TWE">
-            <span>Cache yüklü</span>
-            <span>TWE v2</span>
-            <span>Workflow First</span>
-            <span>Load Once</span>
           </div>
         </header>
 
@@ -202,39 +195,75 @@
   }
 
   function renderWorkflowBoard(wf) {
+    const T = window.MiniBilgeTxs;
     if (!wf) {
-      return `
-        <section class="mb-section">
-          <h2>Bugünkü İşler</h2>
-          <p class="section-lead">Workflow Engine yüklenemedi.</p>
-        </section>`;
+      const empty = T && T.EmptyState
+        ? T.EmptyState({
+            title: 'Bugün buradan başlayın',
+            message: 'Örnek görevler ve yardım hazır. Workflow Engine bağlandığında işler otomatik gelir.',
+            hint: 'TXS-007 Never Empty · TXS-008 Action Dashboard',
+            actions: [
+              { label: 'Dersi Başlat', href: 'modules/ders-yurutme.html', primary: true },
+              { label: 'Yıllık Plan', href: 'modules/yillik-plan.html' }
+            ]
+          }).html
+        : '<p class="section-lead">Workflow Engine yüklenemedi.</p>';
+      return `<section class="mb-section"><h2>Bugün</h2>${empty}</section>`;
     }
     const tasks = (wf.tasks || []).slice(0, 7);
     const overdue = (wf.deadlines && wf.deadlines.overdue) || [];
     const soon = (wf.deadlines && wf.deadlines.soon) || [];
     const suggestions = wf.suggestions || [];
     const progress = wf.progress || { overall: 0, modules: [] };
+    const confOneri = T && T.AiConfidence ? T.AiConfidence({ level: 'oneri' }).html : '';
+    const confTaslak = T && T.AiConfidence ? T.AiConfidence({ level: 'taslak' }).html : '';
+
+    const taskBlock = tasks.length
+      ? `<div class="task-list">
+          ${tasks.map(t => `
+            <div class="task-row">
+              <span class="task-check${t.done ? ' done' : ''}">${t.done ? '✓' : ''}</span>
+              <span class="task-text${t.done ? ' done' : ''}">${esc(t.text)}</span>
+              <a class="quick-btn primary compact" href="${t.href}">Yap</a>
+            </div>`).join('')}
+        </div>`
+      : (T && T.EmptyState
+        ? T.EmptyState({
+            title: 'Bugün için önerilen işler',
+            message: 'Örnek akış: günlük plan → yoklama → ders yürütme → veli / rehberlik.',
+            hint: 'TXS-007 · örnek görevlerle başlayın',
+            actions: [
+              { label: 'Günlük Plan', href: 'modules/gunluk-plan.html', primary: true },
+              { label: 'Dersi Başlat', href: 'modules/ders-yurutme.html' }
+            ]
+          }).html
+        : '');
+
+    const advancedBody = `
+      <div class="wf-progress-head">
+        <div class="wf-progress-label">Genel ilerleme</div>
+        <div class="wf-progress-bar" aria-valuenow="${progress.overall}" aria-valuemin="0" aria-valuemax="100">
+          <span style="width:${progress.overall}%"></span>
+        </div>
+        <strong>${progress.overall}%</strong>
+      </div>
+      <div class="wf-module-progress">
+        ${(progress.modules || []).slice(0, 8).map(m => `
+          <div class="wf-mod">
+            <span>${esc(m.ad)}</span>
+            <div class="wf-progress-bar slim"><span style="width:${m.percent}%"></span></div>
+            <em>${m.percent}%</em>
+          </div>`).join('')}
+      </div>`;
+
+    const advanced = T && T.AdvancedPanel
+      ? T.AdvancedPanel({ id: 'wf-advanced', bodyHtml: advancedBody }).html
+      : advancedBody;
 
     return `
       <section class="mb-section wf-board">
-        <h2>Workflow — ${esc(wf.stage.ad)}</h2>
-        <p class="section-lead">MD-039 Workflow First · görevler zamanında gelir; belgeyi workflow önerir.</p>
-
-        <div class="wf-progress-head">
-          <div class="wf-progress-label">Genel ilerleme</div>
-          <div class="wf-progress-bar" aria-valuenow="${progress.overall}" aria-valuemin="0" aria-valuemax="100">
-            <span style="width:${progress.overall}%"></span>
-          </div>
-          <strong>${progress.overall}%</strong>
-        </div>
-        <div class="wf-module-progress">
-          ${(progress.modules || []).slice(0, 8).map(m => `
-            <div class="wf-mod">
-              <span>${esc(m.ad)}</span>
-              <div class="wf-progress-bar slim"><span style="width:${m.percent}%"></span></div>
-              <em>${m.percent}%</em>
-            </div>`).join('')}
-        </div>
+        <h2>Bugün</h2>
+        <p class="section-lead">${esc(wf.stage.ad)} · TXS-008 iş yaptırır — belgeyi workflow üretir.</p>
 
         ${overdue.length || soon.length ? `
           <div class="wf-deadlines">
@@ -242,27 +271,19 @@
             ${soon.map(d => `<span class="wf-pill soon">Yaklaşan: ${esc(d.text)}</span>`).join('')}
           </div>` : ''}
 
-        <h3 class="wf-subhead">Bugünkü görevler</h3>
-        <div class="task-list">
-          ${tasks.map(t => `
-            <div class="task-row">
-              <span class="task-check${t.done ? ' done' : ''}">${t.done ? '✓' : ''}</span>
-              <span class="task-text${t.done ? ' done' : ''}">${esc(t.text)}
-                <small class="wf-prio">Öncelik ${t.priority || '—'}</small>
-              </span>
-              <a class="text-link" href="${t.href}">Aç</a>
-            </div>`).join('')}
-        </div>
+        ${taskBlock}
 
         ${suggestions.length ? `
-          <h3 class="wf-subhead">Workflow belge önerileri</h3>
+          <h3 class="wf-subhead">Sonraki adım önerileri ${confOneri}</h3>
           <div class="wf-suggestions">
             ${suggestions.map(s => `
               <a class="wf-suggest" href="${s.href}">
-                <strong>${esc(s.docHint || 'Belge')}</strong>
+                <strong>${esc(s.docHint || 'İş')} ${confTaslak}</strong>
                 <span>${esc(s.text)}</span>
               </a>`).join('')}
           </div>` : ''}
+
+        ${advanced}
       </section>`;
   }
 

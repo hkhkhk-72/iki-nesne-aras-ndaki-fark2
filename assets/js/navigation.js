@@ -87,11 +87,16 @@
   }
 
   function renderLayout(activeId, content) {
-    return `
+    const html = `
       <div class="app-layout">
         ${renderSidebar(activeId)}
         <main class="main-content">${content}</main>
       </div>`;
+    // TXS-005 — AI Everywhere (mount sonrası FAB)
+    setTimeout(() => {
+      if (window.MiniBilgeTxs) MiniBilgeTxs.attach({ screen: activeId });
+    }, 0);
+    return html;
   }
 
   window.MiniBilgeNav = { MENU, EVRAK_ALT, renderSidebar, renderLayout, resolveHref, activeSinif };

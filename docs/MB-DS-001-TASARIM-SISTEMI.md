@@ -129,4 +129,12 @@ Gürültülü parallax / glow yok.
 
 ---
 
+## 10. Deneyim katmanı
+
+Görsel dil bu belgededir. Öğretmen deneyimi anayasası:
+
+→ **`docs/MB-DS-002-TEACHER-EXPERIENCE-SYSTEM.md`** (TXS-001…010)
+
+---
+
 *Bu sistem UI-001 ekranlarına uygulanır; yeni ekran DS onayı olmadan stil eklemez.*

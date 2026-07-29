@@ -10,6 +10,7 @@
 <body>
   <div id="app"></div>
   <script>window.MINIBILGE_BASE = '../';</script>
+  <script src="../assets/js/components/txs.js"></script>
   <script src="../assets/js/navigation.js"></script>
   <script>
     document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('ai', `
@@ -39,6 +40,16 @@
         </section>
       </div>
     `);
+    const params = new URLSearchParams(location.search);
+    const preset = params.get('q');
+    if (preset) {
+      document.getElementById('aiInput').value = preset;
+      const conf = window.MiniBilgeTxs
+        ? MiniBilgeTxs.AiConfidence({ level: 'oneri' }).html
+        : '';
+      document.getElementById('aiOut').innerHTML =
+        conf + ' Bağlamdan gelen soru hazır. Çalıştırın veya düzenleyin. <em>AI çıktısı MEB belgesi değildir (TXS-010).</em>';
+    }
     document.getElementById('aiForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const q = document.getElementById('aiInput').value.trim();

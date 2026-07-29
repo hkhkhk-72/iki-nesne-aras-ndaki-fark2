@@ -72,6 +72,7 @@ Bağlayıcı sıra:
 2j. **MD-038** — Context Cache Engine (Load Once — Use Everywhere) ✅  
 2k. **MB-WFE-001 / MD-039** — Teacher Workflow Engine v2 + Workflow First ✅  
 2l. **MB-DOS-003 / MD-040** — Lesson Execution Engine (LEE) ✅  
+2m. **MB-DS-002 / MD-041** — Teacher Experience System (TXS-001…010) ✅  
 3. **MB-DM-002** — Entity Detay ✅  
 4. **MB-TPM-001** — 1. sınıf Türkçe domain ✅  
 5. **FAZ 6 / MB-COMP-001…008** — Bileşen mimarisi *(aktif)*  

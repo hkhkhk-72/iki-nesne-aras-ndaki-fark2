@@ -52,7 +52,8 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 2c. **MB-DS-001** Tasarım Sistemi ✅
 3. **MB-DM-002** Entity Detay Spesifikasyonu ✅ → `docs/MB-DM-002-ENTITY-DETAY-SPESIFIKASYONU.md`
 3b. **Günlük Kazanımlar** (sınıf defteri) + Kazanım Cepte UX esini → `docs/ESIN-KAZANIM-CEPTE.md`
-4. **MB-TPM-001** *(sıradaki)* → MB-DB-001 → MB-JSON-001 → MB-ALG-001 → MB-APP-001
+4. **MB-TPM-001** 1. sınıf Türkçe domain ✅ → `docs/MB-TPM-001-SINIF1-TURKCE-DOMAIN-UYGULAMASI.md`
+5. **MB-DB-001** *(sıradaki)* → MB-JSON-001 → MB-ALG-001 → MB-APP-001
 
 > JSON en son ürün olacaktır. UI menüsü ARCH-001 ile donmuştur (8 madde).
 

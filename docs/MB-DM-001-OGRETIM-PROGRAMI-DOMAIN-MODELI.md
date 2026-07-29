@@ -437,8 +437,9 @@ Yıllık plan, günlük plan, tema planı, ölçme aracı, öğretmen rehberi, k
 |-----|--------------|-------|
 | **MB-DM-001** | Domain Model (bu doküman) | ✅ v1.0 |
 | **MB-DM-002** | Entity Detay Spesifikasyonu (alanlar, ID, iş kuralları, validasyon) | ✅ v1.0 → `docs/MB-DM-002-ENTITY-DETAY-SPESIFIKASYONU.md` |
-| **MB-TPM-001** | 1. Sınıf Türkçe — domain uygulaması (örnek doldurma) | ⏳ sıradaki |
-| **MB-DB-001** | Fiziksel veri tabanı tasarımı | ⏳ |
+| **MB-TPM-001** | 1. Sınıf Türkçe — domain uygulaması (örnek doldurma) | ✅ v1.0 → `docs/MB-TPM-001-SINIF1-TURKCE-DOMAIN-UYGULAMASI.md` |
+| **MB-DB-001** | Fiziksel veri tabanı tasarımı | ⏳ sıradaki |
+| **MB-DB-001** | Fiziksel veri tabanı tasarımı | ⏳ (TPM-001 sonrası) |
 | **MB-JSON-001** | Makine tarafından işlenebilir JSON şeması | ⏳ |
 | **MB-ALG-001** | Yıllık plan üretim algoritması | ⏳ |
 | **MB-APP-001** | MiniBilge Öğretmen uygulaması entegrasyonu | ⏳ |
@@ -455,7 +456,7 @@ MB-JSON-001 onaylanana kadar kanonik şema sayılmaz; domain’e uymayan alanlar
 MB-DM-002 v1.0 tamamlandı (`docs/MB-DM-002-ENTITY-DETAY-SPESIFIKASYONU.md`).  
 Her varlık için: iş amacı, zorunlu/isteğe bağlı alanlar, kimlik, ilişkiler, iş kuralları, doğrulama, genişletme alanları.
 
-Sıradaki: **MB-TPM-001** (1. sınıf Türkçe domain uygulaması) → ardından MB-DB-001.
+TPM-001 ✅ → Sıradaki: **MB-DB-001** (fiziksel veri tabanı) → MB-JSON-001.
 
 ---
 

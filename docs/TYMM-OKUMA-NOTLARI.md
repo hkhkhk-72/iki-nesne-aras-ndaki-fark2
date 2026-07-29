@@ -302,7 +302,7 @@ Serbest Etkinlikler çizelge saatidir; branş/program dersi listesinde yer almaz
 
 Yeni curriculum JSON yazımı **durduruldu**.  
 Önce domain anayasası: `docs/MB-DM-001-OGRETIM-PROGRAMI-DOMAIN-MODELI.md`  
-DM-002 ✅ → Sıradaki: **MB-TPM-001** (1. sınıf Türkçe domain uygulaması) → MB-DB-001.
+DM-002 ✅ · TPM-001 ✅ → Sıradaki: **MB-DB-001** (fiziksel veri tabanı).
 
 Keşif amaçlı kalan okumalar (domain’e bağlanınca):
 

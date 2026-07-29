@@ -207,7 +207,8 @@ AI asistanı **asla** domain’i baypas ederek internetten “hazır plan” kop
 | Takvim ekranı | ⏳ Yeni (motor kısmen var) |
 | Evrak Merkezi alt grupları | ⏳ Envanter üzerinden |
 | MB-DM-002 Entity detay | ✅ `docs/MB-DM-002-ENTITY-DETAY-SPESIFIKASYONU.md` |
-| MB-TPM-001 1. sınıf Türkçe uygulama | ⏳ Sıradaki domain işi |
+| MB-TPM-001 1. sınıf Türkçe uygulama | ✅ `docs/MB-TPM-001-SINIF1-TURKCE-DOMAIN-UYGULAMASI.md` |
+| MB-DB-001 Fiziksel DB | ⏳ Sıradaki domain işi |
 
 ---
 

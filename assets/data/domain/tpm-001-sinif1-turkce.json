@@ -1,0 +1,2118 @@
+{
+  "meta": {
+    "spec": "MB-TPM-001",
+    "surum": "1.0",
+    "durum": "domain-instance-draft",
+    "notCanonicalSchema": true,
+    "aciklama": "DM-002'ye göre 1. sınıf Türkçe örnek doldurma. MB-JSON-001 öncesi migrasyon taslağıdır; keşif JSON kanonik değildir.",
+    "kaynakKesif": "assets/data/curriculum/sinif1-turkce.json",
+    "kaynakProgram": "MEB TYMM İlkokul Türkçe Dersi Öğretim Programı (1-4) 2024 — onaylı PDF",
+    "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programtur1234Onayli.pdf",
+    "modellemeNotu": "TYMM Türkçe'de aynı çıktı kodu birden fazla temada işlenir. TPM-001 ProgramUnitOutcome (M:N) bağını kullanır; LearningOutcome.kod tektir. Bu, DM-001 'tek unit' kuralına Türkçe için inceltilmiş uzantıdır (DM-002.1 adayı)."
+  },
+  "educationSystem": {
+    "id": "edu:ilkokul",
+    "ad": "Türkiye Yüzyılı Maarif Modeli — İlkokul",
+    "kademe": "ILKOKUL",
+    "aktifEgitimYili": "2025-2026"
+  },
+  "course": {
+    "id": "course:turkce",
+    "dersId": "turkce",
+    "ad": "Türkçe",
+    "kademe": "ILKOKUL",
+    "courseKind": "PROGRAM",
+    "structure": "tema",
+    "sinifKapsami": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "haftalikDersSaati": {
+      "1": 10,
+      "2": 10,
+      "3": 8,
+      "4": 8
+    }
+  },
+  "curriculum": {
+    "id": "cur:turkce:2024",
+    "dersId": "turkce",
+    "ad": "İlkokul Türkçe Dersi Öğretim Programı (1-4) 2024",
+    "sinifKapsami": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "onayYili": "2024",
+    "model": "Türkiye Yüzyılı Maarif Modeli",
+    "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programtur1234Onayli.pdf",
+    "toplamDersSaatiSinifBazli": {
+      "1": 360
+    },
+    "durum": "ACTIVE",
+    "ilkOkumaYazma": {
+      "yontem": "Ses Esaslı İlk Okuma Yazma Öğretimi",
+      "harfYazimi": "tırnaksız dik temel harfler",
+      "harfGruplari": [
+        {
+          "grup": 1,
+          "hafta": 6,
+          "harfler": "a-A, n-N, e-E, t-T",
+          "rakamlar": "1,2,3,4"
+        },
+        {
+          "grup": 2,
+          "hafta": 4
+        },
+        {
+          "grup": 3,
+          "hafta": 2
+        },
+        {
+          "grup": 4,
+          "hafta": 2
+        },
+        {
+          "grup": 5,
+          "hafta": 2
+        }
+      ]
+    },
+    "uygulamaEsaslari": "Ses Esaslı İlk Okuma Yazma Öğretimi; tırnaksız dik temel harfler"
+  },
+  "grade": {
+    "id": "grade:1",
+    "sinif": 1,
+    "ad": "1. Sınıf"
+  },
+  "programUnits": [
+    {
+      "id": "pu:turkce:1:th:01",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "kind": "THEME",
+      "ad": "İlk Okuma Yazmaya Hazırlık Çalışmaları",
+      "sira": 1,
+      "dersSaati": 10,
+      "yuzde": null,
+      "ciktiSayisi": 3,
+      "ozet": "Genel hazırlık, okul olgunluğu, okumaya/yazmaya hazırlık; dinleme, nefes, parmak-el-kol kasları",
+      "planlamayaDahil": true,
+      "legacyTemaId": "hazirlik",
+      "onerilenHafta": 1
+    },
+    {
+      "id": "pu:turkce:1:th:02",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "kind": "THEME",
+      "ad": "Güzel Davranışlarımız",
+      "sira": 2,
+      "dersSaati": 38,
+      "yuzde": null,
+      "ciktiSayisi": 10,
+      "ozet": "Etik, nezaket, dürüstlük, ailede sorumluluk, dostluk, saygı, sevgi; harfler: a-A, n-N, e-E, t-T; rakamlar 1-4",
+      "planlamayaDahil": true,
+      "legacyTemaId": "t1",
+      "onerilenHafta": 4
+    },
+    {
+      "id": "pu:turkce:1:th:03",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "kind": "THEME",
+      "ad": "Mustafa Kemal'den Atatürk'e",
+      "sira": 3,
+      "dersSaati": 38,
+      "yuzde": null,
+      "ciktiSayisi": 10,
+      "ozet": "Mustafa Kemal Atatürk, 23 Nisan, 19 Mayıs, millî bayramlar ve kahramanlık",
+      "planlamayaDahil": true,
+      "legacyTemaId": "t2",
+      "onerilenHafta": 4
+    },
+    {
+      "id": "pu:turkce:1:th:04",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "kind": "THEME",
+      "ad": "Çevremizdeki Yaşam",
+      "sira": 4,
+      "dersSaati": 38,
+      "yuzde": null,
+      "ciktiSayisi": 10,
+      "ozet": "Doğa, çevre, canlılar, yaşam alanları",
+      "planlamayaDahil": true,
+      "legacyTemaId": "t3",
+      "onerilenHafta": 4
+    },
+    {
+      "id": "pu:turkce:1:th:05",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "kind": "THEME",
+      "ad": "Yol Arkadaşımız Kitaplar",
+      "sira": 5,
+      "dersSaati": 38,
+      "yuzde": null,
+      "ciktiSayisi": 9,
+      "ozet": "Kitap sevgisi, okuma kültürü, kütüphane",
+      "planlamayaDahil": true,
+      "legacyTemaId": "t4",
+      "onerilenHafta": 4
+    },
+    {
+      "id": "pu:turkce:1:th:06",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "kind": "THEME",
+      "ad": "Yeteneklerimizi Keşfediyoruz",
+      "sira": 6,
+      "dersSaati": 38,
+      "yuzde": null,
+      "ciktiSayisi": 11,
+      "ozet": "Yetenekler, ilgi alanları, kendini ifade etme",
+      "planlamayaDahil": true,
+      "legacyTemaId": "t5",
+      "onerilenHafta": 4
+    },
+    {
+      "id": "pu:turkce:1:th:07",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "kind": "THEME",
+      "ad": "Minik Kâşifler",
+      "sira": 7,
+      "dersSaati": 38,
+      "yuzde": null,
+      "ciktiSayisi": 12,
+      "ozet": "Keşif, merak, bilim ve gözlem",
+      "planlamayaDahil": true,
+      "legacyTemaId": "t6",
+      "onerilenHafta": 4
+    },
+    {
+      "id": "pu:turkce:1:th:08",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "kind": "THEME",
+      "ad": "Atalarımızın İzleri",
+      "sira": 8,
+      "dersSaati": 38,
+      "yuzde": null,
+      "ciktiSayisi": 17,
+      "ozet": "Millî kültür, gelenek, tarihî miras",
+      "planlamayaDahil": true,
+      "legacyTemaId": "t7",
+      "onerilenHafta": 4
+    },
+    {
+      "id": "pu:turkce:1:th:09",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "kind": "THEME",
+      "ad": "Sorumluluklarımızın Farkındayız",
+      "sira": 9,
+      "dersSaati": 38,
+      "yuzde": null,
+      "ciktiSayisi": 17,
+      "ozet": "Haklar, sorumluluklar, demokratik yaşam",
+      "planlamayaDahil": true,
+      "legacyTemaId": "t8",
+      "onerilenHafta": 4
+    },
+    {
+      "id": "pu:turkce:1:sp:10",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "kind": "SPECIAL",
+      "specialKind": "PEKISTIRME",
+      "ad": "Pekiştirme Haftası",
+      "sira": 10,
+      "dersSaati": 20,
+      "ciktiSayisi": 0,
+      "ozet": "Özel birim — yeni öğrenme çıktısı üretmez / OTP zümre kararı",
+      "planlamayaDahil": true
+    },
+    {
+      "id": "pu:turkce:1:sp:11",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "kind": "SPECIAL",
+      "specialKind": "HATIRLATMA",
+      "ad": "Hatırlatma Haftası",
+      "sira": 11,
+      "dersSaati": 10,
+      "ciktiSayisi": 0,
+      "ozet": "Özel birim — yeni öğrenme çıktısı üretmez / OTP zümre kararı",
+      "planlamayaDahil": true
+    },
+    {
+      "id": "pu:turkce:1:sp:12",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "kind": "SPECIAL",
+      "specialKind": "OTP",
+      "ad": "Okul Temelli Planlama",
+      "sira": 12,
+      "dersSaati": 16,
+      "ciktiSayisi": 0,
+      "ozet": "Özel birim — yeni öğrenme çıktısı üretmez / OTP zümre kararı",
+      "planlamayaDahil": true
+    }
+  ],
+  "learningOutcomes": [
+    {
+      "id": "T.D.1.1",
+      "kod": "T.D.1.1",
+      "aciklama": "Dinleme/izlemeyi yönetebilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Dinleme/İzleme",
+      "primaryProgramUnitId": "pu:turkce:1:th:02",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.D.1.2",
+      "kod": "T.D.1.2",
+      "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Dinleme/İzleme",
+      "primaryProgramUnitId": "pu:turkce:1:th:01",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.D.1.3",
+      "kod": "T.D.1.3",
+      "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Dinleme/İzleme",
+      "primaryProgramUnitId": "pu:turkce:1:th:01",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.D.1.4",
+      "kod": "T.D.1.4",
+      "aciklama": "Dinleme/izleme sürecini değerlendirebilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Dinleme/İzleme",
+      "primaryProgramUnitId": "pu:turkce:1:th:02",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.K.1.1",
+      "kod": "T.K.1.1",
+      "aciklama": "Konuşmalarını yönetebilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Konuşma",
+      "primaryProgramUnitId": "pu:turkce:1:th:06",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.K.1.2",
+      "kod": "T.K.1.2",
+      "aciklama": "Konuşmalarında içerik oluşturabilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Konuşma",
+      "primaryProgramUnitId": "pu:turkce:1:th:02",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.K.1.3",
+      "kod": "T.K.1.3",
+      "aciklama": "Konuşma kurallarını uygulayabilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Konuşma",
+      "primaryProgramUnitId": "pu:turkce:1:th:02",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.K.1.4",
+      "kod": "T.K.1.4",
+      "aciklama": "Konuşma sürecini değerlendirebilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Konuşma",
+      "primaryProgramUnitId": "pu:turkce:1:th:08",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.O.1.1",
+      "kod": "T.O.1.1",
+      "aciklama": "Okuma sürecini yönetebilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Okuma",
+      "primaryProgramUnitId": "pu:turkce:1:th:02",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.O.1.2",
+      "kod": "T.O.1.2",
+      "aciklama": "Okudukları ile ilgili anlam oluşturabilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Okuma",
+      "primaryProgramUnitId": "pu:turkce:1:th:06",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.O.1.3",
+      "kod": "T.O.1.3",
+      "aciklama": "Okuduklarını çözümleyebilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Okuma",
+      "primaryProgramUnitId": "pu:turkce:1:th:06",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.O.1.4",
+      "kod": "T.O.1.4",
+      "aciklama": "Okuma sürecine etki eden durumları gözden geçirebilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Okuma",
+      "primaryProgramUnitId": "pu:turkce:1:th:08",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.O.1.5",
+      "kod": "T.O.1.5",
+      "aciklama": "Okuma sürecini değerlendirebilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Okuma",
+      "primaryProgramUnitId": "pu:turkce:1:th:08",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.Y.1.1",
+      "kod": "T.Y.1.1",
+      "aciklama": "Yazılı anlatım becerilerini yönetebilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Yazma",
+      "primaryProgramUnitId": "pu:turkce:1:th:01",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.Y.1.2",
+      "kod": "T.Y.1.2",
+      "aciklama": "Yazılarında içerik oluşturabilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Yazma",
+      "primaryProgramUnitId": "pu:turkce:1:th:02",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.Y.1.3",
+      "kod": "T.Y.1.3",
+      "aciklama": "Yazma kurallarını uygulayabilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Yazma",
+      "primaryProgramUnitId": "pu:turkce:1:th:02",
+      "bagimliliklar": []
+    },
+    {
+      "id": "T.Y.1.4",
+      "kod": "T.Y.1.4",
+      "aciklama": "Yazma sürecini değerlendirebilme",
+      "curriculumId": "cur:turkce:2024",
+      "dersId": "turkce",
+      "sinif": 1,
+      "codeFamily": "T",
+      "alan": "Yazma",
+      "primaryProgramUnitId": "pu:turkce:1:th:08",
+      "bagimliliklar": []
+    }
+  ],
+  "programUnitOutcomes": [
+    {
+      "programUnitId": "pu:turkce:1:th:01",
+      "outcomeId": "T.D.1.2",
+      "siraInUnit": 1
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:01",
+      "outcomeId": "T.D.1.3",
+      "siraInUnit": 2
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:01",
+      "outcomeId": "T.Y.1.1",
+      "siraInUnit": 3
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:02",
+      "outcomeId": "T.D.1.1",
+      "siraInUnit": 1
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:02",
+      "outcomeId": "T.D.1.2",
+      "siraInUnit": 2
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:02",
+      "outcomeId": "T.D.1.3",
+      "siraInUnit": 3
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:02",
+      "outcomeId": "T.D.1.4",
+      "siraInUnit": 4
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:02",
+      "outcomeId": "T.K.1.2",
+      "siraInUnit": 5
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:02",
+      "outcomeId": "T.K.1.3",
+      "siraInUnit": 6
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:02",
+      "outcomeId": "T.O.1.1",
+      "siraInUnit": 7
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:02",
+      "outcomeId": "T.Y.1.1",
+      "siraInUnit": 8
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:02",
+      "outcomeId": "T.Y.1.2",
+      "siraInUnit": 9
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:02",
+      "outcomeId": "T.Y.1.3",
+      "siraInUnit": 10
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:03",
+      "outcomeId": "T.D.1.1",
+      "siraInUnit": 1
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:03",
+      "outcomeId": "T.D.1.2",
+      "siraInUnit": 2
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:03",
+      "outcomeId": "T.D.1.3",
+      "siraInUnit": 3
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:03",
+      "outcomeId": "T.D.1.4",
+      "siraInUnit": 4
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:03",
+      "outcomeId": "T.K.1.2",
+      "siraInUnit": 5
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:03",
+      "outcomeId": "T.K.1.3",
+      "siraInUnit": 6
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:03",
+      "outcomeId": "T.O.1.1",
+      "siraInUnit": 7
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:03",
+      "outcomeId": "T.Y.1.1",
+      "siraInUnit": 8
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:03",
+      "outcomeId": "T.Y.1.2",
+      "siraInUnit": 9
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:03",
+      "outcomeId": "T.Y.1.3",
+      "siraInUnit": 10
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:04",
+      "outcomeId": "T.D.1.1",
+      "siraInUnit": 1
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:04",
+      "outcomeId": "T.D.1.2",
+      "siraInUnit": 2
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:04",
+      "outcomeId": "T.D.1.3",
+      "siraInUnit": 3
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:04",
+      "outcomeId": "T.O.1.1",
+      "siraInUnit": 4
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:04",
+      "outcomeId": "T.Y.1.1",
+      "siraInUnit": 5
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:04",
+      "outcomeId": "T.Y.1.2",
+      "siraInUnit": 6
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:04",
+      "outcomeId": "T.Y.1.3",
+      "siraInUnit": 7
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:04",
+      "outcomeId": "T.K.1.2",
+      "siraInUnit": 8
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:04",
+      "outcomeId": "T.K.1.3",
+      "siraInUnit": 9
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:04",
+      "outcomeId": "T.D.1.4",
+      "siraInUnit": 10
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:05",
+      "outcomeId": "T.D.1.1",
+      "siraInUnit": 1
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:05",
+      "outcomeId": "T.D.1.2",
+      "siraInUnit": 2
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:05",
+      "outcomeId": "T.D.1.3",
+      "siraInUnit": 3
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:05",
+      "outcomeId": "T.O.1.1",
+      "siraInUnit": 4
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:05",
+      "outcomeId": "T.Y.1.1",
+      "siraInUnit": 5
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:05",
+      "outcomeId": "T.Y.1.3",
+      "siraInUnit": 6
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:05",
+      "outcomeId": "T.K.1.2",
+      "siraInUnit": 7
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:05",
+      "outcomeId": "T.K.1.3",
+      "siraInUnit": 8
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:05",
+      "outcomeId": "T.D.1.4",
+      "siraInUnit": 9
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:06",
+      "outcomeId": "T.D.1.1",
+      "siraInUnit": 1
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:06",
+      "outcomeId": "T.K.1.1",
+      "siraInUnit": 2
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:06",
+      "outcomeId": "T.O.1.1",
+      "siraInUnit": 3
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:06",
+      "outcomeId": "T.O.1.2",
+      "siraInUnit": 4
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:06",
+      "outcomeId": "T.O.1.3",
+      "siraInUnit": 5
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:06",
+      "outcomeId": "T.Y.1.1",
+      "siraInUnit": 6
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:06",
+      "outcomeId": "T.Y.1.2",
+      "siraInUnit": 7
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:06",
+      "outcomeId": "T.Y.1.3",
+      "siraInUnit": 8
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:06",
+      "outcomeId": "T.K.1.2",
+      "siraInUnit": 9
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:06",
+      "outcomeId": "T.K.1.3",
+      "siraInUnit": 10
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:06",
+      "outcomeId": "T.D.1.3",
+      "siraInUnit": 11
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:07",
+      "outcomeId": "T.D.1.1",
+      "siraInUnit": 1
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:07",
+      "outcomeId": "T.D.1.2",
+      "siraInUnit": 2
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:07",
+      "outcomeId": "T.O.1.1",
+      "siraInUnit": 3
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:07",
+      "outcomeId": "T.O.1.2",
+      "siraInUnit": 4
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:07",
+      "outcomeId": "T.O.1.3",
+      "siraInUnit": 5
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:07",
+      "outcomeId": "T.Y.1.1",
+      "siraInUnit": 6
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:07",
+      "outcomeId": "T.Y.1.2",
+      "siraInUnit": 7
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:07",
+      "outcomeId": "T.Y.1.3",
+      "siraInUnit": 8
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:07",
+      "outcomeId": "T.K.1.1",
+      "siraInUnit": 9
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:07",
+      "outcomeId": "T.K.1.2",
+      "siraInUnit": 10
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:07",
+      "outcomeId": "T.K.1.3",
+      "siraInUnit": 11
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:07",
+      "outcomeId": "T.D.1.3",
+      "siraInUnit": 12
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.D.1.1",
+      "siraInUnit": 1
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.D.1.2",
+      "siraInUnit": 2
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.D.1.3",
+      "siraInUnit": 3
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.D.1.4",
+      "siraInUnit": 4
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.K.1.1",
+      "siraInUnit": 5
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.K.1.2",
+      "siraInUnit": 6
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.K.1.3",
+      "siraInUnit": 7
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.K.1.4",
+      "siraInUnit": 8
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.O.1.1",
+      "siraInUnit": 9
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.O.1.2",
+      "siraInUnit": 10
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.O.1.3",
+      "siraInUnit": 11
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.O.1.4",
+      "siraInUnit": 12
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.O.1.5",
+      "siraInUnit": 13
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.Y.1.1",
+      "siraInUnit": 14
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.Y.1.2",
+      "siraInUnit": 15
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.Y.1.3",
+      "siraInUnit": 16
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:08",
+      "outcomeId": "T.Y.1.4",
+      "siraInUnit": 17
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.D.1.1",
+      "siraInUnit": 1
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.D.1.2",
+      "siraInUnit": 2
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.D.1.3",
+      "siraInUnit": 3
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.D.1.4",
+      "siraInUnit": 4
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.K.1.1",
+      "siraInUnit": 5
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.K.1.2",
+      "siraInUnit": 6
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.K.1.3",
+      "siraInUnit": 7
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.K.1.4",
+      "siraInUnit": 8
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.O.1.1",
+      "siraInUnit": 9
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.O.1.2",
+      "siraInUnit": 10
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.O.1.3",
+      "siraInUnit": 11
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.O.1.4",
+      "siraInUnit": 12
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.O.1.5",
+      "siraInUnit": 13
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.Y.1.1",
+      "siraInUnit": 14
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.Y.1.2",
+      "siraInUnit": 15
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.Y.1.3",
+      "siraInUnit": 16
+    },
+    {
+      "programUnitId": "pu:turkce:1:th:09",
+      "outcomeId": "T.Y.1.4",
+      "siraInUnit": 17
+    }
+  ],
+  "contentFrames": [
+    {
+      "id": "cf:T.D.1.2",
+      "outcomeId": "T.D.1.2",
+      "hamMetin": "Genel hazırlık, okul olgunluğu, okumaya/yazmaya hazırlık; dinleme, nefes, parmak-el-kol kasları",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.D.1.3",
+      "outcomeId": "T.D.1.3",
+      "hamMetin": "Genel hazırlık, okul olgunluğu, okumaya/yazmaya hazırlık; dinleme, nefes, parmak-el-kol kasları",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.Y.1.1",
+      "outcomeId": "T.Y.1.1",
+      "hamMetin": "Genel hazırlık, okul olgunluğu, okumaya/yazmaya hazırlık; dinleme, nefes, parmak-el-kol kasları",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.D.1.1",
+      "outcomeId": "T.D.1.1",
+      "hamMetin": "Etik, nezaket, dürüstlük, ailede sorumluluk, dostluk, saygı, sevgi; harfler: a-A, n-N, e-E, t-T; rakamlar 1-4",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.D.1.4",
+      "outcomeId": "T.D.1.4",
+      "hamMetin": "Etik, nezaket, dürüstlük, ailede sorumluluk, dostluk, saygı, sevgi; harfler: a-A, n-N, e-E, t-T; rakamlar 1-4",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.K.1.2",
+      "outcomeId": "T.K.1.2",
+      "hamMetin": "Etik, nezaket, dürüstlük, ailede sorumluluk, dostluk, saygı, sevgi; harfler: a-A, n-N, e-E, t-T; rakamlar 1-4",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.K.1.3",
+      "outcomeId": "T.K.1.3",
+      "hamMetin": "Etik, nezaket, dürüstlük, ailede sorumluluk, dostluk, saygı, sevgi; harfler: a-A, n-N, e-E, t-T; rakamlar 1-4",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.O.1.1",
+      "outcomeId": "T.O.1.1",
+      "hamMetin": "Etik, nezaket, dürüstlük, ailede sorumluluk, dostluk, saygı, sevgi; harfler: a-A, n-N, e-E, t-T; rakamlar 1-4",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.Y.1.2",
+      "outcomeId": "T.Y.1.2",
+      "hamMetin": "Etik, nezaket, dürüstlük, ailede sorumluluk, dostluk, saygı, sevgi; harfler: a-A, n-N, e-E, t-T; rakamlar 1-4",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.Y.1.3",
+      "outcomeId": "T.Y.1.3",
+      "hamMetin": "Etik, nezaket, dürüstlük, ailede sorumluluk, dostluk, saygı, sevgi; harfler: a-A, n-N, e-E, t-T; rakamlar 1-4",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.K.1.1",
+      "outcomeId": "T.K.1.1",
+      "hamMetin": "Yetenekler, ilgi alanları, kendini ifade etme",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.O.1.2",
+      "outcomeId": "T.O.1.2",
+      "hamMetin": "Yetenekler, ilgi alanları, kendini ifade etme",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.O.1.3",
+      "outcomeId": "T.O.1.3",
+      "hamMetin": "Yetenekler, ilgi alanları, kendini ifade etme",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.K.1.4",
+      "outcomeId": "T.K.1.4",
+      "hamMetin": "Millî kültür, gelenek, tarihî miras",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.O.1.4",
+      "outcomeId": "T.O.1.4",
+      "hamMetin": "Millî kültür, gelenek, tarihî miras",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.O.1.5",
+      "outcomeId": "T.O.1.5",
+      "hamMetin": "Millî kültür, gelenek, tarihî miras",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    },
+    {
+      "id": "cf:T.Y.1.4",
+      "outcomeId": "T.Y.1.4",
+      "hamMetin": "Millî kültür, gelenek, tarihî miras",
+      "anahtarKavramlar": [],
+      "konular": [],
+      "genellemeler": []
+    }
+  ],
+  "processComponents": [
+    {
+      "id": "pc:T.D.1.2:a",
+      "outcomeId": "T.D.1.2",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.D.1.2:b",
+      "outcomeId": "T.D.1.2",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.D.1.3:a",
+      "outcomeId": "T.D.1.3",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.D.1.3:b",
+      "outcomeId": "T.D.1.3",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.1:a",
+      "outcomeId": "T.Y.1.1",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.1:b",
+      "outcomeId": "T.Y.1.1",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.D.1.1:a",
+      "outcomeId": "T.D.1.1",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.D.1.1:b",
+      "outcomeId": "T.D.1.1",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.D.1.1:c",
+      "outcomeId": "T.D.1.1",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.D.1.1:ç",
+      "outcomeId": "T.D.1.1",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.D.1.4:a",
+      "outcomeId": "T.D.1.4",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.D.1.4:b",
+      "outcomeId": "T.D.1.4",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.D.1.4:c",
+      "outcomeId": "T.D.1.4",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.D.1.4:ç",
+      "outcomeId": "T.D.1.4",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.2:a",
+      "outcomeId": "T.K.1.2",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.2:b",
+      "outcomeId": "T.K.1.2",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.2:c",
+      "outcomeId": "T.K.1.2",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.2:ç",
+      "outcomeId": "T.K.1.2",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.3:a",
+      "outcomeId": "T.K.1.3",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.3:b",
+      "outcomeId": "T.K.1.3",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.3:c",
+      "outcomeId": "T.K.1.3",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.3:ç",
+      "outcomeId": "T.K.1.3",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.1:a",
+      "outcomeId": "T.O.1.1",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.1:b",
+      "outcomeId": "T.O.1.1",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.1:c",
+      "outcomeId": "T.O.1.1",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.1:ç",
+      "outcomeId": "T.O.1.1",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.2:a",
+      "outcomeId": "T.Y.1.2",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.2:b",
+      "outcomeId": "T.Y.1.2",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.2:c",
+      "outcomeId": "T.Y.1.2",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.2:ç",
+      "outcomeId": "T.Y.1.2",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.3:a",
+      "outcomeId": "T.Y.1.3",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.3:b",
+      "outcomeId": "T.Y.1.3",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.3:c",
+      "outcomeId": "T.Y.1.3",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.3:ç",
+      "outcomeId": "T.Y.1.3",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.1:a",
+      "outcomeId": "T.K.1.1",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.1:b",
+      "outcomeId": "T.K.1.1",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.1:c",
+      "outcomeId": "T.K.1.1",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.1:ç",
+      "outcomeId": "T.K.1.1",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.2:a",
+      "outcomeId": "T.O.1.2",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.2:b",
+      "outcomeId": "T.O.1.2",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.2:c",
+      "outcomeId": "T.O.1.2",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.2:ç",
+      "outcomeId": "T.O.1.2",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.3:a",
+      "outcomeId": "T.O.1.3",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.3:b",
+      "outcomeId": "T.O.1.3",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.3:c",
+      "outcomeId": "T.O.1.3",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.3:ç",
+      "outcomeId": "T.O.1.3",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.4:a",
+      "outcomeId": "T.K.1.4",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.4:b",
+      "outcomeId": "T.K.1.4",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.4:c",
+      "outcomeId": "T.K.1.4",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.K.1.4:ç",
+      "outcomeId": "T.K.1.4",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.4:a",
+      "outcomeId": "T.O.1.4",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.4:b",
+      "outcomeId": "T.O.1.4",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.4:c",
+      "outcomeId": "T.O.1.4",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.4:ç",
+      "outcomeId": "T.O.1.4",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.5:a",
+      "outcomeId": "T.O.1.5",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.5:b",
+      "outcomeId": "T.O.1.5",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.5:c",
+      "outcomeId": "T.O.1.5",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.O.1.5:ç",
+      "outcomeId": "T.O.1.5",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.4:a",
+      "outcomeId": "T.Y.1.4",
+      "harf": "a",
+      "sira": 1,
+      "aciklama": "Dinleme/İzleme sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.4:b",
+      "outcomeId": "T.Y.1.4",
+      "harf": "b",
+      "sira": 2,
+      "aciklama": "Konuşma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.4:c",
+      "outcomeId": "T.Y.1.4",
+      "harf": "c",
+      "sira": 3,
+      "aciklama": "Okuma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    },
+    {
+      "id": "pc:T.Y.1.4:ç",
+      "outcomeId": "T.Y.1.4",
+      "harf": "ç",
+      "sira": 4,
+      "aciklama": "Yazma sürecinde çıktıyı işleme",
+      "olculebilir": true
+    }
+  ],
+  "assessments": [
+    {
+      "id": "as:T.D.1.2",
+      "outcomeId": "T.D.1.2",
+      "yaklasim": "Gözlem, kontrol listesi, performans görevi",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.D.1.3",
+      "outcomeId": "T.D.1.3",
+      "yaklasim": "Gözlem, kontrol listesi, performans görevi",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.Y.1.1",
+      "outcomeId": "T.Y.1.1",
+      "yaklasim": "Gözlem, kontrol listesi, performans görevi",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.D.1.1",
+      "outcomeId": "T.D.1.1",
+      "yaklasim": "Öğrenme kanıtları: gözlem, kontrol listesi, performans görevi",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.D.1.4",
+      "outcomeId": "T.D.1.4",
+      "yaklasim": "Öğrenme kanıtları: gözlem, kontrol listesi, performans görevi",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.K.1.2",
+      "outcomeId": "T.K.1.2",
+      "yaklasim": "Öğrenme kanıtları: gözlem, kontrol listesi, performans görevi",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.K.1.3",
+      "outcomeId": "T.K.1.3",
+      "yaklasim": "Öğrenme kanıtları: gözlem, kontrol listesi, performans görevi",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.O.1.1",
+      "outcomeId": "T.O.1.1",
+      "yaklasim": "Öğrenme kanıtları: gözlem, kontrol listesi, performans görevi",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.Y.1.2",
+      "outcomeId": "T.Y.1.2",
+      "yaklasim": "Öğrenme kanıtları: gözlem, kontrol listesi, performans görevi",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.Y.1.3",
+      "outcomeId": "T.Y.1.3",
+      "yaklasim": "Öğrenme kanıtları: gözlem, kontrol listesi, performans görevi",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.K.1.1",
+      "outcomeId": "T.K.1.1",
+      "yaklasim": "Öğrenme kanıtları",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.O.1.2",
+      "outcomeId": "T.O.1.2",
+      "yaklasim": "Öğrenme kanıtları",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.O.1.3",
+      "outcomeId": "T.O.1.3",
+      "yaklasim": "Öğrenme kanıtları",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.K.1.4",
+      "outcomeId": "T.K.1.4",
+      "yaklasim": "Öğrenme kanıtları",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.O.1.4",
+      "outcomeId": "T.O.1.4",
+      "yaklasim": "Öğrenme kanıtları",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.O.1.5",
+      "outcomeId": "T.O.1.5",
+      "yaklasim": "Öğrenme kanıtları",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    },
+    {
+      "id": "as:T.Y.1.4",
+      "outcomeId": "T.Y.1.4",
+      "yaklasim": "Öğrenme kanıtları",
+      "aracOnerileri": [
+        "gözlem",
+        "kontrol listesi",
+        "performans görevi"
+      ],
+      "bicimlendirme": "biçimlendirici"
+    }
+  ],
+  "learningEvidence": [
+    {
+      "id": "le:T.D.1.2:01",
+      "outcomeId": "T.D.1.2",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.D.1.2"
+    },
+    {
+      "id": "le:T.D.1.3:01",
+      "outcomeId": "T.D.1.3",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.D.1.3"
+    },
+    {
+      "id": "le:T.Y.1.1:01",
+      "outcomeId": "T.Y.1.1",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.Y.1.1"
+    },
+    {
+      "id": "le:T.D.1.1:01",
+      "outcomeId": "T.D.1.1",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.D.1.1"
+    },
+    {
+      "id": "le:T.D.1.4:01",
+      "outcomeId": "T.D.1.4",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.D.1.4"
+    },
+    {
+      "id": "le:T.K.1.2:01",
+      "outcomeId": "T.K.1.2",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.K.1.2"
+    },
+    {
+      "id": "le:T.K.1.3:01",
+      "outcomeId": "T.K.1.3",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.K.1.3"
+    },
+    {
+      "id": "le:T.O.1.1:01",
+      "outcomeId": "T.O.1.1",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.O.1.1"
+    },
+    {
+      "id": "le:T.Y.1.2:01",
+      "outcomeId": "T.Y.1.2",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.Y.1.2"
+    },
+    {
+      "id": "le:T.Y.1.3:01",
+      "outcomeId": "T.Y.1.3",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.Y.1.3"
+    },
+    {
+      "id": "le:T.K.1.1:01",
+      "outcomeId": "T.K.1.1",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.K.1.1"
+    },
+    {
+      "id": "le:T.O.1.2:01",
+      "outcomeId": "T.O.1.2",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.O.1.2"
+    },
+    {
+      "id": "le:T.O.1.3:01",
+      "outcomeId": "T.O.1.3",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.O.1.3"
+    },
+    {
+      "id": "le:T.K.1.4:01",
+      "outcomeId": "T.K.1.4",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.K.1.4"
+    },
+    {
+      "id": "le:T.O.1.4:01",
+      "outcomeId": "T.O.1.4",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.O.1.4"
+    },
+    {
+      "id": "le:T.O.1.5:01",
+      "outcomeId": "T.O.1.5",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.O.1.5"
+    },
+    {
+      "id": "le:T.Y.1.4:01",
+      "outcomeId": "T.Y.1.4",
+      "kind": "GOZLEM",
+      "ad": "Süreç gözlemi",
+      "aciklama": "Öğretmen gözlem kaydı",
+      "assessmentId": "as:T.Y.1.4"
+    }
+  ],
+  "skills": [
+    {
+      "id": "sk:TAB1",
+      "kod": "TAB1",
+      "ad": "Dinleme/İzleme",
+      "skillKind": "ALAN",
+      "dersAilesi": "turkce"
+    },
+    {
+      "id": "sk:TAB2",
+      "kod": "TAB2",
+      "ad": "Okuma",
+      "skillKind": "ALAN",
+      "dersAilesi": "turkce"
+    },
+    {
+      "id": "sk:TAB3",
+      "kod": "TAB3",
+      "ad": "Konuşma",
+      "skillKind": "ALAN",
+      "dersAilesi": "turkce"
+    },
+    {
+      "id": "sk:TAB4",
+      "kod": "TAB4",
+      "ad": "Yazma",
+      "skillKind": "ALAN",
+      "dersAilesi": "turkce"
+    }
+  ],
+  "values": [
+    {
+      "id": "val:D14",
+      "kod": "D14",
+      "ad": "Saygı"
+    },
+    {
+      "id": "val:D16",
+      "kod": "D16",
+      "ad": "Sorumluluk"
+    },
+    {
+      "id": "val:D3",
+      "kod": "D3",
+      "ad": "Çalışkanlık"
+    }
+  ],
+  "tendencies": [
+    {
+      "id": "ten:E1.1",
+      "kod": "E1.1",
+      "ad": "Merak"
+    },
+    {
+      "id": "ten:E3.2",
+      "kod": "E3.2",
+      "ad": "Odaklanma"
+    }
+  ],
+  "outcomeSkills": [
+    {
+      "outcomeId": "T.D.1.2",
+      "skillId": "sk:TAB1"
+    },
+    {
+      "outcomeId": "T.D.1.3",
+      "skillId": "sk:TAB1"
+    },
+    {
+      "outcomeId": "T.Y.1.1",
+      "skillId": "sk:TAB4"
+    },
+    {
+      "outcomeId": "T.D.1.1",
+      "skillId": "sk:TAB1"
+    },
+    {
+      "outcomeId": "T.D.1.4",
+      "skillId": "sk:TAB1"
+    },
+    {
+      "outcomeId": "T.K.1.2",
+      "skillId": "sk:TAB3"
+    },
+    {
+      "outcomeId": "T.K.1.3",
+      "skillId": "sk:TAB3"
+    },
+    {
+      "outcomeId": "T.O.1.1",
+      "skillId": "sk:TAB2"
+    },
+    {
+      "outcomeId": "T.Y.1.2",
+      "skillId": "sk:TAB4"
+    },
+    {
+      "outcomeId": "T.Y.1.3",
+      "skillId": "sk:TAB4"
+    },
+    {
+      "outcomeId": "T.K.1.1",
+      "skillId": "sk:TAB3"
+    },
+    {
+      "outcomeId": "T.O.1.2",
+      "skillId": "sk:TAB2"
+    },
+    {
+      "outcomeId": "T.O.1.3",
+      "skillId": "sk:TAB2"
+    },
+    {
+      "outcomeId": "T.K.1.4",
+      "skillId": "sk:TAB3"
+    },
+    {
+      "outcomeId": "T.O.1.4",
+      "skillId": "sk:TAB2"
+    },
+    {
+      "outcomeId": "T.O.1.5",
+      "skillId": "sk:TAB2"
+    },
+    {
+      "outcomeId": "T.Y.1.4",
+      "skillId": "sk:TAB4"
+    }
+  ],
+  "outcomeValues": [
+    {
+      "outcomeId": "T.D.1.1",
+      "valueId": "val:D14"
+    },
+    {
+      "outcomeId": "T.D.1.2",
+      "valueId": "val:D14"
+    },
+    {
+      "outcomeId": "T.D.1.3",
+      "valueId": "val:D14"
+    }
+  ],
+  "outcomeTendencies": [
+    {
+      "outcomeId": "T.D.1.1",
+      "tendencyId": "ten:E3.2"
+    },
+    {
+      "outcomeId": "T.D.1.2",
+      "tendencyId": "ten:E3.2"
+    },
+    {
+      "outcomeId": "T.D.1.3",
+      "tendencyId": "ten:E3.2"
+    }
+  ],
+  "planningRulesApplied": [
+    "no-skip-unit",
+    "drop-holiday-weeks",
+    "otp-no-auto-outcome",
+    "special-no-new-outcome",
+    "grade1-turkce-ses",
+    "weekly-hours-30"
+  ],
+  "istatistik": {
+    "programUnitSayisi": 12,
+    "themeSayisi": 9,
+    "specialSayisi": 3,
+    "uniqueOutcomeSayisi": 17,
+    "unitOutcomeBagSayisi": 99,
+    "skillSayisi": 4
+  }
+}

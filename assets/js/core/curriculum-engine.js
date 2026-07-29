@@ -19,6 +19,18 @@
     const key = `${sinif}_${dersId}`;
     if (cache[key]) return cache[key];
 
+    // TPM-001: 1. sınıf Türkçe domain paketi varsa onu tercih et
+    if (String(sinif) === '1' && dersId === 'turkce' && window.TpmEngine) {
+      try {
+        const pack = await TpmEngine.loadDomainPack('tpm-001-sinif1-turkce');
+        const data = TpmEngine.asLegacyCurriculum(pack);
+        cache[key] = data;
+        return data;
+      } catch (e) {
+        console.warn('TPM domain pack yok, keşif JSON kullanılıyor', e);
+      }
+    }
+
     const m = await loadManifest();
     const sinifKey = String(sinif);
     const dosya = m.siniflar[sinifKey]?.[dersId];

@@ -785,10 +785,11 @@ DM-002 **v1.0** ile aşağıdakiler yeşil sayılır:
 - [x] PlanningRule çekirdek seti listelendi  
 - [x] Çapraz validasyon matrisi yazıldı  
 
-**Sıradaki — MB-TPM-001 (1. Sınıf Türkçe):**  
-Bu spesifikasyona göre `cur:turkce:2024` için ProgramUnit + LearningOutcome + ProcessComponent örnek doldurma (keşif JSON’dan migrasyon taslağı; henüz kanonik şema değil).
+**MB-TPM-001 ✅** — `docs/MB-TPM-001-SINIF1-TURKCE-DOMAIN-UYGULAMASI.md`  
+Örnek paket: `assets/data/domain/tpm-001-sinif1-turkce.json`  
+Not: Türkçe için `ProgramUnitOutcome` M:N (DM-002.1 adayı).
 
-**Sonra — MB-DB-001:**  
+**Sıradaki — MB-DB-001:**  
 E01–E22 → tablolar, FK, UK, index önerileri (mekanik türetim).
 
 **Sonra — MB-JSON-001:**  

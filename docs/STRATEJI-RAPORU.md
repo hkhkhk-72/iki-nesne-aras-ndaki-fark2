@@ -61,8 +61,8 @@ Bağlayıcı sıra:
 2. **MB-ARCH-001** — Platform Mimari Freeze *(tamamlandı)*
 2b. **MB-UI-001** — UI/UX v2.0 + MB-TWE *(tamamlandı)* → `docs/MB-UI-001-UI-UX-MIMARISI-V2.md`
 2c. **MB-DS-001** — Tasarım Sistemi *(tamamlandı)* → `docs/MB-DS-001-TASARIM-SISTEMI.md`
-3. **MB-DM-002** — Entity Detay Spesifikasyonu
-4. **MB-TPM-001** — 1. Sınıf Türkçe domain uygulaması
+3. **MB-DM-002** — Entity Detay Spesifikasyonu *(tamamlandı)* → `docs/MB-DM-002-ENTITY-DETAY-SPESIFIKASYONU.md`
+4. **MB-TPM-001** — 1. Sınıf Türkçe domain uygulaması *(sıradaki)*
 5. **MB-DB-001** — Fiziksel veri tabanı
 6. **MB-JSON-001** — Makine tarafından işlenebilir JSON şeması
 7. **MB-ALG-001** — Yıllık plan üretim algoritması

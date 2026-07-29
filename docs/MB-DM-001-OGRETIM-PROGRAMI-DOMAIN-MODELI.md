@@ -439,7 +439,6 @@ Yıllık plan, günlük plan, tema planı, ölçme aracı, öğretmen rehberi, k
 | **MB-DM-002** | Entity Detay Spesifikasyonu (alanlar, ID, iş kuralları, validasyon) | ✅ v1.0 → `docs/MB-DM-002-ENTITY-DETAY-SPESIFIKASYONU.md` |
 | **MB-TPM-001** | 1. Sınıf Türkçe — domain uygulaması (örnek doldurma) | ✅ v1.0 → `docs/MB-TPM-001-SINIF1-TURKCE-DOMAIN-UYGULAMASI.md` |
 | **MB-DB-001** | Fiziksel veri tabanı tasarımı | ⏳ sıradaki |
-| **MB-DB-001** | Fiziksel veri tabanı tasarımı | ⏳ (TPM-001 sonrası) |
 | **MB-JSON-001** | Makine tarafından işlenebilir JSON şeması | ⏳ |
 | **MB-ALG-001** | Yıllık plan üretim algoritması | ⏳ |
 | **MB-APP-001** | MiniBilge Öğretmen uygulaması entegrasyonu | ⏳ |

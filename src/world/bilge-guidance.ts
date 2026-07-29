@@ -253,6 +253,12 @@ export const DEFAULT_HELP_TIMING: HelpTiming = {
   calmAfterIdleMs: 10000,
 };
 
+/**
+ * MB-LAB-001: Bilge yalnızca çocuk uzun süre zorlanırsa ortaya çıkar.
+ * Bu eşikten önce konuşma tetiklenmez (sessizlik öncelikli).
+ */
+export const BILGE_LAB_APPEAR_AFTER_MS = 12_000;
+
 /** Karar 239 — süreç övgüsü kalıpları. */
 export const EFFORT_PRAISE = [
   'Harika, vazgeçmedin.',

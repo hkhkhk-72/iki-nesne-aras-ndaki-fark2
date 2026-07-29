@@ -157,7 +157,11 @@ export type AISignal =
   /** Modüldeki ilk anlamlı başarı (puan yok). */
   | 'first_success'
   /** Karar güveni (tereddüt vs akıcı seçim). */
-  | 'decision_confidence';
+  | 'decision_confidence'
+  | 'observe_pattern'
+  | 'subitize_attempt'
+  | 'grouping_strategy'
+  | 'visual_focus';
 
 // ─── Geri bildirim ───────────────────────────────────────────
 export interface SceneFeedback {

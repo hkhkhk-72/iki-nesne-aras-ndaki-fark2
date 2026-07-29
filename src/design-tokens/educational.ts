@@ -11,7 +11,10 @@ export type EduTokenId =
   | 'edu.less'
   | 'edu.equal'
   | 'edu.bond'
-  | 'edu.subitize';
+  | 'edu.subitize'
+  | 'edu.partWhole'
+  | 'edu.visualCompare'
+  | 'edu.grouping';
 
 export interface EduToken {
   id: EduTokenId;
@@ -19,6 +22,8 @@ export interface EduToken {
   /** Önce sezgi, sonra sayı */
   phase: 'intuition' | 'count' | 'bond';
   mebHint: string;
+  /** MB-LAB-001 kural köprüsü */
+  labRule?: 'MB-268' | 'MB-269' | 'MB-270' | 'MB-271' | 'MB-272';
 }
 
 export const eduTokens: Record<EduTokenId, EduToken> = {
@@ -32,7 +37,29 @@ export const eduTokens: Record<EduTokenId, EduToken> = {
     id: 'edu.subitize',
     concept: 'anlik_miktar',
     phase: 'intuition',
-    mebHint: 'Saymadan miktarı görme',
+    mebHint: 'Perceptual subitizing — 1–4 saymadan',
+    labRule: 'MB-269',
+  },
+  'edu.partWhole': {
+    id: 'edu.partWhole',
+    concept: 'parca_butun',
+    phase: 'intuition',
+    mebHint: 'Conceptual subitizing — parçadan bütüne',
+    labRule: 'MB-270',
+  },
+  'edu.visualCompare': {
+    id: 'edu.visualCompare',
+    concept: 'gorsel_karsilastirma',
+    phase: 'intuition',
+    mebHint: 'Görerek karşılaştır — saymadan',
+    labRule: 'MB-268',
+  },
+  'edu.grouping': {
+    id: 'edu.grouping',
+    concept: 'alt_grup',
+    phase: 'intuition',
+    mebHint: '5+ doğal kümeler (3+2, 4+1…)',
+    labRule: 'MB-270',
   },
   'edu.compare': {
     id: 'edu.compare',

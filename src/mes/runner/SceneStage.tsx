@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import type { CharacterId, SceneSpec } from '@/mes/types';
 import { getCharacter } from '@/world/characters';
 import { colors, radius, spacing, typography } from '@/theme';
 import type { AppSettings } from '@/core/settings-store';
 import { scaleFont, touchTargetFor } from '@/core/settings-store';
+import { isConceptualCount, naturalLayout, pickGrouping } from '@/lab';
 
 /** Karakter repliği — sahnenin duygusal taşıyıcısı. */
 export function SpeechBubble({
@@ -32,7 +33,10 @@ export function SpeechBubble({
   );
 }
 
-/** Bir grubun nesnelerini görsel olarak serer — sayı yerine somut nesne. */
+/**
+ * Bir grubun nesnelerini doğal dizilimle serer (MB-LAB-001).
+ * Izgara YASAK. 5+ için alt grup kümeleri kullanılır.
+ */
 export function GroupDisplay({
   label,
   emoji,
@@ -41,6 +45,7 @@ export function GroupDisplay({
   showCount,
   onPress,
   settings,
+  layoutSeed = 1,
 }: {
   label: string;
   emoji: string;
@@ -49,16 +54,40 @@ export function GroupDisplay({
   showCount?: boolean;
   onPress?: () => void;
   settings: AppSettings;
+  layoutSeed?: number;
 }) {
-  const items = Array.from({ length: count }, (_, i) => i);
   const size = touchTargetFor(settings, 34);
+  const field = 120;
+  const groups = useMemo(
+    () => (isConceptualCount(count) ? pickGrouping(count, layoutSeed) : [count]),
+    [count, layoutSeed],
+  );
+  const points = useMemo(
+    () =>
+      naturalLayout({
+        count,
+        groups,
+        seed: layoutSeed * 17 + count * 3,
+        width: 1,
+        height: 1,
+      }),
+    [count, groups, layoutSeed],
+  );
 
   const content = (
     <View style={[styles.group, highlighted && styles.groupHighlighted]}>
       <Text style={[styles.groupLabel, { fontSize: scaleFont(settings, 15) }]}>{label}</Text>
-      <View style={styles.groupItems}>
-        {items.map((i) => (
-          <Text key={i} style={{ fontSize: size }}>
+      <View style={[styles.naturalField, { width: field, height: field }]}>
+        {points.map((p, i) => (
+          <Text
+            key={i}
+            style={{
+              position: 'absolute',
+              left: p.x * (field - size),
+              top: p.y * (field - size),
+              fontSize: size,
+            }}
+          >
             {emoji}
           </Text>
         ))}
@@ -142,11 +171,9 @@ const styles = StyleSheet.create({
   },
   groupHighlighted: { borderColor: colors.primary, backgroundColor: colors.primary + '12' },
   groupLabel: { color: colors.textSecondary, fontWeight: '600' },
-  groupItems: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: 4,
+  naturalField: {
+    position: 'relative',
+    alignSelf: 'center',
   },
   groupCount: { ...typography.title, color: colors.primary },
   footer: {

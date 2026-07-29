@@ -17,6 +17,8 @@ import {
   teacherVisible,
   personalizationOnly,
 } from '@/ai/decision-engine';
+import { runLabQaForScenes } from '@/qa/lab-qa';
+import { storyTokens, eduTokens, motionTokens, aiTokens } from '@/design-tokens';
 import type { SceneBehavior } from '@/ai/observer';
 import type { MicroExperience, CharacterId } from '@/mes/types';
 
@@ -167,6 +169,34 @@ console.log(
   `  Öğretmen güvenli özet: ${teacher.qualitative === 'destek_gerekli' ? 'GEÇTİ' : 'BAŞARISIZ'}`,
 );
 if (teacher.qualitative !== 'destek_gerekli') failed = true;
+
+// ── MB-LAB-001 Scientific Foundation ──
+console.log('\nMB-LAB-001 Bilimsel Temel');
+const labTokensOk =
+  'story.observe' in storyTokens &&
+  'story.notice' in storyTokens &&
+  'story.discover' in storyTokens &&
+  'edu.partWhole' in eduTokens &&
+  'edu.visualCompare' in eduTokens &&
+  'edu.grouping' in eduTokens &&
+  'motion.deepBreath' in motionTokens &&
+  'motion.softBounce' in motionTokens &&
+  'motion.observe' in motionTokens &&
+  'ai.observe_pattern' in aiTokens &&
+  'ai.subitize_attempt' in aiTokens &&
+  'ai.grouping_strategy' in aiTokens &&
+  'ai.visual_focus' in aiTokens;
+console.log(`  Token paketi: ${labTokensOk ? 'GEÇTİ' : 'BAŞARISIZ'}`);
+if (!labTokensOk) failed = true;
+
+for (const exp of MATH_EXPERIENCES) {
+  const lab = runLabQaForScenes(exp.scenes);
+  console.log(`  ${exp.code} Lab QA: ${lab.ok ? 'GEÇTİ' : 'BAŞARISIZ'}`);
+  if (!lab.ok) {
+    console.log('  Lab sorunlar:', lab.issues);
+    failed = true;
+  }
+}
 
 console.log(`\nSonuç: ${failed ? 'BAŞARISIZ' : 'TÜM KONTROLLER GEÇTİ'}`);
 process.exit(failed ? 1 : 0);

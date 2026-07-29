@@ -18,7 +18,11 @@ export type ObservationType =
   | 'idle'
   | 'hint_shown'
   | 'first_success'
-  | 'decision_confidence';
+  | 'decision_confidence'
+  | 'observe_pattern'
+  | 'subitize_attempt'
+  | 'grouping_strategy'
+  | 'visual_focus';
 
 export interface Observation {
   sceneId: string;
@@ -162,6 +166,10 @@ export function coversSignals(behavior: SceneBehavior, signals: AISignal[]): boo
       case 'success_trend':
       case 'first_success':
       case 'decision_confidence':
+      case 'observe_pattern':
+      case 'subitize_attempt':
+      case 'grouping_strategy':
+      case 'visual_focus':
         return true;
       default:
         return true;

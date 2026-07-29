@@ -29,3 +29,17 @@ export function registerFirstSuccess(
   observer.record(sceneId, 'first_success', 'ls006_trust');
   observer.record(sceneId, 'decision_confidence', confidence);
 }
+
+/** MB-LAB-001 AI olayları — puan üretmez. */
+export function registerLabObservation(
+  observer: ExperienceObserver,
+  sceneId: string,
+  event:
+    | 'observe_pattern'
+    | 'subitize_attempt'
+    | 'grouping_strategy'
+    | 'visual_focus',
+  detail?: string,
+): void {
+  observer.record(sceneId, event, detail);
+}

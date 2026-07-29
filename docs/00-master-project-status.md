@@ -102,7 +102,7 @@ Kod köprüsü: `src/design-tokens/`
 - Önce sezgi, sonra sayı  
 - Çocuk matematik değil; Fındık’a yardım hisseder  
 - Başarı = hikâye; yanlış = öğrenme (ceza yok)  
-- MB-LAB-001: Az / Çok / Eşit  
+- MB-LAB-001 v1.2: Az / Çok / Eşit bilimsel temel (subitizing · CPA · MB-268…272) — `docs/16-…` · `src/lab/` · `src/qa/lab-qa.ts` 
 
 ---
 

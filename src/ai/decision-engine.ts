@@ -19,6 +19,7 @@ import {
   BILGE_SPEAK_POLICY,
   EFFORT_PRAISE,
   lineForHelpLevel,
+  BILGE_LAB_APPEAR_AFTER_MS,
 } from '@/world/bilge-guidance';
 
 // ─── İzlenen davranışlar ─────────────────────────────────────
@@ -152,6 +153,13 @@ export function decideIntervention(ctx: DecisionContext): InterventionDecision {
     return silence('child_is_exploring', 'Keşif sırasında müdahale yok.');
   }
 
+  // MB-LAB-001: Bilge yalnızca uzun zorlanmada / yardım isteğinde konuşur
+  const waited = ctx.msSinceLastTouch ?? b.firstTouchLatencyMs ?? 0;
+  const bilgeMaySpeak =
+    Boolean(ctx.helpRequested) ||
+    Math.max(waited, b.durationMs) >= BILGE_LAB_APPEAR_AFTER_MS ||
+    b.retries >= t.retriesForLevel3;
+
   // ── Çocuk açıkça yardım istedi → seviye 2+ (cevap yok) ──
   if (ctx.helpRequested) {
     const level: HelpLevel = b.retries >= t.retriesForLevel3 ? 4 : 3;
@@ -167,6 +175,19 @@ export function decideIntervention(ctx: DecisionContext): InterventionDecision {
 
   // ── Moral ──
   if (ctx.moraleLow || (b.retries >= 3 && b.idleEvents > 0)) {
+    if (!bilgeMaySpeak) {
+      return {
+        kind: 'gaze',
+        helpLevel: 1,
+        reason: 'Moral sinyali var; Bilge henüz konuşmaz (MB-LAB-001).',
+        bilge: {
+          trigger: 'silence',
+          silenceReason: 'child_is_thinking',
+          helpLevel: 1,
+          gazeOnly: true,
+        },
+      };
+    }
     return {
       kind: 'morale_support',
       helpLevel: 2,
@@ -200,6 +221,19 @@ export function decideIntervention(ctx: DecisionContext): InterventionDecision {
     return fromHelpLevel(3, 'Tekrar eşiği — düşünmeyi yönlendir.', b);
   }
   if (b.retries >= t.retriesForLevel2) {
+    if (!bilgeMaySpeak) {
+      return {
+        kind: 'gaze',
+        helpLevel: 1,
+        reason: 'Takılma var; Bilge önce sessiz bakış (MB-LAB-001).',
+        bilge: {
+          trigger: 'silence',
+          silenceReason: 'child_is_thinking',
+          helpLevel: 1,
+          gazeOnly: true,
+        },
+      };
+    }
     return fromHelpLevel(2, 'İlk takılma — küçük ipucu.', b);
   }
 
@@ -207,13 +241,52 @@ export function decideIntervention(ctx: DecisionContext): InterventionDecision {
   const wait = ctx.msSinceLastTouch ?? b.firstTouchLatencyMs ?? 0;
 
   if (b.idleEvents > 0 || (b.durationMs > t.idleInterveneMs && b.totalTouches === 0)) {
+    if (!bilgeMaySpeak) {
+      return {
+        kind: 'gaze',
+        helpLevel: 1,
+        reason: 'Bekleme; Bilge henüz konuşmaz.',
+        bilge: {
+          trigger: 'silence',
+          silenceReason: 'child_is_thinking',
+          helpLevel: 1,
+          gazeOnly: true,
+        },
+      };
+    }
     return fromHelpLevel(2, 'Uzun bekleme — sakin yönlendirme.', b);
   }
 
   if (wait >= t.guideHintAfterMs && hasHesitation(b)) {
+    if (!bilgeMaySpeak) {
+      return {
+        kind: 'gaze',
+        helpLevel: 1,
+        reason: 'Uzun kararsızlık; önce bakış.',
+        bilge: {
+          trigger: 'silence',
+          silenceReason: 'child_is_thinking',
+          helpLevel: 1,
+          gazeOnly: true,
+        },
+      };
+    }
     return fromHelpLevel(3, 'Uzun kararsızlık — yönlendirici ipucu.', b);
   }
   if (wait >= t.softHintAfterMs && hasHesitation(b)) {
+    if (!bilgeMaySpeak) {
+      return {
+        kind: 'gaze',
+        helpLevel: 1,
+        reason: 'Kararsızlık; Bilge konuşmadan bakış.',
+        bilge: {
+          trigger: 'silence',
+          silenceReason: 'child_is_thinking',
+          helpLevel: 1,
+          gazeOnly: true,
+        },
+      };
+    }
     return fromHelpLevel(2, 'Kararsızlık — küçük ipucu.', b);
   }
   if (wait >= t.gazeHintAfterMs && hasHesitation(b)) {

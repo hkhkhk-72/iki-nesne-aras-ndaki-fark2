@@ -80,9 +80,12 @@ export const scenes: SceneSpec[] = [
     id: 'scene02',
     order: 2,
     title: 'İki Ağaç',
+    learningSceneId: 'LS-004',
+    storyToken: 'story.observe',
+    motionToken: 'motion.observe',
     pedagogicalGoal:
-      'Sayı saymadan sezgisel karşılaştırma: "hangisinde daha fazla?" ' +
-      '(Karar 231 — Sezgisel Matematik Önceliği). Sayma dili kullanılmaz.',
+      'Sayı saymadan sezgisel karşılaştırma (MB-268/269/270): 3 perceptual, 6 conceptual (3+3). ' +
+      'Sayma dili kullanılmaz. Hız baskısı yok (MB-271).',
     targetEmotion: 'merak',
     opening: {
       visual: '🌳🌳',
@@ -111,7 +114,15 @@ export const scenes: SceneSpec[] = [
     },
     aiObservation: {
       concept: 'sezgisel_daha_fazla',
-      signals: ['first_choice', 'hesitation', 'touch_latency', 'retry_count', 'error_type'],
+      signals: [
+        'first_choice',
+        'hesitation',
+        'touch_latency',
+        'subitize_attempt',
+        'grouping_strategy',
+        'visual_focus',
+        'observe_pattern',
+      ],
       misconceptions: ['kucuk_yigini_secme', 'rastgele_dokunma'],
     },
     feedback: {
@@ -192,8 +203,11 @@ export const scenes: SceneSpec[] = [
     id: 'scene03',
     order: 4,
     title: 'Palamutları Keşfet',
+    storyToken: 'story.discover',
+    motionToken: 'motion.softBounce',
     pedagogicalGoal:
-      'Birebir sayma becerisini dokunarak deneyimletmek. Sayı söylenmez, çocuk kendi sayar.',
+      '1–4 perceptual subitizing (MB-269): sayma istemez, sayaç göstermez. ' +
+      'Dokunarak toplama — miktar hissedilir (CPA concrete).',
     targetEmotion: 'kesif',
     opening: {
       visual: '🌳',
@@ -209,15 +223,16 @@ export const scenes: SceneSpec[] = [
         { id: 'p2', emoji: '🌰', label: 'palamut' },
         { id: 'p3', emoji: '🌰', label: 'palamut' },
       ],
-      revealCount: true,
+      /** MB-269: 1–4’te sayı sayacı gösterilmez. */
+      revealCount: false,
     },
     aiObservation: {
-      concept: 'birebir_sayma',
-      signals: ['touch_latency', 'retry_count'],
+      concept: 'subitize_toplama',
+      signals: ['touch_latency', 'subitize_attempt', 'visual_focus'],
       misconceptions: ['ayni_nesneye_tekrar_dokunma', 'nesne_atlama'],
     },
     feedback: {
-      positive: 'Harika! Hepsini topladın.',
+      positive: 'Hepsini topladın — güzel baktın.',
       guidance: 'Dokunmadığın bir palamut kalmış olabilir, bir daha bak.',
       speaker: 'findik',
     },
@@ -239,8 +254,11 @@ export const scenes: SceneSpec[] = [
     id: 'scene04',
     order: 5,
     title: 'İki Kovayı İncele',
+    storyToken: 'story.notice',
+    motionToken: 'motion.deepBreath',
     pedagogicalGoal:
-      'Karşılaştırma öncesi gözlem. Bu sahnede doğru cevap yoktur; amaç iki grubu fark etmek.',
+      'Karşılaştırma öncesi gözlem (MB-268): önce gör. 5 conceptual (3+2), 3 perceptual. ' +
+      'Doğru cevap yok; miktar isimlendirilmez.',
     targetEmotion: 'merak',
     opening: {
       visual: '🪣',
@@ -259,7 +277,7 @@ export const scenes: SceneSpec[] = [
     },
     aiObservation: {
       concept: 'grup_farkindaligi',
-      signals: ['touch_latency', 'wait_time'],
+      signals: ['touch_latency', 'wait_time', 'observe_pattern', 'visual_focus', 'grouping_strategy'],
       misconceptions: [],
     },
     feedback: {
@@ -276,7 +294,8 @@ export const scenes: SceneSpec[] = [
       success: 'gozlem_tik',
     },
     visualComposition: { world: 70, interaction: 20, ui: 10 },
-    accessibilityLabel: 'Kırmızı kovada beş, mavi kovada üç palamut var.',
+    accessibilityLabel:
+      'İki kova. Biri daha dolu görünüyor; saymadan bakıyorsun.',
   },
 
   // ── SAHNE 5 — Birebir eşleştirme ───────────────────────────
@@ -284,9 +303,11 @@ export const scenes: SceneSpec[] = [
     id: 'scene05',
     order: 6,
     title: 'Birebir Eşleştir',
+    storyToken: 'story.discover',
+    motionToken: 'motion.softBounce',
     pedagogicalGoal:
-      'Sayı saymadan karşılaştırma: birebir eşleştirme sonucu artan taraf kavramı sezdirir. ' +
-      'Bu, az/çok kavramının somut temelidir.',
+      'Sayı saymadan karşılaştırma (MB-268/269): birebir eşleştirme artan tarafı sezdirir. ' +
+      'CPA concrete — az/çok somut temeli.',
     targetEmotion: 'kesif',
     opening: {
       visual: '🤝',
@@ -306,7 +327,7 @@ export const scenes: SceneSpec[] = [
     },
     aiObservation: {
       concept: 'birebir_eslestirme',
-      signals: ['touch_latency', 'retry_count', 'success_trend'],
+      signals: ['touch_latency', 'retry_count', 'success_trend', 'visual_focus'],
       misconceptions: ['eslesmeyi_tamamlamadan_karar_verme'],
     },
     feedback: {
@@ -332,9 +353,11 @@ export const scenes: SceneSpec[] = [
     id: 'scene06',
     order: 7,
     title: 'Daha Çok Olan',
+    storyToken: 'story.notice',
+    motionToken: 'motion.observe',
     pedagogicalGoal:
-      '"Daha çok" kavramını eşleştirme deneyiminin üzerine oturtmak. ' +
-      'Tek hedef: artan tarafın "daha çok" olduğunu adlandırmak.',
+      '"Daha çok"u eşleştirme deneyiminin üzerine oturtmak (MB-268). ' +
+      '3 perceptual saydırılmaz (MB-269); 5 conceptual alt grup (MB-270).',
     targetEmotion: 'basari',
     opening: {
       visual: '🐿️',
@@ -356,13 +379,22 @@ export const scenes: SceneSpec[] = [
       answerId: 'kova_a',
       hints: [
         'Az önce eşleştirmiştik. Hangi kovada eşi olmayan palamutlar kalmıştı?',
-        'Kırmızı kovadaki palamutları tek tek sayalım, sonra mavi kovadakileri.',
+        'Kırmızı kovadaki yığına bir daha bak, sonra mavi kovadakine.',
       ],
-      countVisibility: 'after_attempt',
+      /** MB-269: grupta 1–4 varken sayı asla görünmez. */
+      countVisibility: 'never',
     },
     aiObservation: {
       concept: 'daha_cok',
-      signals: ['first_choice', 'retry_count', 'error_type', 'hesitation'],
+      signals: [
+        'first_choice',
+        'retry_count',
+        'error_type',
+        'hesitation',
+        'subitize_attempt',
+        'grouping_strategy',
+        'visual_focus',
+      ],
       misconceptions: ['az_ile_cok_karistirma', 'buyuk_gorunen_secme'],
     },
     feedback: {
@@ -387,8 +419,11 @@ export const scenes: SceneSpec[] = [
     id: 'scene07',
     order: 8,
     title: 'Daha Az Olan',
+    storyToken: 'story.notice',
+    motionToken: 'motion.observe',
     pedagogicalGoal:
-      '"Daha az" kavramını "daha çok"un karşıtı olarak kurmak. Aynı görsel bağlam korunur.',
+      '"Daha az"ı "daha çok"un karşıtı olarak kurmak (MB-268). ' +
+      'Sayma dili yok; görsel yığın karşılaştırması (MB-269).',
     targetEmotion: 'guven',
     opening: {
       visual: '🪣',
@@ -409,14 +444,20 @@ export const scenes: SceneSpec[] = [
       ],
       answerId: 'kova_b',
       hints: [
-        'Daha az demek, daha küçük miktar demek. Hangi kovada daha küçük bir yığın var?',
-        'Kırmızı kovada 5, mavi kovada 3 palamut var. 3, 5\'ten küçüktür.',
+        'Daha az demek, daha küçük yığın demek. Hangisi daha küçük görünüyor?',
+        'Kırmızıdaki yığına bir bak, sonra mavidekine. Hangisi daha ufak?',
       ],
-      countVisibility: 'after_attempt',
+      countVisibility: 'never',
     },
     aiObservation: {
       concept: 'daha_az',
-      signals: ['first_choice', 'retry_count', 'error_type'],
+      signals: [
+        'first_choice',
+        'retry_count',
+        'error_type',
+        'subitize_attempt',
+        'visual_focus',
+      ],
       misconceptions: ['az_ile_cok_ters_cevirme'],
     },
     feedback: {
@@ -441,8 +482,11 @@ export const scenes: SceneSpec[] = [
     id: 'scene08',
     order: 9,
     title: 'Eşit Olunca',
+    storyToken: 'story.discover',
+    motionToken: 'motion.softBounce',
     pedagogicalGoal:
-      '"Eşit" kavramını birebir eşleştirmede artan olmaması olarak kurmak.',
+      '"Eşit"i birebir eşleştirmede artan olmaması olarak kurmak (MB-268). ' +
+      'Her iki taraf 5 — conceptual subitizing / alt grup (MB-270).',
     targetEmotion: 'basari',
     opening: {
       visual: '⚖️',
@@ -467,11 +511,18 @@ export const scenes: SceneSpec[] = [
         'Birebir eşleştirsek artan palamut kalır mıydı?',
         'Her kırmızı palamutun bir mavi eşi var. Hiç artan yok.',
       ],
+      /** İsimlendirme aşaması — yalnızca 5+ (perceptual yok). */
       countVisibility: 'after_attempt',
     },
     aiObservation: {
       concept: 'esit',
-      signals: ['first_choice', 'retry_count', 'error_type'],
+      signals: [
+        'first_choice',
+        'retry_count',
+        'error_type',
+        'grouping_strategy',
+        'observe_pattern',
+      ],
       misconceptions: ['esitligi_fark_etmeme', 'kova_boyutuna_bakma'],
     },
     feedback: {

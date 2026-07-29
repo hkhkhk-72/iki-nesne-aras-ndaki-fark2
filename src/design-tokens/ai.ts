@@ -13,7 +13,11 @@ export type AiTokenId =
   | 'ai.screen_dwell'
   | 'ai.audio_listen'
   | 'ai.first_success'
-  | 'ai.decision_confidence';
+  | 'ai.decision_confidence'
+  | 'ai.observe_pattern'
+  | 'ai.subitize_attempt'
+  | 'ai.grouping_strategy'
+  | 'ai.visual_focus';
 
 export interface AiToken {
   id: AiTokenId;
@@ -71,5 +75,25 @@ export const aiTokens: Record<AiTokenId, AiToken> = {
     id: 'ai.decision_confidence',
     signal: 'decision_confidence',
     purpose: 'Karar güveni — tereddüt vs akıcı seçim',
+  },
+  'ai.observe_pattern': {
+    id: 'ai.observe_pattern',
+    signal: 'observe_pattern',
+    purpose: 'Gözlem örüntüsü — nereye / ne kadar bakıldı',
+  },
+  'ai.subitize_attempt': {
+    id: 'ai.subitize_attempt',
+    signal: 'subitize_attempt',
+    purpose: 'Saymadan miktar hissi denemesi (1–4)',
+  },
+  'ai.grouping_strategy': {
+    id: 'ai.grouping_strategy',
+    signal: 'grouping_strategy',
+    purpose: '5+ alt grup stratejisi (3+2, 4+1…)',
+  },
+  'ai.visual_focus': {
+    id: 'ai.visual_focus',
+    signal: 'visual_focus',
+    purpose: 'Görsel odak — hangi kümeye bakıldı',
   },
 };

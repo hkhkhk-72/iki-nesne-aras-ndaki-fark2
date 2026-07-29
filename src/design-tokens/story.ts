@@ -11,7 +11,10 @@ export type StoryTokenId =
   | 'story.calm'
   | 'story.proud'
   | 'story.together'
-  | 'story.trust';
+  | 'story.trust'
+  | 'story.observe'
+  | 'story.notice'
+  | 'story.discover';
 
 export interface StoryToken {
   id: StoryTokenId;
@@ -70,5 +73,23 @@ export const storyTokens: Record<StoryTokenId, StoryToken> = {
     emotion: 'güven',
     childFeel: 'Kararım değerli; Fındık bana güveniyor.',
     cue: 'Küçük gülümseme, sıcak ışık, yumuşak zil — puan/ödül yok',
+  },
+  'story.observe': {
+    id: 'story.observe',
+    emotion: 'gözlem',
+    childFeel: 'Bakıyorum… acele yok.',
+    cue: 'FN Observe; motion.observe; sessiz bakış',
+  },
+  'story.notice': {
+    id: 'story.notice',
+    emotion: 'fark etme',
+    childFeel: 'Bir şey fark ettim.',
+    cue: 'FN Think; hafif parıltı; sayı yok',
+  },
+  'story.discover': {
+    id: 'story.discover',
+    emotion: 'keşif',
+    childFeel: 'Keşfettim / davet edildim.',
+    cue: 'FN Invite; motion.softBounce',
   },
 };

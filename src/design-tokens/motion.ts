@@ -8,7 +8,10 @@ export type MotionTokenId =
   | 'motion.pop'
   | 'motion.fade'
   | 'motion.none'
-  | 'motion.trust';
+  | 'motion.trust'
+  | 'motion.deepBreath'
+  | 'motion.softBounce'
+  | 'motion.observe';
 
 export interface MotionToken {
   id: MotionTokenId;
@@ -54,5 +57,23 @@ export const motionTokens: Record<MotionTokenId, MotionToken> = {
     durationMs: 900,
     easing: 'ease-in-out',
     reduceMotionFallback: 'instant',
+  },
+  'motion.deepBreath': {
+    id: 'motion.deepBreath',
+    durationMs: 1400,
+    easing: 'ease-in-out',
+    reduceMotionFallback: 'none',
+  },
+  'motion.softBounce': {
+    id: 'motion.softBounce',
+    durationMs: 520,
+    easing: 'ease-out',
+    reduceMotionFallback: 'instant',
+  },
+  'motion.observe': {
+    id: 'motion.observe',
+    durationMs: 1100,
+    easing: 'linear',
+    reduceMotionFallback: 'none',
   },
 };

@@ -108,3 +108,41 @@ ve öğrenme stratejisine yöneliktir.
 Örnek: *"Harika, vazgeçmedin."* · *"Dikkatlice inceledin."* · *"Yeni bir yol denedin."*
 
 **Kod:** `EFFORT_PRAISE` · `isProcessPraise()` · `after_effort` tetikleyicisi.
+
+---
+
+## 📘 Karar No: 268 — Gör → Hisset → İsimlendir *(MB-LAB-001)*
+
+Matematik önce görülür, sonra hissedilir, en son isimlendirilir.
+
+---
+
+## 📘 Karar No: 269 — 1–4 Asla Saydırılmaz
+
+1–4 nesne perceptual subitizing ile hissedilir; sayma istemi yasaktır.
+
+**Kod:** `mayPromptCount()` · discover `revealCount: false` (1–4).
+
+---
+
+## 📘 Karar No: 270 — 5+ Alt Grup
+
+5 ve üzeri nesnelerde doğal kümeler: 3+2, 4+1, 2+2+1…
+
+**Kod:** `pickGrouping()` · `edu.grouping` / `edu.partWhole`.
+
+---
+
+## 📘 Karar No: 271 — Hız Baskısı Yasak
+
+Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
+
+**Kod:** `FORBIDDEN_PRESSURE` · `runLabQa()`.
+
+---
+
+## 📘 Karar No: 272 — Her LS CPA Destekler
+
+Concrete → Pictorial → Abstract. Her Learning Scene bu zinciri destekler.
+
+Ayrıntı: [docs/16-mb-lab-001-scientific-foundation.md](./16-mb-lab-001-scientific-foundation.md)

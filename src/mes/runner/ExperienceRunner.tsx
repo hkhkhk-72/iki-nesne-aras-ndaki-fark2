@@ -12,8 +12,9 @@ import type { AppSettings } from '@/core/settings-store';
 import { scaleFont } from '@/core/settings-store';
 import { SceneStage, GroupDisplay, SpeechBubble } from './SceneStage';
 import { TrustReaction, DecisionRipple, SceneTransition } from '@/components/scene';
-import { registerFirstSuccess } from '@/ai/analytics';
+import { registerFirstSuccess, registerLabObservation } from '@/ai/analytics';
 import { motionTokens, storyTokens } from '@/design-tokens';
+import { isPerceptualCount, naturalLayout } from '@/lab';
 
 interface RunnerProps {
   experience: MicroExperience;
@@ -224,18 +225,40 @@ function NarrativeScene({ scene, settings, observer, onAdvance }: SceneProps) {
   );
 }
 
-// ─── Keşif: nesnelere dokunarak sayma ────────────────────────
+// ─── Keşif: dokunarak toplama (MB-269: 1–4 saydırılmaz) ───────
 function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
   const i = scene.interaction as Extract<SceneSpec['interaction'], { kind: 'discover' }>;
   const [found, setFound] = useState<Set<string>>(new Set());
   const allFound = found.size === i.items.length;
+  const field = 220;
+  const itemSize = 64;
+  const points = useMemo(
+    () =>
+      naturalLayout({
+        count: i.items.length,
+        seed: scene.order * 41 + i.items.length * 7,
+        width: 1,
+        height: 1,
+      }),
+    [i.items.length, scene.order],
+  );
+
+  useEffect(() => {
+    if (isPerceptualCount(i.items.length)) {
+      registerLabObservation(observer, scene.id, 'subitize_attempt', String(i.items.length));
+    }
+  }, [i.items.length, observer, scene.id]);
 
   const tap = (id: string) => {
     if (found.has(id)) return;
     observer.record(scene.id, 'touch', id);
+    registerLabObservation(observer, scene.id, 'visual_focus', id);
     if (!settings.reduceMotion) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setFound((prev) => new Set(prev).add(id));
   };
+
+  /** MB-269: 1–4’te sayaç asla açılmaz. */
+  const mayRevealCount = Boolean(i.revealCount) && !isPerceptualCount(i.items.length);
 
   return (
     <SceneStage
@@ -250,14 +273,25 @@ function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
       }
     >
       <Text style={[styles.prompt, { fontSize: scaleFont(settings, 18) }]}>{i.prompt}</Text>
-      <View style={styles.discoverGrid}>
-        {i.items.map((item) => {
+      <View style={[styles.discoverField, { width: field, height: field }]}>
+        {i.items.map((item, idx) => {
           const isFound = found.has(item.id);
+          const p = points[idx] ?? { x: 0.5, y: 0.5 };
           return (
             <TouchableOpacity
               key={item.id}
               onPress={() => tap(item.id)}
-              style={[styles.discoverItem, isFound && styles.discoverItemFound]}
+              style={[
+                styles.discoverItem,
+                {
+                  position: 'absolute',
+                  left: p.x * (field - itemSize),
+                  top: p.y * (field - itemSize),
+                  width: itemSize,
+                  height: itemSize,
+                },
+                isFound && styles.discoverItemFound,
+              ]}
               accessibilityLabel={item.label ?? item.emoji}
             >
               <Text style={styles.discoverEmoji}>{item.emoji}</Text>
@@ -266,7 +300,7 @@ function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
           );
         })}
       </View>
-      {i.revealCount && found.size > 0 ? (
+      {mayRevealCount && found.size > 0 ? (
         <Text style={styles.counter}>{found.size}</Text>
       ) : null}
       {allFound ? (
@@ -285,8 +319,17 @@ function ObserveScene({ scene, settings, observer, onAdvance }: SceneProps) {
   const i = scene.interaction as Extract<SceneSpec['interaction'], { kind: 'observe' }>;
   const [looked, setLooked] = useState<Set<string>>(new Set());
 
+  useEffect(() => {
+    registerLabObservation(observer, scene.id, 'observe_pattern', 'observe_enter');
+  }, [observer, scene.id]);
+
   const look = (id: string) => {
     observer.record(scene.id, 'touch', id);
+    registerLabObservation(observer, scene.id, 'visual_focus', id);
+    const group = i.groups.find((g) => g.id === id);
+    if (group && !isPerceptualCount(group.count)) {
+      registerLabObservation(observer, scene.id, 'grouping_strategy', String(group.count));
+    }
     setLooked((prev) => new Set(prev).add(id));
   };
 
@@ -298,16 +341,18 @@ function ObserveScene({ scene, settings, observer, onAdvance }: SceneProps) {
     >
       <Text style={[styles.prompt, { fontSize: scaleFont(settings, 18) }]}>{i.prompt}</Text>
       <View style={styles.groupRow}>
-        {i.groups.map((g) => (
+        {i.groups.map((g, gi) => (
           <GroupDisplay
             key={g.id}
             label={g.label}
             emoji={g.emoji}
             count={g.count}
             highlighted={looked.has(g.id)}
-            showCount={looked.has(g.id)}
+            /** MB-268/269: gözlemde sayı gösterilmez — önce gör. */
+            showCount={false}
             onPress={() => look(g.id)}
             settings={settings}
+            layoutSeed={scene.order * 10 + gi}
           />
         ))}
       </View>
@@ -406,9 +451,19 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
   };
 
   const countVisibility = i.countVisibility ?? 'after_attempt';
-  const showCount =
+  const baseShowCount =
     countVisibility === 'always' ||
     (countVisibility === 'after_attempt' && (attempts > 0 || solved));
+
+  useEffect(() => {
+    registerLabObservation(observer, scene.id, 'observe_pattern', 'choose_enter');
+    if (i.groups.some((g) => !isPerceptualCount(g.count))) {
+      registerLabObservation(observer, scene.id, 'grouping_strategy', 'choose_groups');
+    }
+    if (i.groups.some((g) => isPerceptualCount(g.count))) {
+      registerLabObservation(observer, scene.id, 'subitize_attempt', 'choose_perceptual');
+    }
+  }, [i.groups, observer, scene.id]);
 
   return (
     <SceneStage
@@ -423,14 +478,16 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
       <Text style={[styles.prompt, { fontSize: scaleFont(settings, 18) }]}>{i.prompt}</Text>
 
       <View style={styles.groupRow}>
-        {i.groups.map((g) => (
+        {i.groups.map((g, gi) => (
           <GroupDisplay
             key={g.id}
             label={g.label}
             emoji={g.emoji}
             count={g.count}
-            showCount={showCount}
+            /** MB-269: 1–4 nesnede sayı asla gösterilmez. */
+            showCount={baseShowCount && !isPerceptualCount(g.count)}
             settings={settings}
+            layoutSeed={scene.order * 13 + gi + attempts}
           />
         ))}
       </View>
@@ -572,15 +629,11 @@ const styles = StyleSheet.create({
   hintText: { ...typography.caption, color: colors.textSecondary, textAlign: 'center' },
   counter: { ...typography.hero, color: colors.primary, textAlign: 'center' },
 
-  discoverGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: spacing.sm,
+  discoverField: {
+    alignSelf: 'center',
+    position: 'relative',
   },
   discoverItem: {
-    width: 72,
-    height: 72,
     borderRadius: radius.md,
     backgroundColor: colors.surface,
     borderWidth: 2,

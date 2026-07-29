@@ -20,11 +20,14 @@
 | **MD-034** | Dynamic Form Builder | Document OS | ✅ freeze |
 | **MD-035** | Document DNA | Document OS | ✅ freeze |
 | **MD-036** | Official Lock | Document OS | ✅ freeze |
+| **MD-038** | Context Cache Engine | Document OS | ✅ freeze |
 
 ### Numara notu
 
 Taslakta Document OS ilkeleri MD-025…030 diye anılmıştı.  
 **MD-025 / MD-026** zaten dolu olduğu için Document OS ilkeleri **MD-031…036** olarak donduruldu. Anlam aynıdır.
+
+**MD-038** — Context Cache: Load Once — Use Everywhere.
 
 ---
 
@@ -48,5 +51,10 @@ Her belgenin kimliği: kod, tür, motor, bağımlılıklar, versiyon, şablon, M
 
 ### MD-036 — Official Lock
 MEB korumalı alanlar kilitli (ör. kazanımlar); öğretmen alanı esnek (ör. etkinlik).
+
+### MD-038 — Context Cache Engine
+TeacherContext bir kez yüklenir; session boyunca tüm motorlar aynı cache’i kullanır.  
+`ContextCacheService` · `TeacherContextAggregate` · `TeacherContextLoaded`.  
+Detay: `docs/MD-038-CONTEXT-CACHE-ENGINE.md`
 
 Detay: `docs/MB-IA-003-AKILLI-BELGE-URETIM-MOTORU.md` · `docs/MB-DOS-000-DOCUMENT-OS.md`

@@ -69,6 +69,7 @@ Bağlayıcı sıra:
 2g. **MB-IA-002** — Belge yaşam döngüsü 🔒 **Architecture Freeze** → `docs/MB-IA-002-BELGE-YASAM-DONGUSU.md`  
 2h. **MB-IA-003** — Akıllı Belge Üretim Motoru ✅ → `docs/MB-IA-003-AKILLI-BELGE-URETIM-MOTORU.md`  
 2i. **MB-DOS-000 / DOS-001** — Document OS + katalog şeması (tohum) 🔵  
+2j. **MD-038** — Context Cache Engine (Load Once — Use Everywhere) ✅  
 3. **MB-DM-002** — Entity Detay ✅  
 4. **MB-TPM-001** — 1. sınıf Türkçe domain ✅  
 5. **FAZ 6 / MB-COMP-001…008** — Bileşen mimarisi *(aktif)*  

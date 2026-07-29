@@ -60,27 +60,39 @@
       const profile = MiniBilgeStorage.getProfile();
       const school = MiniBilgeStorage.getSchool();
       const plans = MiniBilgeStorage.getPlans();
-      const ctx = MiniBilgeStorage.getClassContext();
-      const siniflar = MiniBilgeStorage.getSiniflar();
-      const sinif = ctx.sinif;
-      const sube = ctx.sube;
-      const egitimYili = school.egitimYili || '2025-2026';
+      const egitimYiliHint = school.egitimYili || '2025-2026';
       const today = new Date();
       const gunAdi = GUNLER[today.getDay()];
-      const ad = profile.adSoyad || 'Öğretmen';
-      const okulAdi = school.okulAdi || school.ad || 'Okul bilgisi girilmedi';
-      const needsSetup = setupIncomplete(profile, school);
 
       let cal = FALLBACK_CAL;
       try {
         if (window.CalendarEngine) {
-          CalendarEngine.setYear(egitimYili);
+          CalendarEngine.setYear(egitimYiliHint);
           const loaded = await CalendarEngine.loadCalendar();
           if (loaded && loaded.haftalikDersSaati) cal = loaded;
         }
       } catch (e) {
         console.warn(e);
       }
+
+      // MD-038 — Load Once (takvim saatleriyle)
+      let cacheAgg = null;
+      if (window.ContextCacheService) {
+        const needHours = !ContextCacheService.isLoaded()
+          || !(ContextCacheService.get() && ContextCacheService.get().haftalikDersSaatleri);
+        cacheAgg = await ContextCacheService.load({ cal, force: needHours });
+      }
+
+      const ctx = cacheAgg
+        ? { sinif: cacheAgg.sinif, sube: cacheAgg.sube, label: cacheAgg.label }
+        : MiniBilgeStorage.getClassContext();
+      const siniflar = MiniBilgeStorage.getSiniflar();
+      const sinif = ctx.sinif;
+      const sube = ctx.sube;
+      const egitimYili = (cacheAgg && cacheAgg.okul.egitimYili) || egitimYiliHint;
+      const ad = (cacheAgg && cacheAgg.ogretmen.adSoyad) || profile.adSoyad || 'Öğretmen';
+      const okulAdi = (cacheAgg && cacheAgg.okul.ad) || school.okulAdi || school.ad || 'Okul bilgisi girilmedi';
+      const needsSetup = setupIncomplete(profile, school);
 
       let currentWeek = null;
       try {
@@ -89,8 +101,12 @@
         console.warn(e);
       }
 
-      const hours = (cal.haftalikDersSaati && cal.haftalikDersSaati[sinif]) || FALLBACK_CAL.haftalikDersSaati['1'];
-      const dersler = MiniBilgeHub.derslerForSinif(sinif);
+      const hours = (cacheAgg && cacheAgg.haftalikDersSaatleri)
+        || (cal.haftalikDersSaati && cal.haftalikDersSaati[sinif])
+        || FALLBACK_CAL.haftalikDersSaati['1'];
+      const dersler = (cacheAgg && cacheAgg.dersProgrami && cacheAgg.dersProgrami.length)
+        ? cacheAgg.dersProgrami
+        : MiniBilgeHub.derslerForSinif(sinif);
       const hasYillik = (plans || []).some(p => p.tur === 'yillik' && String(p.sinif) === sinif);
       const motorFlow = MiniBilgeHub.MOTOR_FLOW || [];
 
@@ -117,12 +133,13 @@
             <span class="hero-chip sky">${gunAdi}, ${fmtToday(today)}</span>
           </div>
 
-          <div class="context-loaded" aria-label="Otomatik yüklenen bağlam">
-            <span>Ders çizelgesi</span>
-            <span>Öğretim programı</span>
-            <span>Takvim</span>
-            <span>Okul / öğretmen</span>
-            <span>Ders saatleri</span>
+          <div class="context-loaded" aria-label="Context Cache (MD-038)">
+            <span>Cache yüklü</span>
+            <span>Öğretmen / Okul</span>
+            <span>Sınıf / Şube</span>
+            <span>Ders programı</span>
+            <span>Haftalık saatler</span>
+            <span>Load Once</span>
           </div>
         </header>
 
@@ -201,12 +218,16 @@
     const root = document.querySelector('.mbc-class-context, .grade-tabs');
     if (!root) return;
     root.querySelectorAll('[data-sinif]').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', async () => {
         const s = btn.getAttribute('data-sinif');
         const sub = btn.getAttribute('data-sube') || 'A';
-        MiniBilgeStorage.setClassContext(s, sub);
+        if (window.ContextCacheService) {
+          await ContextCacheService.switchClass(s, sub);
+        } else {
+          MiniBilgeStorage.setClassContext(s, sub);
+        }
         if (window.MiniBilgeComponents && MiniBilgeComponents.notify) {
-          MiniBilgeComponents.notify.success(`${s}/${sub} — sistem yeniden yapılandı`);
+          MiniBilgeComponents.notify.success(`${s}/${sub} — Context Cache yenilendi`);
         }
         initDashboard();
       });

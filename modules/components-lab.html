@@ -15,6 +15,7 @@
   <script src="../assets/js/core/hub-config.js"></script>
   <script src="../assets/js/core/calendar-engine.js"></script>
   <script src="../assets/js/core/document-dna.js"></script>
+  <script src="../assets/js/core/context-cache.js"></script>
   <script src="../assets/js/core/context-engine.js"></script>
   <script src="../assets/js/components/mb-components.js"></script>
   <script src="../assets/js/components/nav.js"></script>
@@ -172,15 +173,24 @@
           if (host) host.innerHTML = '<p class="empty-state">DNA motoru yüklenemedi.</p>';
           return;
         }
+        if (window.ContextCacheService) {
+          await ContextCacheService.load({ force: true });
+        }
         await DocumentDNA.load();
         const samples = ['yillik-plan', 'gunluk-plan', 'zumre-toplanti', 'bep'];
+        const cacheLine = window.ContextCacheService && ContextCacheService.isLoaded()
+          ? `<div class="mbc-banner mbc-banner--success" style="margin-bottom:12px;">
+              MD-038 Cache: <strong>${ContextCacheService.get().label}</strong> ·
+              ${ContextCacheService.get().okul.egitimYili} · Load Once
+             </div>`
+          : '';
         const rows = samples.map(id => {
           const dna = DocumentDNA.get(id);
           if (!dna) return '';
           const pack = ContextEngine.buildDocumentContext({ docId: id, dna });
           const inputs = pack.userInputs.length
             ? pack.userInputs.map(u => u.label).join(' · ')
-            : '0 soru (Zero Input)';
+            : '0 soru (Zero Input + Cache)';
           const locked = (dna.officialLocked || []).join(', ') || '—';
           return `<div class="mbc-doc-card" style="margin-bottom:10px;">
             <div class="mbc-doc-card-top">
@@ -190,9 +200,10 @@
             <p class="mbc-doc-meta">Motor: ${(dna.motors || []).join(', ')}</p>
             <p class="mbc-doc-meta">Smart Form: ${inputs}</p>
             <p class="mbc-doc-meta">Official Lock: ${locked}</p>
+            <p class="mbc-doc-meta">Cache: ${pack.cacheLoaded ? 'evet' : 'hayır'}</p>
           </div>`;
         }).join('');
-        host.innerHTML = rows || '<p class="empty-state">Katalog boş.</p>';
+        host.innerHTML = cacheLine + (rows || '<p class="empty-state">Katalog boş.</p>');
       })();
     })();
   </script>

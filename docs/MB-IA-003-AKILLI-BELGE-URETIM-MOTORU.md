@@ -119,7 +119,8 @@ Generation Engine iki katmanı ayrı üretir; Preview bunları görsel olarak ay
 
 | Dosya | Rol |
 |-------|-----|
-| `assets/js/core/context-engine.js` | Teacher + Document context |
+| `assets/js/core/context-cache.js` | MD-038 ContextCacheService |
+| `assets/js/core/context-engine.js` | Teacher + Document context (cache üzerinden) |
 | `assets/js/core/document-dna.js` | DNA okuma / katalog erişimi |
 | `assets/data/document-catalog.json` | DOS-001 tohum katalog |
 | `docs/MB-DOS-000-DOCUMENT-OS.md` | OS özeti |

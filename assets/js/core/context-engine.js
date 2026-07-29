@@ -3,10 +3,16 @@
 
   /**
    * MB-IA-003 — Context Builder Engine
-   * MD-031 Context First · MD-032 Zero Input
+   * MD-031 Context First · MD-032 Zero Input · MD-038 Context Cache
+   *
+   * Rule: Load Once — Use Everywhere (ContextCacheService)
    */
 
   function buildTeacherContext() {
+    if (window.ContextCacheService && ContextCacheService.isLoaded()) {
+      return ContextCacheService.get().toEngineContext();
+    }
+    // Cache yoksa senkron fallback (load henüz çağrılmadı)
     const profile = (window.MiniBilgeStorage && MiniBilgeStorage.getProfile()) || {};
     const school = (window.MiniBilgeStorage && MiniBilgeStorage.getSchool()) || {};
     const settings = (window.MiniBilgeStorage && MiniBilgeStorage.getSettings()) || {};
@@ -31,12 +37,15 @@
       },
       class: cls,
       ders: settings.varsayilanDers || 'turkce',
+      dersProgrami: (window.MiniBilgeHub && MiniBilgeHub.derslerForSinif)
+        ? MiniBilgeHub.derslerForSinif(cls.sinif) : [],
+      haftalikDersSaatleri: null,
       week: null
     };
   }
 
   function attachWeek(ctx, cal, date) {
-    const out = { ...ctx };
+    const out = Object.assign({}, ctx);
     try {
       if (window.CalendarEngine && cal) {
         const w = CalendarEngine.getCurrentWeek(cal, date || new Date());
@@ -58,15 +67,13 @@
     return miss;
   }
 
-  /**
-   * Belge DNA + bağlam → Smart Form’ta sorulacak alanlar
-   * Kayıtlı zero-input alanlar userInputs’tan elenir.
-   */
   function resolveUserInputs(dna, ctx) {
-    const inputs = (dna && dna.userInputs) || [];
+    let inputs = (dna && dna.userInputs) || [];
+    if (window.ContextCacheService) {
+      inputs = ContextCacheService.stripCachedInputs(inputs);
+    }
     return inputs.filter(field => {
       if (!field || !field.id) return false;
-      // Bağlamda zaten varsa sorma (zero input)
       if (field.id === 'sinif' && ctx.class && ctx.class.sinif) return false;
       if (field.id === 'sube' && ctx.class && ctx.class.sube) return false;
       if (field.id === 'ders' && ctx.ders) return false;
@@ -100,7 +107,8 @@
       userInputs,
       zeroMissing,
       readyToGenerate: zeroMissing.length === 0 && userInputs.filter(u => u.required).length === 0,
-      principle: 'MD-031/032/033'
+      principle: 'MD-031/032/033/038',
+      cacheLoaded: !!(window.ContextCacheService && ContextCacheService.isLoaded())
     };
   }
 

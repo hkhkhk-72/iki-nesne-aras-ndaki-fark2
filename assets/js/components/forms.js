@@ -18,9 +18,23 @@
 
   C.SchoolSelector = function SchoolSelector(opts) {
     const o = opts || {};
-    const school = o.school || (window.MiniBilgeStorage && MiniBilgeStorage.getSchool()) || {};
-    const profile = o.profile || (window.MiniBilgeStorage && MiniBilgeStorage.getProfile()) || {};
-    const settings = o.settings || (window.MiniBilgeStorage && MiniBilgeStorage.getSettings()) || {};
+    let school = o.school || (window.MiniBilgeStorage && MiniBilgeStorage.getSchool()) || {};
+    let profile = o.profile || (window.MiniBilgeStorage && MiniBilgeStorage.getProfile()) || {};
+    let settings = o.settings || (window.MiniBilgeStorage && MiniBilgeStorage.getSettings()) || {};
+    // MD-038 — cache varsa formu doldur, tekrar sorma
+    if (window.ContextCacheService && ContextCacheService.isLoaded()) {
+      const agg = ContextCacheService.get();
+      school = {
+        ad: agg.okul.ad,
+        okulAdi: agg.okul.ad,
+        il: agg.okul.il,
+        ilce: agg.okul.ilce,
+        mudur: agg.okul.mudur,
+        mudurAdi: agg.okul.mudur
+      };
+      profile = { adSoyad: agg.ogretmen.adSoyad };
+      settings = { sube: agg.sube };
+    }
     const html = `
       <div class="mbc-smart-form" data-form="school">
         <p class="mbc-smart-lead">Okul bağlamı — kayıtlıysa otomatik dolar.</p>

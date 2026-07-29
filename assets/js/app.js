@@ -11,11 +11,12 @@
     ],
     tatiller: [],
     belirliGunler: [],
+    /* TTKB 09.05.2025 İlkokul haftalık ders çizelgesi — her sınıf 30 saat */
     haftalikDersSaati: {
-      '1': { turkce: 10, matematik: 5, hayatBilgisi: 4, gorselSanatlar: 2, muzik: 2, bedenEgitimi: 2, rehberlik: 1 },
-      '2': { turkce: 10, matematik: 5, hayatBilgisi: 4, gorselSanatlar: 2, muzik: 2, bedenEgitimi: 2, ingilizce: 2, rehberlik: 1 },
-      '3': { turkce: 8, matematik: 5, fen: 3, hayatBilgisi: 3, gorselSanatlar: 2, muzik: 2, bedenEgitimi: 2, ingilizce: 2, rehberlik: 1 },
-      '4': { turkce: 8, matematik: 5, fen: 3, sosyal: 3, gorselSanatlar: 2, muzik: 2, bedenEgitimi: 2, ingilizce: 2, rehberlik: 1 }
+      '1': { turkce: 10, matematik: 5, hayatBilgisi: 4, gorselSanatlar: 1, muzik: 1, bedenEgitimi: 5, serbestEtkinlikler: 4 },
+      '2': { turkce: 10, matematik: 5, hayatBilgisi: 4, ingilizce: 2, gorselSanatlar: 1, muzik: 1, bedenEgitimi: 5, serbestEtkinlikler: 2 },
+      '3': { turkce: 8, matematik: 5, hayatBilgisi: 3, fen: 3, ingilizce: 2, gorselSanatlar: 1, muzik: 1, bedenEgitimi: 5, serbestEtkinlikler: 2 },
+      '4': { turkce: 8, matematik: 5, fen: 3, sosyal: 3, ingilizce: 2, dinKulturu: 2, gorselSanatlar: 1, muzik: 1, bedenEgitimi: 2, trafikGuvenligi: 1, insanHaklari: 2 }
     }
   };
 
@@ -186,7 +187,10 @@
     const map = {
       turkce: 'Türkçe', matematik: 'Matematik', hayatBilgisi: 'Hayat Bilgisi',
       fen: 'Fen Bilimleri', sosyal: 'Sosyal Bilgiler', gorselSanatlar: 'Görsel Sanatlar',
-      muzik: 'Müzik', bedenEgitimi: 'Beden Eğitimi', ingilizce: 'İngilizce', rehberlik: 'Rehberlik'
+      muzik: 'Müzik', bedenEgitimi: 'Beden Eğitimi ve Oyun', ingilizce: 'İngilizce',
+      dinKulturu: 'Din Kültürü ve Ahlak Bilgisi', serbestEtkinlikler: 'Serbest Etkinlikler',
+      trafikGuvenligi: 'Trafik Güvenliği',
+      insanHaklari: 'İnsan Hakları, Vatandaşlık ve Demokrasi'
     };
     return map[id] || id;
   }

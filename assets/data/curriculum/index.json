@@ -7,25 +7,41 @@
       "gorselSanatlar": "sinif1-gorsel-sanatlar.json",
       "muzik": "sinif1-muzik.json",
       "bedenEgitimi": "sinif1-beden-egitimi.json",
-      "rehberlik": "sinif1-rehberlik.json"
+      "serbestEtkinlikler": "sinif1-serbest-etkinlikler.json"
     },
     "2": {
       "turkce": "sinif2-turkce.json",
       "matematik": "sinif2-matematik.json",
       "hayatBilgisi": "sinif2-hayat-bilgisi.json",
-      "ingilizce": "sinif2-ingilizce.json"
+      "ingilizce": "sinif2-ingilizce.json",
+      "gorselSanatlar": "sinif2-gorsel-sanatlar.json",
+      "muzik": "sinif2-muzik.json",
+      "bedenEgitimi": "sinif2-beden-egitimi.json",
+      "serbestEtkinlikler": "sinif2-serbest-etkinlikler.json"
     },
     "3": {
       "turkce": "sinif3-turkce.json",
       "matematik": "sinif3-matematik.json",
       "hayatBilgisi": "sinif3-hayat-bilgisi.json",
-      "fen": "sinif3-fen.json"
+      "fen": "sinif3-fen.json",
+      "ingilizce": "sinif3-ingilizce.json",
+      "gorselSanatlar": "sinif3-gorsel-sanatlar.json",
+      "muzik": "sinif3-muzik.json",
+      "bedenEgitimi": "sinif3-beden-egitimi.json",
+      "serbestEtkinlikler": "sinif3-serbest-etkinlikler.json"
     },
     "4": {
       "turkce": "sinif4-turkce.json",
       "matematik": "sinif4-matematik.json",
       "fen": "sinif4-fen.json",
-      "sosyal": "sinif4-sosyal.json"
+      "sosyal": "sinif4-sosyal.json",
+      "ingilizce": "sinif4-ingilizce.json",
+      "dinKulturu": "sinif4-din-kulturu.json",
+      "gorselSanatlar": "sinif4-gorsel-sanatlar.json",
+      "muzik": "sinif4-muzik.json",
+      "bedenEgitimi": "sinif4-beden-egitimi.json",
+      "trafikGuvenligi": "sinif4-trafik-guvenligi.json",
+      "insanHaklari": "sinif4-insan-haklari.json"
     }
   },
   "dersAdlari": {
@@ -35,10 +51,14 @@
     "fen": "Fen Bilimleri",
     "sosyal": "Sosyal Bilgiler",
     "ingilizce": "İngilizce",
+    "dinKulturu": "Din Kültürü ve Ahlak Bilgisi",
     "gorselSanatlar": "Görsel Sanatlar",
     "muzik": "Müzik",
-    "bedenEgitimi": "Beden Eğitimi",
-    "rehberlik": "Rehberlik ve Kariyer Bilgisi"
+    "bedenEgitimi": "Beden Eğitimi ve Oyun",
+    "serbestEtkinlikler": "Serbest Etkinlikler",
+    "trafikGuvenligi": "Trafik Güvenliği",
+    "insanHaklari": "İnsan Hakları, Vatandaşlık ve Demokrasi"
   },
-  "kaynakNotu": "1–4 Türkçe/Matematik, 1–3 Hayat Bilgisi, 3–4 Fen, 4 Sosyal: MEB TYMM onaylı PDF'lerden sayfa sayfa okunarak üretilmiştir."
+  "haftalikDersSaatiKaynak": "TTKB 09.05.2025 sayılı karar — İlköğretim Kurumları Haftalık Ders Çizelgesi (2025-2026)",
+  "kaynakNotu": "1–4 Türkçe/Matematik, 1–3 Hayat Bilgisi, 3–4 Fen, 4 Sosyal: MEB TYMM onaylı PDF'lerden okunmuştur. Diğer dersler çizelge stub'ıdır (kanonik şema değil). Rehberlik ilkokul zorunlu çizelgede yer almaz."
 }

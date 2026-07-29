@@ -240,11 +240,43 @@ Haftalık **3** saat · yıllık **108** saat · **17** çıktı · kod `SB.4.x.
 1. Uydurma tema adları kaldırıldı → resmi temalar (1–4 Türkçe/Mat, 1–3 HB, 3–4 Fen, 4 Sosyal)
 2. Öğrenme çıktı kodları resmi formata çekildi (`T.*`, `MAT.*`, `HB.*`, `FB.*`, `SB.*`)
 3. Matematik işleniş sırası resmi tabloya göre düzeltildi (1. sınıfta Geometri önce)
-4. Takvim haftalık saatleri resmi programla hizalandı:
-   - 2. sınıf Türkçe 8 → **10**, HB 3 → **4**
-   - 3. sınıf Türkçe 6 → **8**, HB 2 → **3**
-   - 4. sınıf Türkçe 6 → **8**
+4. Takvim haftalık saatleri resmi program + TTKB çizelge ile hizalandı (aşağıdaki §7.1)
 5. Her dosyada `kaynak` + `kaynakUrl` (tymm.meb.gov.tr)
+
+### 7.1 Haftalık ders çizelgesi (TTKB 09.05.2025 — 2025-2026)
+
+Kaynak: Talim ve Terbiye Kurulu Başkanlığı, 09/05/2025 sayılı 04 nolu karar eki  
+*İlköğretim Kurumları (İlkokul ve Ortaokul) Haftalık Ders Çizelgesi*  
+(önceki 23/05/2024-21 çizelgesi 2025-2026’dan itibaren uygulamadan kaldırılmıştır).
+
+| Ders | 1 | 2 | 3 | 4 |
+| --- | ---: | ---: | ---: | ---: |
+| Türkçe | 10 | 10 | 8 | 8 |
+| Matematik | 5 | 5 | 5 | 5 |
+| Hayat Bilgisi | 4 | 4 | 3 | — |
+| Fen Bilimleri | — | — | 3 | 3 |
+| Sosyal Bilgiler | — | — | — | 3 |
+| Yabancı Dil | — | 2 | 2 | 2 |
+| Din Kültürü ve Ahlak Bilgisi | — | — | — | 2 |
+| Görsel Sanatlar | 1 | 1 | 1 | 1 |
+| Müzik | 1 | 1 | 1 | 1 |
+| Beden Eğitimi ve Oyun | 5 | 5 | 5 | 2 |
+| Trafik Güvenliği | — | — | — | 1 |
+| İnsan Hakları, Vatandaşlık ve Demokrasi | — | — | — | 2 |
+| Serbest Etkinlikler | 4 | 2 | 2 | — |
+| **Toplam** | **30** | **30** | **30** | **30** |
+
+Zorunlu alt toplamları: 26 / 28 / 28 / 30; serbest etkinliklerle 30’a tamamlanır.  
+Açıklama (çizelge notu): 1. sınıfta serbest etkinliklerin 2 saati; 2 ve 3. sınıflarda 1 saati masal ve geleneksel oyun saati olarak değerlendirilir.
+
+**Sınıf notları (çizelge + TYMM ile uyumlu):**
+
+- **1. sınıf:** Yabancı dil yok. Fen/Sosyal branşları yok; temel konular Hayat Bilgisi’nde.
+- **2. sınıf:** Yabancı dil başlar.
+- **3. sınıf:** Hayat Bilgisi devam eder (3 saat) + Fen Bilimleri eklenir. Din Kültürü bu çizelgede 4. sınıftan başlar. Beden Eğitimi ve Oyun 5 saat kalır.
+- **4. sınıf:** Hayat Bilgisi kalkar; Sosyal Bilgiler, Din Kültürü, Trafik Güvenliği ve İHVD eklenir.
+
+Platform dosyaları: `assets/data/calendar-*.json` → `haftalikDersSaati`; `assets/data/curriculum/index.json`.
 
 ---
 

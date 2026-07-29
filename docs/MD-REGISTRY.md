@@ -24,6 +24,7 @@
 | **MD-039** | Workflow First | Teacher Workflow | ✅ freeze |
 | **MD-040** | LessonExecution SSOT | Document OS / LEE | ✅ freeze |
 | **MD-041** | Teacher Experience System (TXS) | UX / MB-DS-002 | ✅ freeze |
+| **MD-042** | Interaction Standards | UX / MB-DS-003 | ✅ freeze |
 
 ### Numara notu
 
@@ -33,7 +34,8 @@ Taslakta Document OS ilkeleri MD-025…030 diye anılmıştı.
 **MD-038** — Context Cache: Load Once — Use Everywhere.  
 **MD-039** — Workflow First: belge seçilmez; TWE doğru işi zamanında önerir.  
 **MD-040** — LessonExecution tek doğruluk kaynağı; Ders Defteri bağımsız belge değildir.  
-**MD-041** — Teacher Experience System: Context/Workflow First, Zero Load, One Click, AI Everywhere, Never Empty, Action Dashboard, AI Confidence.
+**MD-041** — Teacher Experience System: Context/Workflow First, Zero Load, One Click, AI Everywhere, Never Empty, Action Dashboard, AI Confidence.  
+**MD-042** — Interaction Standards: hover/click/page/drawer/dialog süreleri, snackbar 3 sn, skeleton, debounce, infinite scroll, undo 5 sn, autosave 30 sn.
 
 ---
 
@@ -74,5 +76,9 @@ Detay: `docs/MD-040-LESSON-EXECUTION-SSOT.md` · `docs/MB-DOS-003-LESSON-EXECUTI
 ### MD-041 — Teacher Experience System (TXS)
 Tasarım sistemi yalnızca görsel dil değildir; öğretmen akışına göre yönlendirir.  
 TXS-001…010 · `docs/MB-DS-002-TEACHER-EXPERIENCE-SYSTEM.md` · `assets/js/components/txs.js`
+
+### MD-042 — Interaction Standards
+Etkileşim süreleri tek kaynaktan: `--mb-is-*` · `MiniBilgeInteraction`.  
+Detay: `docs/MB-DS-003-INTERACTION-STANDARDS.md` · `docs/MD-042-INTERACTION-STANDARDS.md`
 
 Detay: `docs/MB-IA-003-AKILLI-BELGE-URETIM-MOTORU.md` · `docs/MB-DOS-000-DOCUMENT-OS.md`

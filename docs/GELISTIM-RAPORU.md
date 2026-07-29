@@ -60,6 +60,7 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 2k. **MB-WFE-001** Teacher Workflow Engine v2 + MD-039 Workflow First ✅
 2l. **MB-DOS-003** Lesson Execution Engine + MD-040 SSOT ✅ → `docs/MB-DOS-003-LESSON-EXECUTION-ENGINE.md`
 2m. **MB-DS-002 / MD-041** Teacher Experience System (TXS) ✅ → `docs/MB-DS-002-TEACHER-EXPERIENCE-SYSTEM.md`
+2n. **MB-DS-003 / MD-042** Interaction Standards ✅ → `docs/MB-DS-003-INTERACTION-STANDARDS.md`
 3. **MB-DM-002** Entity Detay Spesifikasyonu ✅ → `docs/MB-DM-002-ENTITY-DETAY-SPESIFIKASYONU.md`
 3b. **Günlük Kazanımlar** (sınıf defteri) + Kazanım Cepte UX esini → `docs/ESIN-KAZANIM-CEPTE.md`
 4. **MB-TPM-001** 1. sınıf Türkçe domain ✅ → `docs/MB-TPM-001-SINIF1-TURKCE-DOMAIN-UYGULAMASI.md`

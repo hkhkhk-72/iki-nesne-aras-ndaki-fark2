@@ -18,8 +18,9 @@
 |--------|--------|------|
 | Görsel dil | MB-DS-001 | Renk, tipografi, bileşen görünümü |
 | Deneyim dili | **MB-DS-002** | Akış, bilişsel yük, AI, boş durum, aksiyon |
+| Etkileşim | MB-DS-003 | Hover/click/page süreleri, snackbar, undo, autosave |
 
-DS-002, DS-001’i geçersiz kılmaz; **üstüne oturur**.
+DS-002, DS-001’i geçersiz kılmaz; **üstüne oturur**. Süreler için DS-003.
 
 ---
 

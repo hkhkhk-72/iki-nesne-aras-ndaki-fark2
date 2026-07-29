@@ -18,7 +18,9 @@
   C.Toast = function Toast(opts) {
     const o = opts || {};
     const type = o.type || 'info';
-    const timeout = o.timeout == null ? 3200 : o.timeout;
+    // MB-DS-003 IS-006 — Snackbar 3 sn
+    const isMs = (window.MiniBilgeInteraction && MiniBilgeInteraction.TIMINGS.snackbar) || 3000;
+    const timeout = o.timeout == null ? isMs : o.timeout;
     const html = `
       <div class="mbc-toast mbc-toast--${esc(type)}" role="status">
         <strong>${esc(o.title || typeLabel(type))}</strong>
@@ -32,9 +34,10 @@
       const node = wrap.firstElementChild;
       h.appendChild(node);
       if (timeout > 0) {
+        const leave = (window.MiniBilgeInteraction && MiniBilgeInteraction.TIMINGS.dialog) || 200;
         setTimeout(() => {
           node.classList.add('is-leaving');
-          setTimeout(() => node.remove(), 220);
+          setTimeout(() => node.remove(), leave);
         }, timeout);
       }
       return node;

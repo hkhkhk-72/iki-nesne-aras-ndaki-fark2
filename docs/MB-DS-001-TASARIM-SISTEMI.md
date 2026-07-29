@@ -129,11 +129,14 @@ Gürültülü parallax / glow yok.
 
 ---
 
-## 10. Deneyim katmanı
+## 10. Deneyim ve etkileşim katmanı
 
-Görsel dil bu belgededir. Öğretmen deneyimi anayasası:
+Görsel dil bu belgededir.
 
-→ **`docs/MB-DS-002-TEACHER-EXPERIENCE-SYSTEM.md`** (TXS-001…010)
+| Katman | Belge |
+|--------|--------|
+| Deneyim (TXS) | `docs/MB-DS-002-TEACHER-EXPERIENCE-SYSTEM.md` |
+| Etkileşim süreleri (IS) | `docs/MB-DS-003-INTERACTION-STANDARDS.md` |
 
 ---
 

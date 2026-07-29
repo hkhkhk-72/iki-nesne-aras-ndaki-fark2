@@ -92,9 +92,11 @@
         ${renderSidebar(activeId)}
         <main class="main-content">${content}</main>
       </div>`;
-    // TXS-005 — AI Everywhere (mount sonrası FAB)
+    // TXS-005 — AI Everywhere · IS-003 page enter
     setTimeout(() => {
       if (window.MiniBilgeTxs) MiniBilgeTxs.attach({ screen: activeId });
+      const main = document.querySelector('.main-content');
+      if (main && window.MiniBilgeInteraction) MiniBilgeInteraction.markPageEnter(main);
     }, 0);
     return html;
   }

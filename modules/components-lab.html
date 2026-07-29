@@ -20,6 +20,7 @@
   <script src="../assets/js/components/mb-components.js"></script>
   <script src="../assets/js/components/nav.js"></script>
   <script src="../assets/js/components/status.js"></script>
+  <script src="../assets/js/components/interaction.js"></script>
   <script src="../assets/js/components/notify.js"></script>
   <script src="../assets/js/components/txs.js"></script>
   <script src="../assets/js/components/ai.js"></script>
@@ -91,6 +92,23 @@
             <div id="lab-txs-empty" style="margin-bottom:12px;"></div>
             <div id="lab-txs-advanced"></div>
           </section>
+
+          <section class="mbc-lab-section">
+            <h2>IS — Interaction Standards (MB-DS-003)</h2>
+            <p class="section-lead">Hover 180ms · Click 100ms · Snackbar 3sn · Skeleton · Undo 5sn · Autosave 30sn · Search debounce 300ms</p>
+            <div id="lab-is-skel" style="margin-bottom:12px;"></div>
+            <div class="mbc-lab-row" id="lab-is-btns" style="margin-bottom:12px; gap:8px; flex-wrap:wrap;"></div>
+            <label class="mbc-field" style="max-width:360px;">
+              <span class="mbc-field-label">Arama (300ms debounce)</span>
+              <input id="lab-is-search" class="mbc-input" type="search" placeholder="Yazın…">
+            </label>
+            <p id="lab-is-search-out" class="section-lead" style="margin-top:8px;"></p>
+            <form id="lab-is-form" class="mbc-smart-form" style="margin-top:12px; max-width:360px;">
+              <p class="mbc-smart-lead">Autosave demo (30 sn / manuel flush)</p>
+              <input class="mbc-input" name="not" placeholder="Not yazın" style="margin-bottom:8px;">
+              <button type="button" class="quick-btn compact" id="lab-is-flush">Şimdi kaydet</button>
+            </form>
+          </section>
         </div>`;
 
       document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('home', body);
@@ -148,6 +166,45 @@
         MiniBilgeTxs.AdvancedPanel({
           bodyHtml: '<p>İleri düzey seçenekler yalnızca ihtiyaç halinde açılır (TXS-006).</p>'
         }).mount('#lab-txs-advanced');
+      }
+
+      if (window.MiniBilgeInteraction) {
+        const I = MiniBilgeInteraction;
+        I.Skeleton({ lines: 4 }).mount('#lab-is-skel');
+        const btns = document.getElementById('lab-is-btns');
+        const undoBtn = document.createElement('button');
+        undoBtn.className = 'quick-btn primary compact';
+        undoBtn.textContent = 'Sil (Undo 5 sn)';
+        undoBtn.addEventListener('click', () => {
+          I.undoable({
+            message: 'Örnek kayıt silindi — 5 sn içinde geri alınabilir',
+            onCommit() { C.notify.success('Kalıcı silindi'); },
+            onUndo() { /* demo */ }
+          });
+        });
+        btns.appendChild(undoBtn);
+        const snackBtn = document.createElement('button');
+        snackBtn.className = 'quick-btn compact';
+        snackBtn.textContent = 'Snackbar 3 sn';
+        snackBtn.addEventListener('click', () => C.notify.info('IS-006 · 3 saniye', 'Snackbar'));
+        btns.appendChild(snackBtn);
+        const searchOut = document.getElementById('lab-is-search-out');
+        const onSearch = I.debounce((e) => {
+          searchOut.textContent = e.target.value
+            ? 'Arama: ' + e.target.value
+            : 'Debounce 300 ms — yazmayı bırakınca güncellenir';
+        });
+        document.getElementById('lab-is-search').addEventListener('input', onSearch);
+        const as = I.autosave({
+          root: '#lab-is-form',
+          key: 'lab-is-autosave',
+          notify: false,
+          save(data) { C.notify.info('Autosave: ' + JSON.stringify(data), 'IS-011'); }
+        });
+        document.getElementById('lab-is-flush').addEventListener('click', () => {
+          as.markDirty();
+          as.flush();
+        });
       }
 
       C.Banner({ type: 'info', message: 'Bildirimler tek tasarım dilini kullanır.' }).mount('#lab-banner');

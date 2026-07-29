@@ -65,5 +65,21 @@
     "title": "Document DNA katalog genişletme",
     "complete": 55,
     "remaining": 45
+  },
+  "home": {
+    "baglam": { "complete": 95, "label": "Sınıf bağlamı" },
+    "bugun": { "complete": 90, "label": "Bugün / Workflow" },
+    "dersler": { "complete": 85, "label": "Dersler / LEE" },
+    "ana-moduller": { "complete": 78, "label": "Ana Modüller" },
+    "hubs": {
+      "planlar": 82,
+      "sinif-yonetimi": 80,
+      "olcme": 55,
+      "resmi-evraklar": 50,
+      "takvim": 75,
+      "etkinlikler": 45,
+      "raporlar": 40,
+      "ai": 60
+    }
   }
 }

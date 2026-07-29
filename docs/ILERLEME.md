@@ -57,7 +57,24 @@
 
 ---
 
-## 4. Makine okunur
+## 4. Ana sayfa başlık yüzdeleri
+
+Ana sayfadaki her başlıkta renkli rozet (`%tamam · kaldı %`):
+
+| Başlık | Anahtar | Tamam |
+|--------|---------|------:|
+| Öğretmen / web omurgası | `webSpine` | 86% |
+| Sınıfını Seç | `home.baglam` | 95% |
+| Bugün | `home.bugun` | 90% |
+| Dersleri | `home.dersler` | 85% |
+| Ana Modüller | `home.ana-moduller` | 78% |
+| Planlar … AI (8 hub) | `home.hubs.*` | 40–82% |
+
+Renk: **≥90 yeşil** · **70–89 teal** · **40–69 kehribar** · **&lt;40 kırmızı**
+
+---
+
+## 5. Makine okunur
 
 `assets/data/progress.json` — UI / rapor aynı kaynağı kullanır.
 

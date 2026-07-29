@@ -120,11 +120,27 @@
         });
       }
 
+      let prog = null;
+      if (window.MiniBilgeProgress) {
+        try { prog = await MiniBilgeProgress.load(); } catch (e) { console.warn(e); }
+      }
+      const pct = (key, fb) => (window.MiniBilgeProgress
+        ? MiniBilgeProgress.homePct(prog, key, fb)
+        : (fb || 0));
+      const badge = (n) => (window.MiniBilgeProgress ? MiniBilgeProgress.badge(n) : '');
+      const pctBaglam = pct('baglam', 95);
+      const pctBugun = pct('bugun', wf && wf.progress ? wf.progress.overall : 90);
+      const pctDersler = pct('dersler', 85);
+      const pctModuller = pct('ana-moduller', 78);
+
       const content = `
       <div class="dash">
         <header class="dash-hero dash-hero--os">
           <p class="brand-kicker">MiniBilge Öğretmen</p>
-          <h1>${esc(ad)}</h1>
+          <h1 class="mb-heading-with-pct">
+            <span class="mb-heading-text">${esc(ad)}</span>
+            ${badge(prog && prog.webSpine ? prog.webSpine.complete : 86)}
+          </h1>
           <p class="dash-date">${esc(egitimYili)} Eğitim Öğretim Yılı · ${esc(okulAdi)}</p>
 
           ${needsSetup ? `
@@ -133,7 +149,10 @@
               <a class="quick-btn primary compact" href="modules/hesabim.html">Kurulumu tamamla</a>
             </div>` : ''}
 
-          <p class="grade-prompt">Sınıfını Seç</p>
+          <p class="grade-prompt mb-heading-with-pct">
+            <span class="mb-heading-text">Sınıfını Seç</span>
+            ${badge(pctBaglam)}
+          </p>
           <p class="section-lead" style="margin-top:4px;margin-bottom:0;">TXS — bağlam seçilir; sistem yönlendirir. Belge menüsü değil, bugünkü iş.</p>
           ${renderClassContext(siniflar, sinif, sube)}
 
@@ -145,10 +164,13 @@
           </div>
         </header>
 
-        ${renderWorkflowBoard(wf)}
+        ${renderWorkflowBoard(wf, pctBugun)}
 
         <section class="mb-section">
-          <h2>${esc(ctx.label)} Dersleri</h2>
+          <h2 class="mb-heading-with-pct">
+            <span class="mb-heading-text">${esc(ctx.label)} Dersleri</span>
+            ${badge(pctDersler)}
+          </h2>
           <p class="section-lead">Seçilen sınıf/şube için TTKB dersleri otomatik yüklendi.</p>
           <div class="lesson-strip">
             ${dersler.map(d => {
@@ -171,8 +193,11 @@
         </section>
 
         <section class="mb-section hub-section">
-          <h2>Ana Modüller</h2>
-          <p class="section-lead">Derin rotalar — birincil yönlendirme Workflow görevleridir.</p>
+          <h2 class="mb-heading-with-pct">
+            <span class="mb-heading-text">Ana Modüller</span>
+            ${badge(pctModuller)}
+          </h2>
+          <p class="section-lead">Derin rotalar — birincil yönlendirme Workflow görevleridir. Renkli % = tamam · kaldı.</p>
           <div class="data-pipeline motor-flow" aria-label="Motor akışı">
             <span class="pipeline-step">İş</span>
             <span class="pipeline-arrow">→</span>
@@ -181,7 +206,7 @@
             ).join('')}
           </div>
           <div class="hub-grid hub-grid--eight">
-            ${MiniBilgeHub.HUB.map(cat => renderHubCategory(cat, sinif, sube)).join('')}
+            ${MiniBilgeHub.HUB.map(cat => renderHubCategory(cat, sinif, sube, prog)).join('')}
           </div>
         </section>
       </div>`;

@@ -127,20 +127,21 @@
       const pct = (key, fb) => (window.MiniBilgeProgress
         ? MiniBilgeProgress.homePct(prog, key, fb)
         : (fb || 0));
+      const head = (title, n, tag) => (window.MiniBilgeProgress
+        ? MiniBilgeProgress.headingBlock(title, n, tag || 'h2')
+        : `<${tag || 'h2'}>${esc(title)}</${tag || 'h2'}>`);
       const badge = (n) => (window.MiniBilgeProgress ? MiniBilgeProgress.badge(n) : '');
       const pctBaglam = pct('baglam', 95);
       const pctBugun = pct('bugun', wf && wf.progress ? wf.progress.overall : 90);
       const pctDersler = pct('dersler', 85);
       const pctModuller = pct('ana-moduller', 78);
+      const pctWeb = prog && prog.webSpine ? prog.webSpine.complete : 86;
 
       const content = `
       <div class="dash">
         <header class="dash-hero dash-hero--os">
           <p class="brand-kicker">MiniBilge Öğretmen</p>
-          <h1 class="mb-heading-with-pct">
-            <span class="mb-heading-text">${esc(ad)}</span>
-            ${badge(prog && prog.webSpine ? prog.webSpine.complete : 86)}
-          </h1>
+          ${head(ad, pctWeb, 'h1')}
           <p class="dash-date">${esc(egitimYili)} Eğitim Öğretim Yılı · ${esc(okulAdi)}</p>
 
           ${needsSetup ? `
@@ -149,10 +150,7 @@
               <a class="quick-btn primary compact" href="modules/hesabim.html">Kurulumu tamamla</a>
             </div>` : ''}
 
-          <p class="grade-prompt mb-heading-with-pct">
-            <span class="mb-heading-text">Sınıfını Seç</span>
-            ${badge(pctBaglam)}
-          </p>
+          ${head('Sınıfını Seç', pctBaglam, 'p')}
           <p class="section-lead" style="margin-top:4px;margin-bottom:0;">TXS — bağlam seçilir; sistem yönlendirir. Belge menüsü değil, bugünkü iş.</p>
           ${renderClassContext(siniflar, sinif, sube)}
 
@@ -167,10 +165,7 @@
         ${renderWorkflowBoard(wf, pctBugun)}
 
         <section class="mb-section">
-          <h2 class="mb-heading-with-pct">
-            <span class="mb-heading-text">${esc(ctx.label)} Dersleri</span>
-            ${badge(pctDersler)}
-          </h2>
+          ${head(ctx.label + ' Dersleri', pctDersler, 'h2')}
           <p class="section-lead">Seçilen sınıf/şube için TTKB dersleri otomatik yüklendi.</p>
           <div class="lesson-strip">
             ${dersler.map(d => {
@@ -193,11 +188,8 @@
         </section>
 
         <section class="mb-section hub-section">
-          <h2 class="mb-heading-with-pct">
-            <span class="mb-heading-text">Ana Modüller</span>
-            ${badge(pctModuller)}
-          </h2>
-          <p class="section-lead">Derin rotalar — birincil yönlendirme Workflow görevleridir. Renkli % = tamam · kaldı.</p>
+          ${head('Ana Modüller', pctModuller, 'h2')}
+          <p class="section-lead">Derin rotalar — birincil yönlendirme Workflow görevleridir. Renkli şerit = tamamlanma.</p>
           <div class="data-pipeline motor-flow" aria-label="Motor akışı">
             <span class="pipeline-step">İş</span>
             <span class="pipeline-arrow">→</span>
@@ -225,7 +217,9 @@
 
   function renderWorkflowBoard(wf, sectionPct) {
     const T = window.MiniBilgeTxs;
-    const badge = (n) => (window.MiniBilgeProgress ? MiniBilgeProgress.badge(n) : '');
+    const head = (title, n) => (window.MiniBilgeProgress
+      ? MiniBilgeProgress.headingBlock(title, n, 'h2')
+      : `<h2>${title}</h2>`);
     const bugunPct = sectionPct != null
       ? sectionPct
       : (wf && wf.progress ? wf.progress.overall : 90);
@@ -242,7 +236,7 @@
           }).html
         : '<p class="section-lead">Workflow Engine yüklenemedi.</p>';
       return `<section class="mb-section">
-        <h2 class="mb-heading-with-pct"><span class="mb-heading-text">Bugün</span>${badge(bugunPct)}</h2>
+        ${head('Bugün', bugunPct)}
         ${empty}
       </section>`;
     }
@@ -299,10 +293,7 @@
 
     return `
       <section class="mb-section wf-board">
-        <h2 class="mb-heading-with-pct">
-          <span class="mb-heading-text">Bugün</span>
-          ${badge(bugunPct)}
-        </h2>
+        ${head('Bugün', bugunPct)}
         <p class="section-lead">${esc(wf.stage.ad)} · TXS-008 iş yaptırır — belgeyi workflow üretir.</p>
 
         ${overdue.length || soon.length ? `
@@ -368,14 +359,13 @@
     const hubPct = window.MiniBilgeProgress
       ? MiniBilgeProgress.hubPct(prog, cat.id, cat)
       : 0;
-    const badge = window.MiniBilgeProgress ? MiniBilgeProgress.badge(hubPct) : '';
+    const head = window.MiniBilgeProgress
+      ? MiniBilgeProgress.headingBlock(cat.ad, hubPct, 'h3')
+      : `<h3>${esc(cat.ad)}</h3>`;
     return `
       <article class="hub-block hub-block--module" data-hub="${esc(cat.id)}" data-pct="${hubPct}">
         <header class="hub-block-head">
-          <h3 class="mb-heading-with-pct">
-            <span class="mb-heading-text">${esc(cat.ad)}</span>
-            ${badge}
-          </h3>
+          ${head}
           <p>${esc(cat.lead || '')}</p>
         </header>
         <ul class="hub-links">

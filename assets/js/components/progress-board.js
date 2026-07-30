@@ -48,26 +48,34 @@
       </div>`;
   }
 
-  /** Başlık yanı renkli yüzde rozeti */
+  /** Başlık yanı renkli yüzde rozeti + mini bar */
   function badge(complete, opts) {
     const o = opts || {};
     const c = clampPct(complete);
     const r = 100 - c;
     const t = tone(c);
     const showLeft = o.showRemaining !== false;
-    const label = showLeft ? `%${c} · kaldı %${r}` : `%${c}`;
+    const label = showLeft ? `%${c} tamam · %${r} kaldı` : `%${c}`;
     return `<span class="mb-pct mb-pct--${t}" title="${c}% tamamlandı, ${r}% kaldı" aria-label="${c}% tamam, ${r}% kaldı">
       <span class="mb-pct-ring" aria-hidden="true" style="--mb-pct:${c}"></span>
       <span class="mb-pct-label">${label}</span>
     </span>`;
   }
 
-  function headingHtml(title, complete, tag) {
+  /** Başlık + rozet + renkli şerit (ana sayfa bölümleri) */
+  function headingBlock(title, complete, tag) {
     const Tag = tag || 'h2';
-    return `<${Tag} class="mb-heading-with-pct">
-      <span class="mb-heading-text">${esc(title)}</span>
-      ${badge(complete)}
-    </${Tag}>`;
+    const c = clampPct(complete);
+    const t = tone(c);
+    return `<div class="mb-heading-block">
+      <${Tag} class="mb-heading-with-pct">
+        <span class="mb-heading-text">${esc(title)}</span>
+        ${badge(c)}
+      </${Tag}>
+      <div class="mb-heading-track" aria-hidden="true">
+        <span class="mb-heading-fill mb-pct-tone--${t}" style="width:${c}%"></span>
+      </div>
+    </div>`;
   }
 
   function hubPctFromItems(cat, override) {
@@ -148,7 +156,8 @@
     renderDesignSystem,
     bar,
     badge,
-    headingHtml,
+    headingHtml: headingBlock,
+    headingBlock,
     tone,
     homePct,
     hubPct,

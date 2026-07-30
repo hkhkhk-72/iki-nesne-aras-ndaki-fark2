@@ -12,13 +12,24 @@ export type MotionTokenId =
   | 'motion.trust'
   | 'motion.deepBreath'
   | 'motion.softBounce'
-  | 'motion.observe';
+  | 'motion.observe'
+  /** LS-011 prep — Fındık çocuğa bakar, palamutlara döner (6s loop). */
+  | 'motion.look_back_child';
+
+export type MotionKind = 'micro' | 'character_loop';
 
 export interface MotionToken {
   id: MotionTokenId;
   durationMs: number;
   easing: string;
   reduceMotionFallback: 'none' | 'instant';
+  /**
+   * micro = UX 250–450ms (MBA-BENCHMARK).
+   * character_loop = karakter döngüsü; mikro süre kuralı uygulanmaz.
+   */
+  kind?: MotionKind;
+  /** Karakter döngüsü toplam süresi (ms). */
+  loopMs?: number;
 }
 
 export const motionTokens: Record<MotionTokenId, MotionToken> = {
@@ -76,5 +87,14 @@ export const motionTokens: Record<MotionTokenId, MotionToken> = {
     durationMs: 420,
     easing: 'linear',
     reduceMotionFallback: 'none',
+  },
+  /** LS-011 prep — bakış: çocuk → palamutlar; 6 sn loop. */
+  'motion.look_back_child': {
+    id: 'motion.look_back_child',
+    durationMs: 6000,
+    easing: 'ease-in-out',
+    reduceMotionFallback: 'none',
+    kind: 'character_loop',
+    loopMs: 6000,
   },
 };

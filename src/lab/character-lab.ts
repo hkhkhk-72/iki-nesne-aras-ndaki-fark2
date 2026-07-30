@@ -23,3 +23,7 @@ export const FINDIK_PHASE_CUES: Record<FindikBehaviourPhase, string> = {
   smile: 'pose.smile_small — küçük gülümseme',
   invite: 'story.discover — çocuğu davet eder',
 };
+
+/** LS-011 prep — uzun düşünme (Observe döngüsüne ek; gameplay bağlama sonra). */
+export const FINDIK_DEEP_THINK_CUE =
+  'story.thinking.deep — dünya sakin; Fındık bekler; Bilge konuşmaz';

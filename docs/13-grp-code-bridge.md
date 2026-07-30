@@ -31,6 +31,7 @@ Mevcut MES sahneleri LS hattının ilk dilimidir; tam 30 LS genişlemesi ürün 
 | scene01 | GRS-001 / LS-001 — tanışma / İlk Bakış |
 | scene02 | Sezgisel “daha fazla” |
 | **ls006** | **LS-006 Trust** — `story.trust` / `motion.trust` |
+| **LS-011 prep** | Altyapı — `story.thinking.deep` · `motion.look_back_child` · `anim.deep_breath` · `FX_soft_bounce` · `ai.observe_compare_v2` (`docs/18-…`) |
 | scene03… | Keşif → gözlem → eşleştirme → az/çok/eşit → kutlama |
 
 ## Token → kod

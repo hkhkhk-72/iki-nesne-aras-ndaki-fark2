@@ -14,7 +14,9 @@ export type StoryTokenId =
   | 'story.trust'
   | 'story.observe'
   | 'story.notice'
-  | 'story.discover';
+  | 'story.discover'
+  /** LS-011 prep — uzun düşünme; dünya sakinleşir. */
+  | 'story.thinking.deep';
 
 export interface StoryToken {
   id: StoryTokenId;
@@ -91,5 +93,14 @@ export const storyTokens: Record<StoryTokenId, StoryToken> = {
     emotion: 'keşif',
     childFeel: 'Keşfettim / davet edildim.',
     cue: 'FN Invite; motion.softBounce',
+  },
+  /** LS-011 prep — çocuk uzun düşünüyor; Bilge konuşmaz. */
+  'story.thinking.deep': {
+    id: 'story.thinking.deep',
+    emotion: 'derin düşünme',
+    childFeel: 'Acele yok; düşünebilirim.',
+    cue:
+      'Dünya sakinleşir · rüzgar yavaşlar · Fındık bekler · Bilge konuşmaz · ' +
+      'motion.look_back_child · anim.deep_breath',
   },
 };

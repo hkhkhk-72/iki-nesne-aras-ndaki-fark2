@@ -19,6 +19,7 @@ import {
 } from '@/ai/decision-engine';
 import { runLabQaForScenes } from '@/qa/lab-qa';
 import { runBenchmarkQaForScenes, runMotionTokenBenchmark } from '@/qa/benchmark-qa';
+import { runLs011PrepQa } from '@/qa/ls011-prep-qa';
 import {
   BENCHMARK_ID,
   BENCHMARK_VERSION,
@@ -36,6 +37,9 @@ import { PRIMARY_AI_METRICS } from '@/ai/decision-engine';
 import { storyTokens, eduTokens, motionTokens, aiTokens, touchTarget } from '@/design-tokens';
 import type { SceneBehavior } from '@/ai/observer';
 import type { MicroExperience, CharacterId } from '@/mes/types';
+import { serializeObserveCompareV2 } from '@/ai/analytics';
+import { SILENT_MODE_POLICY } from '@/core/accessibility';
+import { FX_SOFT_BOUNCE_SPEC, DEEP_BREATH_IDLE_AFTER_MS } from '@/world/assets';
 
 function collectLines(exp: MicroExperience): { line: string; speaker: CharacterId }[] {
   const lines: { line: string; speaker: CharacterId }[] = [];
@@ -349,6 +353,32 @@ for (const exp of MATH_EXPERIENCES) {
     failed = true;
   }
 }
+
+// ── LS-011 Preparation (altyapı — gameplay yok) ──
+console.log('\nLS-011 Preparation (GRP-001)');
+const ls011 = runLs011PrepQa();
+console.log(`  Altyapı QA: ${ls011.ok ? 'GEÇTİ' : 'BAŞARISIZ'}`);
+if (!ls011.ok) {
+  console.log('  LS-011 sorunlar:', ls011.issues);
+  failed = true;
+}
+const ls011TokensOk =
+  'story.thinking.deep' in storyTokens &&
+  'motion.look_back_child' in motionTokens &&
+  motionTokens['motion.look_back_child'].kind === 'character_loop' &&
+  'ai.observe_compare_v2' in aiTokens &&
+  FX_SOFT_BOUNCE_SPEC.durationMs === 200 &&
+  DEEP_BREATH_IDLE_AFTER_MS === 5000 &&
+  SILENT_MODE_POLICY.soundOffKeepsAnimationMeaning &&
+  serializeObserveCompareV2({
+    firstLookedGroupId: 'a',
+    firstTouchedGroupId: 'b',
+    decisionMs: 1,
+    exploreTouchCount: 0,
+    waitMs: 2,
+  }).startsWith('look=');
+console.log(`  Token / FX / a11y sözleşmesi: ${ls011TokensOk ? 'GEÇTİ' : 'BAŞARISIZ'}`);
+if (!ls011TokensOk) failed = true;
 
 console.log(`\nSonuç: ${failed ? 'BAŞARISIZ' : 'TÜM KONTROLLER GEÇTİ'}`);
 process.exit(failed ? 1 : 0);

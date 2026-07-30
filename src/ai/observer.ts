@@ -24,7 +24,9 @@ export type ObservationType =
   | 'grouping_strategy'
   | 'visual_focus'
   /** Karar 273 — düşünme / yansıma süresi. */
-  | 'reflection_time';
+  | 'reflection_time'
+  /** LS-011 prep — karşılaştırma v2 (anonim). */
+  | 'observe_compare_v2';
 
 export interface Observation {
   sceneId: string;
@@ -191,6 +193,7 @@ export function coversSignals(behavior: SceneBehavior, signals: AISignal[]): boo
       case 'grouping_strategy':
       case 'visual_focus':
       case 'reflection_time':
+      case 'observe_compare_v2':
         return true;
       default:
         return true;

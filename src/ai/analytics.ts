@@ -1,6 +1,7 @@
 /**
- * LS-006 / AI analytics — puan üretmez.
+ * LS-006 / LS-011 / AI analytics — puan üretmez.
  * Olaylar ExperienceObserver üzerinden kaydedilir.
+ * observe_compare_v2 verileri anonim tutulur.
  */
 
 import type { ExperienceObserver } from '@/ai/observer';
@@ -42,4 +43,40 @@ export function registerLabObservation(
   detail?: string,
 ): void {
   observer.record(sceneId, event, detail);
+}
+
+/**
+ * ai.observe_compare_v2 — karşılaştırma gözlemi (LS-011 prep).
+ * Anonim: çocuk kimliği / PII yok; yalnızca davranış alanları.
+ */
+export interface ObserveCompareV2Payload {
+  /** İlk bakılan grup kimliği. */
+  firstLookedGroupId: string | null;
+  /** İlk dokunulan grup kimliği. */
+  firstTouchedGroupId: string | null;
+  /** Karar süresi (ms). */
+  decisionMs: number | null;
+  /** Keşif dokunuşları (yanlış etiket yok — MB-269). */
+  exploreTouchCount: number;
+  /** Bekleme süresi (ms). */
+  waitMs: number | null;
+}
+
+/** Payload → anonim detay dizesi (PII yok). */
+export function serializeObserveCompareV2(p: ObserveCompareV2Payload): string {
+  return [
+    `look=${p.firstLookedGroupId ?? '-'}`,
+    `touch=${p.firstTouchedGroupId ?? '-'}`,
+    `decisionMs=${p.decisionMs ?? '-'}`,
+    `explore=${p.exploreTouchCount}`,
+    `waitMs=${p.waitMs ?? '-'}`,
+  ].join('|');
+}
+
+export function registerObserveCompareV2(
+  observer: ExperienceObserver,
+  sceneId: string,
+  payload: ObserveCompareV2Payload,
+): void {
+  observer.record(sceneId, 'observe_compare_v2', serializeObserveCompareV2(payload));
 }

@@ -131,11 +131,15 @@ export function runBenchmarkQa(scene: SceneSpec): BenchmarkQaResult {
   let motionOk = true;
   if (scene.motionToken && scene.motionToken in motionTokens) {
     const token = motionTokens[scene.motionToken as keyof typeof motionTokens];
-    motionOk = isMicroAnimationDuration(token.durationMs);
-    if (!motionOk) {
-      issues.push(
-        `${scene.id}: UX — ${scene.motionToken} süresi ${token.durationMs}ms (250–450)`,
-      );
+    if (token.kind === 'character_loop') {
+      motionOk = true;
+    } else {
+      motionOk = isMicroAnimationDuration(token.durationMs);
+      if (!motionOk) {
+        issues.push(
+          `${scene.id}: UX — ${scene.motionToken} süresi ${token.durationMs}ms (250–450)`,
+        );
+      }
     }
   }
 
@@ -173,6 +177,8 @@ export function runBenchmarkQaForScenes(scenes: SceneSpec[]): {
 export function runMotionTokenBenchmark(): { ok: boolean; issues: string[] } {
   const issues: string[] = [];
   for (const [id, token] of Object.entries(motionTokens)) {
+    // Karakter döngüleri (ör. look_back_child 6s) mikro UX süresine tabi değil.
+    if (token.kind === 'character_loop') continue;
     if (!isMicroAnimationDuration(token.durationMs)) {
       issues.push(`${id}: ${token.durationMs}ms (beklenen 250–450 veya 0)`);
     }

@@ -79,6 +79,19 @@ Mevcut UI `@/theme` üzerinden aynı visual token’ları kullanır (breaking ch
 
 QA: puan yok · ödül popup yok · doğru/yanlış yok · yalnızca destekleyici duygu.
 
+## LS-011 Preparation (altyapı — gameplay yok)
+
+Henüz sahne frame’i yok. Token / asset sözleşmesi:
+
+| Layer (aday) | Asset / Token |
+|--------------|----------------|
+| Deep Thinking | `story.thinking.deep` |
+| Look Back Loop | `motion.look_back_child` (6s) |
+| Idle Breath | AN008 · `anim.deep_breath` (5s idle) |
+| Soft Bounce | FX011 · `FX_soft_bounce` (200ms) |
+
+Detay: [docs/18-ls011-prep-update.md](./18-ls011-prep-update.md)
+
 ## Sonraki ürün adımları
 
 ② UI Kit · ③ Scene Kit · ④ Animation Kit · ⑤ Çalışan prototip (Expo 57)

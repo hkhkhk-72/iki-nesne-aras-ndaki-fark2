@@ -18,7 +18,9 @@ export type AiTokenId =
   | 'ai.subitize_attempt'
   | 'ai.grouping_strategy'
   | 'ai.visual_focus'
-  | 'ai.reflection_time';
+  | 'ai.reflection_time'
+  /** LS-011 prep — karşılaştırma gözlemi v2 (anonim). */
+  | 'ai.observe_compare_v2';
 
 export interface AiToken {
   id: AiTokenId;
@@ -101,5 +103,12 @@ export const aiTokens: Record<AiTokenId, AiToken> = {
     id: 'ai.reflection_time',
     signal: 'reflection_time',
     purpose: 'Düşünme süresi — hızdan değerli (Karar 273)',
+  },
+  'ai.observe_compare_v2': {
+    id: 'ai.observe_compare_v2',
+    signal: 'observe_compare_v2',
+    purpose:
+      'Karşılaştırma v2 — ilk bakılan / ilk dokunulan grup, karar süresi, ' +
+      'yanlış dokunma sayısı, bekleme süresi (anonim)',
   },
 };

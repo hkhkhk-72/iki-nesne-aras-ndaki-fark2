@@ -163,7 +163,9 @@ export type AISignal =
   | 'grouping_strategy'
   | 'visual_focus'
   /** Karar 273 — Reflection Time. */
-  | 'reflection_time';
+  | 'reflection_time'
+  /** LS-011 prep — karşılaştırma gözlemi v2 (anonim). */
+  | 'observe_compare_v2';
 
 // ─── Geri bildirim ───────────────────────────────────────────
 export interface SceneFeedback {

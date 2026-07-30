@@ -92,9 +92,13 @@
         ${renderSidebar(activeId)}
         <main id="mb-main" class="main-content" role="main" tabindex="-1">${content}</main>
       </div>`;
-    // TXS-005 · IS-003 · A11Y · TXA boot
+    // MB-AOS-001 Academic Kernel · TXS · IS · A11Y · TXA
     setTimeout(() => {
-      if (window.MiniBilgeTxs) MiniBilgeTxs.attach({ screen: activeId });
+      if (window.AcademicKernel) {
+        AcademicKernel.boot({ screen: activeId });
+      } else if (window.MiniBilgeTxs) {
+        MiniBilgeTxs.attach({ screen: activeId });
+      }
       const main = document.querySelector('.main-content');
       if (main && window.MiniBilgeMotion) MiniBilgeMotion.pageEnter(main);
       else if (main && window.MiniBilgeInteraction) MiniBilgeInteraction.markPageEnter(main);

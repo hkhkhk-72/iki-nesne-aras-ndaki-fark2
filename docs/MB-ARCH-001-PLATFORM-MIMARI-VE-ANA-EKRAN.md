@@ -10,6 +10,7 @@
 **Bileşen fazı:** **FAZ 6 / MD-025** — `docs/FAZ-6-COMPONENT-ARCHITECTURE.md`. Flutter mimarisi **MB-ARCH-002** olarak planlanır (bu belge web freeze’tir).
 
 > Domain kuralları (`Program ≠ Plan ≠ Belge`) bozulamaz.  
+> **En üst standart:** `docs/MB-AOS-001-ACADEMIC-OPERATING-SYSTEM.md` (MD-048 Academic Kernel).  
 > Sol menü için güncel freeze: `docs/MB-UI-001-UI-UX-MIMARISI-V2.md`.
 
 ---

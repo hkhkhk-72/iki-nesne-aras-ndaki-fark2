@@ -30,6 +30,7 @@
 | Kod | Tamam | Kaldı | Not |
 |-----|------:|------:|-----|
 | MB-DM-001 Domain | 100% | 0% | Freeze |
+| **MB-AOS-001 / MD-048 Kernel** | **68%** | **32%** | Flutter Feature-First · Security derinliği · legacy boot |
 | MB-ARCH-001 Mimari | 100% | 0% | Freeze |
 | MB-UI-001 / UI-002 / UI-003 | 95% | 5% | Derin rota cilası |
 | MB-IA-001 Bilgi mimarisi | 100% | 0% | 8 modül |
@@ -51,10 +52,11 @@
 
 ---
 
-## 3. Bu tur özeti (DOS-002 Core)
+## 3. Bu tur özeti (AOS-001 Kernel)
 
 | Kalem | Tamam | Kaldı |
 |-------|------:|------:|
+| Academic Kernel (MB-AOS-001 / MD-048) | 68% | 32% |
 | Document OS Core (MB-DOS-002 / MD-047) | 70% | 30% |
 | Universal Component Library (MB-DS-007) | 75% | 25% |
 | DS paketi (001…007) | 84% | 16% |

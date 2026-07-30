@@ -62,6 +62,7 @@ Karar: **MD-025 — Everything is a Component** → `docs/FAZ-6-COMPONENT-ARCHIT
 Bağlayıcı sıra:
 
 1. **MB-DM-001** — Domain Modeli ✅  
+1b. **MB-AOS-001 / MD-048** — Academic Operating System (Academic Kernel) ✅  
 2. **MB-ARCH-001** — Platform Mimari Freeze ✅  
 2b–2d. **MB-UI-001 / DS-001 / UI-002** ✅  
 2e. **MD-026 / MB-UI-003** — ÖğretmenEvrak referansı → sonraki nesil ana ekran ✅  
@@ -104,6 +105,7 @@ Her teslimatta: **hangi kalem · % tamam · % kaldı**.
 
 | Paket | Tamam | Kaldı |
 |-------|------:|------:|
+| MB-AOS-001 Academic Kernel | 68% | 32% |
 | MB-DS-001…007 | 84% | 16% |
 | MB-DOS-002 Core (MD-047) | 70% | 30% |
 | Web omurgası | 85% | 15% |
@@ -111,4 +113,4 @@ Her teslimatta: **hangi kalem · % tamam · % kaldı**.
 
 ---
 
-*Son güncelleme: 30 Temmuz 2026 · MB-DOS-002 / MD-047*
+*Son güncelleme: 30 Temmuz 2026 · MB-AOS-001 / MD-048*

@@ -57,6 +57,7 @@
     ]
   },
   "roadmap": [
+    { "id": "MB-AOS-001", "complete": 68, "remaining": 32 },
     { "id": "MB-DM-001", "complete": 100, "remaining": 0 },
     { "id": "MB-ARCH-001", "complete": 100, "remaining": 0 },
     { "id": "MB-UI-001-003", "complete": 95, "remaining": 5 },
@@ -87,6 +88,13 @@
     "complete": 70,
     "remaining": 30,
     "left": "Flutter Isar/Riverpod · Background Sync · legacy addDocument migrate"
+  },
+  "academicKernel": {
+    "id": "MB-AOS-001",
+    "decision": "MD-048",
+    "complete": 68,
+    "remaining": 32,
+    "left": "Flutter Feature-First · Security Kernel · tüm sayfalarda boot"
   },
   "home": {
     "baglam": { "complete": 95, "label": "Sınıf bağlamı" },

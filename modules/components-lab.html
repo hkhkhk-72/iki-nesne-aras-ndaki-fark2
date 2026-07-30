@@ -21,6 +21,10 @@
   <script src="../assets/js/core/document/repository.js"></script>
   <script src="../assets/js/core/document/services.js"></script>
   <script src="../assets/js/core/document/engine.js"></script>
+  <script src="../assets/js/core/aos/event-bus.js"></script>
+  <script src="../assets/js/core/aos/container.js"></script>
+  <script src="../assets/js/core/aos/automation.js"></script>
+  <script src="../assets/js/core/aos/kernel.js"></script>
   <script src="../assets/js/core/context-cache.js"></script>
   <script src="../assets/js/core/context-engine.js"></script>
   <script src="../assets/js/components/mb-components.js"></script>
@@ -149,6 +153,12 @@
             <h2>DOS-002 — Document OS Core (MD-047)</h2>
             <p class="section-lead">Belge canlı entity · Event Bus · Dependency Graph · Workflow → Engine · %70 tamam · %30 kaldı</p>
             <div id="lab-dos-core"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>AOS-001 — Academic Kernel (MD-048)</h2>
+            <p class="section-lead">En üst mimari standart · 10 katman · DI · Global Event Bus · %68 tamam · %32 kaldı</p>
+            <div id="lab-aos-core"></div>
           </section>
         </div>`;
 
@@ -571,6 +581,56 @@
         });
         actions.appendChild(wfBtn);
         host.appendChild(actions);
+      })();
+
+      /* MB-AOS-001 — Academic Kernel */
+      (function aosDemo() {
+        const host = document.getElementById('lab-aos-core');
+        if (!host || !window.AcademicKernel) {
+          if (host) host.innerHTML = '<p class="empty-state">Academic Kernel yüklenemedi.</p>';
+          return;
+        }
+        const status = AcademicKernel.boot({ screen: 'components-lab', skipDefaultRules: false });
+        const layers = status.layers.map(function (l) {
+          const tone = l.status === 'active' ? 'ready' : (l.status === 'partial' ? 'editing' : 'missing');
+          return '<span class="mbc-status mbc-status--' + tone + '" style="margin:2px;">' +
+            l.name.replace('Kernel', '') + ' · ' + l.status + '</span>';
+        }).join(' ');
+
+        host.innerHTML =
+          '<div class="mbc-banner mbc-banner--success" style="margin-bottom:12px;">' +
+          'MD-048 Academic Kernel · booted · nav: <strong>' + AcademicKernel.navigationStage() + '</strong> · ' +
+          'DI: ' + status.diKeys.length + ' · events: ' + status.eventCount +
+          '</div>' +
+          '<p class="section-lead">Context: ' + status.context.teacher + ' · ' +
+          status.context.class + ' · ' + status.context.academicYear + '</p>' +
+          '<div class="mbc-lab-row" style="flex-wrap:wrap;gap:6px;margin-bottom:12px;">' + layers + '</div>';
+
+        const eng = document.createElement('div');
+        eng.className = 'mb-lib-card';
+        eng.innerHTML = '<strong>Engine Kernel</strong><ul style="margin:8px 0 0;padding-left:18px;">' +
+          Object.keys(AcademicKernel.ENGINES).map(function (k) {
+            const name = AcademicKernel.ENGINES[k];
+            const ok = AcademicKernel.di() && AcademicKernel.di().has(name);
+            return '<li><code>' + k + '</code> ' + name + (ok ? ' ✓' : ' · factory') + '</li>';
+          }).join('') + '</ul>';
+        host.appendChild(eng);
+
+        const busBox = document.createElement('div');
+        busBox.className = 'mb-lib-card';
+        busBox.style.marginTop = '10px';
+        const hist = (AcademicKernel.bus() && AcademicKernel.bus().getHistory().slice(-10).reverse()) || [];
+        busBox.innerHTML = '<strong>Global Event Bus</strong><ul style="margin:8px 0 0;padding-left:18px;">' +
+          hist.map(function (e) {
+            return '<li><code>' + e.type + '</code> · ' + (e.at || '').slice(11, 19) + '</li>';
+          }).join('') + '</ul>';
+        host.appendChild(busBox);
+
+        const nav = document.createElement('p');
+        nav.className = 'section-lead';
+        nav.style.marginTop = '10px';
+        nav.textContent = 'Navigation: ' + AcademicKernel.NAVIGATION.join(' → ');
+        host.appendChild(nav);
       })();
     })();
   </script>

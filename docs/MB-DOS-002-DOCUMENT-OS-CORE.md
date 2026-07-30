@@ -5,7 +5,7 @@
 **Durum:** Bağlayıcı mimari anayasa  
 **Kod:** `MB-DOC` / Document Engine  
 **Karar:** **MD-047**  
-**Üst:** MB-DOS-000 · MB-IA-002 · MB-IA-003 · MB-WFE-001 · MD-031…036 · MD-038 · MD-039  
+**Üst:** MB-DOS-000 · MB-IA-002 · MB-IA-003 · MB-WFE-001 · MD-031…036 · MD-038 · MD-039 · **MB-AOS-001**  
 
 > **Numara notu:** Taslak başlık *MB-DOS-003* idi.  
 > **MB-DOS-003** zaten **Lesson Execution Engine (LEE / MD-040)** olduğu için bu anayasa **MB-DOS-002** olarak kaydedildi. Anlam aynıdır: Document OS Core.

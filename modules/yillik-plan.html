@@ -41,13 +41,23 @@
     const state = {
       sinif: settings.varsayilanSinif || '1',
       dersId: settings.varsayilanDers || 'turkce',
+      kaynakId: settings.varsayilanKaynakId || null,
       sube: settings.sube || 'A'
     };
     let courseList = [];
+    let sourceList = [];
 
     async function loadCourses() {
       courseList = await CurriculumEngine.listAvailableCourses(state.sinif, { onlyProgram: true });
       if (!courseList.find(c => c.id === state.dersId)) state.dersId = courseList[0]?.id || 'turkce';
+      await loadSources();
+    }
+
+    async function loadSources() {
+      sourceList = await CurriculumEngine.listSourcesForDers(state.dersId, state.sinif);
+      if (!sourceList.find(s => s.id === state.kaynakId)) {
+        state.kaynakId = (sourceList.find(s => s.durum === 'ACTIVE') || sourceList[0] || {}).id || null;
+      }
     }
 
     async function loadCal(yil) {
@@ -218,13 +228,32 @@
     }
 
     function stepDers() {
+      const src = sourceList.find(s => s.id === state.kaynakId) || sourceList[0];
+      const multi = sourceList.length > 1;
       return `<div class="ctx-grid">
         <div class="form-field"><label>Ders (${state.sinif}. Sınıf)</label>
           <select id="ders">${courseList.map(c =>
-            `<option value="${c.id}" ${state.dersId === c.id ? 'selected' : ''}>${c.ad}</option>`).join('')}
+            `<option value="${c.id}" ${state.dersId === c.id ? 'selected' : ''}>${c.ad}${c.sourceCount > 1 ? ' · ' + c.sourceCount + ' kaynak' : ''}</option>`).join('')}
           </select>
         </div>
-      </div>`;
+        <div class="form-field form-field--wide">
+          <label>MEB / TYMM kaynağı ${multi ? '(' + sourceList.length + ' seçenek)' : ''}</label>
+          <select id="kaynak">${sourceList.map(s =>
+            `<option value="${s.id}" ${state.kaynakId === s.id ? 'selected' : ''}>${s.shortLabel || s.ad} · ${s.durum}</option>`).join('')}
+          </select>
+          <p class="field-hint">Aynı ders için Milli Eğitim’in farklı program kaynakları olabilir. Önce dersi, sonra kaynağı seçin; ardından plan motoru çalışır.</p>
+        </div>
+      </div>
+      ${src ? `<div class="mb-source-card" data-kaynak="${src.id}">
+        <strong>${src.ad}</strong>
+        <div class="mb-source-meta">
+          <span>${src.model || 'TYMM'}</span>
+          <span>Onay ${src.onayYili || '—'}</span>
+          <span class="mb-lib-badge mb-lib-badge--${src.durum === 'ACTIVE' ? 'hi' : 'low'}">${src.durum}</span>
+        </div>
+        ${src.kaynakUrl ? `<a class="text-link" href="${src.kaynakUrl}" target="_blank" rel="noopener">Resmî programı aç (MEB)</a>` : ''}
+        ${src.not ? `<p class="section-lead">${src.not}</p>` : ''}
+      </div>` : ''}`;
     }
 
     function stepBilgiler() {
@@ -247,12 +276,14 @@
 
     function stepUret(weeks, tatilCount, gunCount) {
       const dersAd = courseList.find(c => c.id === state.dersId)?.ad || state.dersId;
+      const src = sourceList.find(s => s.id === state.kaynakId);
       return `
         <div class="cal-strip" style="margin-bottom:16px">
           <div class="cal-pill"><strong>Öğretim haftası</strong><span>${weeks.length || '—'}</span></div>
           <div class="cal-pill"><strong>Tatil kaydı</strong><span>${tatilCount}</span></div>
           <div class="cal-pill"><strong>Belirli gün</strong><span>${gunCount}</span></div>
           <div class="cal-pill"><strong>Bağlam</strong><span>${state.sinif}/${state.sube} · ${dersAd}</span></div>
+          <div class="cal-pill"><strong>Kaynak</strong><span>${src ? (src.shortLabel || src.ad) : '—'}</span></div>
         </div>
         <div class="quick-actions">
           <button class="quick-btn primary txa-dominant" id="btnGenerate" type="button">Yıllık Planı Üret</button>
@@ -265,6 +296,7 @@
       return {
         sinif: state.sinif,
         dersId: state.dersId,
+        kaynakId: state.kaynakId,
         sube: state.sube,
         okul: {
           okulAdi: document.getElementById('okulAdi')?.value || school.okulAdi,
@@ -291,17 +323,23 @@
       document.getElementById('previewPanel').style.display = 'block';
       MiniBilgeStorage.addPlan({
         tur: 'yillik', sinif: currentPlan.sinif, ders: currentPlan.ders,
-        dersId: currentPlan.dersId, sube: ctx.sube, data: currentPlan
+        dersId: currentPlan.dersId, kaynakId: currentPlan.kaynakId, sube: ctx.sube, data: currentPlan
       });
-      MiniBilgeStorage.saveSettings({ varsayilanSinif: state.sinif, varsayilanDers: state.dersId, sube: state.sube });
+      MiniBilgeStorage.saveSettings({
+        varsayilanSinif: state.sinif,
+        varsayilanDers: state.dersId,
+        varsayilanKaynakId: state.kaynakId,
+        sube: state.sube
+      });
       if (window.MiniBilgeTxa) {
         MiniBilgeTxa.VersionHistory.push('yillik-plan', currentPlan, {
-          label: currentPlan.sinif + '/' + ctx.sube + ' · ' + (currentPlan.ders || currentPlan.dersId)
+          label: currentPlan.sinif + '/' + ctx.sube + ' · ' + (currentPlan.ders || currentPlan.dersId) +
+            (currentPlan.kaynakShort ? ' · ' + currentPlan.kaynakShort : '')
         });
         mountDocActions();
         MiniBilgeTxa.VersionHistory.render('yillik-plan').mount('#txa-versions-host');
       }
-      alerts.innerHTML = `<div class="alert alert-ok">${currentPlan.toplamHafta} haftalık yıllık plan üretildi · TXA-008 sürüm kaydedildi.</div>`;
+      alerts.innerHTML = `<div class="alert alert-ok">${currentPlan.toplamHafta} haftalık yıllık plan üretildi · kaynak: ${currentPlan.kaynakShort || currentPlan.kaynak || '—'} · TXA-008 sürüm kaydedildi.</div>`;
     }
 
     function bindEvents() {
@@ -311,7 +349,10 @@
           state.sube = document.getElementById('sube')?.value || state.sube;
           await loadCourses();
         }
-        if (step === 2) state.dersId = document.getElementById('ders')?.value || state.dersId;
+        if (step === 2) {
+          state.dersId = document.getElementById('ders')?.value || state.dersId;
+          state.kaynakId = document.getElementById('kaynak')?.value || state.kaynakId;
+        }
         if (step === 3) {
           const yil = document.getElementById('egitimYili')?.value;
           await loadCal(yil);
@@ -320,6 +361,15 @@
       });
       document.getElementById('btnPrev')?.addEventListener('click', () => { if (step > 1) { step--; render(); } });
       document.getElementById('btnGenerate')?.addEventListener('click', generate);
+      document.getElementById('ders')?.addEventListener('change', async (e) => {
+        state.dersId = e.target.value;
+        await loadSources();
+        render();
+      });
+      document.getElementById('kaynak')?.addEventListener('change', (e) => {
+        state.kaynakId = e.target.value;
+        render();
+      });
       document.querySelectorAll('[data-ai]').forEach(btn => {
         btn.addEventListener('click', () => {
           const k = btn.getAttribute('data-ai');

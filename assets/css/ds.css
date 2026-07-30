@@ -2044,6 +2044,40 @@ html[data-theme="dark"] .mb-lib-cmd { background: #16202C; }
 .mb-doc-status[data-status="Rejected"],
 .mb-doc-status[data-status="Deleted"] { background: rgba(179,58,58,0.14); color: #8A2E2E; }
 
+.mb-source-card {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(11, 122, 106, 0.22);
+  background: linear-gradient(165deg, rgba(255,255,255,0.92), rgba(224,245,238,0.7));
+}
+html[data-theme="dark"] .mb-source-card {
+  background: rgba(22, 32, 44, 0.9);
+  border-color: var(--mb-line);
+}
+.mb-source-card strong {
+  display: block;
+  font-family: var(--mb-font-display);
+  font-size: 1.02rem;
+  margin-bottom: 8px;
+}
+.mb-source-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-size: max(var(--mb-font-min), 0.82rem);
+  font-weight: 700;
+  color: var(--mb-ink-soft);
+  margin-bottom: 8px;
+}
+.form-field--wide { grid-column: 1 / -1; }
+.field-hint {
+  margin: 6px 0 0;
+  font-size: max(var(--mb-font-min), 0.8rem);
+  color: var(--mb-ink-soft);
+  line-height: 1.4;
+}
+
 /* ===== MB-DS-006 Teacher Experience Architecture (TXA) ===== */
 
 .txa-purpose {

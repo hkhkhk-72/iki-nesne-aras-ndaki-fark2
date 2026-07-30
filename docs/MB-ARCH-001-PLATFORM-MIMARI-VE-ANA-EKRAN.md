@@ -11,6 +11,7 @@
 
 > Domain kuralları (`Program ≠ Plan ≠ Belge`) bozulamaz.  
 > **En üst standart:** `docs/MB-AOS-001-ACADEMIC-OPERATING-SYSTEM.md` (MD-048 Academic Kernel).  
+> **Ürün amacı:** `docs/MB-VIS-001-URUN-VIZYONU.md` — MEB/TYMM belgeler · ders+kaynak · AI.  
 > Sol menü için güncel freeze: `docs/MB-UI-001-UI-UX-MIMARISI-V2.md`.
 
 ---

@@ -62,6 +62,7 @@ Karar: **MD-025 — Everything is a Component** → `docs/FAZ-6-COMPONENT-ARCHIT
 Bağlayıcı sıra:
 
 1. **MB-DM-001** — Domain Modeli ✅  
+1a. **MB-VIS-001** — Ürün vizyonu (MEB/TYMM · ders+kaynak · AI) ✅  
 1b. **MB-AOS-001 / MD-048** — Academic Operating System (Academic Kernel) ✅  
 2. **MB-ARCH-001** — Platform Mimari Freeze ✅  
 2b–2d. **MB-UI-001 / DS-001 / UI-002** ✅  

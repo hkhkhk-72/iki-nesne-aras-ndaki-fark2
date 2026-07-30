@@ -1,0 +1,381 @@
+{
+  "version": "1.0",
+  "updated": "2026-07-30",
+  "decision": "MB-AOS-001 / MB-VIS-001",
+  "aciklama": "Aynı ders için MEB/TYMM kaynakları. Öğretmen ders + kaynak seçer; sonra plan motoru çalışır.",
+  "sources": [
+    {
+      "id": "cur:bedenEgitimi:tymm-cizelge",
+      "dersId": "bedenEgitimi",
+      "ad": "Türkiye Yüzyılı Maarif Modeli · 2025-2026",
+      "shortLabel": "TYMM / TTKB çizelge",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2025-2026",
+      "publisher": "MEB",
+      "durum": "PARTIAL",
+      "kaynakUrl": null,
+      "not": null,
+      "kind": "tymm-cizelge",
+      "grades": {
+        "1": {
+          "type": "curriculum",
+          "file": "sinif1-beden-egitimi.json"
+        },
+        "2": {
+          "type": "curriculum",
+          "file": "sinif2-beden-egitimi.json"
+        },
+        "3": {
+          "type": "curriculum",
+          "file": "sinif3-beden-egitimi.json"
+        },
+        "4": {
+          "type": "curriculum",
+          "file": "sinif4-beden-egitimi.json"
+        }
+      }
+    },
+    {
+      "id": "cur:dinKulturu:tymm-cizelge",
+      "dersId": "dinKulturu",
+      "ad": "Türkiye Yüzyılı Maarif Modeli · 2025-2026",
+      "shortLabel": "TYMM / TTKB çizelge",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2025-2026",
+      "publisher": "MEB",
+      "durum": "PARTIAL",
+      "kaynakUrl": null,
+      "not": "Keşif stub: haftalık saat TTKB 09.05.2025 İlkokul çizelgesine göre. TYMM çıktıları MB-DM-002 sonrası işlenecek.",
+      "kind": "tymm-cizelge",
+      "grades": {
+        "4": {
+          "type": "curriculum",
+          "file": "sinif4-din-kulturu.json"
+        }
+      }
+    },
+    {
+      "id": "cur:fen:tymm-2024",
+      "dersId": "fen",
+      "ad": "MEB TYMM Fen Bilimleri Dersi Öğretim Programı (3-8) 2024 — onaylı PDF",
+      "shortLabel": "TYMM 2024 PDF",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2024",
+      "publisher": "MEB",
+      "durum": "ACTIVE",
+      "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programfen345678Onayli.pdf",
+      "not": null,
+      "kind": "tymm-pdf",
+      "grades": {
+        "3": {
+          "type": "curriculum",
+          "file": "sinif3-fen.json"
+        },
+        "4": {
+          "type": "curriculum",
+          "file": "sinif4-fen.json"
+        }
+      }
+    },
+    {
+      "id": "cur:gorselSanatlar:tymm-cizelge",
+      "dersId": "gorselSanatlar",
+      "ad": "Türkiye Yüzyılı Maarif Modeli · 2025-2026",
+      "shortLabel": "TYMM / TTKB çizelge",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2025-2026",
+      "publisher": "MEB",
+      "durum": "PARTIAL",
+      "kaynakUrl": null,
+      "not": null,
+      "kind": "tymm-cizelge",
+      "grades": {
+        "1": {
+          "type": "curriculum",
+          "file": "sinif1-gorsel-sanatlar.json"
+        },
+        "2": {
+          "type": "curriculum",
+          "file": "sinif2-gorsel-sanatlar.json"
+        },
+        "3": {
+          "type": "curriculum",
+          "file": "sinif3-gorsel-sanatlar.json"
+        },
+        "4": {
+          "type": "curriculum",
+          "file": "sinif4-gorsel-sanatlar.json"
+        }
+      }
+    },
+    {
+      "id": "cur:hayatBilgisi:tymm-2024",
+      "dersId": "hayatBilgisi",
+      "ad": "MEB TYMM Hayat Bilgisi Dersi Öğretim Programı (1-3) 2024 — onaylı PDF",
+      "shortLabel": "TYMM 2024 PDF",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2024",
+      "publisher": "MEB",
+      "durum": "ACTIVE",
+      "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programhay123Onayli.pdf",
+      "not": null,
+      "kind": "tymm-pdf",
+      "grades": {
+        "1": {
+          "type": "curriculum",
+          "file": "sinif1-hayat-bilgisi.json"
+        },
+        "2": {
+          "type": "curriculum",
+          "file": "sinif2-hayat-bilgisi.json"
+        },
+        "3": {
+          "type": "curriculum",
+          "file": "sinif3-hayat-bilgisi.json"
+        }
+      }
+    },
+    {
+      "id": "cur:ingilizce:tymm-cizelge",
+      "dersId": "ingilizce",
+      "ad": "Türkiye Yüzyılı Maarif Modeli · 2025-2026",
+      "shortLabel": "TYMM / TTKB çizelge",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2025-2026",
+      "publisher": "MEB",
+      "durum": "PARTIAL",
+      "kaynakUrl": null,
+      "not": null,
+      "kind": "tymm-cizelge",
+      "grades": {
+        "2": {
+          "type": "curriculum",
+          "file": "sinif2-ingilizce.json"
+        },
+        "3": {
+          "type": "curriculum",
+          "file": "sinif3-ingilizce.json"
+        },
+        "4": {
+          "type": "curriculum",
+          "file": "sinif4-ingilizce.json"
+        }
+      }
+    },
+    {
+      "id": "cur:insanHaklari:tymm-cizelge",
+      "dersId": "insanHaklari",
+      "ad": "Türkiye Yüzyılı Maarif Modeli · 2025-2026",
+      "shortLabel": "TYMM / TTKB çizelge",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2025-2026",
+      "publisher": "MEB",
+      "durum": "PARTIAL",
+      "kaynakUrl": null,
+      "not": "Keşif stub: haftalık saat TTKB 09.05.2025 İlkokul çizelgesine göre. TYMM çıktıları MB-DM-002 sonrası işlenecek.",
+      "kind": "tymm-cizelge",
+      "grades": {
+        "4": {
+          "type": "curriculum",
+          "file": "sinif4-insan-haklari.json"
+        }
+      }
+    },
+    {
+      "id": "cur:matematik:tymm-2024",
+      "dersId": "matematik",
+      "ad": "MEB TYMM İlkokul Matematik Dersi Öğretim Programı (1-4) 2024 — onaylı PDF",
+      "shortLabel": "TYMM 2024 PDF",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2024",
+      "publisher": "MEB",
+      "durum": "ACTIVE",
+      "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programmat1234Onayli.pdf",
+      "not": null,
+      "kind": "tymm-pdf",
+      "grades": {
+        "1": {
+          "type": "curriculum",
+          "file": "sinif1-matematik.json"
+        },
+        "2": {
+          "type": "curriculum",
+          "file": "sinif2-matematik.json"
+        },
+        "3": {
+          "type": "curriculum",
+          "file": "sinif3-matematik.json"
+        },
+        "4": {
+          "type": "curriculum",
+          "file": "sinif4-matematik.json"
+        }
+      }
+    },
+    {
+      "id": "cur:muzik:tymm-cizelge",
+      "dersId": "muzik",
+      "ad": "Türkiye Yüzyılı Maarif Modeli · 2025-2026",
+      "shortLabel": "TYMM / TTKB çizelge",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2025-2026",
+      "publisher": "MEB",
+      "durum": "PARTIAL",
+      "kaynakUrl": null,
+      "not": null,
+      "kind": "tymm-cizelge",
+      "grades": {
+        "1": {
+          "type": "curriculum",
+          "file": "sinif1-muzik.json"
+        },
+        "2": {
+          "type": "curriculum",
+          "file": "sinif2-muzik.json"
+        },
+        "3": {
+          "type": "curriculum",
+          "file": "sinif3-muzik.json"
+        },
+        "4": {
+          "type": "curriculum",
+          "file": "sinif4-muzik.json"
+        }
+      }
+    },
+    {
+      "id": "cur:rehberlik:tymm-cizelge",
+      "dersId": "rehberlik",
+      "ad": "Türkiye Yüzyılı Maarif Modeli · 2025-2026",
+      "shortLabel": "TYMM / TTKB çizelge",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2025-2026",
+      "publisher": "MEB",
+      "durum": "PARTIAL",
+      "kaynakUrl": null,
+      "not": null,
+      "kind": "tymm-cizelge",
+      "grades": {
+        "1": {
+          "type": "curriculum",
+          "file": "sinif1-rehberlik.json"
+        }
+      }
+    },
+    {
+      "id": "cur:serbestEtkinlikler:tymm-cizelge",
+      "dersId": "serbestEtkinlikler",
+      "ad": "Türkiye Yüzyılı Maarif Modeli · 2025-2026",
+      "shortLabel": "TYMM / TTKB çizelge",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2025-2026",
+      "publisher": "MEB",
+      "durum": "PARTIAL",
+      "kaynakUrl": null,
+      "not": "Keşif stub: haftalık saat TTKB 09.05.2025 İlkokul çizelgesine göre. TYMM çıktıları MB-DM-002 sonrası işlenecek.",
+      "kind": "tymm-cizelge",
+      "grades": {
+        "1": {
+          "type": "curriculum",
+          "file": "sinif1-serbest-etkinlikler.json"
+        },
+        "2": {
+          "type": "curriculum",
+          "file": "sinif2-serbest-etkinlikler.json"
+        },
+        "3": {
+          "type": "curriculum",
+          "file": "sinif3-serbest-etkinlikler.json"
+        }
+      }
+    },
+    {
+      "id": "cur:sosyal:tymm-2024",
+      "dersId": "sosyal",
+      "ad": "MEB TYMM Sosyal Bilgiler Dersi Öğretim Programı (4-7) 2024 — onaylı PDF",
+      "shortLabel": "TYMM 2024 PDF",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2024",
+      "publisher": "MEB",
+      "durum": "ACTIVE",
+      "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programsos4567Onayli.pdf",
+      "not": null,
+      "kind": "tymm-pdf",
+      "grades": {
+        "4": {
+          "type": "curriculum",
+          "file": "sinif4-sosyal.json"
+        }
+      }
+    },
+    {
+      "id": "cur:trafikGuvenligi:tymm-cizelge",
+      "dersId": "trafikGuvenligi",
+      "ad": "Türkiye Yüzyılı Maarif Modeli · 2025-2026",
+      "shortLabel": "TYMM / TTKB çizelge",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2025-2026",
+      "publisher": "MEB",
+      "durum": "PARTIAL",
+      "kaynakUrl": null,
+      "not": "Keşif stub: haftalık saat TTKB 09.05.2025 İlkokul çizelgesine göre. TYMM çıktıları MB-DM-002 sonrası işlenecek.",
+      "kind": "tymm-cizelge",
+      "grades": {
+        "4": {
+          "type": "curriculum",
+          "file": "sinif4-trafik-guvenligi.json"
+        }
+      }
+    },
+    {
+      "id": "cur:turkce:tymm-2024",
+      "dersId": "turkce",
+      "ad": "MEB TYMM İlkokul Türkçe Dersi Öğretim Programı (1-4) 2024 — onaylı PDF",
+      "shortLabel": "TYMM 2024 PDF",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2024",
+      "publisher": "MEB",
+      "durum": "ACTIVE",
+      "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programtur1234Onayli.pdf",
+      "not": null,
+      "kind": "tymm-pdf",
+      "grades": {
+        "1": {
+          "type": "curriculum",
+          "file": "sinif1-turkce.json"
+        },
+        "2": {
+          "type": "curriculum",
+          "file": "sinif2-turkce.json"
+        },
+        "3": {
+          "type": "curriculum",
+          "file": "sinif3-turkce.json"
+        },
+        "4": {
+          "type": "curriculum",
+          "file": "sinif4-turkce.json"
+        }
+      }
+    },
+    {
+      "id": "cur:turkce:tpm-001",
+      "dersId": "turkce",
+      "ad": "TPM-001 Domain Pack — 1. Sınıf Türkçe (TYMM yapılandırılmış)",
+      "shortLabel": "Domain Pack TPM-001",
+      "model": "Türkiye Yüzyılı Maarif Modeli",
+      "onayYili": "2024",
+      "publisher": "MiniBilge / MEB TYMM",
+      "durum": "ACTIVE",
+      "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programtur1234Onayli.pdf",
+      "not": "Aynı MEB programının domain paket işlenmiş sürümü. Öğretmen kaynak seçer.",
+      "kind": "domain-pack",
+      "grades": {
+        "1": {
+          "type": "domain",
+          "pack": "tpm-001-sinif1-turkce"
+        }
+      }
+    }
+  ]
+}

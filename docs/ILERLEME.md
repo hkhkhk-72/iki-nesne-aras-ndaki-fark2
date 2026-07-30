@@ -30,6 +30,7 @@
 | Kod | Tamam | Kaldı | Not |
 |-----|------:|------:|-----|
 | MB-DM-001 Domain | 100% | 0% | Freeze |
+| **MB-VIS-001 Ürün vizyonu** | **90%** | **10%** | Yıllık kaynak güncelleme süreci |
 | **MB-AOS-001 / MD-048 Kernel** | **68%** | **32%** | Flutter Feature-First · Security derinliği · legacy boot |
 | MB-ARCH-001 Mimari | 100% | 0% | Freeze |
 | MB-UI-001 / UI-002 / UI-003 | 95% | 5% | Derin rota cilası |
@@ -52,15 +53,15 @@
 
 ---
 
-## 3. Bu tur özeti (AOS-001 Kernel)
+## 3. Bu tur özeti (VIS-001 + ders/kaynak)
 
 | Kalem | Tamam | Kaldı |
 |-------|------:|------:|
+| Ürün vizyonu (MB-VIS-001) | 90% | 10% |
+| Ders + MEB kaynak seçimi (Curriculum sources) | 85% | 15% |
 | Academic Kernel (MB-AOS-001 / MD-048) | 68% | 32% |
 | Document OS Core (MB-DOS-002 / MD-047) | 70% | 30% |
-| Universal Component Library (MB-DS-007) | 75% | 25% |
-| DS paketi (001…007) | 84% | 16% |
-| Sonraki öncelik adayı | — | DOS-001 DNA katalog **45% kaldı** |
+| Sonraki: yeni yıl program kaynakları sources.json’a | — | sürekli |
 
 ---
 

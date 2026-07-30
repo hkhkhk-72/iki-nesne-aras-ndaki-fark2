@@ -2,10 +2,10 @@
   'use strict';
 
   async function generateAnnualPlan(options) {
-    const { sinif, dersId, okul, ogretmen, egitimYili } = options;
+    const { sinif, dersId, okul, ogretmen, egitimYili, kaynakId } = options;
 
     const cal = await CalendarEngine.loadCalendar();
-    const curriculum = await CurriculumEngine.loadCurriculum(dersId, sinif);
+    const curriculum = await CurriculumEngine.loadCurriculum(dersId, sinif, { kaynakId: kaynakId });
     const weeks = CalendarEngine.getTeachingWeeks(cal);
     const weekPlan = CurriculumEngine.distributeThemesToWeeks(curriculum, weeks.length);
 
@@ -32,6 +32,10 @@
       sinif,
       ders: curriculum.ders,
       dersId,
+      kaynakId: curriculum.kaynakId || kaynakId || null,
+      kaynak: (curriculum.kaynakMeta && curriculum.kaynakMeta.ad) || curriculum.kaynak || null,
+      kaynakUrl: (curriculum.kaynakMeta && curriculum.kaynakMeta.kaynakUrl) || curriculum.kaynakUrl || null,
+      kaynakShort: (curriculum.kaynakMeta && curriculum.kaynakMeta.shortLabel) || null,
       model: curriculum.model,
       egitimYili: egitimYili || cal.egitimYili,
       okulAdi: okul?.okulAdi || '',

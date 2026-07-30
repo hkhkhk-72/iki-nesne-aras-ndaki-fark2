@@ -89,6 +89,17 @@
     "remaining": 30,
     "left": "Flutter Isar/Riverpod · Background Sync · legacy addDocument migrate"
   },
+  "vision": {
+    "id": "MB-VIS-001",
+    "complete": 90,
+    "remaining": 10,
+    "left": "Yıllık MEB/TYMM kaynak güncelleme süreci"
+  },
+  "curriculumSources": {
+    "complete": 85,
+    "remaining": 15,
+    "left": "Daha fazla ders için çoklu kaynak satırı; yıllık onay migrasyonu"
+  },
   "academicKernel": {
     "id": "MB-AOS-001",
     "decision": "MD-048",

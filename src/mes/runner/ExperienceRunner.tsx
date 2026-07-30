@@ -225,7 +225,7 @@ function NarrativeScene({ scene, settings, observer, onAdvance }: SceneProps) {
   );
 }
 
-// ─── Keşif: dokunarak toplama (MB-274: 1–4 saydırılmaz) ───────
+// ─── Keşif: dokunarak toplama (MB-277: 1–4 saydırılmaz · MB-274 keşif çocuğa ait) ──
 function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
   const i = scene.interaction as Extract<SceneSpec['interaction'], { kind: 'discover' }>;
   const [found, setFound] = useState<Set<string>>(new Set());
@@ -257,8 +257,9 @@ function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
     setFound((prev) => new Set(prev).add(id));
   };
 
-  /** MB-274: 1–4’te sayaç asla açılmaz. */
+  /** MB-277: 1–4’te sayaç asla açılmaz. */
   const mayRevealCount = Boolean(i.revealCount) && !isPerceptualCount(i.items.length);
+  const discoveryOwned = scene.discoveryBelongsToChild !== false;
 
   return (
     <SceneStage
@@ -306,9 +307,16 @@ function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
       {allFound ? (
         <SpeechBubble
           speaker={scene.feedback.speaker}
-          line={scene.feedback.positive}
+          line={
+            discoveryOwned
+              ? scene.feedback.positive || 'Sen buldun… güzel baktın.'
+              : scene.feedback.positive
+          }
           settings={settings}
         />
+      ) : null}
+      {allFound && discoveryOwned ? (
+        <Text style={styles.worldCue}>Yapraklar kıpırdar — keşif senin.</Text>
       ) : null}
     </SceneStage>
   );
@@ -348,7 +356,7 @@ function ObserveScene({ scene, settings, observer, onAdvance }: SceneProps) {
             emoji={g.emoji}
             count={g.count}
             highlighted={looked.has(g.id)}
-            /** MB-269/278: gözlemde sayı gösterilmez — önce gör. */
+            /** MB-269/281: gözlemde sayı gösterilmez — önce gör. */
             showCount={false}
             onPress={() => look(g.id)}
             settings={settings}
@@ -522,7 +530,7 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
             label={g.label}
             emoji={g.emoji}
             count={g.count}
-            /** MB-274: 1–4 nesnede sayı asla gösterilmez. */
+            /** MB-277: 1–4 nesnede sayı asla gösterilmez. */
             showCount={baseShowCount && !isPerceptualCount(g.count)}
             settings={settings}
             layoutSeed={scene.order * 13 + gi + attempts}
@@ -622,7 +630,7 @@ function TrustScene({ scene, settings, observer, onAdvance }: SceneProps) {
   );
 }
 
-// ─── Kutlama ─────────────────────────────────────────────────
+// ─── Kutlama — Karar 275: dünya kutlar, arayüz değil ─────────
 function CelebrateScene({
   scene,
   settings,
@@ -634,20 +642,31 @@ function CelebrateScene({
 }) {
   const i = scene.interaction as Extract<SceneSpec['interaction'], { kind: 'celebrate' }>;
   const findik = getCharacter('findik');
+  const worldCeleb = scene.worldCelebration !== false;
 
   return (
     <SceneStage
       scene={scene}
       settings={settings}
-      footer={<Button title="Maceranı tamamla" onPress={onAdvance} fullWidth size="lg" variant="success" />}
+      footer={
+        <Button title="Maceranı tamamla" onPress={onAdvance} fullWidth size="lg" variant="primary" />
+      }
     >
       <View style={styles.celebrateBox}>
-        <Text style={styles.celebrateReward}>{i.reward}</Text>
+        {/* Karar 275: pop-up / yıldız yağmuru yok — karakter + dünya cue */}
+        <Text style={styles.celebrateCharacter}>{findik.visual}</Text>
         <Text style={[styles.celebrateTitle, { fontSize: scaleFont(settings, 24) }]}>{i.title}</Text>
         <Text style={[styles.celebrateMessage, { fontSize: scaleFont(settings, 16) }]}>
           {i.message}
         </Text>
-        <Text style={styles.celebrateCharacter}>{findik.visual}</Text>
+        {worldCeleb ? (
+          <Text style={styles.worldCue}>
+            {scene.atmosphere?.worldCue ?? 'Işık yumuşakça ısınır; Fındık gülümser…'}
+          </Text>
+        ) : null}
+        {!worldCeleb && i.reward ? (
+          <Text style={styles.celebrateReward}>{i.reward}</Text>
+        ) : null}
       </View>
     </SceneStage>
   );

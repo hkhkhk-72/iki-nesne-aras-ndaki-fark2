@@ -285,6 +285,15 @@ export interface SceneSpec {
    * Varsayılan: true (MES sahneleri).
    */
   worldFeedback?: boolean;
+  /**
+   * Karar 274 — keşif anı çocuğa aittir; sistem duyurmaz, görünür kılar.
+   */
+  discoveryBelongsToChild?: boolean;
+  /**
+   * Karar 275 — kutlama dünya ile (pop-up / yıldız yağmuru yok).
+   * Varsayılan: true.
+   */
+  worldCelebration?: boolean;
 }
 
 // ─── Mikro deneyim (ders) ────────────────────────────────────

@@ -48,7 +48,7 @@ export const storyTokens: Record<StoryTokenId, StoryToken> = {
     id: 'story.excited',
     emotion: 'sevinç',
     childFeel: 'Birlikte başardık.',
-    cue: 'Yaprak / yıldız FX, sepet yukarı',
+    cue: 'Yaprak kıpırdar, sepet yukarı — pop-up / yıldız yağmuru yok (MB-275)',
   },
   'story.calm': {
     id: 'story.calm',

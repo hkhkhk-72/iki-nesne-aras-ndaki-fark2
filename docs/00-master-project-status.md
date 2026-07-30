@@ -102,7 +102,7 @@ Kod köprüsü: `src/design-tokens/`
 - Önce sezgi, sonra sayı  
 - Çocuk matematik değil; Fındık’a yardım hisseder  
 - Başarı = hikâye; yanlış = öğrenme (ceza yok)  
-- MB-LAB-001 v1.2 + Mavi Kitap 268–278 — `docs/16-…` · `docs/09-…` · `src/lab/` · `src/world/mavi-kitap-268-270.ts` · `mavi-kitap-271-273.ts`
+- MB-LAB-001 v1.2 + Mavi Kitap 268–281 — `docs/16-…` · `docs/09-…` · `src/lab/` · `src/world/mavi-kitap-*.ts`
 - MBA-BENCHMARK-001 v1.1: küresel UX / audio / motivasyon / güvenlik / hikâye eşiği — `docs/17-…` · `src/benchmark/` · `src/qa/benchmark-qa.ts` 
 
 ---

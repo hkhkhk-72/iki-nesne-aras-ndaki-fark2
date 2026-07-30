@@ -34,7 +34,10 @@ export interface EduToken {
     | 'MB-275'
     | 'MB-276'
     | 'MB-277'
-    | 'MB-278';
+    | 'MB-278'
+    | 'MB-279'
+    | 'MB-280'
+    | 'MB-281';
 }
 
 export const eduTokens: Record<EduTokenId, EduToken> = {
@@ -49,14 +52,14 @@ export const eduTokens: Record<EduTokenId, EduToken> = {
     concept: 'anlik_miktar',
     phase: 'intuition',
     mebHint: 'Perceptual subitizing — 1–4 saymadan',
-    labRule: 'MB-274',
+    labRule: 'MB-277',
   },
   'edu.partWhole': {
     id: 'edu.partWhole',
     concept: 'parca_butun',
     phase: 'intuition',
     mebHint: 'Conceptual subitizing — parçadan bütüne',
-    labRule: 'MB-275',
+    labRule: 'MB-278',
   },
   'edu.visualCompare': {
     id: 'edu.visualCompare',
@@ -70,7 +73,7 @@ export const eduTokens: Record<EduTokenId, EduToken> = {
     concept: 'alt_grup',
     phase: 'intuition',
     mebHint: '5+ doğal kümeler (3+2, 4+1…)',
-    labRule: 'MB-275',
+    labRule: 'MB-278',
   },
   'edu.compare': {
     id: 'edu.compare',

@@ -18,6 +18,7 @@
 | MBA-BENCHMARK-001 | Küresel üretim eşiği v1.1 | `src/benchmark/` · `src/qa/benchmark-qa.ts` · `docs/17-…` |
 | Karar 268–270 | İlk karar güvenli · karşılaştırma önce · dünya feedback | `src/world/mavi-kitap-268-270.ts` · ChooseScene |
 | Karar 271–273 | Sessizlik · hata hissettirilir · Reflection Time | `src/world/mavi-kitap-271-273.ts` · `reflectionTimeMs` |
+| Karar 274–276 | Keşif çocuğa ait · dünya kutlar · süreç > sonuç | `src/world/mavi-kitap-274-276.ts` |
 
 ## Sahne sırası (modül içi)
 

@@ -80,23 +80,25 @@ export function buildInsights(code: string, behaviors: SceneBehavior[]): Experie
         level === 'guclu' ? 'Yeni bir maceraya geçebilirsin.' : 'Aynı sahneyi birlikte tekrar keşfedelim.',
     });
 
-    // Öğretmene: davranış temelli — Karar 273 Reflection Time birincil
+    // Öğretmene: süreç analizi (Karar 276) — sonuç skoru yok
     const teacherDetail: string[] = [];
     const avgReflection = related.reduce((s, x) => s + (x.reflectionTimeMs ?? 0), 0) / related.length;
     if (avgReflection >= 2000) {
       teacherDetail.push(`reflection time ~${Math.round(avgReflection / 1000)}sn (değerli düşünme)`);
     }
-    if (hesitated) teacherDetail.push('karar vermeden önce uzun süre bekliyor');
+    const retries = related.reduce((s, x) => s + x.retries, 0);
+    if (retries > 0) teacherDetail.push(`öz-düzeltme denemeleri: ${retries}`);
+    if (hesitated) teacherDetail.push('gözlem / karşılaştırma için bekledi');
     if (idled) teacherDetail.push('sahnede dikkat dağınıklığı gözlendi');
-    if (misconceptions.length) teacherDetail.push(`kavram yanılgısı: ${misconceptions.join(', ')}`);
+    if (misconceptions.length) teacherDetail.push(`süreç ipucu: ${misconceptions.join(', ')}`);
 
     insights.push({
       audience: 'teacher',
       level,
       concept,
       message: teacherDetail.length
-        ? `${concept}: ${teacherDetail.join('; ')}.`
-        : `${concept}: akıcı ilerliyor, ek desteğe ihtiyaç görünmüyor.`,
+        ? `${concept} (süreç): ${teacherDetail.join('; ')}.`
+        : `${concept}: gözlem ve karşılaştırma süreci akıcı.`,
       nextStep:
         level === 'destek_gerekli'
           ? `${concept} için somut materyalle (nesne eşleştirme) sınıf içi tekrar önerilir.`

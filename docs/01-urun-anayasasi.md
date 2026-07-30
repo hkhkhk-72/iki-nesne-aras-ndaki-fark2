@@ -83,11 +83,14 @@ Amaç çok oyun yapmak değil; **çocukların matematiği sevmesini sağlamak**.
 | 271 | Sessizlik de bir geri bildirimdir |
 | 272 | Hata söylenmez, hissettirilir |
 | 273 | Düşünme süresi başarı süresinden değerlidir (Reflection Time) |
-| 274 | 1–4 asla saydırılmaz |
-| 275 | 5+ alt grup (3+2, 4+1…) |
-| 276 | Timer / hız baskısı yasak |
-| 277 | Her LS CPA destekler |
-| 278 | Gör → Hisset → İsimlendir |
+| 274 | Keşif anı çocuğa aittir |
+| 275 | Dünya kutlar, arayüz değil |
+| 276 | Süreç sonuçtan değerlidir |
+| 277 | 1–4 asla saydırılmaz |
+| 278 | 5+ alt grup (3+2, 4+1…) |
+| 279 | Timer / hız baskısı yasak |
+| 280 | Her LS CPA destekler |
+| 281 | Gör → Hisset → İsimlendir |
 
 Ayrıntı: [docs/09…](./09-mavi-kitap-kararlari-234-236.md)
 · [MB-CHAR-002](./10-mb-char-002-bilge-rehberlik-sistemi.md)

@@ -28,6 +28,7 @@ import {
 } from '@/benchmark';
 import { KARAR_268, KARAR_269, KARAR_270 } from '@/world/mavi-kitap-268-270';
 import { KARAR_271, KARAR_272, KARAR_273, REFLECTION_TIME_METRIC } from '@/world/mavi-kitap-271-273';
+import { KARAR_274, KARAR_275, KARAR_276, PROCESS_AI_METRICS } from '@/world/mavi-kitap-274-276';
 import { PRIMARY_AI_METRICS } from '@/ai/decision-engine';
 import { storyTokens, eduTokens, motionTokens, aiTokens, touchTarget } from '@/design-tokens';
 import type { SceneBehavior } from '@/ai/observer';
@@ -222,16 +223,19 @@ for (const exp of MATH_EXPERIENCES) {
   }
 }
 
-// ── Mavi Kitap 268–273 ──
-console.log('\nMavi Kitap Karar 268–273');
+// ── Mavi Kitap 268–276 ──
+console.log('\nMavi Kitap Karar 268–276');
 const reflectionPrimary = PRIMARY_AI_METRICS[0] === REFLECTION_TIME_METRIC;
+const processOk = PROCESS_AI_METRICS.includes('reflection_time');
 console.log(
-  `  ${KARAR_273.id} Reflection Time birincil: ${reflectionPrimary ? 'GEÇTİ' : 'BAŞARISIZ'}`,
+  `  ${KARAR_273.id}/${KARAR_276.id} Reflection+süreç: ${reflectionPrimary && processOk ? 'GEÇTİ' : 'BAŞARISIZ'}`,
 );
-if (!reflectionPrimary) failed = true;
+if (!reflectionPrimary || !processOk) failed = true;
 
 for (const exp of MATH_EXPERIENCES) {
   const firstChoose = exp.scenes.find((s) => s.interaction.kind === 'choose');
+  const discover = exp.scenes.find((s) => s.interaction.kind === 'discover');
+  const celebrate = exp.scenes.find((s) => s.interaction.kind === 'celebrate');
   const k268 =
     firstChoose?.firstMathDecision === true &&
     (firstChoose.interaction.kind === 'choose'
@@ -252,12 +256,26 @@ for (const exp of MATH_EXPERIENCES) {
   const k272 = KARAR_272.title.includes('Hata');
   const k273 =
     firstChoose?.aiObservation.signals.includes('reflection_time') === true;
-  const ok = k268 && k269 && k270 && k271 && k272 && k273;
+  const k274 = discover?.discoveryBelongsToChild !== false;
+  const k275 = celebrate?.worldCelebration !== false;
+  const k276 = KARAR_276.title.includes('Süreç');
+  const ok = k268 && k269 && k270 && k271 && k272 && k273 && k274 && k275 && k276;
   console.log(
-    `  ${exp.code}: ${KARAR_268.id}…${KARAR_273.id} → ${ok ? 'GEÇTİ' : 'BAŞARISIZ'}`,
+    `  ${exp.code}: ${KARAR_268.id}…${KARAR_276.id} → ${ok ? 'GEÇTİ' : 'BAŞARISIZ'}`,
   );
   if (!ok) {
-    console.log('  Detay:', { k268, k269, k270, k271, k272, k273, first: firstChoose?.id });
+    console.log('  Detay:', {
+      k268,
+      k269,
+      k270,
+      k271,
+      k272,
+      k273,
+      k274,
+      k275,
+      k276,
+      first: firstChoose?.id,
+    });
     failed = true;
   }
 }

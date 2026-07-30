@@ -11,6 +11,7 @@ import {
   LAB_ID,
 } from '@/lab/foundations';
 import { isForbiddenDecisionLabel } from '@/world/mavi-kitap-268-270';
+import { FORBIDDEN_UI_CELEBRATION } from '@/world/mavi-kitap-274-276';
 
 export interface LabQaResult {
   ok: boolean;
@@ -87,14 +88,14 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
 
   const hasTimerPressure = FORBIDDEN_PRESSURE.some((p) => blob.includes(p));
   if (hasTimerPressure) {
-    issues.push(`${scene.id}: MB-276 ihlali — hız baskısı ifadesi (${LAB_ID})`);
+    issues.push(`${scene.id}: MB-279 ihlali — hız baskısı ifadesi (${LAB_ID})`);
   }
 
-  // MB-274: 1–4 için sayma istemi
+  // MB-277: 1–4 için sayma istemi
   const perceptual = counts.filter(isPerceptualCount);
   if (perceptual.length && hasCountPrompt(scene)) {
     issues.push(
-      `${scene.id}: MB-274 ihlali — 1–4 nesne saydırılıyor (${PEDAGOGICAL_RULES['MB-274'].title})`,
+      `${scene.id}: MB-277 ihlali — 1–4 nesne saydırılıyor (${PEDAGOGICAL_RULES['MB-277'].title})`,
     );
   }
 
@@ -105,17 +106,17 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
     isPerceptualCount(scene.interaction.items.length)
   ) {
     issues.push(
-      `${scene.id}: MB-274 riski — 1–4 discover’da revealCount açık (sayma hissi)`,
+      `${scene.id}: MB-277 riski — 1–4 discover’da revealCount açık (sayma hissi)`,
     );
   }
 
-  // choose: 1–4 varken sayı görünürlüğü (MB-274) + karşılaştırma saymadan (MB-269)
+  // choose: 1–4 varken sayı görünürlüğü (MB-277) + karşılaştırma saymadan (MB-269)
   if (scene.interaction.kind === 'choose') {
     const hasPerceptual = scene.interaction.groups.some((g) => isPerceptualCount(g.count));
     const vis = scene.interaction.countVisibility ?? 'after_attempt';
     if (hasPerceptual && vis !== 'never') {
       issues.push(
-        `${scene.id}: MB-274 ihlali — 1–4 grup varken countVisibility=${vis} (olmalı: never)`,
+        `${scene.id}: MB-277 ihlali — 1–4 grup varken countVisibility=${vis} (olmalı: never)`,
       );
     }
     if (scene.firstMathDecision && vis !== 'never') {
@@ -164,12 +165,30 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
     issues.push(`${scene.id}: Saymadan çözülebilirlik zayıf`);
   }
   if (!checklist.cpa) {
-    issues.push(`${scene.id}: MB-277 CPA desteği yetersiz`);
+    issues.push(`${scene.id}: MB-280 CPA desteği yetersiz`);
   }
 
   // Karar 268 / 270 / 272 — çocuk yüzü etiketleri ("yanlış" yok)
   if (isForbiddenDecisionLabel(childFacingBlob(scene))) {
     issues.push(`${scene.id}: MB-268/270/272 ihlali — doğru/yanlış etiket dili`);
+  }
+
+  // Karar 275 — UI kutlama yasakları
+  const celebHit = FORBIDDEN_UI_CELEBRATION.find((p) => blob.includes(p));
+  if (celebHit) {
+    issues.push(`${scene.id}: MB-275 ihlali — yasaklı UI kutlama "${celebHit}"`);
+  }
+
+  // Karar 274 — keşif anı çocuğa ait: discover'da sistem cevap duyurmaz
+  if (scene.interaction.kind === 'discover') {
+    const announce =
+      blob.includes('doğru buldun') ||
+      blob.includes('dogru buldun') ||
+      blob.includes('cevap bu') ||
+      blob.includes('işte cevap');
+    if (announce) {
+      issues.push(`${scene.id}: MB-274 ihlali — keşif anı çocuğun elinden alınıyor`);
+    }
   }
 
   return {

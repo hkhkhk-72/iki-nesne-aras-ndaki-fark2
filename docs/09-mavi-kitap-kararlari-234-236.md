@@ -169,7 +169,36 @@ metriğini izler.
 
 ---
 
-## 📘 Karar No: 274 — 1–4 Asla Saydırılmaz *(MB-LAB-001)*
+## 📘 Karar No: 274 — Keşif Anı Çocuğa Aittir
+
+MiniBilge hiçbir zaman keşif anını elinden almaz. Çocuk "Ben buldum."
+hissini yaşamalıdır. Sistem yalnızca bu anı görünür ve anlamlı kılar.
+
+**Kod:** `discoveryBelongsToChild` · DiscoverScene · `src/world/mavi-kitap-274-276.ts`.
+
+---
+
+## 📘 Karar No: 275 — Dünya Kutlar, Arayüz Değil
+
+Doğru öğrenme anlarında geri bildirim; karakterlerin davranışları, ışık,
+doğa ve çevresel animasyonlarla verilir. Pop-up, yıldız yağmuru veya
+yüksek sesli efektler kullanılmaz.
+
+**Kod:** `worldCelebration` · `FORBIDDEN_UI_CELEBRATION` · CelebrateScene dünya cue.
+
+---
+
+## 📘 Karar No: 276 — Süreç Sonuçtan Değerlidir
+
+MiniBilge, doğru cevabı değil; gözlem, karşılaştırma, düşünme ve kendi
+kendini düzeltme sürecini destekler. Yapay zekâ bu süreci analiz eder,
+sonucu değil.
+
+**Kod:** `PROCESS_AI_METRICS` · `PRIMARY_AI_METRICS` · Karar 239 / 273 ile uyumlu.
+
+---
+
+## 📘 Karar No: 277 — 1–4 Asla Saydırılmaz *(MB-LAB-001)*
 
 1–4 nesne perceptual subitizing ile hissedilir; sayma istemi yasaktır.
 
@@ -177,7 +206,7 @@ metriğini izler.
 
 ---
 
-## 📘 Karar No: 275 — 5+ Alt Grup *(MB-LAB-001)*
+## 📘 Karar No: 278 — 5+ Alt Grup *(MB-LAB-001)*
 
 5 ve üzeri nesnelerde doğal kümeler: 3+2, 4+1, 2+2+1…
 
@@ -185,7 +214,7 @@ metriğini izler.
 
 ---
 
-## 📘 Karar No: 276 — Hız Baskısı Yasak
+## 📘 Karar No: 279 — Hız Baskısı Yasak
 
 Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
 
@@ -193,13 +222,13 @@ Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
 
 ---
 
-## 📘 Karar No: 277 — Her LS CPA Destekler
+## 📘 Karar No: 280 — Her LS CPA Destekler
 
 Concrete → Pictorial → Abstract. Her Learning Scene bu zinciri destekler.
 
 ---
 
-## 📘 Karar No: 278 — Gör → Hisset → İsimlendir *(MB-LAB-001)*
+## 📘 Karar No: 281 — Gör → Hisset → İsimlendir *(MB-LAB-001)*
 
 Matematik önce görülür, sonra hissedilir, en son isimlendirilir.
 

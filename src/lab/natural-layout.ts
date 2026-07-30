@@ -14,7 +14,7 @@ export interface NaturalLayoutOptions {
   width?: number;
   height?: number;
   seed?: number;
-  /** Alt gruplar (MB-275); her küme kendi bölgesinde. */
+  /** Alt gruplar (MB-278); her küme kendi bölgesinde. */
   groups?: number[];
 }
 

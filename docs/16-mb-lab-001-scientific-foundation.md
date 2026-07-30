@@ -14,9 +14,9 @@ Yeni anayasa değildir; laboratuvarın ürün üretim standardıdır.
 
 | # | Temel | MiniBilge karşılığı |
 |---|--------|---------------------|
-| 1 | **Perceptual Subitizing** (1–4 nesne) | `edu.subitize` · MB-274 |
-| 2 | **Conceptual Subitizing** (5+ alt gruplar) | `edu.partWhole` · `edu.grouping` · MB-275 |
-| 3 | **CPA** Concrete → Pictorial → Abstract | Her LS CPA destekler (MB-277) |
+| 1 | **Perceptual Subitizing** (1–4 nesne) | `edu.subitize` · MB-277 |
+| 2 | **Conceptual Subitizing** (5+ alt gruplar) | `edu.partWhole` · `edu.grouping` · MB-278 |
+| 3 | **CPA** Concrete → Pictorial → Abstract | Her LS CPA destekler (MB-280) |
 | 4 | **Montessori Sensory Learning** | Doğal dizilim, dokunma, baskısız tempo |
 | 5 | **Finland Play-Based Mathematics** | Hikâye + oyun; test hissi yok |
 | 6 | **OECD Starting Strong** | Erken matematik = ilişki, dil, oyun |
@@ -49,23 +49,35 @@ Asla "yanlış" denmez; doğal ipucu ile çocuk yeniden değerlendirir.
 
 AI öncelikle **Reflection Time** izler; hız övülmez.
 
-### MB-274 — 1–4 Asla Saydırılmaz
+### MB-274 — Keşif Anı Çocuğa Aittir
+
+Keşif anı çocuğundur; sistem yalnızca görünür ve anlamlı kılar.
+
+### MB-275 — Dünya Kutlar, Arayüz Değil
+
+Kutlama dünya ile; pop-up / yıldız yağmuru / yüksek ses yok.
+
+### MB-276 — Süreç Sonuçtan Değerlidir
+
+AI süreci analiz eder (gözlem, karşılaştırma, düşünme, öz-düzeltme); sonucu değil.
+
+### MB-277 — 1–4 Asla Saydırılmaz
 
 1–4 nesne **ASLA** saydırılmaz (perceptual subitizing).
 
-### MB-275 — 5+ Alt Grup
+### MB-278 — 5+ Alt Grup
 
 5+ nesnede doğal kümeler: `3+2`, `4+1`, `2+2+1` vb.
 
-### MB-276 — Hız Baskısı Yasak
+### MB-279 — Hız Baskısı Yasak
 
 Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
 
-### MB-277 — Her LS CPA Destekler
+### MB-280 — Her LS CPA Destekler
 
 Concrete → Picture → Abstract. Her Learning Scene bu zinciri destekler.
 
-### MB-278 — Gör → Hisset → İsimlendir
+### MB-281 — Gör → Hisset → İsimlendir
 
 Matematik önce **görülür**, sonra **hissedilir**, en son **isimlendirilir**.
 

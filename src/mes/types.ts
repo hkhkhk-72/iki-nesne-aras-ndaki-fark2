@@ -294,6 +294,19 @@ export interface SceneSpec {
    * Varsayılan: true.
    */
   worldCelebration?: boolean;
+  /**
+   * Karar 277 — karakter soruyu önce davranışla yaşar; söz sonra (gerekirse).
+   */
+  behaviorBeforeSpeech?: boolean;
+  /**
+   * Karar 278 — sessiz bekleme aktif öğretim; gereksiz anlık yönlendirme yok.
+   * Varsayılan: true.
+   */
+  waitIsTeaching?: boolean;
+  /**
+   * Karar 279 — merak/gözlem tamamlanmadan kavram adı tanıtılmaz.
+   */
+  curiosityBeforeConcept?: boolean;
 }
 
 // ─── Mikro deneyim (ders) ────────────────────────────────────

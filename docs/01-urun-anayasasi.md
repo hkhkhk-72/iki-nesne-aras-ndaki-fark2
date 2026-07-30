@@ -86,11 +86,14 @@ Amaç çok oyun yapmak değil; **çocukların matematiği sevmesini sağlamak**.
 | 274 | Keşif anı çocuğa aittir |
 | 275 | Dünya kutlar, arayüz değil |
 | 276 | Süreç sonuçtan değerlidir |
-| 277 | 1–4 asla saydırılmaz |
-| 278 | 5+ alt grup (3+2, 4+1…) |
-| 279 | Timer / hız baskısı yasak |
-| 280 | Her LS CPA destekler |
-| 281 | Gör → Hisset → İsimlendir |
+| 277 | Karakter soruyu yaşar, söylemez |
+| 278 | Beklemek öğretimin bir parçasıdır |
+| 279 | Merak cevaptan önce gelir |
+| 280 | 1–4 asla saydırılmaz |
+| 281 | 5+ alt grup (3+2, 4+1…) |
+| 282 | Timer / hız baskısı yasak |
+| 283 | Her LS CPA destekler |
+| 284 | Gör → Hisset → İsimlendir |
 
 Ayrıntı: [docs/09…](./09-mavi-kitap-kararlari-234-236.md)
 · [MB-CHAR-002](./10-mb-char-002-bilge-rehberlik-sistemi.md)

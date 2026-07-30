@@ -14,9 +14,9 @@ Yeni anayasa değildir; laboratuvarın ürün üretim standardıdır.
 
 | # | Temel | MiniBilge karşılığı |
 |---|--------|---------------------|
-| 1 | **Perceptual Subitizing** (1–4 nesne) | `edu.subitize` · MB-277 |
-| 2 | **Conceptual Subitizing** (5+ alt gruplar) | `edu.partWhole` · `edu.grouping` · MB-278 |
-| 3 | **CPA** Concrete → Pictorial → Abstract | Her LS CPA destekler (MB-280) |
+| 1 | **Perceptual Subitizing** (1–4 nesne) | `edu.subitize` · MB-280 |
+| 2 | **Conceptual Subitizing** (5+ alt gruplar) | `edu.partWhole` · `edu.grouping` · MB-281 |
+| 3 | **CPA** Concrete → Pictorial → Abstract | Her LS CPA destekler (MB-283) |
 | 4 | **Montessori Sensory Learning** | Doğal dizilim, dokunma, baskısız tempo |
 | 5 | **Finland Play-Based Mathematics** | Hikâye + oyun; test hissi yok |
 | 6 | **OECD Starting Strong** | Erken matematik = ilişki, dil, oyun |
@@ -61,23 +61,35 @@ Kutlama dünya ile; pop-up / yıldız yağmuru / yüksek ses yok.
 
 AI süreci analiz eder (gözlem, karşılaştırma, düşünme, öz-düzeltme); sonucu değil.
 
-### MB-277 — 1–4 Asla Saydırılmaz
+### MB-277 — Karakter Soruyu Yaşar, Söylemez
+
+Önce davranışla soru; sözlü/yazılı yönlendirme sonra ve yalnızca gerektiğinde.
+
+### MB-278 — Beklemek Öğretimin Bir Parçasıdır
+
+Sessiz düşünme süresi aktif öğretim bileşenidir; gereksiz yönlendirme yok.
+
+### MB-279 — Merak Cevaptan Önce Gelir
+
+Önce merak ve gözlem; kavram adı süreç tamamlandıktan sonra.
+
+### MB-280 — 1–4 Asla Saydırılmaz
 
 1–4 nesne **ASLA** saydırılmaz (perceptual subitizing).
 
-### MB-278 — 5+ Alt Grup
+### MB-281 — 5+ Alt Grup
 
 5+ nesnede doğal kümeler: `3+2`, `4+1`, `2+2+1` vb.
 
-### MB-279 — Hız Baskısı Yasak
+### MB-282 — Hız Baskısı Yasak
 
 Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
 
-### MB-280 — Her LS CPA Destekler
+### MB-283 — Her LS CPA Destekler
 
 Concrete → Picture → Abstract. Her Learning Scene bu zinciri destekler.
 
-### MB-281 — Gör → Hisset → İsimlendir
+### MB-284 — Gör → Hisset → İsimlendir
 
 Matematik önce **görülür**, sonra **hissedilir**, en son **isimlendirilir**.
 

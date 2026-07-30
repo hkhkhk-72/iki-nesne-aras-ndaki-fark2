@@ -87,9 +87,15 @@ export const scenes: SceneSpec[] = [
     firstMathDecision: true,
     /** Karar 270 — geri bildirimi dünya verir. */
     worldFeedback: true,
+    /** Karar 277 — önce davranışla soru. */
+    behaviorBeforeSpeech: true,
+    /** Karar 278 — beklemek öğretim. */
+    waitIsTeaching: true,
+    /** Karar 279 — merak önce. */
+    curiosityBeforeConcept: true,
     pedagogicalGoal:
-      'Karar 268/269/271–276: ilk güvenli karar + saymadan karşılaştırma + Reflection Time + süreç. ' +
-      '3 perceptual, 6 conceptual (3+3). Hız baskısı yok (MB-279).',
+      'Karar 268/269/271–279: güvenli karar, saymadan karşılaştırma, davranışla soru, merak önce. ' +
+      '3 perceptual, 6 conceptual (3+3). Hız baskısı yok (MB-282).',
     targetEmotion: 'merak',
     discoveryBelongsToChild: true,
     worldCelebration: true,
@@ -141,7 +147,7 @@ export const scenes: SceneSpec[] = [
     maxTouches: 2,
     atmosphere: {
       season: 'sonbahar',
-      worldCue: 'Fındık iki ağacın önünde durur; bekler, saymaz — sessizlik de geri bildirimdir.',
+      worldCue: 'Fındık iki ağaca bakar, bekler — soruyu yaşar, henüz söylemez (MB-277/278).',
     },
     soundBudget: {
       ambient: 'orman_sessiz',
@@ -214,9 +220,12 @@ export const scenes: SceneSpec[] = [
     motionToken: 'motion.softBounce',
     discoveryBelongsToChild: true,
     worldCelebration: true,
+    behaviorBeforeSpeech: true,
+    waitIsTeaching: true,
+    curiosityBeforeConcept: true,
     pedagogicalGoal:
-      '1–4 perceptual subitizing (MB-277): sayma istemez, sayaç göstermez. ' +
-      'Keşif anı çocuğa aittir (MB-274). CPA concrete (MB-280).',
+      '1–4 perceptual subitizing (MB-280): sayma istemez, sayaç göstermez. ' +
+      'Keşif anı çocuğa aittir (MB-274). CPA concrete (MB-283). Merak önce (MB-279).',
     targetEmotion: 'kesif',
     opening: {
       visual: '🌳',
@@ -232,7 +241,7 @@ export const scenes: SceneSpec[] = [
         { id: 'p2', emoji: '🌰', label: 'palamut' },
         { id: 'p3', emoji: '🌰', label: 'palamut' },
       ],
-      /** MB-277: 1–4’te sayı sayacı gösterilmez. */
+      /** MB-280: 1–4’te sayı sayacı gösterilmez. */
       revealCount: false,
     },
     aiObservation: {
@@ -266,10 +275,13 @@ export const scenes: SceneSpec[] = [
     storyToken: 'story.notice',
     motionToken: 'motion.deepBreath',
     pedagogicalGoal:
-      'Karşılaştırma öncesi gözlem (MB-269/281): önce gör. 5 conceptual (3+2), 3 perceptual. ' +
-      'Doğru cevap yok; miktar isimlendirilmez. Dünya/sessizlik geri bildirir (MB-270/271).',
+      'Karşılaştırma öncesi gözlem (MB-269/284): önce gör. 5 conceptual (3+2), 3 perceptual. ' +
+      'Davranışla soru (MB-277); beklemek öğretim (MB-278).',
     worldFeedback: true,
     worldCelebration: true,
+    behaviorBeforeSpeech: true,
+    waitIsTeaching: true,
+    curiosityBeforeConcept: true,
     targetEmotion: 'merak',
     opening: {
       visual: '🪣',
@@ -317,11 +329,13 @@ export const scenes: SceneSpec[] = [
     storyToken: 'story.discover',
     motionToken: 'motion.softBounce',
     pedagogicalGoal:
-      'Sayı saymadan karşılaştırma (MB-269/277): birebir eşleştirme artan tarafı sezdirir. ' +
-      'CPA concrete (MB-280). Hata söylenmez (MB-272). Keşif çocuğa ait (MB-274).',
+      'Sayı saymadan karşılaştırma (MB-269/280): birebir eşleştirme artan tarafı sezdirir. ' +
+      'CPA concrete (MB-283). Hata söylenmez (MB-272). Keşif çocuğa ait (MB-274).',
     worldFeedback: true,
     discoveryBelongsToChild: true,
     worldCelebration: true,
+    behaviorBeforeSpeech: true,
+    waitIsTeaching: true,
     targetEmotion: 'kesif',
     opening: {
       visual: '🤝',
@@ -370,10 +384,13 @@ export const scenes: SceneSpec[] = [
     storyToken: 'story.notice',
     motionToken: 'motion.observe',
     pedagogicalGoal:
-      '"Daha çok"u eşleştirme deneyiminin üzerine oturtmak (MB-269/281). ' +
-      '3 perceptual saydırılmaz (MB-277); 5 conceptual alt grup (MB-278). Süreç > sonuç (MB-276).',
+      '"Daha çok"u eşleştirme deneyiminin üzerine oturtmak (MB-269/284). ' +
+      '3 perceptual saydırılmaz (MB-280); 5 conceptual alt grup (MB-281). ' +
+      'Merak/gözlem sonrası isimlendirme (MB-279). Süreç > sonuç (MB-276).',
     worldFeedback: true,
     worldCelebration: true,
+    curiosityBeforeConcept: true,
+    waitIsTeaching: true,
     targetEmotion: 'basari',
     opening: {
       visual: '🐿️',
@@ -397,7 +414,7 @@ export const scenes: SceneSpec[] = [
         'Az önce eşleştirmiştik. Hangi kovada eşi olmayan palamutlar kalmıştı?',
         'Kırmızı kovadaki yığına bir daha bak, sonra mavi kovadakine.',
       ],
-      /** MB-277: grupta 1–4 varken sayı asla görünmez. */
+      /** MB-280: grupta 1–4 varken sayı asla görünmez. */
       countVisibility: 'never',
     },
     aiObservation: {
@@ -439,10 +456,11 @@ export const scenes: SceneSpec[] = [
     storyToken: 'story.notice',
     motionToken: 'motion.observe',
     pedagogicalGoal:
-      '"Daha az"ı "daha çok"un karşıtı olarak kurmak (MB-269/281). ' +
-      'Sayma dili yok; görsel yığın karşılaştırması (MB-277).',
+      '"Daha az"ı "daha çok"un karşıtı olarak kurmak (MB-269/284). ' +
+      'Sayma dili yok; görsel yığın karşılaştırması (MB-280).',
     worldFeedback: true,
     worldCelebration: true,
+    waitIsTeaching: true,
     targetEmotion: 'guven',
     opening: {
       visual: '🪣',
@@ -504,10 +522,11 @@ export const scenes: SceneSpec[] = [
     storyToken: 'story.discover',
     motionToken: 'motion.softBounce',
     pedagogicalGoal:
-      '"Eşit"i birebir eşleştirmede artan olmaması olarak kurmak (MB-269/281). ' +
-      'Her iki taraf 5 — conceptual subitizing / alt grup (MB-278).',
+      '"Eşit"i birebir eşleştirmede artan olmaması olarak kurmak (MB-269/284). ' +
+      'Her iki taraf 5 — conceptual subitizing / alt grup (MB-281).',
     worldFeedback: true,
     worldCelebration: true,
+    waitIsTeaching: true,
     targetEmotion: 'basari',
     opening: {
       visual: '⚖️',

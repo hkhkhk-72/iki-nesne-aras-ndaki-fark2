@@ -198,7 +198,35 @@ sonucu değil.
 
 ---
 
-## 📘 Karar No: 277 — 1–4 Asla Saydırılmaz *(MB-LAB-001)*
+## 📘 Karar No: 277 — Karakter Soruyu Yaşar, Söylemez
+
+MiniBilge'de karakterler önce davranışlarıyla soru oluşturur. Yazılı veya
+sözlü yönlendirme, yalnızca davranışın ardından ve gerçekten gerekli
+olduğunda kullanılır.
+
+**Kod:** `behaviorBeforeSpeech` · SceneStage gecikmeli replik · `src/world/mavi-kitap-277-279.ts`.
+
+---
+
+## 📘 Karar No: 278 — Beklemek Öğretimin Bir Parçasıdır
+
+Çocuğun düşünmesi için bırakılan sessiz süre, eğitim tasarımının aktif bir
+bileşenidir. Sistem gereksiz yönlendirme yapmaz.
+
+**Kod:** `waitIsTeaching` · Karar 271 sessizlik · `decideIntervention` bakış önceliği.
+
+---
+
+## 📘 Karar No: 279 — Merak Cevaptan Önce Gelir
+
+Her yeni matematik kavramı, önce merak ve gözlem yoluyla zihinde yer
+edinmeli; kavram adı ancak bu süreç tamamlandıktan sonra tanıtılmalıdır.
+
+**Kod:** `curiosityBeforeConcept` · `EARLY_CONCEPT_ANNOUNCE` · Karar 235 / 284.
+
+---
+
+## 📘 Karar No: 280 — 1–4 Asla Saydırılmaz *(MB-LAB-001)*
 
 1–4 nesne perceptual subitizing ile hissedilir; sayma istemi yasaktır.
 
@@ -206,7 +234,7 @@ sonucu değil.
 
 ---
 
-## 📘 Karar No: 278 — 5+ Alt Grup *(MB-LAB-001)*
+## 📘 Karar No: 281 — 5+ Alt Grup *(MB-LAB-001)*
 
 5 ve üzeri nesnelerde doğal kümeler: 3+2, 4+1, 2+2+1…
 
@@ -214,7 +242,7 @@ sonucu değil.
 
 ---
 
-## 📘 Karar No: 279 — Hız Baskısı Yasak
+## 📘 Karar No: 282 — Hız Baskısı Yasak
 
 Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
 
@@ -222,13 +250,13 @@ Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
 
 ---
 
-## 📘 Karar No: 280 — Her LS CPA Destekler
+## 📘 Karar No: 283 — Her LS CPA Destekler
 
 Concrete → Pictorial → Abstract. Her Learning Scene bu zinciri destekler.
 
 ---
 
-## 📘 Karar No: 281 — Gör → Hisset → İsimlendir *(MB-LAB-001)*
+## 📘 Karar No: 284 — Gör → Hisset → İsimlendir *(MB-LAB-001)*
 
 Matematik önce görülür, sonra hissedilir, en son isimlendirilir.
 

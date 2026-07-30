@@ -225,7 +225,7 @@ function NarrativeScene({ scene, settings, observer, onAdvance }: SceneProps) {
   );
 }
 
-// ─── Keşif: dokunarak toplama (MB-277: 1–4 saydırılmaz · MB-274 keşif çocuğa ait) ──
+// ─── Keşif: dokunarak toplama (MB-280: 1–4 · MB-274 keşif çocuğa ait) ──
 function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
   const i = scene.interaction as Extract<SceneSpec['interaction'], { kind: 'discover' }>;
   const [found, setFound] = useState<Set<string>>(new Set());
@@ -257,7 +257,7 @@ function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
     setFound((prev) => new Set(prev).add(id));
   };
 
-  /** MB-277: 1–4’te sayaç asla açılmaz. */
+  /** MB-280: 1–4’te sayaç asla açılmaz. */
   const mayRevealCount = Boolean(i.revealCount) && !isPerceptualCount(i.items.length);
   const discoveryOwned = scene.discoveryBelongsToChild !== false;
 
@@ -356,7 +356,7 @@ function ObserveScene({ scene, settings, observer, onAdvance }: SceneProps) {
             emoji={g.emoji}
             count={g.count}
             highlighted={looked.has(g.id)}
-            /** MB-269/281: gözlemde sayı gösterilmez — önce gör. */
+            /** MB-269/284: gözlemde sayı gösterilmez — önce gör. */
             showCount={false}
             onPress={() => look(g.id)}
             settings={settings}
@@ -530,7 +530,7 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
             label={g.label}
             emoji={g.emoji}
             count={g.count}
-            /** MB-277: 1–4 nesnede sayı asla gösterilmez. */
+            /** MB-280: 1–4 nesnede sayı asla gösterilmez. */
             showCount={baseShowCount && !isPerceptualCount(g.count)}
             settings={settings}
             layoutSeed={scene.order * 13 + gi + attempts}

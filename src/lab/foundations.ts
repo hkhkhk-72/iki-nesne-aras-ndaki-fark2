@@ -1,7 +1,7 @@
 /**
  * MB-LAB-001 Scientific Foundation v1.2 — APPROVED
  *
- * Mavi Kitap 268–276 + LAB pedagoji 277–281.
+ * Mavi Kitap 268–279 + LAB pedagoji 280–284.
  */
 
 export const LAB_ID = 'MB-LAB-001' as const;
@@ -59,7 +59,10 @@ export type PedagogicalRuleId =
   | 'MB-278'
   | 'MB-279'
   | 'MB-280'
-  | 'MB-281';
+  | 'MB-281'
+  | 'MB-282'
+  | 'MB-283'
+  | 'MB-284';
 
 export const PEDAGOGICAL_RULES: Record<
   PedagogicalRuleId,
@@ -103,28 +106,40 @@ export const PEDAGOGICAL_RULES: Record<
     rule: 'AI süreci analiz eder (gözlem, karşılaştırma, düşünme, öz-düzeltme); sonucu değil.',
   },
   'MB-277': {
+    title: 'Karakter Soruyu Yaşar, Söylemez',
+    rule: 'Önce davranışla soru; sözlü/yazılı yönlendirme sonra ve yalnızca gerektiğinde.',
+  },
+  'MB-278': {
+    title: 'Beklemek Öğretimin Bir Parçasıdır',
+    rule: 'Sessiz düşünme süresi aktif öğretim bileşenidir; gereksiz yönlendirme yok.',
+  },
+  'MB-279': {
+    title: 'Merak Cevaptan Önce Gelir',
+    rule: 'Önce merak ve gözlem; kavram adı süreç tamamlandıktan sonra.',
+  },
+  'MB-280': {
     title: '1–4 Asla Saydırılmaz',
     rule: '1–4 nesne ASLA saydırılmaz; çocuk miktarı doğrudan hisseder.',
   },
-  'MB-278': {
+  'MB-281': {
     title: '5+ Alt Grup',
     rule: '5+ nesnede doğal kümeler kullanılır (3+2, 4+1, 2+2+1…).',
   },
-  'MB-279': {
+  'MB-282': {
     title: 'Hız Baskısı Yasak',
     rule: 'Timer, Countdown, LeaderBoard, Speed Bonus yasaktır.',
   },
-  'MB-280': {
+  'MB-283': {
     title: 'Her LS CPA Destekler',
     rule: 'Concrete → Picture → Abstract zinciri her LS’te desteklenir.',
   },
-  'MB-281': {
+  'MB-284': {
     title: 'Gör → Hisset → İsimlendir',
     rule: 'Matematik önce görülür, sonra hissedilir, en son isimlendirilir.',
   },
 };
 
-/** MB-279 — yasaklı hız baskısı kalıpları (içerik + UI metni). */
+/** MB-282 — yasaklı hız baskısı kalıpları (içerik + UI metni). */
 export const FORBIDDEN_PRESSURE = [
   'timer',
   'countdown',
@@ -152,13 +167,13 @@ export function isConceptualCount(n: number): boolean {
   return n >= CONCEPTUAL_SUBITIZE_MIN;
 }
 
-/** MB-277: 1–4 için sayma istemi üretilemez. */
+/** MB-280: 1–4 için sayma istemi üretilemez. */
 export function mayPromptCount(n: number): boolean {
   return !isPerceptualCount(n);
 }
 
 /**
- * MB-278 — 5+ için doğal alt grup şablonları.
+ * MB-281 — 5+ için doğal alt grup şablonları.
  * Toplam her zaman `n` eder.
  */
 export const GROUPING_TEMPLATES: Record<number, number[][]> = {

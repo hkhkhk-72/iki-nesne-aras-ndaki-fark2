@@ -12,6 +12,7 @@ import {
 } from '@/lab/foundations';
 import { isForbiddenDecisionLabel } from '@/world/mavi-kitap-268-270';
 import { FORBIDDEN_UI_CELEBRATION } from '@/world/mavi-kitap-274-276';
+import { EARLY_CONCEPT_ANNOUNCE } from '@/world/mavi-kitap-277-279';
 
 export interface LabQaResult {
   ok: boolean;
@@ -88,14 +89,14 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
 
   const hasTimerPressure = FORBIDDEN_PRESSURE.some((p) => blob.includes(p));
   if (hasTimerPressure) {
-    issues.push(`${scene.id}: MB-279 ihlali — hız baskısı ifadesi (${LAB_ID})`);
+    issues.push(`${scene.id}: MB-282 ihlali — hız baskısı ifadesi (${LAB_ID})`);
   }
 
-  // MB-277: 1–4 için sayma istemi
+  // MB-280: 1–4 için sayma istemi
   const perceptual = counts.filter(isPerceptualCount);
   if (perceptual.length && hasCountPrompt(scene)) {
     issues.push(
-      `${scene.id}: MB-277 ihlali — 1–4 nesne saydırılıyor (${PEDAGOGICAL_RULES['MB-277'].title})`,
+      `${scene.id}: MB-280 ihlali — 1–4 nesne saydırılıyor (${PEDAGOGICAL_RULES['MB-280'].title})`,
     );
   }
 
@@ -106,17 +107,17 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
     isPerceptualCount(scene.interaction.items.length)
   ) {
     issues.push(
-      `${scene.id}: MB-277 riski — 1–4 discover’da revealCount açık (sayma hissi)`,
+      `${scene.id}: MB-280 riski — 1–4 discover’da revealCount açık (sayma hissi)`,
     );
   }
 
-  // choose: 1–4 varken sayı görünürlüğü (MB-277) + karşılaştırma saymadan (MB-269)
+  // choose: 1–4 varken sayı görünürlüğü (MB-280) + karşılaştırma saymadan (MB-269)
   if (scene.interaction.kind === 'choose') {
     const hasPerceptual = scene.interaction.groups.some((g) => isPerceptualCount(g.count));
     const vis = scene.interaction.countVisibility ?? 'after_attempt';
     if (hasPerceptual && vis !== 'never') {
       issues.push(
-        `${scene.id}: MB-277 ihlali — 1–4 grup varken countVisibility=${vis} (olmalı: never)`,
+        `${scene.id}: MB-280 ihlali — 1–4 grup varken countVisibility=${vis} (olmalı: never)`,
       );
     }
     if (scene.firstMathDecision && vis !== 'never') {
@@ -165,7 +166,7 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
     issues.push(`${scene.id}: Saymadan çözülebilirlik zayıf`);
   }
   if (!checklist.cpa) {
-    issues.push(`${scene.id}: MB-280 CPA desteği yetersiz`);
+    issues.push(`${scene.id}: MB-283 CPA desteği yetersiz`);
   }
 
   // Karar 268 / 270 / 272 — çocuk yüzü etiketleri ("yanlış" yok)
@@ -189,6 +190,19 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
     if (announce) {
       issues.push(`${scene.id}: MB-274 ihlali — keşif anı çocuğun elinden alınıyor`);
     }
+  }
+
+  // Karar 279 — erken sahnelerde kavram adı duyurusu yok
+  if (scene.order <= 4) {
+    const earlyHit = EARLY_CONCEPT_ANNOUNCE.find((p) => blob.includes(p));
+    if (earlyHit) {
+      issues.push(`${scene.id}: MB-279 ihlali — merak öncesi kavram duyurusu ("${earlyHit}")`);
+    }
+  }
+
+  // Karar 277 — davranış önce: opening visual zorunlu, boş davranış yok
+  if (scene.behaviorBeforeSpeech && !scene.opening.visual) {
+    issues.push(`${scene.id}: MB-277 ihlali — davranışla soru için opening.visual gerekli`);
   }
 
   return {

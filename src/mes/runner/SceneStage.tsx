@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import type { CharacterId, SceneSpec } from '@/mes/types';
 import { getCharacter } from '@/world/characters';
@@ -7,6 +7,7 @@ import type { AppSettings } from '@/core/settings-store';
 import { scaleFont, touchTargetFor } from '@/core/settings-store';
 import { isConceptualCount, naturalLayout, pickGrouping } from '@/lab';
 import { TOUCH_TARGET_MIN_PX } from '@/benchmark';
+import { motionTokens } from '@/design-tokens';
 
 /** Karakter repliği — sahnenin duygusal taşıyıcısı. */
 export function SpeechBubble({
@@ -117,6 +118,25 @@ export function SceneStage({
   children?: React.ReactNode;
   footer?: React.ReactNode;
 }) {
+  const behaviorFirst = Boolean(scene.behaviorBeforeSpeech);
+  const waitTeaching = scene.waitIsTeaching !== false;
+  const delayMs = settings.reduceMotion
+    ? 0
+    : behaviorFirst
+      ? (motionTokens[scene.motionToken as keyof typeof motionTokens]?.durationMs ?? 400)
+      : 0;
+  const [speechReady, setSpeechReady] = useState(!behaviorFirst || delayMs === 0);
+
+  useEffect(() => {
+    if (!behaviorFirst || delayMs === 0) {
+      setSpeechReady(true);
+      return;
+    }
+    setSpeechReady(false);
+    const t = setTimeout(() => setSpeechReady(true), delayMs);
+    return () => clearTimeout(t);
+  }, [behaviorFirst, delayMs, scene.id]);
+
   return (
     <View style={styles.stage} accessibilityLabel={scene.accessibilityLabel}>
       <ScrollView
@@ -124,11 +144,16 @@ export function SceneStage({
         showsVerticalScrollIndicator={false}
       >
         <Text style={styles.openingVisual}>{scene.opening.visual}</Text>
-        <SpeechBubble
-          speaker={scene.opening.speaker}
-          line={scene.opening.line}
-          settings={settings}
-        />
+        {/* Karar 277: önce davranış; söz sonra. Karar 278: beklemek öğretim. */}
+        {speechReady && scene.opening.line ? (
+          <SpeechBubble
+            speaker={scene.opening.speaker}
+            line={scene.opening.line}
+            settings={settings}
+          />
+        ) : behaviorFirst && waitTeaching ? (
+          <Text style={styles.waitCue}>Fındık bakar… sen de bak.</Text>
+        ) : null}
         {children}
       </ScrollView>
       {footer ? <View style={styles.footer}>{footer}</View> : null}
@@ -140,6 +165,12 @@ const styles = StyleSheet.create({
   stage: { flex: 1 },
   stageContent: { padding: spacing.md, gap: spacing.md, paddingBottom: spacing.lg },
   openingVisual: { fontSize: 64, textAlign: 'center' },
+  waitCue: {
+    ...typography.caption,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    fontStyle: 'italic',
+  },
   speechRow: { flexDirection: 'row', gap: spacing.sm, alignItems: 'flex-start' },
   avatar: {
     width: 48,

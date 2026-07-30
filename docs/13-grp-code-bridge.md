@@ -19,6 +19,7 @@
 | Karar 268–270 | İlk karar güvenli · karşılaştırma önce · dünya feedback | `src/world/mavi-kitap-268-270.ts` · ChooseScene |
 | Karar 271–273 | Sessizlik · hata hissettirilir · Reflection Time | `src/world/mavi-kitap-271-273.ts` · `reflectionTimeMs` |
 | Karar 274–276 | Keşif çocuğa ait · dünya kutlar · süreç > sonuç | `src/world/mavi-kitap-274-276.ts` |
+| Karar 277–279 | Davranışla soru · beklemek öğretim · merak önce | `src/world/mavi-kitap-277-279.ts` · SceneStage |
 
 ## Sahne sırası (modül içi)
 

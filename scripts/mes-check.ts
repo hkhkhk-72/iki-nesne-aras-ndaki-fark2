@@ -29,6 +29,7 @@ import {
 import { KARAR_268, KARAR_269, KARAR_270 } from '@/world/mavi-kitap-268-270';
 import { KARAR_271, KARAR_272, KARAR_273, REFLECTION_TIME_METRIC } from '@/world/mavi-kitap-271-273';
 import { KARAR_274, KARAR_275, KARAR_276, PROCESS_AI_METRICS } from '@/world/mavi-kitap-274-276';
+import { KARAR_277, KARAR_278, KARAR_279 } from '@/world/mavi-kitap-277-279';
 import { PRIMARY_AI_METRICS } from '@/ai/decision-engine';
 import { storyTokens, eduTokens, motionTokens, aiTokens, touchTarget } from '@/design-tokens';
 import type { SceneBehavior } from '@/ai/observer';
@@ -223,8 +224,8 @@ for (const exp of MATH_EXPERIENCES) {
   }
 }
 
-// ── Mavi Kitap 268–276 ──
-console.log('\nMavi Kitap Karar 268–276');
+// ── Mavi Kitap 268–279 ──
+console.log('\nMavi Kitap Karar 268–279');
 const reflectionPrimary = PRIMARY_AI_METRICS[0] === REFLECTION_TIME_METRIC;
 const processOk = PROCESS_AI_METRICS.includes('reflection_time');
 console.log(
@@ -259,9 +260,24 @@ for (const exp of MATH_EXPERIENCES) {
   const k274 = discover?.discoveryBelongsToChild !== false;
   const k275 = celebrate?.worldCelebration !== false;
   const k276 = KARAR_276.title.includes('Süreç');
-  const ok = k268 && k269 && k270 && k271 && k272 && k273 && k274 && k275 && k276;
+  const k277 = firstChoose?.behaviorBeforeSpeech === true;
+  const k278 = firstChoose?.waitIsTeaching !== false;
+  const k279 = firstChoose?.curiosityBeforeConcept === true;
+  const ok =
+    k268 &&
+    k269 &&
+    k270 &&
+    k271 &&
+    k272 &&
+    k273 &&
+    k274 &&
+    k275 &&
+    k276 &&
+    k277 &&
+    k278 &&
+    k279;
   console.log(
-    `  ${exp.code}: ${KARAR_268.id}…${KARAR_276.id} → ${ok ? 'GEÇTİ' : 'BAŞARISIZ'}`,
+    `  ${exp.code}: ${KARAR_268.id}…${KARAR_279.id} → ${ok ? 'GEÇTİ' : 'BAŞARISIZ'}`,
   );
   if (!ok) {
     console.log('  Detay:', {
@@ -274,6 +290,9 @@ for (const exp of MATH_EXPERIENCES) {
       k274,
       k275,
       k276,
+      k277,
+      k278,
+      k279,
       first: firstChoose?.id,
     });
     failed = true;

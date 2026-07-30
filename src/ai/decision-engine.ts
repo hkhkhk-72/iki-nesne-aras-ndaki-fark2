@@ -262,7 +262,7 @@ export function decideIntervention(ctx: DecisionContext): InterventionDecision {
       return {
         kind: 'gaze',
         helpLevel: 1,
-        reason: 'Bekleme; sessizlik geri bildirimdir (Karar 271).',
+        reason: 'Bekleme öğretimdir (Karar 278); sessizlik geri bildirimdir (Karar 271).',
         bilge: {
           trigger: 'silence',
           silenceReason: 'child_is_thinking',
@@ -271,6 +271,7 @@ export function decideIntervention(ctx: DecisionContext): InterventionDecision {
         },
       };
     }
+    // Karar 278: gereksiz yönlendirme yok — eşik aşılmadan konuşma
     return fromHelpLevel(2, 'Uzun bekleme — sakin yönlendirme.', b);
   }
 

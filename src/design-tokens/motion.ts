@@ -107,7 +107,7 @@ export const LOOK_BACK_CHILD_SEQUENCE = [
   { id: 'look_child', target: 'child', durationMs: 1200 },
   { id: 'look_basket', target: 'basket', durationMs: 1200 },
   { id: 'look_child_2', target: 'child', durationMs: 1200 },
-  { id: 'smile', target: 'smile', durationMs: 1200 },
+  { id: 'small_smile', target: 'smile', durationMs: 1200 },
   { id: 'look_basket_2', target: 'basket', durationMs: 1200 },
 ] as const;
 

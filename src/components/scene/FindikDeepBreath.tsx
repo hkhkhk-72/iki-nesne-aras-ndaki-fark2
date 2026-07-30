@@ -37,7 +37,8 @@ export function FindikDeepBreath({
   const [active, setActive] = useState(false);
   const started = useRef(lastInteractionAt ?? Date.now());
   const story = storyTokens['story.thinking.deep'];
-  const { inhaleMs, exhaleMs, shoulderLift, chestScalePeak, bodyScalePeak } = DEEP_BREATH_SPEC;
+  const { inhaleMs, exhaleMs, returnToIdleMs, shoulderLift, chestScalePeak, bodyScalePeak } =
+    DEEP_BREATH_SPEC;
 
   useEffect(() => {
     started.current = lastInteractionAt ?? Date.now();
@@ -54,14 +55,16 @@ export function FindikDeepBreath({
         shoulder.value = 1;
         return;
       }
-      // Slow inhale → slow exhale
+      // Slow inhale → tiny chest/shoulder → slow exhale → return to idle
       chest.value = withSequence(
         withTiming(chestScalePeak, { duration: inhaleMs, easing: Easing.inOut(Easing.sin) }),
         withTiming(1, { duration: exhaleMs, easing: Easing.inOut(Easing.sin) }),
+        withTiming(1, { duration: returnToIdleMs }),
       );
       shoulder.value = withSequence(
         withTiming(1, { duration: inhaleMs, easing: Easing.inOut(Easing.sin) }),
         withTiming(0, { duration: exhaleMs, easing: Easing.inOut(Easing.sin) }),
+        withTiming(0, { duration: returnToIdleMs }),
       );
     }, idleMs);
 
@@ -79,6 +82,7 @@ export function FindikDeepBreath({
     inhaleMs,
     lastInteractionAt,
     reduceMotion,
+    returnToIdleMs,
     shoulder,
   ]);
 

@@ -1,8 +1,8 @@
 /**
  * Erişilebilirlik politikası — LS-011 prep.
  *
- * Silent Mode: tüm duygusal anlam ses olmadan anlaşılır kalır.
- * Animasyonlar birincil iletişim kanalıdır.
+ * Silent Mode: every emotional state remains understandable without sound.
+ * Animation = primary channel. Audio is optional. Meaning never depends on sound.
  */
 
 import type { AppSettings } from '@/core/settings-store';
@@ -13,11 +13,13 @@ import { motionTokens, type MotionTokenId } from '@/design-tokens/motion';
 export const SILENT_MODE_POLICY = {
   id: 'a11y.silent_keeps_meaning' as const,
   rule:
-    'Silent Mode: all emotional meaning remains understandable without audio. ' +
-    'Animations become the primary communication channel.',
+    'Silent Mode: every emotional state must remain understandable without sound. ' +
+    'Animation becomes the primary communication channel. Audio is optional. ' +
+    'Meaning is never dependent on sound.',
   soundOffKeepsAnimationMeaning: true as const,
-  /** Animasyon birincil kanal; ses destekleyicidir. */
   animationIsPrimaryChannel: true as const,
+  audioOptional: true as const,
+  meaningNeverDependsOnSound: true as const,
 };
 
 /**
@@ -61,6 +63,7 @@ export function animationMeaningPreservedWhenSilent(
   void settings;
   return (
     SILENT_MODE_POLICY.soundOffKeepsAnimationMeaning &&
-    SILENT_MODE_POLICY.animationIsPrimaryChannel
+    SILENT_MODE_POLICY.animationIsPrimaryChannel &&
+    SILENT_MODE_POLICY.meaningNeverDependsOnSound
   );
 }

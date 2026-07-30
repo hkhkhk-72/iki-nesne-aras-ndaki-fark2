@@ -1,107 +1,83 @@
-# LS-011 Preparation — Update Package (GRP-001)
+# LS-011 Preparation — Engine Update (GRP-001)
 
 | Alan | Değer |
 |------|--------|
 | Version | GRP-001 |
 | Sprint | LS-011 Preparation |
 | Status | Infrastructure Update |
-| Gameplay | **No** — mechanics not added |
+| Gameplay | **No** — no mechanics / UI redesign / scene flow |
 
-## 1. Story Token — `story.thinking.deep`
+## Purpose
 
-Activated after prolonged observation.
+Engine capabilities only. System ready for LS-011.
 
-- World becomes calmer
-- Wind slows
-- Leaves almost stop
-- Findik waits
-- Bilge stays silent
-- No hints
+## Registered tokens
 
-→ `src/design-tokens/story.ts`
+| Token | Exposed via |
+|-------|-------------|
+| `story.thinking.deep` | MBA-TOKEN-001 |
+| `motion.look_back_child` | MBA-TOKEN-001 · MBA-MOTION-001 |
+| `anim.deep_breath` | MBA-TOKEN-001 · MBA-CHAR-DNA-001 |
+| `FX_soft_bounce` | MBA-TOKEN-001 · MBA-MOTION-001 |
+| `ai.observe_compare_v2` | MBA-TOKEN-001 · MBA-QA-001 |
 
-## 2. Motion Token — `motion.look_back_child`
+Kod: `src/mba/`
 
-| | |
-|--|--|
-| Duration | 6 seconds |
-| Loop | seamless |
+## 1. Story — `story.thinking.deep`
 
-**Sequence:** Look child → Look basket → Look child → Smile → Look basket → Loop
+Long observation without interaction → world slows · wind softer · leaves almost stop · **FN-001** waits calmly · **BO-001** completely silent · no hints · no pressure → **psychological safety**.
 
-→ `LOOK_BACK_CHILD_SEQUENCE` · `LookBackChild`
+## 2. Motion — `motion.look_back_child` (6000 ms)
+
+Look child → Look basket → Look child → Small smile → Look basket → Repeat  
+Purpose: maintain emotional connection. Seamless loop (no visible jump).
 
 ## 3. Animation — `anim.deep_breath`
 
-| | |
-|--|--|
-| Trigger | 5 seconds without interaction |
-| Behavior | Slow inhale · slow exhale · tiny shoulder · very small chest |
-
-→ AN008 · `DEEP_BREATH_SPEC` · `FindikDeepBreath`
+Trigger: 5s idle. Slow inhale → tiny shoulder → tiny chest → slow exhale → return to idle.  
+Amplitude **extremely small**; never exaggerated.
 
 ## 4. FX — `FX_soft_bounce`
 
-| | |
-|--|--|
-| Trigger | Touch object |
-| Scale | 1.00 → 1.04 → 1.00 |
-| Duration | 200 ms |
-| Ease | easeOutQuad |
+Touch collectible · 1.00→1.04→1.00 · 200ms · easeOutQuad · tactile feedback.
 
-→ FX011 · `SoftBounce`
+## 5. AI — `ai.observe_compare_v2`
 
-## 5. Analytics — `ai.observe_compare_v2`
+Anonymous: firstViewedGroup · firstTouchedGroup · decisionTime · wrongTouchCount · idleTime · comparisonStrategy  
 
-Anonymous capture:
-
-- `firstViewedGroup`
-- `firstTouchedGroup`
-- `decisionTime`
-- `wrongTouchCount` (telemetry name; child-facing “wrong” label forbidden — MB-269)
-- `idleTime`
-- `comparisonStrategy`
-
-→ `registerObserveCompareV2`
+Rules: no child identity · no profile · no grading · no adaptive pressure · **observation only**.
 
 ## 6. Accessibility — Silent Mode
 
-All emotional meaning remains understandable without audio.  
-Animations become the primary communication channel.
+Animation = primary channel. Audio optional. Meaning never depends on sound.
 
-→ `SILENT_MODE_POLICY.animationIsPrimaryChannel`
+## 7. QA (MBA-QA-001)
 
-## 7. QA Checklist
-
-- [ ] World is calm
+- [ ] World feels calm
 - [ ] Child never feels rushed
-- [ ] Story Token transitions are smooth
-- [ ] Character eye contact feels natural
-- [ ] Motion loops are seamless
-- [ ] AI remains invisible
+- [ ] Story Token transitions are invisible
+- [ ] Eye contact feels natural
+- [ ] Motion loops contain no visible jump
+- [ ] AI never interrupts
 - [ ] Accessibility preserved
-
-Kapı: `src/qa/ls011-prep-qa.ts`
 
 ## 8. Performance
 
-| Contract | Value |
-|----------|--------|
-| Max FPS | 60 |
-| Dropped frames | none (contract) |
-| Idle animations | GPU-friendly (transform/opacity) |
-| Memory | cancel on unmount |
+60 FPS · GPU-friendly idle · **zero allocations during idle loop** · no dropped frames.
 
-→ `src/design-tokens/performance.ts` · `LS011_PERF`
+→ `LS011_PERF.zeroAllocationsDuringIdleLoop`
 
-## Components (infra only)
+## 9. Architecture
 
 ```
-SoftBounce.tsx · FindikDeepBreath.tsx · LookBackChild.tsx
+src/mba/
+  token-001.ts      MBA-TOKEN-001
+  char-dna-001.ts   MBA-CHAR-DNA-001
+  motion-001.ts     MBA-MOTION-001
+  qa-001.ts         MBA-QA-001
+  index.ts
 ```
 
-Not wired into MB-MAT scenes yet.
+## 10. Gameplay
 
-## Ready for LS-011
-
-Infrastructure complete. Gameplay binding comes next.
+None. Infrastructure only. Ready for LS-011.

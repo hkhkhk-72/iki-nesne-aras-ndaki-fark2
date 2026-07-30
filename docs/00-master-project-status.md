@@ -104,7 +104,7 @@ Kod köprüsü: `src/design-tokens/`
 - Başarı = hikâye; yanlış = öğrenme (ceza yok)  
 - MB-LAB-001 v1.2 + Mavi Kitap 268–287 — `docs/16-…` · `docs/09-…` · `src/lab/` · `src/world/mavi-kitap-*.ts` · `src/mes/concept-transfer.ts`
 - MBA-BENCHMARK-001 v1.1: küresel UX / audio / motivasyon / güvenlik / hikâye eşiği — `docs/17-…` · `src/benchmark/` · `src/qa/benchmark-qa.ts`
-- LS-011 Preparation (GRP-001): `story.thinking.deep` · `motion.look_back_child` · `anim.deep_breath` · `FX_soft_bounce` · `ai.observe_compare_v2` — `docs/18-…` · gameplay yok
+- LS-011 Preparation (GRP-001): engine infra · MBA-TOKEN/CHAR-DNA/MOTION/QA-001 · `docs/18-…` · `src/mba/` — gameplay yok
 
 ---
 

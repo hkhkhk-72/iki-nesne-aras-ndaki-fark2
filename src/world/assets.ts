@@ -80,19 +80,27 @@ export const FX_SOFT_BOUNCE_SPEC = {
   durationMs: 200,
   /** Ürün: easeOutQuad */
   easing: 'easeOutQuad' as const,
-  trigger: 'touch_object' as const,
+  /** Touch collectible object — tactile feedback. */
+  trigger: 'touch_collectible_object' as const,
+  purpose: 'Provide tactile feedback.' as const,
 } as const;
 
 /** Idle derin nefes — 5 sn hareketsizlik sonrası. */
 export const DEEP_BREATH_IDLE_AFTER_MS = 5000;
 
-/** anim.deep_breath davranış sözleşmesi. */
+/**
+ * anim.deep_breath — Slow inhale → tiny shoulder → tiny chest → slow exhale → idle.
+ * Amplitude extremely small; must never feel exaggerated.
+ */
 export const DEEP_BREATH_SPEC = {
   idleAfterMs: DEEP_BREATH_IDLE_AFTER_MS,
   inhaleMs: 1100,
   exhaleMs: 1100,
-  /** Çok küçük omuz / göğüs hareketi (GPU-dostu scale). */
-  shoulderLift: 2,
-  chestScalePeak: 1.035,
-  bodyScalePeak: 1.02,
+  returnToIdleMs: 200,
+  /** Çok küçük omuz / göğüs (GPU-dostu). */
+  shoulderLift: 1.5,
+  chestScalePeak: 1.025,
+  bodyScalePeak: 1.015,
+  amplitude: 'extremely_small' as const,
+  neverExaggerated: true as const,
 } as const;

@@ -1,7 +1,7 @@
 /**
  * LS-006 / LS-011 / AI analytics — puan üretmez.
  * Olaylar ExperienceObserver üzerinden kaydedilir.
- * observe_compare_v2 verileri anonim tutulur.
+ * observe_compare_v2: observation only — no identity / profile / grading / pressure.
  */
 
 import type { ExperienceObserver } from '@/ai/observer';
@@ -57,25 +57,29 @@ export type ComparisonStrategy =
   | 'hesitate_then_choose'
   | 'unknown';
 
+/** ai.observe_compare_v2 — observation-only politika. */
+export const OBSERVE_COMPARE_V2_POLICY = {
+  noChildIdentity: true as const,
+  noProfileCreation: true as const,
+  noGrading: true as const,
+  noAdaptivePressure: true as const,
+  observationOnly: true as const,
+} as const;
+
 /**
  * ai.observe_compare_v2 — karşılaştırma gözlemi (LS-011 prep).
  * Anonim: çocuk kimliği / PII yok; yalnızca davranış alanları.
  */
 export interface ObserveCompareV2Payload {
-  /** firstViewedGroup — ilk bakılan grup. */
   firstViewedGroup: string | null;
-  /** firstTouchedGroup — ilk dokunulan grup. */
   firstTouchedGroup: string | null;
-  /** decisionTime — karar süresi (ms). */
   decisionTime: number | null;
   /**
    * wrongTouchCount — ürün telemetri adı.
    * Çocuk yüzünde "yanlış" yok; keşif / hizasız dokunuş sayısı.
    */
   wrongTouchCount: number;
-  /** idleTime — bekleme süresi (ms). */
   idleTime: number | null;
-  /** comparisonStrategy — karşılaştırma stratejisi. */
   comparisonStrategy: ComparisonStrategy;
 }
 

@@ -1,7 +1,6 @@
 /**
  * LS-011 prep — performans sözleşmesi.
- * Idle animasyonlar GPU-dostu ve bellek güvenli olmalı.
- * Yeni gameplay eklemez.
+ * Idle animasyonlar GPU-dostu; idle loop sırasında sıfır yeni allocation.
  */
 
 export const LS011_PERF = {
@@ -13,6 +12,11 @@ export const LS011_PERF = {
   idleGpuFriendly: true as const,
   /** Bellek: loop cancel + unmount cleanup zorunlu. */
   memorySafe: true as const,
+  /**
+   * Idle loop sırasında yeni heap allocation yok.
+   * withRepeat/withSequence bir kez kurulur; tick’te alloc yok.
+   */
+  zeroAllocationsDuringIdleLoop: true as const,
   /** Soft bounce / breath — düşük maliyetli transform. */
   preferredProps: ['transform', 'opacity'] as const,
 } as const;
@@ -25,6 +29,7 @@ export function assertLs011PerfContract(): boolean {
     LS011_PERF.targetFps === 60 &&
     LS011_PERF.noDroppedFrames &&
     LS011_PERF.idleGpuFriendly &&
-    LS011_PERF.memorySafe
+    LS011_PERF.memorySafe &&
+    LS011_PERF.zeroAllocationsDuringIdleLoop
   );
 }

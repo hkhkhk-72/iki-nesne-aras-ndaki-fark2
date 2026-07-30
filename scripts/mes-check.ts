@@ -40,6 +40,16 @@ import type { MicroExperience, CharacterId } from '@/mes/types';
 import { serializeObserveCompareV2 } from '@/ai/analytics';
 import { SILENT_MODE_POLICY } from '@/core/accessibility';
 import { FX_SOFT_BOUNCE_SPEC, DEEP_BREATH_IDLE_AFTER_MS } from '@/world/assets';
+import {
+  MBA_TOKEN_001,
+  MBA_CHAR_DNA_001,
+  MBA_MOTION_001,
+  MBA_QA_001,
+  assertMbaToken001Registry,
+  assertMbaCharDna001Registry,
+  assertMbaMotion001Registry,
+  runMbaQa001Gate,
+} from '@/mba';
 
 function collectLines(exp: MicroExperience): { line: string; speaker: CharacterId }[] {
   const lines: { line: string; speaker: CharacterId }[] = [];
@@ -370,7 +380,7 @@ const ls011TokensOk =
   FX_SOFT_BOUNCE_SPEC.durationMs === 200 &&
   FX_SOFT_BOUNCE_SPEC.easing === 'easeOutQuad' &&
   DEEP_BREATH_IDLE_AFTER_MS === 5000 &&
-  SILENT_MODE_POLICY.animationIsPrimaryChannel &&
+  SILENT_MODE_POLICY.meaningNeverDependsOnSound &&
   serializeObserveCompareV2({
     firstViewedGroup: 'a',
     firstTouchedGroup: 'b',
@@ -381,6 +391,26 @@ const ls011TokensOk =
   }).startsWith('firstViewedGroup=');
 console.log(`  Token / FX / a11y sözleşmesi: ${ls011TokensOk ? 'GEÇTİ' : 'BAŞARISIZ'}`);
 if (!ls011TokensOk) failed = true;
+
+const mbaGate = runMbaQa001Gate();
+const mbaRegs =
+  assertMbaToken001Registry() &&
+  assertMbaCharDna001Registry() &&
+  assertMbaMotion001Registry() &&
+  mbaGate.ok;
+console.log(
+  `  ${MBA_TOKEN_001} / ${MBA_CHAR_DNA_001} / ${MBA_MOTION_001} / ${MBA_QA_001}: ${mbaRegs ? 'GEÇTİ' : 'BAŞARISIZ'}`,
+);
+if (!mbaRegs) {
+  console.log('  MBA detay:', {
+    token: assertMbaToken001Registry(),
+    charDna: assertMbaCharDna001Registry(),
+    motion: assertMbaMotion001Registry(),
+    qa: mbaGate.ok,
+    issues: mbaGate.issues,
+  });
+  failed = true;
+}
 
 console.log(`\nSonuç: ${failed ? 'BAŞARISIZ' : 'TÜM KONTROLLER GEÇTİ'}`);
 process.exit(failed ? 1 : 0);

@@ -1,65 +1,79 @@
-# MBA-LIFE-001 Preparation — Character Life System
+# MBA-LIFE-001 Foundation — Character Life System
 
 | Alan | Değer |
 |------|--------|
 | Version | GRP-001 |
-| Sprint | MBA-LIFE-001 Preparation |
-| Status | Infrastructure Preparation |
-| Gameplay | **No** |
+| Sprint | MBA-LIFE-001 Foundation |
+| Status | Infrastructure Integrated |
+| Gameplay / UI / Education | **No changes** |
 
 ## Purpose
 
-Characters must feel alive even while doing nothing.  
-Life is created through **subtle motion**, not constant animation.
+Characters must never appear static.  
+Life emerges through tiny, almost invisible behaviors — organic, not scripted.
 
-## Token group — `life.*`
+## Token namespace `life.*`
 
-Reserved namespace. Groups:
+Subgroups: eye · face · breath · tail · ear · idle · random · motion · focus · emotion
 
-- `life.eye.*`
-- `life.face.*`
-- `life.breath.*`
-- `life.idle.*`
-- `life.random.*`
-- `life.motion.*`
+### Foundation tokens
 
-→ `src/design-tokens/life.ts`
+| Token | Spec |
+|-------|------|
+| `life.eye.saccade` | 2–5s interval |
+| `life.eye.contact` | max 1.2s |
+| `life.face.micro_smile` | random subtle |
+| `life.face.thinking` | tiny eyebrow |
+| `life.breath.idle` | 5s cycle |
+| `life.tail.soft` | independent float |
+| `life.ear.listen` | random micro |
+| `life.focus.child` | brief check |
+| `life.focus.object` | return to object |
 
-## Layered idle engine
+## 9 independent layers
 
-Independent layers (simultaneous):
+Breath · Blink · Eye movement · Facial expression · Head · Ear · Tail · Basket · Leaves  
 
-Breath · Eyes · Blink · Face · Tail · Ears · Basket · Leaves
+Never block each other. Max simultaneous = 9.
 
-→ `src/life/layers.ts`
+## Random scheduler
 
-## Random engine
+Weighted · cooldown · previous memory · no immediate repeat · AI **weight** override only · deterministic seed
 
-Weighted scheduler:
+Idle max identical sequence = **1**
 
-- No immediate repetition
-- Cooldown support
-- Probability weights
-- Memory of previous animation
-- AI overridable
+## Story → Life
 
-→ `src/life/random-scheduler.ts`
+| Story | Life bias |
+|-------|-----------|
+| `story.safe` | slow blink · deep breath · soft smile |
+| `story.curious` | faster eyes · head tilt · focus object |
+| `story.thinking.deep` | reduced motion · slow breath · observation |
+
+## AI
+
+Modifies **probabilities only**. Never directly triggers animation.
+
+## Forbidden
+
+Robotic loops · sync blink · constant smile · exaggerated squash · sudden moves · horror timing · stare >2s · hyperactive idle
+
+## RN modules
+
+```
+src/life/engine/
+  CharacterLifeEngine.ts
+  LifeScheduler.ts
+  controllers.ts          (Blink/Eye/Breath/Tail/Ear/Focus/…)
+  EmotionBridge.ts
+  StoryTokenBridge.ts
+  AIWeightController.ts
+```
 
 ## Performance
 
-60 FPS · battery friendly · memory safe · zero idle allocations · simultaneous layers
+60 FPS · pooling · zero idle alloc · battery/memory safe
 
-→ `src/life/performance.ts` · `LIFE_PERF`
+## Ready
 
-## Architecture
-
-| Kimlik | Yol |
-|--------|-----|
-| MBA-LIFE-001 | `src/mba/life-001.ts` |
-| life engine | `src/life/` |
-| QA | `src/qa/life-qa.ts` |
-
-## Gameplay
-
-None. Infrastructure only.  
-**Ready for MBA-LIFE-001 implementation.**
+**Ready for MBA-LIFE-001 implementation** (visual binding next — not this package).

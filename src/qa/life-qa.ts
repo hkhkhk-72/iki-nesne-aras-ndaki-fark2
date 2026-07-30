@@ -1,6 +1,6 @@
 /**
- * MBA-LIFE-001 Preparation QA.
- * No gameplay — infrastructure contracts only.
+ * MBA-LIFE-001 Foundation QA — Infrastructure Integrated.
+ * No gameplay / educational / UI changes.
  */
 
 import {
@@ -8,11 +8,17 @@ import {
   LIFE_TOKEN_GROUPS,
   lifeTokens,
   LIFE_TOKEN_NAMESPACE,
+  IDLE_VARIATION_RULES,
 } from '@/design-tokens/life';
 import { assertMbaLife001Registry, MBA_LIFE_001, MBA_LIFE_001_PURPOSE } from '@/mba/life-001';
-import { assertLayeredIdleSupport } from '@/life/layers';
-import { assertRandomSchedulerContract } from '@/life/random-scheduler';
+import { assertLayeredIdleSupport, assertLayersNonBlocking } from '@/life/layers';
+import { assertRandomSchedulerContract, createSeededRandom } from '@/life/random-scheduler';
 import { assertLifePerfContract, LIFE_PERF } from '@/life/performance';
+import { assertLifeForbiddenRules, LIFE_EYE_CONTACT_MAX_MS } from '@/life/forbidden';
+import { assertEmotionBridge } from '@/life/engine/EmotionBridge';
+import { assertAiWeightController } from '@/life/engine/AIWeightController';
+import { createCharacterLifeEngine } from '@/life/engine/CharacterLifeEngine';
+import { SILENT_MODE_POLICY } from '@/core/accessibility';
 
 export interface LifePrepQaResult {
   ok: boolean;
@@ -20,54 +26,84 @@ export interface LifePrepQaResult {
   issues: string[];
 }
 
-/**
- * □ life.* namespace reserved
- * □ 8 independent layers simultaneous
- * □ weighted random (no immediate repeat, cooldown, AI override)
- * □ 60 FPS / battery / memory safe
- * □ no gameplay coupling
- */
 export function runMbaLife001PrepQa(): LifePrepQaResult {
   const issues: string[] = [];
 
-  const namespaceOk = LIFE_TOKEN_NAMESPACE === 'life.' && LIFE_TOKEN_GROUPS.length === 6;
-  if (!namespaceOk) issues.push('life.* token group rezervasyonu eksik');
+  const namespaceOk = LIFE_TOKEN_NAMESPACE === 'life.' && LIFE_TOKEN_GROUPS.length === 10;
+  if (!namespaceOk) issues.push('life.* 10 subgroup rezervasyonu eksik');
 
-  const examplesOk =
-    'life.eye.blink' in lifeTokens &&
-    'life.face.micro_smile' in lifeTokens &&
-    'life.breath.calm' in lifeTokens &&
-    'life.idle.presence' in lifeTokens &&
-    'life.random.scheduler' in lifeTokens &&
-    'life.motion.subtle' in lifeTokens;
-  if (!examplesOk) issues.push('life.* örnek tokenlar eksik');
+  const tokensOk =
+    'life.eye.saccade' in lifeTokens &&
+    'life.eye.contact' in lifeTokens &&
+    lifeTokens['life.eye.contact'].timing?.maxDurationMs === 1200 &&
+    'life.face.thinking' in lifeTokens &&
+    'life.breath.idle' in lifeTokens &&
+    lifeTokens['life.breath.idle'].timing?.cycleMs === 5000 &&
+    'life.tail.soft' in lifeTokens &&
+    'life.ear.listen' in lifeTokens &&
+    'life.focus.child' in lifeTokens &&
+    'life.focus.object' in lifeTokens;
+  if (!tokensOk) issues.push('Foundation life tokens eksik');
 
-  const layersOk = assertLayeredIdleSupport() && LIFE_LAYERS.length === 8;
-  if (!layersOk) issues.push('layered idle (8 katman) eksik');
+  const layersOk =
+    assertLayeredIdleSupport() &&
+    assertLayersNonBlocking() &&
+    LIFE_LAYERS.length === 9;
+  if (!layersOk) issues.push('9 bağımsız katman / non-blocking eksik');
 
   const randomOk = assertRandomSchedulerContract();
-  if (!randomOk) issues.push('weighted random scheduler sözleşmesi başarısız');
+  const seedA = createSeededRandom(99)();
+  const seedB = createSeededRandom(99)();
+  const seedOk = seedA === seedB;
+  if (!randomOk || !seedOk) issues.push('weighted random / deterministic seed başarısız');
+
+  const idleVarOk = IDLE_VARIATION_RULES.maxIdenticalSequence === 1;
+  if (!idleVarOk) issues.push('idle variation maxIdenticalSequence≠1');
+
+  const emotionOk = assertEmotionBridge();
+  if (!emotionOk) issues.push('Story↔Life emotion bridge eksik');
+
+  const aiOk = assertAiWeightController();
+  if (!aiOk) issues.push('AI weight controller (probabilities only) eksik');
+
+  const forbiddenOk =
+    assertLifeForbiddenRules() && LIFE_EYE_CONTACT_MAX_MS === 1200;
+  if (!forbiddenOk) issues.push('forbidden rules eksik');
+
+  const a11yOk =
+    SILENT_MODE_POLICY.animationIsPrimaryChannel &&
+    SILENT_MODE_POLICY.meaningNeverDependsOnSound;
+  if (!a11yOk) issues.push('a11y movement-primary eksik');
 
   const perfOk =
     assertLifePerfContract() &&
-    LIFE_PERF.batteryFriendly &&
-    LIFE_PERF.zeroAllocationsDuringIdleLoop;
-  if (!perfOk) issues.push('LIFE_PERF 60fps / battery / memory eksik');
+    LIFE_PERF.maxSimultaneousAnimations === 9 &&
+    LIFE_PERF.animationPoolingEnabled;
+  if (!perfOk) issues.push('LIFE_PERF foundation eksik');
+
+  const engineOk = createCharacterLifeEngine().assertInfrastructure();
+  if (!engineOk) issues.push('CharacterLifeEngine infrastructure eksik');
 
   const registryOk = assertMbaLife001Registry();
   if (!registryOk) issues.push(`${MBA_LIFE_001} registry başarısız`);
 
-  const purposeOk = MBA_LIFE_001_PURPOSE.includes('subtle motion');
-  if (!purposeOk) issues.push('MBA-LIFE-001 purpose eksik');
+  const purposeOk = MBA_LIFE_001_PURPOSE.includes('organic');
+  if (!purposeOk) issues.push('purpose organic eksik');
 
   const checklist = {
-    lifeNamespaceReserved: namespaceOk,
-    lifeTokenExamples: examplesOk,
-    layeredIdleSimultaneous: layersOk,
-    weightedRandomScheduler: randomOk,
-    performance60fpsBatterySafe: perfOk,
+    lifeNamespace10Groups: namespaceOk,
+    foundationLifeTokens: tokensOk,
+    nineLayersNonBlocking: layersOk,
+    weightedRandomWithSeed: randomOk && seedOk,
+    idleNeverIdentical: idleVarOk,
+    storyEmotionBridge: emotionOk,
+    aiProbabilitiesOnly: aiOk,
+    forbiddenRules: forbiddenOk,
+    accessibilityMovementPrimary: a11yOk,
+    performance9LayersPooling: perfOk,
+    characterLifeEngine: engineOk,
     mbaLife001Registered: registryOk,
-    subtleNotConstant: purposeOk,
+    organicNotScripted: purposeOk,
     infrastructureOnly: true,
   };
 

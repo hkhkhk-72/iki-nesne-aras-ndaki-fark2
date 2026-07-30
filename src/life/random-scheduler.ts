@@ -1,94 +1,102 @@
 /**
- * MBA-LIFE-001 — Weighted random scheduler (prep).
+ * MBA-LIFE-001 — Weighted random scheduler (Foundation).
  *
- * Requirements:
- * - No immediate repetition
- * - Cooldown support
- * - Probability weights
- * - Memory of previous animation
- * - AI overridable
+ * weighted · cooldown · previous memory · no immediate repetition ·
+ * AI weight override (probabilities only) · deterministic seed (tests)
  */
+
+import { IDLE_VARIATION_RULES } from '@/design-tokens/life';
 
 export interface WeightedLifeClip {
   id: string;
   weight: number;
-  /** Cooldown after play (ms). */
   cooldownMs: number;
 }
 
 export interface RandomSchedulerState {
-  /** Previous clip id (memory). */
   previousId: string | null;
-  /** clipId → earliest next allowed time (ms epoch or relative). */
   cooldowns: Record<string, number>;
-  /** AI force next clip; clears after use. */
-  aiOverrideId: string | null;
+  /**
+   * AI never directly triggers animation — only multiplies weights.
+   * clipId → multiplier (default 1).
+   */
+  aiWeightMultipliers: Record<string, number>;
 }
 
 export interface RandomSchedulerOptions {
-  /** Now in ms (injectable for tests). */
   now?: number;
+  /** Deterministic seed for testing. */
+  seed?: number;
+}
+
+/** Mulberry32 — deterministic [0,1) for tests. */
+export function createSeededRandom(seed: number): () => number {
+  let s = seed >>> 0;
+  return () => {
+    s = (s + 0x6d2b79f5) >>> 0;
+    let t = s;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
 }
 
 export function createRandomSchedulerState(): RandomSchedulerState {
   return {
     previousId: null,
     cooldowns: {},
-    aiOverrideId: null,
+    aiWeightMultipliers: {},
   };
 }
 
-/** AI may override next selection. */
-export function setAiOverride(
+/** AI modifies probabilities only — never forces a clip id. */
+export function setAiWeightMultipliers(
   state: RandomSchedulerState,
-  clipId: string | null,
+  multipliers: Record<string, number>,
 ): RandomSchedulerState {
-  return { ...state, aiOverrideId: clipId };
+  return {
+    ...state,
+    aiWeightMultipliers: { ...state.aiWeightMultipliers, ...multipliers },
+  };
 }
 
-function isCoolingDown(
-  state: RandomSchedulerState,
-  clipId: string,
-  now: number,
-): boolean {
+function effectiveWeight(clip: WeightedLifeClip, state: RandomSchedulerState): number {
+  const m = state.aiWeightMultipliers[clip.id] ?? 1;
+  return Math.max(0, clip.weight * m);
+}
+
+function isCoolingDown(state: RandomSchedulerState, clipId: string, now: number): boolean {
   const until = state.cooldowns[clipId];
   return typeof until === 'number' && until > now;
 }
 
-/**
- * Pick next clip: AI override → weighted among eligible (not previous, not cooling).
- * Returns null if nothing eligible.
- */
 export function pickWeightedLifeClip(
   clips: readonly WeightedLifeClip[],
   state: RandomSchedulerState,
   opts: RandomSchedulerOptions = {},
-  random: () => number = Math.random,
+  random?: () => number,
 ): { clip: WeightedLifeClip; nextState: RandomSchedulerState } | null {
   const now = opts.now ?? Date.now();
+  const rnd =
+    random ?? (opts.seed !== undefined ? createSeededRandom(opts.seed) : Math.random);
 
-  if (state.aiOverrideId) {
-    const forced = clips.find((c) => c.id === state.aiOverrideId);
-    if (forced) {
-      return {
-        clip: forced,
-        nextState: rememberPlay(state, forced, now),
-      };
-    }
-  }
-
+  // Max identical sequence = 1 → never pick previous immediately
   const eligible = clips.filter(
-    (c) => c.id !== state.previousId && !isCoolingDown(state, c.id, now) && c.weight > 0,
+    (c) =>
+      c.id !== state.previousId &&
+      !isCoolingDown(state, c.id, now) &&
+      effectiveWeight(c, state) > 0,
   );
 
   if (eligible.length === 0) {
-    // Soft fallback: allow cooled clips except immediate previous
-    const soft = clips.filter((c) => c.id !== state.previousId && c.weight > 0);
+    const soft = clips.filter(
+      (c) => c.id !== state.previousId && effectiveWeight(c, state) > 0,
+    );
     if (soft.length === 0) return null;
-    return pickFromWeighted(soft, state, now, random);
+    return pickFromWeighted(soft, state, now, rnd);
   }
 
-  return pickFromWeighted(eligible, state, now, random);
+  return pickFromWeighted(eligible, state, now, rnd);
 }
 
 function pickFromWeighted(
@@ -97,10 +105,10 @@ function pickFromWeighted(
   now: number,
   random: () => number,
 ): { clip: WeightedLifeClip; nextState: RandomSchedulerState } {
-  const total = eligible.reduce((s, c) => s + c.weight, 0);
+  const total = eligible.reduce((s, c) => s + effectiveWeight(c, state), 0);
   let r = random() * total;
   for (const clip of eligible) {
-    r -= clip.weight;
+    r -= effectiveWeight(clip, state);
     if (r <= 0) {
       return { clip, nextState: rememberPlay(state, clip, now) };
     }
@@ -116,7 +124,7 @@ function rememberPlay(
 ): RandomSchedulerState {
   return {
     previousId: clip.id,
-    aiOverrideId: null,
+    aiWeightMultipliers: state.aiWeightMultipliers,
     cooldowns: {
       ...state.cooldowns,
       [clip.id]: now + clip.cooldownMs,
@@ -124,22 +132,33 @@ function rememberPlay(
   };
 }
 
-/** Contract checks for prep QA. */
 export function assertRandomSchedulerContract(): boolean {
+  if (IDLE_VARIATION_RULES.maxIdenticalSequence !== 1) return false;
+
   const clips: WeightedLifeClip[] = [
     { id: 'a', weight: 1, cooldownMs: 1000 },
     { id: 'b', weight: 1, cooldownMs: 1000 },
     { id: 'c', weight: 1, cooldownMs: 1000 },
   ];
-  let state = createRandomSchedulerState();
-  const first = pickWeightedLifeClip(clips, state, { now: 0 }, () => 0);
-  if (!first) return false;
-  state = first.nextState;
-  // No immediate repetition
-  const second = pickWeightedLifeClip(clips, state, { now: 0 }, () => 0);
-  if (!second || second.clip.id === first.clip.id) return false;
-  // AI override
-  state = setAiOverride(second.nextState, 'c');
-  const forced = pickWeightedLifeClip(clips, state, { now: 5000 }, () => 0.99);
-  return forced?.clip.id === 'c';
+
+  // Deterministic seed: same seed → same first pick
+  const s1 = pickWeightedLifeClip(clips, createRandomSchedulerState(), { now: 0, seed: 42 });
+  const s2 = pickWeightedLifeClip(clips, createRandomSchedulerState(), { now: 0, seed: 42 });
+  if (!s1 || !s2 || s1.clip.id !== s2.clip.id) return false;
+
+  let state = s1.nextState;
+  const second = pickWeightedLifeClip(clips, state, { now: 0, seed: 42 });
+  if (!second || second.clip.id === s1.clip.id) return false;
+
+  // AI weight boost (probabilities only — never forces a clip id)
+  // previous = second.clip; boost a different eligible id
+  const boostTarget = clips.find((c) => c.id !== second.clip.id)?.id ?? 'a';
+  state = setAiWeightMultipliers(second.nextState, {
+    [boostTarget]: 1000,
+    a: boostTarget === 'a' ? 1000 : 0.01,
+    b: boostTarget === 'b' ? 1000 : 0.01,
+    c: boostTarget === 'c' ? 1000 : 0.01,
+  });
+  const boosted = pickWeightedLifeClip(clips, state, { now: 10_000, seed: 7 });
+  return boosted?.clip.id === boostTarget;
 }

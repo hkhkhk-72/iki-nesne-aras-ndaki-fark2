@@ -105,7 +105,7 @@ Kod köprüsü: `src/design-tokens/`
 - MB-LAB-001 v1.2 + Mavi Kitap 268–287 — `docs/16-…` · `docs/09-…` · `src/lab/` · `src/world/mavi-kitap-*.ts` · `src/mes/concept-transfer.ts`
 - MBA-BENCHMARK-001 v1.1: küresel UX / audio / motivasyon / güvenlik / hikâye eşiği — `docs/17-…` · `src/benchmark/` · `src/qa/benchmark-qa.ts`
 - LS-011 Preparation (GRP-001): engine infra · MBA-TOKEN/CHAR-DNA/MOTION/QA-001 · `docs/18-…` · `src/mba/` — gameplay yok
-- MBA-LIFE-001 Preparation: `life.*` tokens · layered idle · weighted random · `docs/19-…` · `src/life/` — gameplay yok
+- MBA-LIFE-001 Foundation: `life.*` · 9 layers · CharacterLifeEngine · Story/AI bridges · `docs/19-…` · `src/life/engine/` — gameplay yok
 
 ---
 

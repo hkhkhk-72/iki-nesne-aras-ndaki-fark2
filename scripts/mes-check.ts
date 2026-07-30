@@ -419,8 +419,8 @@ if (!mbaRegs) {
   failed = true;
 }
 
-// ── MBA-LIFE-001 Preparation (altyapı — gameplay yok) ──
-console.log(`\n${MBA_LIFE_001} Preparation (GRP-001)`);
+// ── MBA-LIFE-001 Foundation (altyapı — gameplay yok) ──
+console.log(`\n${MBA_LIFE_001} Foundation (GRP-001)`);
 const lifeQa = runMbaLife001PrepQa();
 console.log(`  Character Life QA: ${lifeQa.ok ? 'GEÇTİ' : 'BAŞARISIZ'}`);
 if (!lifeQa.ok) {
@@ -432,10 +432,10 @@ const lifeEngineOk =
   assertLayeredIdleSupport() &&
   assertRandomSchedulerContract() &&
   assertLifePerfContract() &&
-  LIFE_LAYERS.length === 8 &&
-  LIFE_TOKEN_GROUPS.length === 6;
+  LIFE_LAYERS.length === 9 &&
+  LIFE_TOKEN_GROUPS.length === 10;
 console.log(
-  `  life.* / layered idle / random / perf: ${lifeEngineOk ? 'GEÇTİ' : 'BAŞARISIZ'}`,
+  `  life.* / 9 layers / random+seed / perf: ${lifeEngineOk ? 'GEÇTİ' : 'BAŞARISIZ'}`,
 );
 if (!lifeEngineOk) failed = true;
 

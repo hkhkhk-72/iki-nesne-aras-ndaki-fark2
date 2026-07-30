@@ -36,8 +36,10 @@ export {
 export {
   lifeTokens,
   LIFE_LAYERS,
+  LIFE_LAYER_INDEX,
   LIFE_TOKEN_GROUPS,
   LIFE_TOKEN_NAMESPACE,
+  IDLE_VARIATION_RULES,
   isLifeTokenId,
   lifeTokensInGroup,
   type LifeToken,

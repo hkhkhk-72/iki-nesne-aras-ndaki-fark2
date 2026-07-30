@@ -88,7 +88,7 @@ export const motionTokens: Record<MotionTokenId, MotionToken> = {
     easing: 'linear',
     reduceMotionFallback: 'none',
   },
-  /** LS-011 prep — bakış: çocuk → palamutlar; 6 sn loop. */
+  /** LS-011 prep — bakış döngüsü: çocuk → sepet → çocuk → gülümseme → sepet. */
   'motion.look_back_child': {
     id: 'motion.look_back_child',
     durationMs: 6000,
@@ -98,3 +98,22 @@ export const motionTokens: Record<MotionTokenId, MotionToken> = {
     loopMs: 6000,
   },
 };
+
+/**
+ * motion.look_back_child — 6 sn loop adımları (ürün).
+ * Look child → Look basket → Look child → Smile → Look basket → Loop
+ */
+export const LOOK_BACK_CHILD_SEQUENCE = [
+  { id: 'look_child', target: 'child', durationMs: 1200 },
+  { id: 'look_basket', target: 'basket', durationMs: 1200 },
+  { id: 'look_child_2', target: 'child', durationMs: 1200 },
+  { id: 'smile', target: 'smile', durationMs: 1200 },
+  { id: 'look_basket_2', target: 'basket', durationMs: 1200 },
+] as const;
+
+export type LookBackStep = (typeof LOOK_BACK_CHILD_SEQUENCE)[number];
+
+export const LOOK_BACK_CHILD_TOTAL_MS = LOOK_BACK_CHILD_SEQUENCE.reduce(
+  (sum, s) => sum + s.durationMs,
+  0,
+);

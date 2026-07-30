@@ -4,86 +4,104 @@
 |------|--------|
 | Version | GRP-001 |
 | Sprint | LS-011 Preparation |
-| Status | INFRASTRUCTURE ONLY |
-| Gameplay | Yok — yalnızca sistem altyapısı |
+| Status | Infrastructure Update |
+| Gameplay | **No** — mechanics not added |
 
-## Amaç
+## 1. Story Token — `story.thinking.deep`
 
-LS-011 öncesi token / animasyon / FX / analytics / erişilebilirlik / QA sözleşmesi.
+Activated after prolonged observation.
 
-## 1. Story Token
+- World becomes calmer
+- Wind slows
+- Leaves almost stop
+- Findik waits
+- Bilge stays silent
+- No hints
 
-| Token | Dosya |
-|-------|--------|
-| `story.thinking.deep` | `src/design-tokens/story.ts` |
+→ `src/design-tokens/story.ts`
 
-**Kullanım:** Çocuk uzun süre düşünüyor → dünya sakinleşir · rüzgar yavaşlar · Fındık bekler · Bilge konuşmaz.
+## 2. Motion Token — `motion.look_back_child`
 
-## 2. Motion Token
+| | |
+|--|--|
+| Duration | 6 seconds |
+| Loop | seamless |
 
-| Token | Loop | Dosya |
-|-------|------|--------|
-| `motion.look_back_child` | 6 sn | `src/design-tokens/motion.ts` |
+**Sequence:** Look child → Look basket → Look child → Smile → Look basket → Loop
 
-Fındık çocuğa bakar, sonra palamutlara döner. `kind: character_loop` (mikro 250–450 ms kuralı dışı).
+→ `LOOK_BACK_CHILD_SEQUENCE` · `LookBackChild`
 
-## 3. Animation
+## 3. Animation — `anim.deep_breath`
 
-| Anim | Tetik | Asset |
-|------|-------|--------|
-| `anim.deep_breath` | 5 sn idle | AN008 |
+| | |
+|--|--|
+| Trigger | 5 seconds without interaction |
+| Behavior | Slow inhale · slow exhale · tiny shoulder · very small chest |
 
-→ `src/world/character-states.ts` · `FindikDeepBreath` · `DEEP_BREATH_IDLE_AFTER_MS = 5000`
+→ AN008 · `DEEP_BREATH_SPEC` · `FindikDeepBreath`
 
-## 4. FX
+## 4. FX — `FX_soft_bounce`
 
-| Alias | ID | Spec |
-|-------|-----|------|
-| `FX_soft_bounce` | FX011 | scale 1.00 → 1.04 → 1.00 · 200 ms |
+| | |
+|--|--|
+| Trigger | Touch object |
+| Scale | 1.00 → 1.04 → 1.00 |
+| Duration | 200 ms |
+| Ease | easeOutQuad |
 
-→ `src/world/assets.ts` · `SoftBounce`
+→ FX011 · `SoftBounce`
 
-## 5. Analytics
+## 5. Analytics — `ai.observe_compare_v2`
 
-| Event | Alanlar | Gizlilik |
-|-------|---------|----------|
-| `ai.observe_compare_v2` | ilk bakılan grup · ilk dokunulan grup · karar süresi · keşif dokunuşu · bekleme | Anonim |
+Anonymous capture:
 
-→ `src/design-tokens/ai.ts` · `registerObserveCompareV2` · `ObservationType`
+- `firstViewedGroup`
+- `firstTouchedGroup`
+- `decisionTime`
+- `wrongTouchCount` (telemetry name; child-facing “wrong” label forbidden — MB-269)
+- `idleTime`
+- `comparisonStrategy`
 
-## 6. Accessibility
+→ `registerObserveCompareV2`
 
-Ses kapalı modda animasyonlar aynı anlamı taşır.
+## 6. Accessibility — Silent Mode
 
-→ `src/core/accessibility.ts` · `SILENT_MODE_POLICY` · `meaningWithoutSound`
+All emotional meaning remains understandable without audio.  
+Animations become the primary communication channel.
+
+→ `SILENT_MODE_POLICY.animationIsPrimaryChannel`
 
 ## 7. QA Checklist
 
-- [ ] Dünya dikkat dağıtıyor mu?
-- [ ] Çocuk acele hissediyor mu?
-- [ ] AI gereksiz yardım ediyor mu?
-- [ ] Motion doğal mı?
-- [ ] Story Token doğru çalışıyor mu?
+- [ ] World is calm
+- [ ] Child never feels rushed
+- [ ] Story Token transitions are smooth
+- [ ] Character eye contact feels natural
+- [ ] Motion loops are seamless
+- [ ] AI remains invisible
+- [ ] Accessibility preserved
 
-Kapı: `src/qa/ls011-prep-qa.ts` · `npm run check`
+Kapı: `src/qa/ls011-prep-qa.ts`
 
-## Components (altyapı)
+## 8. Performance
+
+| Contract | Value |
+|----------|--------|
+| Max FPS | 60 |
+| Dropped frames | none (contract) |
+| Idle animations | GPU-friendly (transform/opacity) |
+| Memory | cancel on unmount |
+
+→ `src/design-tokens/performance.ts` · `LS011_PERF`
+
+## Components (infra only)
 
 ```
-src/components/scene/
-  SoftBounce.tsx
-  FindikDeepBreath.tsx
-  LookBackChild.tsx
+SoftBounce.tsx · FindikDeepBreath.tsx · LookBackChild.tsx
 ```
 
-Henüz MB-MAT sahnelerine bağlanmadı (gameplay yok).
+Not wired into MB-MAT scenes yet.
 
-## Figma (hazırlık notu)
+## Ready for LS-011
 
-Frame adayı: `07 Scenes / LS-011_*` (henüz sahne yok)
-
-Layers (öneri): Deep Thinking Overlay · Look Back Loop · Soft Bounce · Idle Breath
-
-## Sonraki adım
-
-LS-011 gameplay / sahne bağlama — bu paketten **sonra**.
+Infrastructure complete. Gameplay binding comes next.

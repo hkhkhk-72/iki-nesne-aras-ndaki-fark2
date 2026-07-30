@@ -94,13 +94,14 @@ export const storyTokens: Record<StoryTokenId, StoryToken> = {
     childFeel: 'Keşfettim / davet edildim.',
     cue: 'FN Invite; motion.softBounce',
   },
-  /** LS-011 prep — çocuk uzun düşünüyor; Bilge konuşmaz. */
+  /** LS-011 prep — uzun gözlem sonrası derin düşünme. */
   'story.thinking.deep': {
     id: 'story.thinking.deep',
     emotion: 'derin düşünme',
     childFeel: 'Acele yok; düşünebilirim.',
     cue:
-      'Dünya sakinleşir · rüzgar yavaşlar · Fındık bekler · Bilge konuşmaz · ' +
+      'Activated after prolonged observation · dünya sakinleşir · rüzgar yavaşlar · ' +
+      'yapraklar neredeyse durur · Fındık bekler · Bilge konuşmaz · ipucu yok · ' +
       'motion.look_back_child · anim.deep_breath',
   },
 };

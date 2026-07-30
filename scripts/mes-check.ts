@@ -368,15 +368,17 @@ const ls011TokensOk =
   motionTokens['motion.look_back_child'].kind === 'character_loop' &&
   'ai.observe_compare_v2' in aiTokens &&
   FX_SOFT_BOUNCE_SPEC.durationMs === 200 &&
+  FX_SOFT_BOUNCE_SPEC.easing === 'easeOutQuad' &&
   DEEP_BREATH_IDLE_AFTER_MS === 5000 &&
-  SILENT_MODE_POLICY.soundOffKeepsAnimationMeaning &&
+  SILENT_MODE_POLICY.animationIsPrimaryChannel &&
   serializeObserveCompareV2({
-    firstLookedGroupId: 'a',
-    firstTouchedGroupId: 'b',
-    decisionMs: 1,
-    exploreTouchCount: 0,
-    waitMs: 2,
-  }).startsWith('look=');
+    firstViewedGroup: 'a',
+    firstTouchedGroup: 'b',
+    decisionTime: 1,
+    wrongTouchCount: 0,
+    idleTime: 2,
+    comparisonStrategy: 'unknown',
+  }).startsWith('firstViewedGroup=');
 console.log(`  Token / FX / a11y sözleşmesi: ${ls011TokensOk ? 'GEÇTİ' : 'BAŞARISIZ'}`);
 if (!ls011TokensOk) failed = true;
 

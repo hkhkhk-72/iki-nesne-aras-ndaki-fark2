@@ -46,30 +46,48 @@ export function registerLabObservation(
 }
 
 /**
+ * Karşılaştırma stratejisi (anonim nitel etiket).
+ * Çocuk yüzüne "yanlış" yazılmaz (MB-269); telemetri alanı ürün adıdır.
+ */
+export type ComparisonStrategy =
+  | 'scan_both'
+  | 'touch_first_seen'
+  | 'touch_larger_guess'
+  | 'touch_smaller_guess'
+  | 'hesitate_then_choose'
+  | 'unknown';
+
+/**
  * ai.observe_compare_v2 — karşılaştırma gözlemi (LS-011 prep).
  * Anonim: çocuk kimliği / PII yok; yalnızca davranış alanları.
  */
 export interface ObserveCompareV2Payload {
-  /** İlk bakılan grup kimliği. */
-  firstLookedGroupId: string | null;
-  /** İlk dokunulan grup kimliği. */
-  firstTouchedGroupId: string | null;
-  /** Karar süresi (ms). */
-  decisionMs: number | null;
-  /** Keşif dokunuşları (yanlış etiket yok — MB-269). */
-  exploreTouchCount: number;
-  /** Bekleme süresi (ms). */
-  waitMs: number | null;
+  /** firstViewedGroup — ilk bakılan grup. */
+  firstViewedGroup: string | null;
+  /** firstTouchedGroup — ilk dokunulan grup. */
+  firstTouchedGroup: string | null;
+  /** decisionTime — karar süresi (ms). */
+  decisionTime: number | null;
+  /**
+   * wrongTouchCount — ürün telemetri adı.
+   * Çocuk yüzünde "yanlış" yok; keşif / hizasız dokunuş sayısı.
+   */
+  wrongTouchCount: number;
+  /** idleTime — bekleme süresi (ms). */
+  idleTime: number | null;
+  /** comparisonStrategy — karşılaştırma stratejisi. */
+  comparisonStrategy: ComparisonStrategy;
 }
 
 /** Payload → anonim detay dizesi (PII yok). */
 export function serializeObserveCompareV2(p: ObserveCompareV2Payload): string {
   return [
-    `look=${p.firstLookedGroupId ?? '-'}`,
-    `touch=${p.firstTouchedGroupId ?? '-'}`,
-    `decisionMs=${p.decisionMs ?? '-'}`,
-    `explore=${p.exploreTouchCount}`,
-    `waitMs=${p.waitMs ?? '-'}`,
+    `firstViewedGroup=${p.firstViewedGroup ?? '-'}`,
+    `firstTouchedGroup=${p.firstTouchedGroup ?? '-'}`,
+    `decisionTime=${p.decisionTime ?? '-'}`,
+    `wrongTouchCount=${p.wrongTouchCount}`,
+    `idleTime=${p.idleTime ?? '-'}`,
+    `comparisonStrategy=${p.comparisonStrategy}`,
   ].join('|');
 }
 

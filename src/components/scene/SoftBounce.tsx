@@ -32,6 +32,8 @@ export function SoftBounce({
   const scale = useSharedValue(1);
   const { scaleFrom, scalePeak, scaleTo, durationMs } = FX_SOFT_BOUNCE_SPEC;
   const half = durationMs / 2;
+  // Ürün: Ease easeOutQuad
+  const easeOutQuad = Easing.out(Easing.quad);
 
   useEffect(() => {
     if (!active) {
@@ -44,10 +46,10 @@ export function SoftBounce({
       return;
     }
     scale.value = withSequence(
-      withTiming(scalePeak, { duration: half, easing: Easing.out(Easing.quad) }),
-      withTiming(scaleTo, { duration: half, easing: Easing.in(Easing.quad) }),
+      withTiming(scalePeak, { duration: half, easing: easeOutQuad }),
+      withTiming(scaleTo, { duration: half, easing: easeOutQuad }),
     );
-  }, [active, half, reduceMotion, scale, scaleFrom, scalePeak, scaleTo]);
+  }, [active, easeOutQuad, half, reduceMotion, scale, scaleFrom, scalePeak, scaleTo]);
 
   const animStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],

@@ -78,7 +78,21 @@ export const FX_SOFT_BOUNCE_SPEC = {
   scalePeak: 1.04,
   scaleTo: 1.0,
   durationMs: 200,
+  /** Ürün: easeOutQuad */
+  easing: 'easeOutQuad' as const,
+  trigger: 'touch_object' as const,
 } as const;
 
 /** Idle derin nefes — 5 sn hareketsizlik sonrası. */
 export const DEEP_BREATH_IDLE_AFTER_MS = 5000;
+
+/** anim.deep_breath davranış sözleşmesi. */
+export const DEEP_BREATH_SPEC = {
+  idleAfterMs: DEEP_BREATH_IDLE_AFTER_MS,
+  inhaleMs: 1100,
+  exhaleMs: 1100,
+  /** Çok küçük omuz / göğüs hareketi (GPU-dostu scale). */
+  shoulderLift: 2,
+  chestScalePeak: 1.035,
+  bodyScalePeak: 1.02,
+} as const;

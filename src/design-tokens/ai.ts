@@ -108,7 +108,7 @@ export const aiTokens: Record<AiTokenId, AiToken> = {
     id: 'ai.observe_compare_v2',
     signal: 'observe_compare_v2',
     purpose:
-      'Karşılaştırma v2 — ilk bakılan / ilk dokunulan grup, karar süresi, ' +
-      'yanlış dokunma sayısı, bekleme süresi (anonim)',
+      'Karşılaştırma v2 (anonim): firstViewedGroup, firstTouchedGroup, decisionTime, ' +
+      'wrongTouchCount, idleTime, comparisonStrategy',
   },
 };

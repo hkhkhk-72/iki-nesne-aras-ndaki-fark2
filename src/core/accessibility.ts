@@ -1,8 +1,8 @@
 /**
  * Erişilebilirlik politikası — LS-011 prep.
  *
- * Ses kapalı modda animasyonlar aynı pedagojik anlamı taşır.
- * Yeni gameplay eklemez; yalnızca sözleşme.
+ * Silent Mode: tüm duygusal anlam ses olmadan anlaşılır kalır.
+ * Animasyonlar birincil iletişim kanalıdır.
  */
 
 import type { AppSettings } from '@/core/settings-store';
@@ -13,9 +13,11 @@ import { motionTokens, type MotionTokenId } from '@/design-tokens/motion';
 export const SILENT_MODE_POLICY = {
   id: 'a11y.silent_keeps_meaning' as const,
   rule:
-    'Ses kapalı modda animasyonlar aynı anlamı vermeye devam eder. ' +
-    'Anlam ses katmanına bağlı değildir; motion / story / karakter mimiği taşır.',
+    'Silent Mode: all emotional meaning remains understandable without audio. ' +
+    'Animations become the primary communication channel.',
   soundOffKeepsAnimationMeaning: true as const,
+  /** Animasyon birincil kanal; ses destekleyicidir. */
+  animationIsPrimaryChannel: true as const,
 };
 
 /**
@@ -56,7 +58,9 @@ export function meaningWithoutSound(opts: {
 export function animationMeaningPreservedWhenSilent(
   settings: Pick<AppSettings, 'soundEnabled'>,
 ): boolean {
-  return SILENT_MODE_POLICY.soundOffKeepsAnimationMeaning && isSilentMode(settings)
-    ? true
-    : SILENT_MODE_POLICY.soundOffKeepsAnimationMeaning;
+  void settings;
+  return (
+    SILENT_MODE_POLICY.soundOffKeepsAnimationMeaning &&
+    SILENT_MODE_POLICY.animationIsPrimaryChannel
+  );
 }

@@ -37,9 +37,9 @@
   function runActions(actions, evt) {
     (actions || []).forEach(function (action) {
       const type = action.type || action;
-      if (type === 'notify' && window.MiniBilgeComponents && MiniBilgeComponents.notify) {
+      if (type === 'notify' && window.MiniBilgeComponents && window.MiniBilgeComponents.notify) {
         const t = action.level || 'info';
-        const fn = MiniBilgeComponents.notify[t] || MiniBilgeComponents.notify.info;
+        const fn = window.MiniBilgeComponents.notify[t] || window.MiniBilgeComponents.notify.info;
         fn(action.message || ('Automation: ' + (evt && evt.type)), 'AOS');
       }
       if (type === 'emit' && window.AosEventBus) {

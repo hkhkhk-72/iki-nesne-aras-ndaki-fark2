@@ -1782,6 +1782,163 @@ html[data-theme="dark"] .mb-progress-bar {
   }
 }
 
+/* ===== MB-DS-006 Teacher Experience Architecture (TXA) ===== */
+
+.txa-purpose {
+  margin: 0 0 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: linear-gradient(165deg, rgba(255,255,255,0.9), rgba(224,245,238,0.75));
+  border: 1px solid rgba(11,122,106,0.18);
+}
+html[data-theme="dark"] .txa-purpose {
+  background: rgba(22, 32, 44, 0.9);
+  border-color: var(--mb-line);
+}
+.txa-purpose-label {
+  margin: 0 0 4px;
+  font-size: max(var(--mb-font-min), 0.78rem);
+  font-weight: 700;
+  color: var(--mb-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.txa-purpose-text {
+  display: block;
+  font-family: var(--mb-font-display);
+  font-size: max(var(--mb-font-min), 1.1rem);
+  margin-bottom: 10px;
+}
+.txa-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.txa-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(11,122,106,0.08);
+  font-size: max(var(--mb-font-min), 0.8rem);
+  font-weight: 700;
+}
+.txa-step span {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--mb-accent);
+  color: #fff;
+  font-size: 0.72rem;
+}
+.txa-step.is-current {
+  background: rgba(11,122,106,0.16);
+  outline: 1px solid rgba(11,122,106,0.35);
+}
+
+.txa-primary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0;
+}
+.txa-dominant,
+.quick-btn.txa-dominant {
+  min-height: 52px;
+  padding: 14px 22px;
+  font-size: max(var(--mb-font-min), 1.05rem);
+  font-weight: 800;
+}
+
+.txa-quick {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 10px 0 16px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.55);
+  border: 1px dashed rgba(11,122,106,0.22);
+}
+html[data-theme="dark"] .txa-quick {
+  background: rgba(22,32,44,0.7);
+}
+.txa-quick-label {
+  font-size: max(var(--mb-font-min), 0.78rem);
+  font-weight: 800;
+  color: var(--mb-ink-soft);
+}
+.txa-quick-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.txa-quick-btn {
+  appearance: none;
+  border: 1px solid rgba(11,122,106,0.2);
+  background: #fff;
+  color: var(--mb-ink);
+  border-radius: 999px;
+  padding: 8px 12px;
+  min-height: var(--mb-touch);
+  font-weight: 700;
+  font-size: max(var(--mb-font-min), 0.82rem);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+html[data-theme="dark"] .txa-quick-btn {
+  background: rgba(15,23,32,0.8);
+  border-color: var(--mb-line);
+  color: var(--mb-ink);
+}
+
+.txa-doc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.txa-versions {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--mb-line);
+  background: rgba(255,255,255,0.5);
+}
+.txa-versions-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.txa-version-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.txa-version-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: max(var(--mb-font-min), 0.85rem);
+  font-weight: 600;
+}
+.txa-version-list time { color: var(--mb-ink-soft); }
+
 /* ===== MB-DS-002 Teacher Experience System (TXS) ===== */
 
 .txs-root {

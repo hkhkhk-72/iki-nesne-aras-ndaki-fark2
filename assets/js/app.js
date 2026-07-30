@@ -350,6 +350,7 @@
         if (window.MiniBilgeComponents && MiniBilgeComponents.notify) {
           MiniBilgeComponents.notify.success(`${s}/${sub} — Context Cache yenilendi`);
         }
+        if (window.MiniBilgeTxa) MiniBilgeTxa.emitContextChanged();
         initDashboard();
       });
     });

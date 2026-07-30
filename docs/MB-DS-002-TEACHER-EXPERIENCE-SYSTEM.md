@@ -22,6 +22,7 @@
 | Etkileşim | MB-DS-003 | Hover/click/page süreleri, snackbar, undo, autosave |
 | Erişilebilirlik | MB-DS-004 | Font, touch, klavye, SR, AA, dark, offline |
 | Hareket | MB-DS-005 | Success/error/loading/transition · ≤300ms |
+| Ekran mimarisi | MB-DS-006 | TXA workflow-first ekran iskeleti |
 
 DS-002, DS-001’i geçersiz kılmaz; **üstüne oturur**. Süreler için DS-003.
 

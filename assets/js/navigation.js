@@ -92,7 +92,7 @@
         ${renderSidebar(activeId)}
         <main id="mb-main" class="main-content" role="main" tabindex="-1">${content}</main>
       </div>`;
-    // TXS-005 · IS-003 · A11Y boot landmarks
+    // TXS-005 · IS-003 · A11Y · TXA boot
     setTimeout(() => {
       if (window.MiniBilgeTxs) MiniBilgeTxs.attach({ screen: activeId });
       const main = document.querySelector('.main-content');
@@ -103,6 +103,17 @@
         MiniBilgeA11y.ensureMainId();
       }
       if (window.MiniBilgeOffline) MiniBilgeOffline.renderBanner();
+      if (window.MiniBilgeTxa) {
+        MiniBilgeTxa.watchContext({
+          reload: false,
+          onChange(next) {
+            if (window.MiniBilgeComponents && MiniBilgeComponents.notify) {
+              MiniBilgeComponents.notify.info(next + ' bağlamı — sayfa yenileniyor', 'TXA-010');
+            }
+            setTimeout(function () { location.reload(); }, 280);
+          }
+        });
+      }
     }, 0);
     return html;
   }

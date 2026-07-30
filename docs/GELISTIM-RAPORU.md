@@ -58,6 +58,7 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 | 2n | **MB-DS-003** Interaction | **85%** | **15%** |
 | 2o | **MB-DS-004** A11Y | **85%** | **15%** |
 | 2p | **MB-DS-005** Motion | **100%** | **0%** |
+| 2q | **MB-DS-006** TXA | **70%** | **30%** |
 | 2f | MB-IA-001 | 100% | 0% |
 | 2g | MB-IA-002 | 70% | 30% |
 | 2h | MB-IA-003 | 80% | 20% |

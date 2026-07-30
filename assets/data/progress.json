@@ -1,9 +1,9 @@
 {
-  "updated": "2026-07-29",
+  "updated": "2026-07-30",
   "rule": "Her teslimatta Tamam% ve Kaldı% güncellenir",
   "designSystem": {
-    "averageComplete": 89,
-    "averageRemaining": 11,
+    "averageComplete": 86,
+    "averageRemaining": 14,
     "items": [
       {
         "id": "MB-DS-001",
@@ -39,6 +39,13 @@
         "complete": 100,
         "remaining": 0,
         "left": "—"
+      },
+      {
+        "id": "MB-DS-006",
+        "title": "Teacher Experience Architecture (TXA)",
+        "complete": 70,
+        "remaining": 30,
+        "left": "Tüm belge ekranlarında TXA-007/008"
       }
     ]
   },

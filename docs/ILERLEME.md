@@ -1,6 +1,6 @@
 # MiniBilge — İlerleme Panosu
 
-**Güncelleme:** 29 Temmuz 2026  
+**Güncelleme:** 30 Temmuz 2026  
 **Kural:** Her teslimatta bu tablo güncellenir — *hangi kalemde % kaç tamam, % kaç kaldı*.
 
 > Formül: **Tamam %** = kabul / uygulama kapsamı.  
@@ -17,8 +17,9 @@
 | **MB-DS-003** | Interaction | **85%** | **15%** | Tüm listelerde infinite scroll |
 | **MB-DS-004** | Accessibility | **85%** | **15%** | Tam SR denetim / CI |
 | **MB-DS-005** | Motion Language | **100%** | **0%** | Anayasa + runtime kabulü dolu |
+| **MB-DS-006** | TXA (mimari) | **70%** | **30%** | Tüm belge modüllerinde TXA-007/008 |
 
-**DS paket ortalaması:** **89%** tamam · **11%** kaldı
+**DS paket ortalaması:** **86%** tamam · **14%** kaldı
 
 ---
 
@@ -47,13 +48,13 @@
 
 ---
 
-## 3. Bu tur özeti (DS-005 sonrası)
+## 3. Bu tur özeti (DS-006 TXA)
 
 | Kalem | Tamam | Kaldı |
 |-------|------:|------:|
-| Motion Language (MB-DS-005) | 100% | 0% |
-| DS paketi (001…005) | 89% | 11% |
-| Sonraki öncelik adayı | — | DOS-001 DNA katalog **45% kaldı** veya ARCH-002 **100% kaldı** |
+| Teacher Experience Architecture (MB-DS-006) | 70% | 30% |
+| DS paketi (001…006) | 86% | 14% |
+| Sonraki öncelik adayı | — | DOS-001 DNA katalog **45% kaldı** |
 
 ---
 

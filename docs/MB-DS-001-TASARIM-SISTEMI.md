@@ -139,6 +139,7 @@ Görsel dil bu belgededir.
 | Etkileşim süreleri (IS) | `docs/MB-DS-003-INTERACTION-STANDARDS.md` |
 | Erişilebilirlik (A11Y) | `docs/MB-DS-004-ACCESSIBILITY.md` |
 | Hareket (ML) | `docs/MB-DS-005-MOTION-LANGUAGE.md` |
+| Ekran mimarisi (TXA) | `docs/MB-DS-006-TEACHER-EXPERIENCE-ARCHITECTURE.md` |
 
 ---
 

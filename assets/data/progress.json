@@ -1,0 +1,137 @@
+{
+  "updated": "2026-07-30",
+  "rule": "Her teslimatta Tamam% ve Kaldı% güncellenir",
+  "designSystem": {
+    "averageComplete": 84,
+    "averageRemaining": 16,
+    "items": [
+      {
+        "id": "MB-DS-001",
+        "title": "Görsel dil",
+        "complete": 90,
+        "remaining": 10,
+        "left": "platform.css → DS token migrate"
+      },
+      {
+        "id": "MB-DS-002",
+        "title": "Teacher Experience (TXS)",
+        "complete": 85,
+        "remaining": 15,
+        "left": "Tüm modüllerde Gelişmiş paneli"
+      },
+      {
+        "id": "MB-DS-003",
+        "title": "Interaction Standards",
+        "complete": 85,
+        "remaining": 15,
+        "left": "Tüm listelerde infinite scroll"
+      },
+      {
+        "id": "MB-DS-004",
+        "title": "Accessibility",
+        "complete": 85,
+        "remaining": 15,
+        "left": "Tam SR denetim / CI"
+      },
+      {
+        "id": "MB-DS-005",
+        "title": "Motion Language",
+        "complete": 100,
+        "remaining": 0,
+        "left": "—"
+      },
+      {
+        "id": "MB-DS-006",
+        "title": "Teacher Experience Architecture (TXA)",
+        "complete": 70,
+        "remaining": 30,
+        "left": "Tüm belge ekranlarında TXA-007/008"
+      },
+      {
+        "id": "MB-DS-007",
+        "title": "Universal Component Library (UCL)",
+        "complete": 75,
+        "remaining": 25,
+        "left": "Flutter port · derin motor bağları"
+      }
+    ]
+  },
+  "roadmap": [
+    { "id": "MB-AOS-001", "complete": 68, "remaining": 32 },
+    { "id": "MB-DM-001", "complete": 100, "remaining": 0 },
+    { "id": "MB-ARCH-001", "complete": 100, "remaining": 0 },
+    { "id": "MB-UI-001-003", "complete": 95, "remaining": 5 },
+    { "id": "MB-IA-001", "complete": 100, "remaining": 0 },
+    { "id": "MB-IA-002", "complete": 70, "remaining": 30 },
+    { "id": "MB-IA-003", "complete": 80, "remaining": 20 },
+    { "id": "MB-DOS-000-001", "complete": 55, "remaining": 45 },
+    { "id": "MB-DOS-002", "complete": 70, "remaining": 30 },
+    { "id": "MD-038", "complete": 100, "remaining": 0 },
+    { "id": "MB-WFE-001", "complete": 90, "remaining": 10 },
+    { "id": "MB-DOS-003", "complete": 85, "remaining": 15 },
+    { "id": "FAZ-6-COMP", "complete": 82, "remaining": 18 },
+    { "id": "MB-DM-002", "complete": 100, "remaining": 0 },
+    { "id": "MB-TPM-001", "complete": 80, "remaining": 20 },
+    { "id": "MB-ARCH-002", "complete": 0, "remaining": 100 },
+    { "id": "MB-DB-APP", "complete": 0, "remaining": 100 }
+  ],
+  "webSpine": { "complete": 85, "remaining": 15 },
+  "nextPriority": {
+    "id": "MB-LIFE-001",
+    "title": "Öğretmen meslek hayatı kataloğu — belge/workflow bağları",
+    "complete": 35,
+    "remaining": 65
+  },
+  "adr": {
+    "format": "docs/ADR-FORMAT.md",
+    "lastDecision": 85,
+    "packages": ["MB-ADR-042", "MB-ADR-043", "MB-ADR-044", "MB-ADR-045"]
+  },
+  "teacherLife": {
+    "id": "MB-LIFE-001",
+    "complete": 35,
+    "remaining": 65,
+    "jobCount": 91
+  },
+  "documentOsCore": {
+    "id": "MB-DOS-002",
+    "decision": "MD-047",
+    "complete": 70,
+    "remaining": 30,
+    "left": "Flutter Isar/Riverpod · Background Sync · legacy addDocument migrate"
+  },
+  "vision": {
+    "id": "MB-VIS-001",
+    "complete": 90,
+    "remaining": 10,
+    "left": "Yıllık MEB/TYMM kaynak güncelleme süreci"
+  },
+  "curriculumSources": {
+    "complete": 85,
+    "remaining": 15,
+    "left": "Daha fazla ders için çoklu kaynak satırı; yıllık onay migrasyonu"
+  },
+  "academicKernel": {
+    "id": "MB-AOS-001",
+    "decision": "MD-048",
+    "complete": 68,
+    "remaining": 32,
+    "left": "Flutter Feature-First · Security Kernel · tüm sayfalarda boot"
+  },
+  "home": {
+    "baglam": { "complete": 95, "label": "Sınıf bağlamı" },
+    "bugun": { "complete": 90, "label": "Bugün / Workflow" },
+    "dersler": { "complete": 85, "label": "Dersler / LEE" },
+    "ana-moduller": { "complete": 78, "label": "Ana Modüller" },
+    "hubs": {
+      "planlar": 92,
+      "sinif-yonetimi": 80,
+      "olcme": 55,
+      "resmi-evraklar": 50,
+      "takvim": 75,
+      "etkinlikler": 45,
+      "raporlar": 40,
+      "ai": 60
+    }
+  }
+}

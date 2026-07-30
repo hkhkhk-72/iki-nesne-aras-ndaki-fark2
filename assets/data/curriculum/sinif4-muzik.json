@@ -1,0 +1,27 @@
+{
+  "ders": "Müzik",
+  "dersId": "muzik",
+  "sinif": 4,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2025-2026",
+  "haftalikDersSaati": 1,
+  "toplamHafta": 36,
+  "kaynakNotu": "Keşif stub: haftalık saat TTKB 09.05.2025 İlkokul çizelgesine göre. TYMM çıktıları MB-DM-002 sonrası işlenecek.",
+  "temalar": [
+    {
+      "id": "mu4-1",
+      "ad": "Program birimleri (keşif stub)",
+      "hafta": 36,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "MUZ.4.0.1",
+          "aciklama": "TYMM/MEB programı domain modeline bağlanınca doldurulacak."
+        }
+      ],
+      "icerikCercevesi": "Geçici keşif verisi — kanonik şema değil.",
+      "surecBilesenleri": [],
+      "alanBecerileri": [],
+      "farklilastirma": ""
+    }
+  ]
+}

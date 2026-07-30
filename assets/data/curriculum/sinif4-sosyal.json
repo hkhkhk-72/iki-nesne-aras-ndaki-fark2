@@ -1,0 +1,208 @@
+{
+  "ders": "Sosyal Bilgiler",
+  "dersId": "sosyal",
+  "sinif": 4,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2024",
+  "kaynak": "MEB TYMM Sosyal Bilgiler Dersi Öğretim Programı (4-7) 2024 — onaylı PDF",
+  "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programsos4567Onayli.pdf",
+  "toplamDersSaati": 108,
+  "haftalikDersSaati": 3,
+  "toplamHafta": 36,
+  "ogrenmeCiktisiSayisi": 17,
+  "yapi": "öğrenme alanları",
+  "temalar": [
+    {
+      "id": "sb1",
+      "ad": "Birlikte Yaşamak",
+      "dersSaati": 18,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "SB.4.1.1",
+          "aciklama": "Sosyal bilgiler dersinin hayatına sunacağı katkıları yorumlayabilme"
+        },
+        {
+          "kod": "SB.4.1.2",
+          "aciklama": "Bireysel özelliklere saygı duymanın önemine ilişkin çıkarım yapabilme"
+        },
+        {
+          "kod": "SB.4.1.3",
+          "aciklama": "Toplumsal birliği sürdürmeye yönelik fikir üretebilme"
+        }
+      ],
+      "icerikCercevesi": "Sosyal Bilgiler Dersinin Hayatımıza Katkıları Bireysel Özelliklere Saygı Duyma Toplumsal Birliğin Sürdürülmesi",
+      "surecBilesenleri": [
+        "Araştırma",
+        "Yorumlama",
+        "Sosyal katılım"
+      ],
+      "alanBecerileri": [
+        "SBAB — Sosyal Bilimler alan becerileri"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Kontrol listesi, performans görevi, öğrenme günlüğü"
+    },
+    {
+      "id": "sb2",
+      "ad": "Evimiz Dünya",
+      "dersSaati": 19,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "SB.4.2.1",
+          "aciklama": "Konum ve yön bulurken haritaları kullanabilme"
+        },
+        {
+          "kod": "SB.4.2.2",
+          "aciklama": "Yakın çevresinden hareketle doğa ve insan ilişkisini çözümleyebilme"
+        },
+        {
+          "kod": "SB.4.2.3",
+          "aciklama": "Afetlerin etkilerini azaltma konusunda yapılabileceklere ilişkin oluşturduğu"
+        }
+      ],
+      "icerikCercevesi": "Temel Harita Bilgisi ve Harita Türleri Doğa-İnsan İlişkisi Afetlerin Etkilerinin Azaltılması",
+      "surecBilesenleri": [
+        "Araştırma",
+        "Yorumlama",
+        "Sosyal katılım"
+      ],
+      "alanBecerileri": [
+        "SBAB — Sosyal Bilimler alan becerileri"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Kontrol listesi, performans görevi, öğrenme günlüğü"
+    },
+    {
+      "id": "sb3",
+      "ad": "Ortak Mirasımız",
+      "dersSaati": 19,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "SB.4.3.1",
+          "aciklama": "Geçmişten günümüze çocuk oyun ve oyuncaklarının değişimini karşılaştırabil -"
+        },
+        {
+          "kod": "SB.4.3.2",
+          "aciklama": "Aile tarihini yansıtan bir ürün oluşturabilme"
+        },
+        {
+          "kod": "SB.4.3.3",
+          "aciklama": "Yakın çevresindeki ortak miras ögelerini tanımanın önemini yorumlayabilme"
+        }
+      ],
+      "icerikCercevesi": "Geçmişten Bugüne Oyun ve Oyuncak Ailenin Tarihi Yakın Çevredeki Ortak Miras Ögeleri",
+      "surecBilesenleri": [
+        "Araştırma",
+        "Yorumlama",
+        "Sosyal katılım"
+      ],
+      "alanBecerileri": [
+        "SBAB — Sosyal Bilimler alan becerileri"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Kontrol listesi, performans görevi, öğrenme günlüğü"
+    },
+    {
+      "id": "sb4",
+      "ad": "Yaşayan Demokrasimiz",
+      "dersSaati": 18,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "SB.4.4.1",
+          "aciklama": "Cumhuriyetin ilanına giden yolda Mustafa Kemal Atatürk’ün ve Türk milletinin"
+        },
+        {
+          "kod": "SB.4.4.2",
+          "aciklama": "Cumhuriyetin getirdiği değişimlerin hayatımıza katkılarını yorumlayabilme"
+        },
+        {
+          "kod": "SB.4.4.3",
+          "aciklama": "Okulda karar alma ve demokratik katılım süreçlerine ilişkin fikir üretebilme"
+        }
+      ],
+      "icerikCercevesi": "Cumhuriyete Giden Yolda Mustafa Kemal Atatürk ve Türk Milleti Cumhuriyetin Getirdiği Yenilikler Okulda Demokratik Katılım",
+      "surecBilesenleri": [
+        "Araştırma",
+        "Yorumlama",
+        "Sosyal katılım"
+      ],
+      "alanBecerileri": [
+        "SBAB — Sosyal Bilimler alan becerileri"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Kontrol listesi, performans görevi, öğrenme günlüğü"
+    },
+    {
+      "id": "sb5",
+      "ad": "Hayatımızdaki Ekonomi",
+      "dersSaati": 17,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "SB.4.5.1",
+          "aciklama": "Doğal kaynakların tüketimi ile ilgili grafik yorumlayabilme"
+        },
+        {
+          "kod": "SB.4.5.2",
+          "aciklama": "İstek ve ihtiyaçları arasındaki bilinçli seçimleri hayatına yansıtabilme"
+        },
+        {
+          "kod": "SB.4.5.3",
+          "aciklama": "Bir ürünün üretim, dağıtım ve tüketim süreçlerini çözümleyebilme"
+        }
+      ],
+      "icerikCercevesi": "Doğal Kaynakların Tüketimi İstek ve İhtiyaçlar Ürünlerin Yolculuğu",
+      "surecBilesenleri": [
+        "Araştırma",
+        "Yorumlama",
+        "Sosyal katılım"
+      ],
+      "alanBecerileri": [
+        "SBAB — Sosyal Bilimler alan becerileri"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Kontrol listesi, performans görevi, öğrenme günlüğü"
+    },
+    {
+      "id": "sb6",
+      "ad": "Teknoloji ve Sosyal Bilimler",
+      "dersSaati": 12,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "SB.4.6.1",
+          "aciklama": "Çevrim içi ortamda uyulması gereken güvenlik kurallarını eylemlerine yansıta -"
+        },
+        {
+          "kod": "SB.4.6.2",
+          "aciklama": "Bilim insanlarının çocukluk hayatı ile kendi yaşamı arasında bağlantı kurabilme"
+        }
+      ],
+      "icerikCercevesi": "Çevrim İçi Ortamda Güvenlik Kuralları Bilim İnsanlarının Çocukluk Hayatları",
+      "surecBilesenleri": [
+        "Araştırma",
+        "Yorumlama",
+        "Sosyal katılım"
+      ],
+      "alanBecerileri": [
+        "SBAB — Sosyal Bilimler alan becerileri"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Kontrol listesi, performans görevi, öğrenme günlüğü"
+    },
+    {
+      "id": "otp",
+      "ad": "Okul Temelli Planlama",
+      "dersSaati": 5,
+      "hafta": 1,
+      "ogrenmeCiktilari": [],
+      "icerikCercevesi": "Zümre kararlarıyla planlanır",
+      "surecBilesenleri": [],
+      "alanBecerileri": []
+    }
+  ]
+}

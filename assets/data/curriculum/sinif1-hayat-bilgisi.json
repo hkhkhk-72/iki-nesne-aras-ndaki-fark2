@@ -1,0 +1,119 @@
+{
+  "ders": "Hayat Bilgisi",
+  "dersId": "hayatBilgisi",
+  "sinif": 1,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2024",
+  "kaynak": "MEB TYMM Hayat Bilgisi Dersi Öğretim Programı (1-3) 2024 — onaylı PDF",
+  "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programhay123Onayli.pdf",
+  "toplamDersSaati": 144,
+  "haftalikDersSaati": 4,
+  "not": "Program öğrenme alanı (tema değil) yapısı kullanır. TYMM'de 6 öğrenme alanı + Okul Temelli Planlama.",
+  "temalar": [
+    {
+      "id": "hb1",
+      "ad": "Ben ve Okulum",
+      "tur": "ogrenmeAlani",
+      "dersSaati": 24,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        { "kod": "HB.1.1.1", "aciklama": "Öğretmeni ve arkadaşlarıyla tanışabilme" },
+        { "kod": "HB.1.1.2", "aciklama": "Okul ortamını tanıyabilme" },
+        { "kod": "HB.1.1.3", "aciklama": "Sınıf ve okul ortamında kurallara uygun davranabilme" },
+        { "kod": "HB.1.1.4", "aciklama": "Fiziksel özelliklerini ve temel duygularını açıklayabilme" }
+      ],
+      "icerikCercevesi": "Okula uyum, tanışma, okul/sınıf kuralları, benlik ve duygular",
+      "surecBilesenleri": ["Gözlem", "Tartışma", "Drama"],
+      "degerler": ["Saygı", "Sorumluluk", "Dostluk"],
+      "olcmeDegerlendirme": "Anekdot kaydı, kontrol listesi, canlandırma"
+    },
+    {
+      "id": "hb2",
+      "ad": "Sağlığım ve Güvenliğim",
+      "tur": "ogrenmeAlani",
+      "dersSaati": 24,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        { "kod": "HB.1.2.1", "aciklama": "Sağlıklı büyüme ve gelişme için yapması gerekenleri belirleyebilme" },
+        { "kod": "HB.1.2.2", "aciklama": "Kişisel alanının sınırlarını belirleyebilme" },
+        { "kod": "HB.1.2.3", "aciklama": "Temel trafik kurallarına uygun davranabilme" },
+        { "kod": "HB.1.2.4", "aciklama": "Acil durumlarda yapılması gerekenleri belirleyebilme" }
+      ],
+      "icerikCercevesi": "Sağlıklı büyüme, kişisel alan/mahremiyet, trafik, acil durumlar",
+      "surecBilesenleri": ["Belirleme", "Uygulama"],
+      "degerler": ["Sağlıklı Yaşam", "Mahremiyet", "Sorumluluk"],
+      "olcmeDegerlendirme": "Kontrol listesi, performans görevi"
+    },
+    {
+      "id": "hb3",
+      "ad": "Ailem ve Toplum",
+      "tur": "ogrenmeAlani",
+      "dersSaati": 20,
+      "hafta": 5,
+      "ogrenmeCiktilari": [
+        { "kod": "HB.1.3.1", "aciklama": "Aile olmanın önemini fark edebilme" },
+        { "kod": "HB.1.3.2", "aciklama": "Aile yaşamında nezaket ve görgü kurallarına uygun davranabilme" },
+        { "kod": "HB.1.3.3", "aciklama": "Aile bireylerinin görev ve sorumluluklarını çözümleyebilme" }
+      ],
+      "icerikCercevesi": "Ailenin önemi, nezaket ve görgü, ailede görev ve sorumluluklar",
+      "surecBilesenleri": ["Fark etme", "Uygulama", "Çözümleme"],
+      "degerler": ["Aile Bütünlüğü", "Mahremiyet", "Merhamet", "Saygı", "Sevgi", "Sorumluluk"],
+      "olcmeDegerlendirme": "Anekdot, canlandırma, kontrol listesi, aile albümü performans görevi"
+    },
+    {
+      "id": "hb4",
+      "ad": "Yaşadığım Yer ve Ülkem",
+      "tur": "ogrenmeAlani",
+      "dersSaati": 28,
+      "hafta": 7,
+      "ogrenmeCiktilari": [
+        { "kod": "HB.1.4.1", "aciklama": "Yaşadığı yerin ve ülkemizin genel özelliklerini açıklayabilme" },
+        { "kod": "HB.1.4.2", "aciklama": "Türk Bayrağı ve İstiklâl Marşı'nın önemini ifade edebilme" },
+        { "kod": "HB.1.4.3", "aciklama": "Mustafa Kemal Atatürk'ün hayatıyla ilgili bilgileri ifade edebilme" },
+        { "kod": "HB.1.4.4", "aciklama": "Millî gün ve bayramlarda yaşadığı duyguları ifade edebilme" },
+        { "kod": "HB.1.4.5", "aciklama": "Dinî gün ve bayramlarda yaşadığı duyguları ifade edebilme" }
+      ],
+      "icerikCercevesi": "Yaşadığımız yer ve ülkemiz, bayrak, İstiklâl Marşı, Atatürk, millî ve dinî günler",
+      "surecBilesenleri": ["Açıklama", "İfade etme"],
+      "degerler": ["Vatanseverlik", "Saygı", "Sevgi"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
+    },
+    {
+      "id": "hb5",
+      "ad": "Doğa ve Çevre",
+      "tur": "ogrenmeAlani",
+      "dersSaati": 24,
+      "hafta": 6,
+      "ogrenmeCiktilari": [
+        { "kod": "HB.1.5.1", "aciklama": "Yakın çevresinde bulunan doğadaki varlıkları gözlemleyebilme" },
+        { "kod": "HB.1.5.2", "aciklama": "Modeller üzerinden gök cisimlerini karşılaştırabilme" },
+        { "kod": "HB.1.5.3", "aciklama": "Afet türlerini tanıyabilme" },
+        { "kod": "HB.1.5.4", "aciklama": "Geri dönüştürülebilen atıkları sınıflandırabilme" }
+      ],
+      "icerikCercevesi": "Doğayı gözlemleme, gök cisimleri, afetler, geri dönüşüm",
+      "surecBilesenleri": ["Gözlem", "Karşılaştırma", "Sınıflandırma"],
+      "degerler": ["Yaşanabilir Çevre", "Duyarlılık"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
+    },
+    {
+      "id": "hb6",
+      "ad": "Bilim, Teknoloji ve Sanat",
+      "tur": "ogrenmeAlani",
+      "dersSaati": 18,
+      "hafta": 5,
+      "ogrenmeCiktilari": [
+        { "kod": "HB.1.6.1", "aciklama": "Bilimle ilgili merak ettiklerini sorabilme" },
+        { "kod": "HB.1.6.2", "aciklama": "Teknoloji ile ilgili merak ettiklerini sorabilme" },
+        { "kod": "HB.1.6.3", "aciklama": "Sanatla ilgili merak ettiklerini sorabilme" }
+      ],
+      "icerikCercevesi": "Bilim, teknoloji ve sanat ile ilgili merak edilenler (TYMM'de ilk kez ayrı öğrenme alanı)",
+      "surecBilesenleri": ["Sorgulama", "Merak"],
+      "egilimler": ["Merak"],
+      "disiplinlerArasi": ["Sosyal Bilgiler", "Fen Bilimleri", "Matematik", "Görsel Sanatlar", "Müzik"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
+    }
+  ],
+  "ekSureler": [
+    { "ad": "Okul Temelli Planlama", "dersSaati": 6 }
+  ]
+}

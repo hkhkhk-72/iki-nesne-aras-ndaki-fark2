@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayarlar — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+  <script src="../assets/js/components/a11y.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/core/offline-sync.js"></script>
+  <script src="../assets/js/components/interaction.js"></script>
+  <script src="../assets/js/components/progress-board.js"></script>
+  <script src="../assets/js/components/txs.js"></script>
+  <script src="../assets/js/components/txa.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+  (function () {
+    const settings = MiniBilgeStorage.getSettings();
+    const a11y = window.MiniBilgeA11y ? MiniBilgeA11y.readPrefs() : { theme: 'system', textScale: '100' };
+    const content = `
+      <div class="dash">
+        <header class="dash-hero">
+          <p class="brand-kicker">Ayarlar</p>
+          <h1>Tercihler ve erişilebilirlik</h1>
+          <p class="dash-date">MB-DS-004 · min 14px · 44×44 · WCAG AA · koyu tema · büyük yazı · çevrimdışı</p>
+        </header>
+        <div id="msg"></div>
+
+        <section class="mb-section">
+          <h2>Varsayılan bağlam</h2>
+          <div class="ctx-grid">
+            <div class="form-field">
+              <label for="varsayilanSinif">Varsayılan Sınıf</label>
+              <select id="varsayilanSinif">
+                ${[1,2,3,4].map(s => `<option value="${s}" ${settings.varsayilanSinif == s ? 'selected' : ''}>${s}. Sınıf</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="varsayilanDers">Varsayılan Ders</label>
+              <select id="varsayilanDers">
+                <option value="turkce" ${settings.varsayilanDers === 'turkce' ? 'selected' : ''}>Türkçe</option>
+                <option value="matematik" ${settings.varsayilanDers === 'matematik' ? 'selected' : ''}>Matematik</option>
+                <option value="hayatBilgisi" ${settings.varsayilanDers === 'hayatBilgisi' ? 'selected' : ''}>Hayat Bilgisi</option>
+              </select>
+            </div>
+          </div>
+          <button class="quick-btn primary" id="btnSave" type="button" style="margin-top:12px">Kaydet</button>
+        </section>
+
+        <section class="mb-section">
+          <h2>Erişilebilirlik (A11Y)</h2>
+          <p class="section-lead">Tema, büyük yazı ve çevrimdışı senkron — A11Y-006…008</p>
+          <div class="a11y-panel">
+            <label for="a11yTheme">Tema
+              <select id="a11yTheme">
+                <option value="system" ${a11y.theme === 'system' ? 'selected' : ''}>Sistem</option>
+                <option value="light" ${a11y.theme === 'light' ? 'selected' : ''}>Açık</option>
+                <option value="dark" ${a11y.theme === 'dark' ? 'selected' : ''}>Koyu</option>
+              </select>
+            </label>
+            <label for="a11yScale">Yazı boyutu
+              <select id="a11yScale">
+                <option value="100" ${String(a11y.textScale) === '100' ? 'selected' : ''}>100% (varsayılan)</option>
+                <option value="125" ${String(a11y.textScale) === '125' ? 'selected' : ''}>125%</option>
+                <option value="150" ${String(a11y.textScale) === '150' ? 'selected' : ''}>150%</option>
+                <option value="200" ${String(a11y.textScale) === '200' ? 'selected' : ''}>200%</option>
+              </select>
+            </label>
+            <p class="section-lead" id="a11yHint">Min font 14px · dokunma alanı 44×44 · klavye ve ekran okuyucu destekli</p>
+            <p class="section-lead" id="offlineHint"></p>
+          </div>
+        </section>
+
+        <section class="mb-section">
+          <h2>İlerleme (Tamam% / Kaldı%)</h2>
+          <p class="section-lead">Her teslimatta güncellenir · docs/ILERLEME.md</p>
+          <div id="progress-board"></div>
+        </section>
+
+        <section class="mb-section">
+          <h2>Gelişmiş</h2>
+          <button class="quick-btn" id="btnClear" type="button">Tüm verileri temizle</button>
+        </section>
+      </div>`;
+    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('ayarlar', content);
+    if (window.MiniBilgeProgress) MiniBilgeProgress.mount('#progress-board');
+
+    function refreshOfflineHint() {
+      const el = document.getElementById('offlineHint');
+      if (!el || !window.MiniBilgeOffline) return;
+      const q = MiniBilgeOffline.readQueue().length;
+      const on = MiniBilgeOffline.isOnline();
+      el.textContent = on
+        ? ('Çevrimiçi' + (q ? ' · kuyrukta ' + q + ' öğe senkron bekliyor' : ' · kuyruk boş'))
+        : ('Çevrimdışı · ' + q + ' değişiklik yerelde bekliyor');
+    }
+    refreshOfflineHint();
+
+    document.getElementById('btnSave').addEventListener('click', () => {
+      const payload = {
+        varsayilanSinif: document.getElementById('varsayilanSinif').value,
+        varsayilanDers: document.getElementById('varsayilanDers').value
+      };
+      if (window.MiniBilgeOffline) {
+        MiniBilgeOffline.runOrQueue({
+          type: 'settings',
+          payload,
+          apply(p) { MiniBilgeStorage.saveSettings(p); }
+        });
+      } else {
+        MiniBilgeStorage.saveSettings(payload);
+      }
+      document.getElementById('msg').innerHTML = '<div class="alert alert-ok">Ayarlar kaydedildi.</div>';
+      refreshOfflineHint();
+    });
+
+    if (window.MiniBilgeA11y) {
+      document.getElementById('a11yTheme').addEventListener('change', (e) => {
+        MiniBilgeA11y.setTheme(e.target.value);
+        document.getElementById('msg').innerHTML = '<div class="alert alert-ok">Tema uygulandı.</div>';
+      });
+      document.getElementById('a11yScale').addEventListener('change', (e) => {
+        MiniBilgeA11y.setTextScale(e.target.value);
+        document.getElementById('msg').innerHTML = '<div class="alert alert-ok">Yazı boyutu: ' + e.target.value + '%</div>';
+      });
+    }
+
+    document.getElementById('btnClear').addEventListener('click', () => {
+      const run = () => {
+        Object.values(MiniBilgeStorage.KEYS).forEach(k => localStorage.removeItem(k));
+        localStorage.removeItem('minibilgeA11y');
+        localStorage.removeItem('minibilgeOfflineQueue');
+        document.getElementById('msg').innerHTML = '<div class="alert alert-ok">Veriler temizlendi.</div>';
+      };
+      if (window.MiniBilgeInteraction && MiniBilgeInteraction.undoable) {
+        // Önizleme: onay sonrası temizle (kalıcı)
+        if (confirm('Tüm planlar, belgeler ve ayarlar silinecek. Emin misiniz?')) run();
+      } else if (confirm('Tüm planlar, belgeler ve ayarlar silinecek. Emin misiniz?')) {
+        run();
+      }
+    });
+
+    window.addEventListener('online', refreshOfflineHint);
+    window.addEventListener('offline', refreshOfflineHint);
+  })();
+  </script>
+</body>
+</html>

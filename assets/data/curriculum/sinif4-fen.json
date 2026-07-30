@@ -1,0 +1,270 @@
+{
+  "ders": "Fen Bilimleri",
+  "dersId": "fen",
+  "sinif": 4,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2024",
+  "kaynak": "MEB TYMM Fen Bilimleri Dersi Öğretim Programı (3-8) 2024 — onaylı PDF",
+  "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programfen345678Onayli.pdf",
+  "toplamDersSaati": 108,
+  "haftalikDersSaati": 3,
+  "toplamHafta": 36,
+  "ogrenmeCiktisiSayisi": 19,
+  "yapi": "ünite",
+  "temalar": [
+    {
+      "id": "u1",
+      "ad": "Bilime Yolculuk",
+      "dersSaati": 12,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.4.1.1",
+          "aciklama": "Bilimin özellikleri ile ilgili yansıtma yapabilme"
+        },
+        {
+          "kod": "FB.4.1.2",
+          "aciklama": "Bilgi kaynağının güvenilirliğini sorgulayabilme"
+        }
+      ],
+      "icerikCercevesi": "Bilimin Özellikleri Bilgi Kaynaklarının Güvenilirliği",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u2",
+      "ad": "Sağlıklı Besleniyorum",
+      "dersSaati": 15,
+      "hafta": 5,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.4.2.1",
+          "aciklama": "Besin içeriklerini ayırt etmek için deney yapabilme"
+        },
+        {
+          "kod": "FB.4.2.2",
+          "aciklama": "Besinlerde vitamin ve/veya mineral bulunduğuna ilişkin genelleme yapabilme"
+        },
+        {
+          "kod": "FB.4.2.3",
+          "aciklama": "Besinlerin işlevleri ile ilgili hipotez oluşturabilme"
+        }
+      ],
+      "icerikCercevesi": "Besinlerin İçerikleri Besinler ve Sağlıklı Yaşam",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u3",
+      "ad": "Dünya'mızı Keşfedelim",
+      "dersSaati": 15,
+      "hafta": 5,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.4.3.1",
+          "aciklama": "Dünya’nın şekli ile ilgili bilimsel gözleme dayalı tahmin yapabilme"
+        },
+        {
+          "kod": "FB.4.3.2",
+          "aciklama": "Dünya’nın yapısıyla ilgili bilimsel model oluşturabilme"
+        },
+        {
+          "kod": "FB.4.3.3",
+          "aciklama": "Dünya’nın hareketlerini gözlemlerine dayanarak tahmin edebilme"
+        }
+      ],
+      "icerikCercevesi": "Dünya’nın Şekli Dünya’nın Yapısı Dünya’nın Hareketleri",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u4",
+      "ad": "Maddenin Değişimi",
+      "dersSaati": 12,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.4.4.1",
+          "aciklama": "Maddelerin hâl değişimine yönelik bilimsel çıkarım yapabilme"
+        },
+        {
+          "kod": "FB.4.4.2",
+          "aciklama": "Maddelerin ısı etkisiyle değişimine yönelik deney yapabilme"
+        }
+      ],
+      "icerikCercevesi": "Maddenin Hâl Değişimleri Maddelerin Isı Etkisiyle Değişimi",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u5",
+      "ad": "Mıknatısı Keşfediyorum",
+      "dersSaati": 12,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.4.5.1",
+          "aciklama": "Mıknatısın kutupları ve birbirleriyle etkileşimleri ile ilgili tümevarımsal akıl yürü -"
+        },
+        {
+          "kod": "FB.4.5.2",
+          "aciklama": "Mıknatısın etki ettiği maddelere ilişkin bilimsel gözleme dayalı tahmin yapabilme"
+        },
+        {
+          "kod": "FB.4.5.3",
+          "aciklama": "Mıknatısın kullanım alanlarına yönelik bilimsel sorgulama yapabilme"
+        }
+      ],
+      "icerikCercevesi": "Mıknatısın Kutupları ve Etkileşimleri Mıknatısın Etki Ettiği Maddeler Mıknatısın Kullanım Alanları",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u6",
+      "ad": "Enerji Dedektifleri",
+      "dersSaati": 12,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.4.6.1",
+          "aciklama": "Basit bir elektrik devresi kurmaya ilişkin bilimsel sorgulama yapabilme"
+        },
+        {
+          "kod": "FB.4.6.2",
+          "aciklama": "Elektrik üretiminde yenilenebilir ve yenilenemeyen enerji kaynaklarını kullan -"
+        }
+      ],
+      "icerikCercevesi": "Basit Elektrik Devresi Yenilenebilir ve Yenilenemeyen Enerji Kaynakları",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u7",
+      "ad": "Işığın Peşinde",
+      "dersSaati": 12,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.4.7.1",
+          "aciklama": "Görme olayının gerçekleşebilmesi için ışığın rolüne ilişkin deney yapabilme"
+        },
+        {
+          "kod": "FB.4.7.2",
+          "aciklama": "Doğal ve yapay ışık kaynaklarını karşılaştırabilme"
+        },
+        {
+          "kod": "FB.4.7.3",
+          "aciklama": "Işık kirliliğinin canlılara etkisine ilişkin probleme yönelik çözüm önerilerini de -"
+        }
+      ],
+      "icerikCercevesi": "Işığın Görmedeki Rolü Işık Kaynakları Işık Kirliliği",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "u8",
+      "ad": "Sürdürülebilir Şehirler ve Topluluklar",
+      "dersSaati": 12,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        {
+          "kod": "FB.4.8.1",
+          "aciklama": "Sürdürülebilir bir yaşam alanı kurmaya ilişkin bilimsel sorgulama yapabilme"
+        }
+      ],
+      "icerikCercevesi": "Sürdürülebilir Yaşam",
+      "surecBilesenleri": [
+        "Gözlem",
+        "Sorgulama",
+        "Deney",
+        "Çıkarım"
+      ],
+      "alanBecerileri": [
+        "Bilimsel süreç becerileri",
+        "Kavramsal beceriler"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, akran değerlendirme, ürün dosyası"
+    },
+    {
+      "id": "otp",
+      "ad": "Okul Temelli Planlama",
+      "dersSaati": 6,
+      "hafta": 2,
+      "ogrenmeCiktilari": [],
+      "icerikCercevesi": "Zümre kararlarıyla planlanır",
+      "surecBilesenleri": [],
+      "alanBecerileri": []
+    }
+  ]
+}

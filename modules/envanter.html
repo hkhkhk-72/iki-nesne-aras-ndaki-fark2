@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evrak Envanteri — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+  <script src="../assets/js/components/a11y.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script>window.MINIBILGE_BASE = '../';</script>
+  <script src="../assets/js/components/txs.js"></script>
+  <script src="../assets/js/components/txa.js"></script>
+    <script src="../assets/js/core/offline-sync.js"></script>
+<script src="../assets/js/navigation.js"></script>
+  <script>
+  (async function () {
+    const res = await fetch('../assets/data/evrak-envanteri.json');
+    const env = await res.json();
+
+    const content = `
+      <div class="module-page">
+        <h1>📋 Resmî Evrak Envanteri</h1>
+        <p class="lead">Yıl boyunca üretilecek tüm resmî evraklar. ${env.ozet.aktif} aktif, ${env.ozet.yakinda} yakında, toplam ${env.ozet.toplam} evrak.</p>
+        <div class="roadmap-bar" style="margin-bottom:20px;"><div class="roadmap-fill" style="width:${Math.round(env.ozet.aktif/env.ozet.toplam*100)}%"></div></div>
+        ${env.kategoriler.map(kat => `
+          <div class="dashboard-card" style="background:var(--glass);margin-bottom:16px;padding:18px;border-radius:var(--radius);">
+            <h3>${kat.ad}</h3>
+            ${kat.evraklar.map(e => `
+              <div class="list-item">
+                <span>${e.ad}</span>
+                <span>
+                  <span class="status-badge ${e.durum}">${e.durum}</span>
+                  ${e.durum === 'aktif' || e.durum === 'kismi' ? `<a href="${e.modul.startsWith('documents/') ? '../' + e.modul : e.modul.replace('modules/','')}" class="quick-btn" style="padding:4px 8px;font-size:0.7rem;margin-left:6px;">Aç</a>` : ''}
+                </span>
+              </div>`).join('')}
+          </div>`).join('')}
+      </div>`;
+
+    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('okul-evraklari', content);
+  })();
+  </script>
+</body>
+</html>

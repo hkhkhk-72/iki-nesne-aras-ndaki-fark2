@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kulüp Evrakları — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+  <script src="../assets/js/components/a11y.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../assets/js/components/txs.js"></script>
+  <script src="../assets/js/components/txa.js"></script>
+    <script src="../assets/js/core/offline-sync.js"></script>
+<script src="../assets/js/navigation.js"></script>
+  <script>
+  document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('kulup', `
+    <div class="module-page">
+      <h1>🎭 Kulüp Evrakları</h1>
+      <p class="lead">Kulüp faaliyet raporu, planı ve değerlendirme belgeleri.</p>
+      <div class="quick-actions" style="margin-top:16px;">
+        <a href="../documents/olustur.html?id=kulup-faaliyet-raporu" class="quick-btn primary">Kulüp Faaliyet Raporu</a>
+        <a href="../documents/olustur.html?id=etkinlik-plani" class="quick-btn">Etkinlik Planı</a>
+      </div>
+    </div>`);
+  </script>
+</body>
+</html>

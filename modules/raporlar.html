@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raporlar — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+  <script src="../assets/js/components/a11y.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script>window.MINIBILGE_BASE = '../';</script>
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/core/offline-sync.js"></script>
+  <script src="../assets/js/components/txs.js"></script>
+  <script src="../assets/js/components/txa.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+    const plans = MiniBilgeStorage.getPlans();
+    const docs = MiniBilgeStorage.getDocuments();
+    const yillik = plans.filter(p => p.tur === 'yillik').length;
+    const gunluk = plans.filter(p => p.tur === 'gunluk').length;
+    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('raporlar', `
+      <div class="dash">
+        <header class="dash-hero">
+          <p class="brand-kicker">Raporlar</p>
+          <h1>Öğretimsel özet</h1>
+          <p class="dash-date">İlerleme, kapsama ve evrak üretimi — domain verisine bağlanacak.</p>
+        </header>
+        <section class="mb-section">
+          <h2>Plan tamamlama</h2>
+          <p class="section-lead">Şu ana kadar ürettiğiniz planlar.</p>
+          <div class="lesson-strip">
+            <div class="lesson-row"><div class="lesson-name">Yıllık plan</div><div class="lesson-meta">${yillik} adet</div></div>
+            <div class="lesson-row"><div class="lesson-name">Günlük plan</div><div class="lesson-meta">${gunluk} adet</div></div>
+            <div class="lesson-row"><div class="lesson-name">İndirilen evrak</div><div class="lesson-meta">${docs.length} adet</div></div>
+          </div>
+        </section>
+        <section class="mb-section">
+          <h2>Yakında</h2>
+          <p class="section-lead">İşlenen öğrenme çıktıları, beceri/değer/eğilim kapsama oranı (MB-DM + MB-TWE).</p>
+        </section>
+      </div>
+    `);
+  </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+{
+  "ders": "Türkçe",
+  "dersId": "turkce",
+  "sinif": 1,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2024",
+  "kaynak": "MEB TYMM İlkokul Türkçe Dersi Öğretim Programı (1-4) 2024 — onaylı PDF",
+  "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programtur1234Onayli.pdf",
+  "toplamDersSaati": 360,
+  "haftalikDersSaati": 10,
+  "ilkOkumaYazma": {
+    "yontem": "Ses Esaslı İlk Okuma Yazma Öğretimi",
+    "harfYazimi": "tırnaksız dik temel harfler",
+    "harfGruplari": [
+      { "grup": 1, "hafta": 6, "harfler": "a-A, n-N, e-E, t-T", "rakamlar": "1,2,3,4" },
+      { "grup": 2, "hafta": 4 },
+      { "grup": 3, "hafta": 2 },
+      { "grup": 4, "hafta": 2 },
+      { "grup": 5, "hafta": 2 }
+    ]
+  },
+  "temalar": [
+    {
+      "id": "hazirlik",
+      "ad": "İlk Okuma Yazmaya Hazırlık Çalışmaları",
+      "dersSaati": 10,
+      "hafta": 1,
+      "ogrenmeCiktilari": [
+        { "kod": "T.D.1.2", "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme" },
+        { "kod": "T.D.1.3", "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme" },
+        { "kod": "T.Y.1.1", "aciklama": "Yazılı anlatım becerilerini yönetebilme" }
+      ],
+      "alanBecerileri": ["TAB1. Dinleme/İzleme", "TAB2. Okuma", "TAB3. Konuşma", "TAB4. Yazma"],
+      "icerikCercevesi": "Genel hazırlık, okul olgunluğu, okumaya/yazmaya hazırlık; dinleme, nefes, parmak-el-kol kasları",
+      "surecBilesenleri": ["Dinleme/İzleme", "Yazma"],
+      "olcmeDegerlendirme": "Gözlem, kontrol listesi, performans görevi"
+    },
+    {
+      "id": "t1",
+      "ad": "Güzel Davranışlarımız",
+      "dersSaati": 38,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.D.1.1", "aciklama": "Dinleme/izlemeyi yönetebilme" },
+        { "kod": "T.D.1.2", "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme" },
+        { "kod": "T.D.1.3", "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme" },
+        { "kod": "T.D.1.4", "aciklama": "Dinleme/izleme sürecini değerlendirebilme" },
+        { "kod": "T.K.1.2", "aciklama": "Konuşmalarında içerik oluşturabilme" },
+        { "kod": "T.K.1.3", "aciklama": "Konuşma kurallarını uygulayabilme" },
+        { "kod": "T.O.1.1", "aciklama": "Okuma sürecini yönetebilme" },
+        { "kod": "T.Y.1.1", "aciklama": "Yazılı anlatım becerilerini yönetebilme" },
+        { "kod": "T.Y.1.2", "aciklama": "Yazılarında içerik oluşturabilme" },
+        { "kod": "T.Y.1.3", "aciklama": "Yazma kurallarını uygulayabilme" }
+      ],
+      "alanBecerileri": ["TAB1", "TAB2", "TAB3", "TAB4"],
+      "icerikCercevesi": "Etik, nezaket, dürüstlük, ailede sorumluluk, dostluk, saygı, sevgi; harfler: a-A, n-N, e-E, t-T; rakamlar 1-4",
+      "surecBilesenleri": ["Dinleme/İzleme", "Konuşma", "Okuma", "Yazma"],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Öğrenme kanıtları: gözlem, kontrol listesi, performans görevi"
+    },
+    {
+      "id": "t2",
+      "ad": "Mustafa Kemal'den Atatürk'e",
+      "dersSaati": 38,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.D.1.1", "aciklama": "Dinleme/izlemeyi yönetebilme" },
+        { "kod": "T.D.1.2", "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme" },
+        { "kod": "T.D.1.3", "aciklama": "Dinlediği/izlediğini çözümleyebilme" },
+        { "kod": "T.D.1.4", "aciklama": "Dinleme/izleme sürecini değerlendirebilme" },
+        { "kod": "T.K.1.2", "aciklama": "Konuşmalarında içerik oluşturabilme" },
+        { "kod": "T.K.1.3", "aciklama": "Konuşma kurallarını uygulayabilme" },
+        { "kod": "T.O.1.1", "aciklama": "Okuma sürecini yönetebilme" },
+        { "kod": "T.Y.1.1", "aciklama": "Yazılı anlatım becerilerini yönetebilme" },
+        { "kod": "T.Y.1.2", "aciklama": "Yazılarında içerik oluşturabilme" },
+        { "kod": "T.Y.1.3", "aciklama": "Yazma kurallarını uygulayabilme" }
+      ],
+      "alanBecerileri": ["TAB1", "TAB2", "TAB3", "TAB4"],
+      "icerikCercevesi": "Mustafa Kemal Atatürk, 23 Nisan, 19 Mayıs, millî bayramlar ve kahramanlık",
+      "surecBilesenleri": ["Dinleme/İzleme", "Konuşma", "Okuma", "Yazma"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
+    },
+    {
+      "id": "t3",
+      "ad": "Çevremizdeki Yaşam",
+      "dersSaati": 38,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.D.1.1", "aciklama": "Dinleme/izlemeyi yönetebilme" },
+        { "kod": "T.D.1.2", "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme" },
+        { "kod": "T.D.1.3", "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme" },
+        { "kod": "T.O.1.1", "aciklama": "Okuma sürecini yönetebilme" },
+        { "kod": "T.Y.1.1", "aciklama": "Yazılı anlatım becerilerini yönetebilme" },
+        { "kod": "T.Y.1.2", "aciklama": "Yazılarında içerik oluşturabilme" },
+        { "kod": "T.Y.1.3", "aciklama": "Yazma kurallarını uygulayabilme" },
+        { "kod": "T.K.1.2", "aciklama": "Konuşmalarında içerik oluşturabilme" },
+        { "kod": "T.K.1.3", "aciklama": "Konuşma kurallarını uygulayabilme" },
+        { "kod": "T.D.1.4", "aciklama": "Dinleme/izleme sürecini değerlendirebilme" }
+      ],
+      "alanBecerileri": ["TAB1", "TAB2", "TAB3", "TAB4"],
+      "icerikCercevesi": "Doğa, çevre, canlılar, yaşam alanları",
+      "surecBilesenleri": ["Dinleme/İzleme", "Konuşma", "Okuma", "Yazma"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
+    },
+    {
+      "id": "t4",
+      "ad": "Yol Arkadaşımız Kitaplar",
+      "dersSaati": 38,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.D.1.1", "aciklama": "Dinleme/izlemeyi yönetebilme" },
+        { "kod": "T.D.1.2", "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme" },
+        { "kod": "T.D.1.3", "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme" },
+        { "kod": "T.O.1.1", "aciklama": "Okuma sürecini yönetebilme" },
+        { "kod": "T.Y.1.1", "aciklama": "Yazılı anlatım becerilerini yönetebilme" },
+        { "kod": "T.Y.1.3", "aciklama": "Yazma kurallarını uygulayabilme" },
+        { "kod": "T.K.1.2", "aciklama": "Konuşmalarında içerik oluşturabilme" },
+        { "kod": "T.K.1.3", "aciklama": "Konuşma kurallarını uygulayabilme" },
+        { "kod": "T.D.1.4", "aciklama": "Dinleme/izleme sürecini değerlendirebilme" }
+      ],
+      "alanBecerileri": ["TAB1", "TAB2", "TAB3", "TAB4"],
+      "icerikCercevesi": "Kitap sevgisi, okuma kültürü, kütüphane",
+      "surecBilesenleri": ["Dinleme/İzleme", "Konuşma", "Okuma", "Yazma"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
+    },
+    {
+      "id": "t5",
+      "ad": "Yeteneklerimizi Keşfediyoruz",
+      "dersSaati": 38,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.D.1.1", "aciklama": "Dinleme/izlemeyi yönetebilme" },
+        { "kod": "T.K.1.1", "aciklama": "Konuşmalarını yönetebilme" },
+        { "kod": "T.O.1.1", "aciklama": "Okuma sürecini yönetebilme" },
+        { "kod": "T.O.1.2", "aciklama": "Okudukları ile ilgili anlam oluşturabilme" },
+        { "kod": "T.O.1.3", "aciklama": "Okuduklarını çözümleyebilme" },
+        { "kod": "T.Y.1.1", "aciklama": "Yazılı anlatım becerilerini yönetebilme" },
+        { "kod": "T.Y.1.2", "aciklama": "Yazılarında içerik oluşturabilme" },
+        { "kod": "T.Y.1.3", "aciklama": "Yazma kurallarını uygulayabilme" },
+        { "kod": "T.K.1.2", "aciklama": "Konuşmalarında içerik oluşturabilme" },
+        { "kod": "T.K.1.3", "aciklama": "Konuşma kurallarını uygulayabilme" },
+        { "kod": "T.D.1.3", "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme" }
+      ],
+      "alanBecerileri": ["TAB1", "TAB2", "TAB3", "TAB4"],
+      "icerikCercevesi": "Yetenekler, ilgi alanları, kendini ifade etme",
+      "surecBilesenleri": ["Dinleme/İzleme", "Konuşma", "Okuma", "Yazma"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
+    },
+    {
+      "id": "t6",
+      "ad": "Minik Kâşifler",
+      "dersSaati": 38,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.D.1.1", "aciklama": "Dinleme/izlemeyi yönetebilme" },
+        { "kod": "T.D.1.2", "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme" },
+        { "kod": "T.O.1.1", "aciklama": "Okuma sürecini yönetebilme" },
+        { "kod": "T.O.1.2", "aciklama": "Okudukları ile ilgili anlam oluşturabilme" },
+        { "kod": "T.O.1.3", "aciklama": "Okuduklarını çözümleyebilme" },
+        { "kod": "T.Y.1.1", "aciklama": "Yazılı anlatım becerilerini yönetebilme" },
+        { "kod": "T.Y.1.2", "aciklama": "Yazılarında içerik oluşturabilme" },
+        { "kod": "T.Y.1.3", "aciklama": "Yazma kurallarını uygulayabilme" },
+        { "kod": "T.K.1.1", "aciklama": "Konuşmalarını yönetebilme" },
+        { "kod": "T.K.1.2", "aciklama": "Konuşmalarında içerik oluşturabilme" },
+        { "kod": "T.K.1.3", "aciklama": "Konuşma kurallarını uygulayabilme" },
+        { "kod": "T.D.1.3", "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme" }
+      ],
+      "alanBecerileri": ["TAB1", "TAB2", "TAB3", "TAB4"],
+      "icerikCercevesi": "Keşif, merak, bilim ve gözlem",
+      "surecBilesenleri": ["Dinleme/İzleme", "Konuşma", "Okuma", "Yazma"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
+    },
+    {
+      "id": "t7",
+      "ad": "Atalarımızın İzleri",
+      "dersSaati": 38,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.D.1.1", "aciklama": "Dinleme/izlemeyi yönetebilme" },
+        { "kod": "T.D.1.2", "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme" },
+        { "kod": "T.D.1.3", "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme" },
+        { "kod": "T.D.1.4", "aciklama": "Dinleme/izleme sürecini değerlendirebilme" },
+        { "kod": "T.K.1.1", "aciklama": "Konuşmalarını yönetebilme" },
+        { "kod": "T.K.1.2", "aciklama": "Konuşmalarında içerik oluşturabilme" },
+        { "kod": "T.K.1.3", "aciklama": "Konuşma kurallarını uygulayabilme" },
+        { "kod": "T.K.1.4", "aciklama": "Konuşma sürecini değerlendirebilme" },
+        { "kod": "T.O.1.1", "aciklama": "Okuma sürecini yönetebilme" },
+        { "kod": "T.O.1.2", "aciklama": "Okudukları ile ilgili anlam oluşturabilme" },
+        { "kod": "T.O.1.3", "aciklama": "Okuduklarını çözümleyebilme" },
+        { "kod": "T.O.1.4", "aciklama": "Okuma sürecine etki eden durumları gözden geçirebilme" },
+        { "kod": "T.O.1.5", "aciklama": "Okuma sürecini değerlendirebilme" },
+        { "kod": "T.Y.1.1", "aciklama": "Yazılı anlatım becerilerini yönetebilme" },
+        { "kod": "T.Y.1.2", "aciklama": "Yazılarında içerik oluşturabilme" },
+        { "kod": "T.Y.1.3", "aciklama": "Yazma kurallarını uygulayabilme" },
+        { "kod": "T.Y.1.4", "aciklama": "Yazma sürecini değerlendirebilme" }
+      ],
+      "alanBecerileri": ["TAB1", "TAB2", "TAB3", "TAB4"],
+      "icerikCercevesi": "Millî kültür, gelenek, tarihî miras",
+      "surecBilesenleri": ["Dinleme/İzleme", "Konuşma", "Okuma", "Yazma"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
+    },
+    {
+      "id": "t8",
+      "ad": "Sorumluluklarımızın Farkındayız",
+      "dersSaati": 38,
+      "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "T.D.1.1", "aciklama": "Dinleme/izlemeyi yönetebilme" },
+        { "kod": "T.D.1.2", "aciklama": "Dinledikleri/izledikleri ile ilgili anlam oluşturabilme" },
+        { "kod": "T.D.1.3", "aciklama": "Dinlediklerini/izlediklerini çözümleyebilme" },
+        { "kod": "T.D.1.4", "aciklama": "Dinleme/izleme sürecini değerlendirebilme" },
+        { "kod": "T.K.1.1", "aciklama": "Konuşmalarını yönetebilme" },
+        { "kod": "T.K.1.2", "aciklama": "Konuşmalarında içerik oluşturabilme" },
+        { "kod": "T.K.1.3", "aciklama": "Konuşma kurallarını uygulayabilme" },
+        { "kod": "T.K.1.4", "aciklama": "Konuşma sürecini değerlendirebilme" },
+        { "kod": "T.O.1.1", "aciklama": "Okuma sürecini yönetebilme" },
+        { "kod": "T.O.1.2", "aciklama": "Okudukları ile ilgili anlam oluşturabilme" },
+        { "kod": "T.O.1.3", "aciklama": "Okuduklarını çözümleyebilme" },
+        { "kod": "T.O.1.4", "aciklama": "Okuma sürecine etki eden durumları gözden geçirebilme" },
+        { "kod": "T.O.1.5", "aciklama": "Okuma sürecini değerlendirebilme" },
+        { "kod": "T.Y.1.1", "aciklama": "Yazılı anlatım becerilerini yönetebilme" },
+        { "kod": "T.Y.1.2", "aciklama": "Yazılarında içerik oluşturabilme" },
+        { "kod": "T.Y.1.3", "aciklama": "Yazma kurallarını uygulayabilme" },
+        { "kod": "T.Y.1.4", "aciklama": "Yazma sürecini değerlendirebilme" }
+      ],
+      "alanBecerileri": ["TAB1", "TAB2", "TAB3", "TAB4"],
+      "icerikCercevesi": "Haklar, sorumluluklar, demokratik yaşam",
+      "surecBilesenleri": ["Dinleme/İzleme", "Konuşma", "Okuma", "Yazma"],
+      "olcmeDegerlendirme": "Öğrenme kanıtları"
+    }
+  ],
+  "ekSureler": [
+    { "ad": "Pekiştirme Haftası", "dersSaati": 20, "not": "İki ayrı pekiştirme haftası (10+10)" },
+    { "ad": "Hatırlatma Haftası", "dersSaati": 10 },
+    { "ad": "Okul Temelli Planlama", "dersSaati": 16 }
+  ],
+  "kodlama": {
+    "aciklama": "T.D.1.2 → T=Türkçe, D=Dinleme/İzleme (K=Konuşma, O=Okuma, Y=Yazma), 1=sınıf, 2=çıktı no"
+  }
+}

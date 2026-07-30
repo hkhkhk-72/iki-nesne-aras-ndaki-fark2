@@ -1,0 +1,36 @@
+{
+  "egitimYili": "2025-2026",
+  "kaynak": "MEB Çalışma Takvimi (2025-2026)",
+  "donemler": [
+    { "ad": "1. Dönem", "baslangic": "2025-09-08", "bitis": "2026-01-16" },
+    { "ad": "2. Dönem", "baslangic": "2026-02-02", "bitis": "2026-06-19" }
+  ],
+  "tatiller": [
+    { "ad": "Ara Tatil (1. Dönem)", "baslangic": "2025-11-10", "bitis": "2025-11-14", "tur": "ara" },
+    { "ad": "Yarıyıl Tatili", "baslangic": "2026-01-19", "bitis": "2026-01-30", "tur": "yariyil" },
+    { "ad": "Ara Tatil (2. Dönem)", "baslangic": "2026-03-16", "bitis": "2026-03-20", "tur": "ara" },
+    { "ad": "23 Nisan", "baslangic": "2026-04-23", "bitis": "2026-04-23", "tur": "resmi" },
+    { "ad": "1 Mayıs", "baslangic": "2026-05-01", "bitis": "2026-05-01", "tur": "resmi" },
+    { "ad": "19 Mayıs", "baslangic": "2026-05-19", "bitis": "2026-05-19", "tur": "resmi" },
+    { "ad": "Kurban Bayramı Arefesi", "baslangic": "2026-05-26", "bitis": "2026-05-26", "tur": "resmi" },
+    { "ad": "Kurban Bayramı", "baslangic": "2026-05-27", "bitis": "2026-05-30", "tur": "resmi" }
+  ],
+  "belirliGunler": [
+    { "ad": "Öğretmenler Günü", "tarih": "2025-11-24", "tur": "belirli-gun" },
+    { "ad": "Atatürk'ü Anma Günü", "tarih": "2025-11-10", "tur": "belirli-gun" },
+    { "ad": "İnsan Hakları Haftası", "baslangic": "2025-12-10", "bitis": "2025-12-17", "tur": "belirli-hafta" },
+    { "ad": "Yabancı Dil Haftası", "baslangic": "2025-12-15", "bitis": "2025-12-19", "tur": "belirli-hafta" },
+    { "ad": "Veremle Savaş Haftası", "baslangic": "2026-01-05", "bitis": "2026-01-11", "tur": "belirli-hafta" },
+    { "ad": "Yeşilay Haftası", "baslangic": "2026-03-01", "bitis": "2026-03-07", "tur": "belirli-hafta" },
+    { "ad": "Türk Dili Haftası", "baslangic": "2026-03-09", "bitis": "2026-03-15", "tur": "belirli-hafta" },
+    { "ad": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "tarih": "2026-04-23", "tur": "belirli-gun" },
+    { "ad": "19 Mayıs Atatürk'ü Anma Gençlik ve Spor Bayramı", "tarih": "2026-05-19", "tur": "belirli-gun" },
+    { "ad": "Çevre Haftası", "baslangic": "2026-06-01", "bitis": "2026-06-07", "tur": "belirli-hafta" }
+  ],
+  "haftalikDersSaati": {
+    "1": { "turkce": 10, "matematik": 5, "hayatBilgisi": 4, "bedenEgitimi": 5, "gorselSanatlar": 1, "muzik": 1, "serbestEtkinlikler": 4 },
+    "2": { "turkce": 10, "matematik": 5, "hayatBilgisi": 4, "ingilizce": 2, "bedenEgitimi": 5, "gorselSanatlar": 1, "muzik": 1, "serbestEtkinlikler": 2 },
+    "3": { "turkce": 8, "matematik": 5, "fen": 3, "hayatBilgisi": 3, "ingilizce": 2, "bedenEgitimi": 5, "gorselSanatlar": 1, "muzik": 1, "serbestEtkinlikler": 2 },
+    "4": { "turkce": 8, "matematik": 5, "fen": 3, "sosyal": 3, "ingilizce": 2, "dinKulturu": 2, "insanHaklari": 2, "trafikGuvenligi": 1, "bedenEgitimi": 2, "gorselSanatlar": 1, "muzik": 1 }
+  }
+}

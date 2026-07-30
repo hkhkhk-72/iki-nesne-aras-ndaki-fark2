@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiniBilge — Components Lab (MB-COMP-001)</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <script src="../assets/js/components/a11y.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/core/offline-sync.js"></script>
+  <script src="../assets/js/core/hub-config.js"></script>
+  <script src="../assets/js/core/calendar-engine.js"></script>
+  <script src="../assets/js/core/document-dna.js"></script>
+  <script src="../assets/js/core/document/event-bus.js"></script>
+  <script src="../assets/js/core/document/repository.js"></script>
+  <script src="../assets/js/core/document/services.js"></script>
+  <script src="../assets/js/core/document/engine.js"></script>
+  <script src="../assets/js/core/aos/event-bus.js"></script>
+  <script src="../assets/js/core/aos/container.js"></script>
+  <script src="../assets/js/core/aos/automation.js"></script>
+  <script src="../assets/js/core/aos/kernel.js"></script>
+  <script src="../assets/js/core/context-cache.js"></script>
+  <script src="../assets/js/core/context-engine.js"></script>
+  <script src="../assets/js/components/mb-components.js"></script>
+  <script src="../assets/js/components/mb-library.js"></script>
+  <script src="../assets/js/components/nav.js"></script>
+  <script src="../assets/js/components/status.js"></script>
+  <script src="../assets/js/components/interaction.js"></script>
+  <script src="../assets/js/components/motion.js"></script>
+  <script src="../assets/js/components/progress-board.js"></script>
+  <script src="../assets/js/components/notify.js"></script>
+  <script src="../assets/js/components/txs.js"></script>
+  <script src="../assets/js/components/txa.js"></script>
+  <script src="../assets/js/components/ai.js"></script>
+  <script src="../assets/js/components/forms.js"></script>
+  <script src="../assets/js/components/table.js"></script>
+  <script src="../assets/js/components/document.js"></script>
+  <script src="../assets/js/components/dashboard.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+    (function () {
+      const C = MiniBilgeComponents;
+      const body = `
+        <div class="dash mbc-lab-grid">
+          <header class="dash-hero">
+            <p class="brand-kicker">MiniBilge Öğretmen</p>
+            <h1>Components Lab</h1>
+            <p class="dash-date">FAZ 6 · MB-COMP-001 — Everything is a Component (MD-025)</p>
+            <div id="lab-tabs"></div>
+          </header>
+
+          <section class="mbc-lab-section">
+            <h2>Navigation</h2>
+            <div id="lab-nav"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>Status (COMP-005)</h2>
+            <div class="mbc-lab-row" id="lab-status"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>AI (COMP-004)</h2>
+            <div class="mbc-lab-row" id="lab-ai"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>Notifications (COMP-006)</h2>
+            <div id="lab-banner"></div>
+            <div class="mbc-lab-row" id="lab-notify-btns"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>Smart Forms</h2>
+            <div id="lab-school" style="margin-bottom:14px;"></div>
+            <div id="lab-lesson" style="margin-bottom:14px;"></div>
+            <div id="lab-date" style="margin-bottom:14px;"></div>
+            <div id="lab-student"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>Universal Table (COMP-003)</h2>
+            <div id="lab-table"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>Document Builder (COMP-002)</h2>
+            <div id="lab-doc"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>Document OS — DNA + Smart Form (IA-003)</h2>
+            <div id="lab-dna"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>TXS — Teacher Experience (MB-DS-002)</h2>
+            <p class="section-lead">AI Confidence · Never Empty · Progressive Disclosure · sağ alt FAB</p>
+            <div class="mbc-lab-row" id="lab-txs-conf" style="margin-bottom:12px;"></div>
+            <div id="lab-txs-empty" style="margin-bottom:12px;"></div>
+            <div id="lab-txs-advanced"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>İlerleme — Tamam% / Kaldı%</h2>
+            <p class="section-lead">docs/ILERLEME.md · her teslimatta güncellenir</p>
+            <div id="lab-progress"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>ML — Motion Language (MB-DS-005)</h2>
+            <p class="section-lead">Yalnızca başarı · hata · yükleme · geçiş · max 300ms · bekletmez</p>
+            <div id="lab-ml-target" class="mb-section" style="padding:16px;border:1px solid var(--mb-line);border-radius:12px;margin-bottom:12px;">
+              Hedef yüzey — motion buraya uygulanır
+            </div>
+            <div class="mbc-lab-row" id="lab-ml-btns" style="margin-bottom:16px; gap:8px; flex-wrap:wrap;"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>IS — Interaction Standards (MB-DS-003)</h2>
+            <p class="section-lead">Hover 180ms · Click 100ms · Snackbar 3sn · Skeleton · Undo 5sn · Autosave 30sn · Search debounce 300ms</p>
+            <div id="lab-is-skel" style="margin-bottom:12px;"></div>
+            <div class="mbc-lab-row" id="lab-is-btns" style="margin-bottom:12px; gap:8px; flex-wrap:wrap;"></div>
+            <label class="mbc-field" style="max-width:360px;">
+              <span class="mbc-field-label">Arama (300ms debounce)</span>
+              <input id="lab-is-search" class="mbc-input" type="search" placeholder="Yazın…">
+            </label>
+            <p id="lab-is-search-out" class="section-lead" style="margin-top:8px;"></p>
+            <form id="lab-is-form" class="mbc-smart-form" style="margin-top:12px; max-width:360px;">
+              <p class="mbc-smart-lead">Autosave demo (30 sn / manuel flush)</p>
+              <input class="mbc-input" name="not" placeholder="Not yazın" style="margin-bottom:8px;">
+              <button type="button" class="quick-btn compact" id="lab-is-flush">Şimdi kaydet</button>
+            </form>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>UCL — Universal Component Library (MB-DS-007 · MD-046)</h2>
+            <p class="section-lead">Standart Mb* API · MiniBilgeLib · %75 tamam · %25 kaldı</p>
+            <div id="lab-ucl-core" style="margin-bottom:14px;"></div>
+            <div id="lab-ucl-doc" style="margin-bottom:14px;"></div>
+            <div id="lab-ucl-workflow" style="margin-bottom:14px;"></div>
+            <div id="lab-ucl-state" style="margin-bottom:14px;"></div>
+            <div id="lab-ucl-catalog"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>DOS-002 — Document OS Core (MD-047)</h2>
+            <p class="section-lead">Belge canlı entity · Event Bus · Dependency Graph · Workflow → Engine · %70 tamam · %30 kaldı</p>
+            <div id="lab-dos-core"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>AOS-001 — Academic Kernel (MD-048)</h2>
+            <p class="section-lead">En üst mimari standart · 10 katman · DI · Global Event Bus · %68 tamam · %32 kaldı</p>
+            <div id="lab-aos-core"></div>
+          </section>
+        </div>`;
+
+      document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('home', body);
+
+      let active = (MiniBilgeStorage.getSettings().varsayilanSinif || '1');
+      function mountTabs() {
+        C.ClassTabs({
+          active,
+          onChange(s) {
+            active = s;
+            MiniBilgeStorage.saveSettings({ varsayilanSinif: s });
+            C.notify.success(s + '. sınıf bağlamı ayarlandı');
+            mountTabs();
+            C.LessonSelector({ sinif: s }).mount('#lab-lesson');
+          }
+        }).mount('#lab-tabs');
+      }
+      mountTabs();
+
+      C.Breadcrumb({
+        crumbs: [
+          { label: 'Ana Sayfa', href: '../index.html' },
+          { label: 'Components Lab' }
+        ]
+      }).mount('#lab-nav');
+
+      ['ready', 'editing', 'updated', 'missing'].forEach(s => {
+        document.getElementById('lab-status').insertAdjacentHTML('beforeend', C.StatusBadge({ status: s }).html);
+      });
+
+      ['AiCreate', 'AiSuggest', 'AiFix', 'AiUpdate', 'AiCheck'].forEach(name => {
+        const node = document.createElement('div');
+        document.getElementById('lab-ai').appendChild(node);
+        C[name]({
+          onClick() { C.notify.info(name + ' tetiklendi (demo)'); }
+        }).mount(node);
+      });
+
+      if (window.MiniBilgeTxs) {
+        ['resmi', 'oneri', 'taslak'].forEach(level => {
+          document.getElementById('lab-txs-conf').insertAdjacentHTML(
+            'beforeend',
+            MiniBilgeTxs.AiConfidence({ level }).html + ' '
+          );
+        });
+        MiniBilgeTxs.EmptyState({
+          title: 'Örnek veri hazır',
+          message: 'Yeni kullanıcıda bile yardım ve öneriler görünür.',
+          hint: 'TXS-007 Never Empty',
+          actions: [
+            { label: 'Ana sayfa', href: '../index.html', primary: true },
+            { label: 'AI Asistan', href: 'ai.html' }
+          ]
+        }).mount('#lab-txs-empty');
+        MiniBilgeTxs.AdvancedPanel({
+          bodyHtml: '<p>İleri düzey seçenekler yalnızca ihtiyaç halinde açılır (TXS-006).</p>'
+        }).mount('#lab-txs-advanced');
+      }
+
+      if (window.MiniBilgeProgress) MiniBilgeProgress.mount('#lab-progress');
+
+      if (window.MiniBilgeMotion) {
+        const M = MiniBilgeMotion;
+        const target = '#lab-ml-target';
+        const row = document.getElementById('lab-ml-btns');
+        [
+          ['Başarılı', () => M.success(target)],
+          ['Hata', () => M.error(target)],
+          ['Yükleniyor', () => { M.loading(target); setTimeout(() => M.stopLoading(target), 900); }],
+          ['Geçiş', () => M.transition(target)]
+        ].forEach(([label, fn]) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'quick-btn compact';
+          b.textContent = label;
+          b.addEventListener('click', fn);
+          row.appendChild(b);
+        });
+      }
+
+      if (window.MiniBilgeInteraction) {
+        const I = MiniBilgeInteraction;
+        I.Skeleton({ lines: 4 }).mount('#lab-is-skel');
+        const btns = document.getElementById('lab-is-btns');
+        const undoBtn = document.createElement('button');
+        undoBtn.className = 'quick-btn primary compact';
+        undoBtn.textContent = 'Sil (Undo 5 sn)';
+        undoBtn.addEventListener('click', () => {
+          I.undoable({
+            message: 'Örnek kayıt silindi — 5 sn içinde geri alınabilir',
+            onCommit() { C.notify.success('Kalıcı silindi'); },
+            onUndo() { /* demo */ }
+          });
+        });
+        btns.appendChild(undoBtn);
+        const snackBtn = document.createElement('button');
+        snackBtn.className = 'quick-btn compact';
+        snackBtn.textContent = 'Snackbar 3 sn';
+        snackBtn.addEventListener('click', () => C.notify.info('IS-006 · 3 saniye', 'Snackbar'));
+        btns.appendChild(snackBtn);
+        const searchOut = document.getElementById('lab-is-search-out');
+        const onSearch = I.debounce((e) => {
+          searchOut.textContent = e.target.value
+            ? 'Arama: ' + e.target.value
+            : 'Debounce 300 ms — yazmayı bırakınca güncellenir';
+        });
+        document.getElementById('lab-is-search').addEventListener('input', onSearch);
+        const as = I.autosave({
+          root: '#lab-is-form',
+          key: 'lab-is-autosave',
+          notify: false,
+          save(data) { C.notify.info('Autosave: ' + JSON.stringify(data), 'IS-011'); }
+        });
+        document.getElementById('lab-is-flush').addEventListener('click', () => {
+          as.markDirty();
+          as.flush();
+        });
+      }
+
+      C.Banner({ type: 'info', message: 'Bildirimler tek tasarım dilini kullanır.' }).mount('#lab-banner');
+      const btns = document.getElementById('lab-notify-btns');
+      ['info', 'success', 'warn', 'critical'].forEach(t => {
+        const b = document.createElement('button');
+        b.className = 'mbc-btn-ghost';
+        b.textContent = t;
+        b.addEventListener('click', () => C.notify[t]('Örnek ' + t + ' bildirimi'));
+        btns.appendChild(b);
+      });
+
+      C.SchoolSelector({}).mount('#lab-school');
+      C.LessonSelector({ sinif: active }).mount('#lab-lesson');
+      C.DateSelector({}).mount('#lab-date');
+      C.StudentSelector({}).mount('#lab-student');
+
+      C.UniversalTable({
+        exportName: 'ornek-sinif-listesi',
+        selectable: true,
+        columns: [
+          { id: 'ad', label: 'Öğrenci' },
+          { id: 'no', label: 'No', sortable: true },
+          { id: 'durum', label: 'Durum' }
+        ],
+        rows: [
+          { id: '1', ad: 'Ayşe Yılmaz', no: 1, durum: 'Aktif' },
+          { id: '2', ad: 'Mehmet Demir', no: 2, durum: 'Aktif' },
+          { id: '3', ad: 'Elif Kara', no: 3, durum: 'İzinli' }
+        ]
+      }).mount('#lab-table');
+
+      C.DocumentBuilder({
+        documentType: 'ornek-tutanak',
+        motorId: 'MB-BM',
+        title: 'Örnek Zümre Tutanağı',
+        status: 'editing',
+        blocks: [
+          { type: 'meta', items: [
+            { label: 'Sınıf', value: active + '. Sınıf' },
+            { label: 'Eğitim Yılı', value: '2025-2026' }
+          ]},
+          { type: 'heading', level: 3, text: 'Gündem' },
+          { type: 'paragraph', text: 'Universal Document Builder iskeleti — tüm belgeler aynı gövdeyi kullanır.' },
+          { type: 'signature', roles: ['Öğretmen', 'Müdür'] }
+        ],
+        onExport(fmt) { C.notify.success('Dışa aktarma: ' + fmt); }
+      }).mount('#lab-doc');
+
+      (async function dnaDemo() {
+        const host = document.getElementById('lab-dna');
+        if (!host || !window.DocumentDNA || !window.ContextEngine) {
+          if (host) host.innerHTML = '<p class="empty-state">DNA motoru yüklenemedi.</p>';
+          return;
+        }
+        if (window.ContextCacheService) {
+          await ContextCacheService.load({ force: true });
+        }
+        await DocumentDNA.load();
+        const samples = ['yillik-plan', 'gunluk-plan', 'zumre-toplanti', 'bep'];
+        const cacheLine = window.ContextCacheService && ContextCacheService.isLoaded()
+          ? `<div class="mbc-banner mbc-banner--success" style="margin-bottom:12px;">
+              MD-038 Cache: <strong>${ContextCacheService.get().label}</strong> ·
+              ${ContextCacheService.get().okul.egitimYili} · Load Once
+             </div>`
+          : '';
+        const rows = samples.map(id => {
+          const dna = DocumentDNA.get(id);
+          if (!dna) return '';
+          const pack = ContextEngine.buildDocumentContext({ docId: id, dna });
+          const inputs = pack.userInputs.length
+            ? pack.userInputs.map(u => u.label).join(' · ')
+            : '0 soru (Zero Input + Cache)';
+          const locked = (dna.officialLocked || []).join(', ') || '—';
+          return `<div class="mbc-doc-card" style="margin-bottom:10px;">
+            <div class="mbc-doc-card-top">
+              <h3>${dna.code} — ${dna.name}</h3>
+              <span class="mbc-status mbc-status--ready">${dna.status}</span>
+            </div>
+            <p class="mbc-doc-meta">Motor: ${(dna.motors || []).join(', ')}</p>
+            <p class="mbc-doc-meta">Smart Form: ${inputs}</p>
+            <p class="mbc-doc-meta">Official Lock: ${locked}</p>
+            <p class="mbc-doc-meta">Cache: ${pack.cacheLoaded ? 'evet' : 'hayır'}</p>
+          </div>`;
+        }).join('');
+        host.innerHTML = cacheLine + (rows || '<p class="empty-state">Katalog boş.</p>');
+      })();
+
+      /* MB-DS-007 — Universal Component Library */
+      (function uclDemo() {
+        const L = window.MiniBilgeLib;
+        if (!L) return;
+
+        function slot(parent) {
+          const d = document.createElement('div');
+          d.style.marginBottom = '10px';
+          parent.appendChild(d);
+          return d;
+        }
+        function rowSlot(parent) {
+          const row = document.createElement('div');
+          row.className = 'mbc-lab-row';
+          row.style.cssText = 'gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;';
+          parent.appendChild(row);
+          return row;
+        }
+        function into(row) {
+          const d = document.createElement('div');
+          row.appendChild(d);
+          return d;
+        }
+
+        const core = document.getElementById('lab-ucl-core');
+        if (core) {
+          core.innerHTML = '<h3 class="mbc-lab-sub">Core</h3>';
+          const row = rowSlot(core);
+          L.MbButton({ label: 'Kaydet', primary: true, onClick() { C.notify.success('MbButton'); } }).mount(into(row));
+          L.MbButton({ label: 'İkincil', variant: 'ghost' }).mount(into(row));
+          L.MbBadge({ label: 'Taslak', tone: 'low' }).mount(into(row));
+          L.MbAvatar({ name: 'Ayşe Öğretmen' }).mount(into(row));
+          L.MbInput({ label: 'Başlık', placeholder: 'Belge adı' }).mount(slot(core));
+          L.MbDropdown({
+            label: 'Dönem',
+            options: [{ value: '1', label: '1. Dönem' }, { value: '2', label: '2. Dönem' }],
+            value: '1'
+          }).mount(slot(core));
+          L.MbSearch({ placeholder: 'Belge ara…', onSearch(v) { if (v) C.notify.info(v, 'MbSearch'); } }).mount(slot(core));
+          L.MbCard({ title: 'MbCard', body: 'Standart kart — Atölye Işığı yüzeyi.' }).mount(slot(core));
+          L.MbProgress({ label: 'İlerleme', complete: 75 }).mount(slot(core));
+          L.MbTabs({
+            tabs: [{ id: 'a', label: 'Özet' }, { id: 'b', label: 'Detay' }],
+            active: 'a',
+            onChange(id) { C.notify.info(id, 'MbTabs'); }
+          }).mount(slot(core));
+          L.MbContextBar({}).mount(slot(core));
+          L.MbClassSelector({ activeSinif: '1', activeSube: 'A' }).mount(slot(core));
+          L.MbCommandPalette({}).mount(slot(core));
+          L.MbFloatingAI({ screen: 'components-lab' });
+        }
+
+        const doc = document.getElementById('lab-ucl-doc');
+        if (doc) {
+          doc.innerHTML = '<h3 class="mbc-lab-sub">Belge</h3>';
+          const row = rowSlot(doc);
+          L.MbDocumentStatus({ status: 'editing' }).mount(into(row));
+          L.MbAutosaveIndicator({ state: 'saved' }).mount(into(row));
+          L.MbSyncIndicator({ state: 'synced' }).mount(into(row));
+          L.MbRecentDocuments({ documents: [
+            { id: '1', title: '5-A Matematik Yıllık Plan', createdAt: '2026-07-30' },
+            { id: '2', title: 'Günlük Plan — Kesirler', createdAt: '2026-07-29' }
+          ] }).mount(slot(doc));
+          L.MbVersionHistory({}).mount(slot(doc));
+          L.MbPreview({ title: 'Önizleme', body: 'Belge önizleme gövdesi', status: 'ready' }).mount(slot(doc));
+          L.MbNotificationCenter({}).mount(slot(doc));
+        }
+
+        const wf = document.getElementById('lab-ucl-workflow');
+        if (wf) {
+          wf.innerHTML = '<h3 class="mbc-lab-sub">İş akışı</h3>';
+          L.MbTeacherDashboard({ title: 'Bugün', complete: 90 }).mount(slot(wf));
+          L.MbWorkflowStepper({ stages: ['Hazırlık', 'Uygulama', 'Ölçme', 'Yansıtma'], active: 2 }).mount(slot(wf));
+          L.MbLessonTimeline({}).mount(slot(wf));
+          L.MbLessonExecution({ status: 'READY' }).mount(slot(wf));
+          L.MbAttendanceBar({ present: 24, absent: 2, late: 1 }).mount(slot(wf));
+          L.MbReflectionCard({ text: 'Ders sonrası kısa yansıtma' }).mount(slot(wf));
+          L.MbAssessmentPanel({}).mount(slot(wf));
+          L.MbAnalyticsCard({}).mount(slot(wf));
+          L.MbCalendar({ title: 'Haftalık', week: 12 }).mount(slot(wf));
+          L.MbWizard({
+            steps: ['Bağlam', 'İçerik', 'Onay'],
+            step: 1,
+            bodyHtml: '<p class="section-lead">Sınıf / ders seç</p>',
+            onNext() { C.notify.info('İleri', 'MbWizard'); }
+          }).mount(slot(wf));
+          L.MbQuickActions({
+            items: [
+              { label: 'Yıllık plan', href: 'yillik-plan.html' },
+              { label: 'Günlük plan', href: 'gunluk-plan.html' },
+              { label: 'Yoklama', href: '../documents/olustur.html?id=devamsizlik-takip' }
+            ]
+          }).mount(slot(wf));
+          L.MbTable({
+            columns: [{ id: 'ad', label: 'Ad' }, { id: 'durum', label: 'Durum' }],
+            rows: [{ id: '1', ad: 'Yıllık Plan', durum: 'Taslak' }, { id: '2', ad: 'Günlük Plan', durum: 'Hazır' }]
+          }).mount(slot(wf));
+          L.MbStepper({ steps: ['Bilgi', 'Doğrula', 'Üret'], active: 2 }).mount(slot(wf));
+          L.MbTimeline({
+            items: [
+              { title: 'Hazırlık', meta: '08:30', body: 'Materyal kontrol' },
+              { title: 'Uygulama', meta: '09:00', body: 'Ana etkinlik' }
+            ]
+          }).mount(slot(wf));
+        }
+
+        const st = document.getElementById('lab-ucl-state');
+        if (st) {
+          st.innerHTML = '<h3 class="mbc-lab-sub">Durum</h3>';
+          L.MbEmptyState({
+            title: 'Henüz belge yok',
+            message: 'İlk belgeni oluşturarak başla.',
+            actions: [{ label: 'Yeni belge', href: '../index.html', primary: true }]
+          }).mount(slot(st));
+          L.MbSkeletonLoader({ lines: 3 }).mount(slot(st));
+          L.MbOfflineBanner({ message: 'Çevrimdışı demo — değişiklikler yerelde saklanır.' }).mount(slot(st));
+        }
+
+        const cat = document.getElementById('lab-ucl-catalog');
+        if (cat) {
+          const missing = L.catalog.filter(function (name) { return typeof L[name] !== 'function'; });
+          cat.innerHTML = '<h3 class="mbc-lab-sub">Katalog · ' + L.catalog.length + ' Mb* · eksik: ' + missing.length + '</h3>';
+          const grid = document.createElement('div');
+          grid.className = 'mb-lib-catalog-grid';
+          L.catalog.forEach(function (name) {
+            const item = document.createElement('div');
+            item.className = 'mb-lib-catalog-item';
+            item.innerHTML = '<code>' + name + '</code>';
+            grid.appendChild(item);
+          });
+          cat.appendChild(grid);
+        }
+      })();
+
+      /* MB-DOS-002 — Document OS Core */
+      (function dosCoreDemo() {
+        const host = document.getElementById('lab-dos-core');
+        if (!host || !window.DocumentEngine) {
+          if (host) host.innerHTML = '<p class="empty-state">Document Engine yüklenemedi.</p>';
+          return;
+        }
+        const L = window.MiniBilgeLib;
+        const E = window.DocumentEngine;
+        const log = [];
+        if (window.DocumentEventBus) {
+          DocumentEventBus.onAny(function (evt) {
+            log.unshift(evt.type + ' · ' + (evt.payload && evt.payload.documentId || ''));
+          });
+        }
+
+        let doc = E.CreateDocument({
+          documentType: 'yillik-plan',
+          title: 'Demo Yıllık Plan',
+          dependencies: [],
+          tags: ['lab', 'demo'],
+          metadata: { inputs: {} }
+        });
+        const gen = E.GenerateDocument(doc.id, {});
+        doc = gen.document;
+        E.PreviewDocument(doc.id);
+        const exported = E.ExportDocument(doc.id, 'html');
+
+        host.innerHTML = '';
+        const intro = document.createElement('div');
+        intro.className = 'mbc-banner mbc-banner--success';
+        intro.style.marginBottom = '12px';
+        intro.innerHTML = 'MD-047 Document Engine · <strong>' + doc.id + '</strong> · v' + doc.version +
+          ' · export ' + (exported && exported.format);
+        host.appendChild(intro);
+
+        function slot() {
+          const d = document.createElement('div');
+          d.style.marginBottom = '10px';
+          host.appendChild(d);
+          return d;
+        }
+        if (L) {
+          L.MbDocumentStatus({ status: doc.status }).mount(slot());
+          L.MbDocWorkflowTimeline({ active: 'Generate' }).mount(slot());
+          L.MbVersionHistory({ documentId: doc.id }).mount(slot());
+          L.MbDependencyViewer({ documentId: doc.id }).mount(slot());
+        }
+
+        const events = document.createElement('div');
+        events.className = 'mb-lib-card';
+        events.innerHTML = '<strong>Event Bus (son)</strong><ul style="margin:8px 0 0;padding-left:18px;">' +
+          (DocumentEventBus.getHistory().slice(-8).reverse().map(function (e) {
+            return '<li><code>' + e.type + '</code> · ' + (e.at || '').slice(11, 19) + '</li>';
+          }).join('') || '<li>Yok</li>') + '</ul>';
+        host.appendChild(events);
+
+        const actions = document.createElement('div');
+        actions.className = 'mbc-lab-row';
+        actions.style.cssText = 'gap:8px;flex-wrap:wrap;margin-top:12px;';
+        const archBtn = document.createElement('button');
+        archBtn.type = 'button';
+        archBtn.className = 'quick-btn compact';
+        archBtn.textContent = 'Arşivle';
+        archBtn.addEventListener('click', function () {
+          E.ArchiveDocument(doc.id);
+          C.notify.success('Arşivlendi');
+          dosCoreDemo();
+        });
+        actions.appendChild(archBtn);
+        const wfBtn = document.createElement('button');
+        wfBtn.type = 'button';
+        wfBtn.className = 'quick-btn primary compact';
+        wfBtn.textContent = 'Workflow → Create';
+        wfBtn.addEventListener('click', function () {
+          if (window.WorkflowEngine) {
+            const r = WorkflowEngine.triggerDocument('gunluk-plan', { title: 'Workflow günlük plan' });
+            C.notify.success(r.document ? r.document.id : 'tetiklendi');
+          }
+        });
+        actions.appendChild(wfBtn);
+        host.appendChild(actions);
+      })();
+
+      /* MB-AOS-001 — Academic Kernel */
+      (function aosDemo() {
+        const host = document.getElementById('lab-aos-core');
+        if (!host || !window.AcademicKernel) {
+          if (host) host.innerHTML = '<p class="empty-state">Academic Kernel yüklenemedi.</p>';
+          return;
+        }
+        const status = AcademicKernel.boot({ screen: 'components-lab', skipDefaultRules: false });
+        const layers = status.layers.map(function (l) {
+          const tone = l.status === 'active' ? 'ready' : (l.status === 'partial' ? 'editing' : 'missing');
+          return '<span class="mbc-status mbc-status--' + tone + '" style="margin:2px;">' +
+            l.name.replace('Kernel', '') + ' · ' + l.status + '</span>';
+        }).join(' ');
+
+        host.innerHTML =
+          '<div class="mbc-banner mbc-banner--success" style="margin-bottom:12px;">' +
+          'MD-048 Academic Kernel · booted · nav: <strong>' + AcademicKernel.navigationStage() + '</strong> · ' +
+          'DI: ' + status.diKeys.length + ' · events: ' + status.eventCount +
+          '</div>' +
+          '<p class="section-lead">Context: ' + status.context.teacher + ' · ' +
+          status.context.class + ' · ' + status.context.academicYear + '</p>' +
+          '<div class="mbc-lab-row" style="flex-wrap:wrap;gap:6px;margin-bottom:12px;">' + layers + '</div>';
+
+        const eng = document.createElement('div');
+        eng.className = 'mb-lib-card';
+        eng.innerHTML = '<strong>Engine Kernel</strong><ul style="margin:8px 0 0;padding-left:18px;">' +
+          Object.keys(AcademicKernel.ENGINES).map(function (k) {
+            const name = AcademicKernel.ENGINES[k];
+            const ok = AcademicKernel.di() && AcademicKernel.di().has(name);
+            return '<li><code>' + k + '</code> ' + name + (ok ? ' ✓' : ' · factory') + '</li>';
+          }).join('') + '</ul>';
+        host.appendChild(eng);
+
+        const busBox = document.createElement('div');
+        busBox.className = 'mb-lib-card';
+        busBox.style.marginTop = '10px';
+        const hist = (AcademicKernel.bus() && AcademicKernel.bus().getHistory().slice(-10).reverse()) || [];
+        busBox.innerHTML = '<strong>Global Event Bus</strong><ul style="margin:8px 0 0;padding-left:18px;">' +
+          hist.map(function (e) {
+            return '<li><code>' + e.type + '</code> · ' + (e.at || '').slice(11, 19) + '</li>';
+          }).join('') + '</ul>';
+        host.appendChild(busBox);
+
+        const nav = document.createElement('p');
+        nav.className = 'section-lead';
+        nav.style.marginTop = '10px';
+        nav.textContent = 'Navigation: ' + AcademicKernel.NAVIGATION.join(' → ');
+        host.appendChild(nav);
+      })();
+    })();
+  </script>
+</body>
+</html>

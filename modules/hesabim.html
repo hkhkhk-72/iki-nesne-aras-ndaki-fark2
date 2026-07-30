@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hesabım — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+  <script src="../assets/js/components/a11y.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/core/offline-sync.js"></script>
+  <script src="../assets/js/components/interaction.js"></script>
+  <script src="../assets/js/components/txs.js"></script>
+  <script src="../assets/js/components/txa.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+  (function () {
+    const profile = MiniBilgeStorage.getProfile();
+    const school = MiniBilgeStorage.getSchool();
+    const settings = MiniBilgeStorage.getSettings();
+
+    document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('hesabim', `
+      <div class="dash">
+        <header class="dash-hero">
+          <p class="brand-kicker">Hesabım</p>
+          <h1>Öğretmen ve okul bağlamı</h1>
+          <p class="dash-date">Bu bilgiler yıllık/günlük plan ve evrak üst bilgisine yazılır. · Autosave 30 sn (IS-011)</p>
+        </header>
+        <div id="msg"></div>
+
+        <form id="hesabim-form">
+        <section class="mb-section">
+          <h2>Öğretmen</h2>
+          <div class="ctx-grid">
+            <div class="form-field"><label>Ad Soyad</label><input id="adSoyad" name="adSoyad" value="${profile.adSoyad || ''}"></div>
+            <div class="form-field"><label>Branş</label><input id="brans" name="brans" value="${profile.brans || 'Sınıf Öğretmeni'}"></div>
+            <div class="form-field"><label>E-posta</label><input id="eposta" name="eposta" type="email" value="${profile.eposta || ''}"></div>
+            <div class="form-field"><label>Telefon</label><input id="telefon" name="telefon" value="${profile.telefon || ''}"></div>
+          </div>
+        </section>
+
+        <section class="mb-section">
+          <h2>Okul</h2>
+          <div class="ctx-grid">
+            <div class="form-field"><label>Okul Adı</label><input id="okulAdi" name="okulAdi" value="${school.okulAdi || ''}"></div>
+            <div class="form-field"><label>İl</label><input id="il" name="il" value="${school.il || ''}"></div>
+            <div class="form-field"><label>İlçe</label><input id="ilce" name="ilce" value="${school.ilce || ''}"></div>
+            <div class="form-field"><label>Müdür</label><input id="mudurAdi" name="mudurAdi" value="${school.mudurAdi || ''}"></div>
+            <div class="form-field"><label>Müdür Yardımcısı</label><input id="mudurYardimcisi" name="mudurYardimcisi" value="${school.mudurYardimcisi || ''}"></div>
+            <div class="form-field"><label>Eğitim Yılı</label>
+              <select id="egitimYili" name="egitimYili">
+                <option value="2025-2026" ${school.egitimYili !== '2026-2027' ? 'selected' : ''}>2025-2026</option>
+                <option value="2026-2027" ${school.egitimYili === '2026-2027' ? 'selected' : ''}>2026-2027</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-section">
+          <h2>Okuttuğu sınıf</h2>
+          <div class="ctx-grid">
+            <div class="form-field"><label>Varsayılan sınıf</label>
+              <select id="varsayilanSinif" name="varsayilanSinif">
+                ${['1','2','3','4'].map(s => `<option value="${s}" ${String(settings.varsayilanSinif||'1')===s?'selected':''}>${s}. Sınıf</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-field"><label>Şube</label><input id="sube" name="sube" value="${settings.sube || 'A'}" maxlength="2"></div>
+          </div>
+          <button class="quick-btn primary" id="btnSave" type="button" style="margin-top:14px">Kaydet</button>
+        </section>
+        </form>
+      </div>
+    `);
+
+    function persist() {
+      MiniBilgeStorage.saveProfile({
+        adSoyad: document.getElementById('adSoyad').value,
+        brans: document.getElementById('brans').value,
+        eposta: document.getElementById('eposta').value,
+        telefon: document.getElementById('telefon').value
+      });
+      MiniBilgeStorage.saveSchool({
+        okulAdi: document.getElementById('okulAdi').value,
+        il: document.getElementById('il').value,
+        ilce: document.getElementById('ilce').value,
+        mudurAdi: document.getElementById('mudurAdi').value,
+        mudurYardimcisi: document.getElementById('mudurYardimcisi').value,
+        egitimYili: document.getElementById('egitimYili').value
+      });
+      MiniBilgeStorage.saveSettings({
+        varsayilanSinif: document.getElementById('varsayilanSinif').value,
+        sube: document.getElementById('sube').value
+      });
+    }
+
+    document.getElementById('btnSave').addEventListener('click', () => {
+      persist();
+      document.getElementById('msg').innerHTML = '<div class="alert alert-ok">Bilgiler kaydedildi.</div>';
+    });
+
+    if (window.MiniBilgeInteraction) {
+      MiniBilgeInteraction.autosave({
+        root: '#hesabim-form',
+        key: 'hesabim-autosave',
+        notify: false,
+        save() {
+          persist();
+          document.getElementById('msg').innerHTML = '<div class="alert alert-ok">Otomatik kaydedildi (30 sn · IS-011).</div>';
+        }
+      });
+    }
+  })();
+  </script>
+</body>
+</html>

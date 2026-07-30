@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Öğretim Programı — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+  <script src="../assets/js/components/a11y.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script>window.MINIBILGE_BASE = '../';</script>
+  <script src="../assets/js/core/tpm-engine.js"></script>
+  <script src="../assets/js/components/txs.js"></script>
+  <script src="../assets/js/components/txa.js"></script>
+    <script src="../assets/js/core/offline-sync.js"></script>
+<script src="../assets/js/navigation.js"></script>
+  <script>
+  (async function () {
+    const siniflar = [1, 2, 3, 4];
+    const dersler = {
+      1: [
+        { id: 'turkce', ad: 'Türkçe', domain: 'tpm-001-sinif1-turkce' },
+        { id: 'matematik', ad: 'Matematik' },
+        { id: 'hayatBilgisi', ad: 'Hayat Bilgisi' },
+        { id: 'bedenEgitimi', ad: 'Beden Eğitimi ve Oyun (Oyun ve Fiziki Etkinlikler)' },
+        { id: 'gorselSanatlar', ad: 'Görsel Sanatlar' },
+        { id: 'muzik', ad: 'Müzik' }
+      ],
+      2: [
+        { id: 'turkce', ad: 'Türkçe' },
+        { id: 'matematik', ad: 'Matematik' },
+        { id: 'hayatBilgisi', ad: 'Hayat Bilgisi' },
+        { id: 'ingilizce', ad: 'Yabancı Dil (İngilizce)' },
+        { id: 'bedenEgitimi', ad: 'Oyun ve Fiziki Etkinlikler (Beden Eğitimi)' },
+        { id: 'gorselSanatlar', ad: 'Görsel Sanatlar' },
+        { id: 'muzik', ad: 'Müzik' }
+      ],
+      3: [
+        { id: 'turkce', ad: 'Türkçe' },
+        { id: 'matematik', ad: 'Matematik' },
+        { id: 'fen', ad: 'Fen Bilimleri' },
+        { id: 'hayatBilgisi', ad: 'Hayat Bilgisi' },
+        { id: 'ingilizce', ad: 'Yabancı Dil (İngilizce)' },
+        { id: 'bedenEgitimi', ad: 'Oyun ve Fiziki Etkinlikler' },
+        { id: 'gorselSanatlar', ad: 'Görsel Sanatlar' },
+        { id: 'muzik', ad: 'Müzik' }
+      ],
+      4: [
+        { id: 'turkce', ad: 'Türkçe' },
+        { id: 'matematik', ad: 'Matematik' },
+        { id: 'fen', ad: 'Fen Bilimleri' },
+        { id: 'sosyal', ad: 'Sosyal Bilgiler' },
+        { id: 'ingilizce', ad: 'Yabancı Dil (İngilizce)' },
+        { id: 'dinKulturu', ad: 'Din Kültürü ve Ahlak Bilgisi' },
+        { id: 'insanHaklari', ad: 'İnsan Hakları, Vatandaşlık ve Demokrasi' },
+        { id: 'trafikGuvenligi', ad: 'Trafik Güvenliği' },
+        { id: 'bedenEgitimi', ad: 'Oyun ve Fiziki Etkinlikler' },
+        { id: 'gorselSanatlar', ad: 'Görsel Sanatlar' },
+        { id: 'muzik', ad: 'Müzik' }
+      ]
+    };
+
+    let sinif = 1;
+    let selectedDers = null;
+    let pack = null;
+    let selectedUnitId = null;
+    let selectedOutcome = null;
+
+    async function openDers(ders) {
+      selectedDers = ders;
+      selectedUnitId = null;
+      selectedOutcome = null;
+      pack = null;
+      if (ders.domain) {
+        try {
+          pack = await TpmEngine.loadDomainPack(ders.domain);
+          const units = TpmEngine.listProgramUnits(pack, { onlyThemes: true });
+          selectedUnitId = units[0]?.id || null;
+        } catch (e) {
+          console.warn(e);
+        }
+      }
+      render();
+    }
+
+    function render() {
+      document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('ogretim-programi', `
+        <div class="dash">
+          <header class="dash-hero">
+            <p class="brand-kicker">Öğretim Programı</p>
+            <h1>Müfredat Tarayıcısı</h1>
+            <p class="dash-date">Sınıf → Ders → ProgramUnit → LearningOutcome (MB-TPM-001)</p>
+          </header>
+
+          <section class="mb-section">
+            <h2>Sınıf</h2>
+            <div class="quick-actions" id="sinifBar">
+              ${siniflar.map(s => `
+                <button type="button" class="quick-btn${s === sinif ? ' primary' : ''}" data-sinif="${s}">${s}. Sınıf</button>
+              `).join('')}
+            </div>
+          </section>
+
+          <section class="mb-section">
+            <h2>${sinif}. Sınıf Dersleri</h2>
+            <p class="section-lead">${selectedDers ? esc(selectedDers.ad) + ' seçili' : 'Bir ders seçin — 1. sınıf Türkçe domain paketi (TPM-001) ile açılır.'}</p>
+            <div class="lesson-strip">
+              ${(dersler[sinif] || []).map(d => `
+                <div class="lesson-row">
+                  <div>
+                    <div class="lesson-name">${esc(d.ad)}</div>
+                    <div class="lesson-meta">${d.domain ? 'MB-TPM-001 domain paketi' : 'Domain paketi yakında · keşif verisi'}</div>
+                  </div>
+                  <button type="button" class="quick-btn${selectedDers && selectedDers.id === d.id ? ' primary' : ''} compact" data-ders="${esc(d.id)}">Aç</button>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+
+          ${pack ? renderDomainBrowser() : (selectedDers ? `
+          <section class="mb-section">
+            <h2>${esc(selectedDers.ad)}</h2>
+            <p class="section-lead">Bu ders için henüz TPM domain paketi yok. Yıllık plan keşif verisinden üretilebilir.</p>
+            <a class="quick-btn primary" href="yillik-plan.html">Yıllık Plana Git</a>
+            <a class="quick-btn" href="gunluk-kazanimlar.html?sinif=${sinif}&ders=${encodeURIComponent(selectedDers.id)}">Günlük Kazanımlar</a>
+          </section>` : '')}
+        </div>
+      `);
+      bind();
+    }
+
+    function renderDomainBrowser() {
+      const st = TpmEngine.stats(pack);
+      const units = TpmEngine.listProgramUnits(pack);
+      const unit = selectedUnitId ? TpmEngine.getUnit(pack, selectedUnitId) : null;
+      const outcomes = selectedUnitId ? TpmEngine.outcomesForUnit(pack, selectedUnitId) : [];
+      const oc = selectedOutcome ? TpmEngine.getOutcome(pack, selectedOutcome) : null;
+      const skills = oc ? TpmEngine.skillsForOutcome(pack, oc.kod) : [];
+      const pcs = oc ? TpmEngine.processComponentsForOutcome(pack, oc.kod) : [];
+
+      return `
+        <section class="mb-section">
+          <h2>Domain paketi · ${esc(pack.curriculum.ad)}</h2>
+          <p class="section-lead">
+            ${st.themeSayisi || '—'} tema · ${st.specialSayisi || '—'} özel birim ·
+            ${st.uniqueOutcomeSayisi} tekil çıktı · ${st.unitOutcomeBagSayisi} tema–çıktı bağı
+            · <em>${esc(pack.meta.spec)} ${esc(pack.meta.surum)}</em>
+          </p>
+          <div class="quick-actions" style="flex-wrap:wrap;gap:0.5rem;">
+            <a class="quick-btn primary" href="yillik-plan.html">Yıllık Plan Üret</a>
+            <a class="quick-btn" href="gunluk-kazanimlar.html?sinif=1&ders=turkce">Günlük Kazanımlar</a>
+          </div>
+        </section>
+
+        <section class="mb-section">
+          <h2>ProgramUnit</h2>
+          <p class="section-lead">Tema ve özel birimler (işleniş sırası).</p>
+          <div class="lesson-strip">
+            ${units.map(u => `
+              <div class="lesson-row">
+                <div>
+                  <div class="lesson-name">${u.sira}. ${esc(u.ad)}</div>
+                  <div class="lesson-meta">${u.kind}${u.specialKind ? ' / ' + u.specialKind : ''} · ${u.dersSaati || '—'} saat · ${u.kind === 'THEME' ? TpmEngine.outcomesForUnit(pack, u.id).length + ' çıktı' : 'çıktı yok'}</div>
+                </div>
+                <button type="button" class="quick-btn${selectedUnitId === u.id ? ' primary' : ''} compact" data-unit="${esc(u.id)}">Seç</button>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        ${unit ? `
+        <section class="mb-section">
+          <h2>${esc(unit.ad)}</h2>
+          <p class="section-lead">${esc(unit.ozet || '')}</p>
+          ${unit.kind === 'SPECIAL' ? `
+            <div class="alert alert-warn">Özel birim: yeni öğrenme çıktısı üretilmez (${esc(unit.specialKind)}).</div>
+          ` : `
+            <div class="lesson-strip">
+              ${outcomes.map(o => `
+                <div class="lesson-row">
+                  <div>
+                    <div class="lesson-name"><code>${esc(o.kod)}</code></div>
+                    <div class="lesson-meta">${esc(o.aciklama)}</div>
+                  </div>
+                  <button type="button" class="quick-btn${selectedOutcome === o.kod ? ' primary' : ''} compact" data-oc="${esc(o.kod)}">Detay</button>
+                </div>
+              `).join('') || '<p class="empty-state">Bu birimde çıktı yok.</p>'}
+            </div>
+          `}
+        </section>` : ''}
+
+        ${oc ? `
+        <section class="mb-section">
+          <h2>LearningOutcome · ${esc(oc.kod)}</h2>
+          <p class="section-lead">${esc(oc.aciklama)}</p>
+          <div class="ctx-grid">
+            <div class="form-field"><label>Alan</label><p>${esc(oc.alan || '—')}</p></div>
+            <div class="form-field"><label>Sınıf</label><p>${esc(oc.sinif)}</p></div>
+            <div class="form-field"><label>Skill</label><p>${skills.map(s => esc(s.kod + ' ' + s.ad)).join(', ') || '—'}</p></div>
+          </div>
+          ${pcs.length ? `
+            <h3 style="margin-top:1rem;">ProcessComponent</h3>
+            <ul class="rules-list">
+              ${pcs.map(p => `<li><strong>${esc(p.harf)})</strong> ${esc(p.aciklama)}</li>`).join('')}
+            </ul>
+          ` : ''}
+        </section>` : ''}
+      `;
+    }
+
+    function bind() {
+      document.querySelectorAll('#sinifBar [data-sinif]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sinif = Number(btn.getAttribute('data-sinif'));
+          selectedDers = null;
+          pack = null;
+          selectedUnitId = null;
+          selectedOutcome = null;
+          render();
+        });
+      });
+      document.querySelectorAll('[data-ders]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-ders');
+          const d = (dersler[sinif] || []).find(x => x.id === id);
+          if (d) openDers(d);
+        });
+      });
+      document.querySelectorAll('[data-unit]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedUnitId = btn.getAttribute('data-unit');
+          selectedOutcome = null;
+          render();
+        });
+      });
+      document.querySelectorAll('[data-oc]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedOutcome = btn.getAttribute('data-oc');
+          render();
+        });
+      });
+    }
+
+    function esc(s) {
+      return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    }
+
+    render();
+  })();
+  </script>
+</body>
+</html>

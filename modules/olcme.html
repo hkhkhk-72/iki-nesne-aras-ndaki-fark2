@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ölçme ve Değerlendirme — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+  <script src="../assets/js/components/a11y.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../assets/js/components/txs.js"></script>
+  <script src="../assets/js/components/txa.js"></script>
+    <script src="../assets/js/core/offline-sync.js"></script>
+<script src="../assets/js/navigation.js"></script>
+  <script>
+  document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('olcme', `
+    <div class="module-page">
+      <h1>📊 Ölçme ve Değerlendirme</h1>
+      <p class="lead">Sınav kağıtları, not çizelgeleri, performans rubrikleri ve değerlendirme formları.</p>
+      <div class="quick-actions" style="margin-top:16px;">
+        <a href="../documents/olustur.html?id=sinav-kagidi" class="quick-btn primary">Sınav Kağıdı</a>
+        <a href="../documents/olustur.html?id=not-cizelgesi" class="quick-btn">Not Çizelgesi</a>
+        <a href="../documents/olustur.html?id=sozlu-sinav" class="quick-btn">Sözlü Sınav</a>
+        <a href="../documents/olustur.html?id=performans-degerlendirme" class="quick-btn">Performans Rubriği</a>
+        <a href="../documents/olustur.html?id=odev-takip" class="quick-btn">Ödev Takip</a>
+        <a href="../documents/olustur.html?id=karne-not-giris" class="quick-btn">Karne Not Girişi</a>
+      </div>
+    </div>`);
+  </script>
+</body>
+</html>

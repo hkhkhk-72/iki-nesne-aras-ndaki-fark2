@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>İYEP — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+  <script src="../assets/js/components/a11y.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../assets/js/components/txs.js"></script>
+  <script src="../assets/js/components/txa.js"></script>
+    <script src="../assets/js/core/offline-sync.js"></script>
+<script src="../assets/js/navigation.js"></script>
+  <script>
+  document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('iyep', `
+    <div class="module-page">
+      <h1>📚 İYEP (İşitme Yetersizliği Eğitim Programı)</h1>
+      <p class="lead">İYEP planları ve bireyselleştirilmiş eğitim belgeleri. Modül geliştirme aşamasında.</p>
+      <div class="announcement" style="margin-top:16px;">İYEP plan motoru bir sonraki sürümde eklenecektir.</div>
+    </div>`);
+  </script>
+</body>
+</html>

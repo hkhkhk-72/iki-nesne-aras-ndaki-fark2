@@ -1,0 +1,84 @@
+{
+  "siniflar": {
+    "1": {
+      "turkce": "sinif1-turkce.json",
+      "matematik": "sinif1-matematik.json",
+      "hayatBilgisi": "sinif1-hayat-bilgisi.json",
+      "bedenEgitimi": "sinif1-beden-egitimi.json",
+      "gorselSanatlar": "sinif1-gorsel-sanatlar.json",
+      "muzik": "sinif1-muzik.json",
+      "serbestEtkinlikler": "sinif1-serbest-etkinlikler.json"
+    },
+    "2": {
+      "turkce": "sinif2-turkce.json",
+      "matematik": "sinif2-matematik.json",
+      "hayatBilgisi": "sinif2-hayat-bilgisi.json",
+      "ingilizce": "sinif2-ingilizce.json",
+      "bedenEgitimi": "sinif2-beden-egitimi.json",
+      "gorselSanatlar": "sinif2-gorsel-sanatlar.json",
+      "muzik": "sinif2-muzik.json",
+      "serbestEtkinlikler": "sinif2-serbest-etkinlikler.json"
+    },
+    "3": {
+      "turkce": "sinif3-turkce.json",
+      "matematik": "sinif3-matematik.json",
+      "fen": "sinif3-fen.json",
+      "hayatBilgisi": "sinif3-hayat-bilgisi.json",
+      "ingilizce": "sinif3-ingilizce.json",
+      "bedenEgitimi": "sinif3-beden-egitimi.json",
+      "gorselSanatlar": "sinif3-gorsel-sanatlar.json",
+      "muzik": "sinif3-muzik.json",
+      "serbestEtkinlikler": "sinif3-serbest-etkinlikler.json"
+    },
+    "4": {
+      "turkce": "sinif4-turkce.json",
+      "matematik": "sinif4-matematik.json",
+      "fen": "sinif4-fen.json",
+      "sosyal": "sinif4-sosyal.json",
+      "ingilizce": "sinif4-ingilizce.json",
+      "dinKulturu": "sinif4-din-kulturu.json",
+      "insanHaklari": "sinif4-insan-haklari.json",
+      "trafikGuvenligi": "sinif4-trafik-guvenligi.json",
+      "bedenEgitimi": "sinif4-beden-egitimi.json",
+      "gorselSanatlar": "sinif4-gorsel-sanatlar.json",
+      "muzik": "sinif4-muzik.json"
+    }
+  },
+  "dersAdlari": {
+    "turkce": "Türkçe",
+    "matematik": "Matematik",
+    "hayatBilgisi": "Hayat Bilgisi",
+    "fen": "Fen Bilimleri",
+    "sosyal": "Sosyal Bilgiler",
+    "ingilizce": "Yabancı Dil (İngilizce)",
+    "dinKulturu": "Din Kültürü ve Ahlak Bilgisi",
+    "gorselSanatlar": "Görsel Sanatlar",
+    "muzik": "Müzik",
+    "bedenEgitimi": "Oyun ve Fiziki Etkinlikler",
+    "serbestEtkinlikler": "Serbest Etkinlikler",
+    "trafikGuvenligi": "Trafik Güvenliği",
+    "insanHaklari": "İnsan Hakları, Vatandaşlık ve Demokrasi"
+  },
+  "dersAdlariBySinif": {
+    "1": {
+      "bedenEgitimi": "Beden Eğitimi ve Oyun (Oyun ve Fiziki Etkinlikler)"
+    },
+    "2": {
+      "bedenEgitimi": "Oyun ve Fiziki Etkinlikler (Beden Eğitimi)"
+    },
+    "3": {
+      "bedenEgitimi": "Oyun ve Fiziki Etkinlikler"
+    },
+    "4": {
+      "bedenEgitimi": "Oyun ve Fiziki Etkinlikler"
+    }
+  },
+  "programDersleri": {
+    "1": ["turkce", "matematik", "hayatBilgisi", "bedenEgitimi", "gorselSanatlar", "muzik"],
+    "2": ["turkce", "matematik", "hayatBilgisi", "ingilizce", "bedenEgitimi", "gorselSanatlar", "muzik"],
+    "3": ["turkce", "matematik", "fen", "hayatBilgisi", "ingilizce", "bedenEgitimi", "gorselSanatlar", "muzik"],
+    "4": ["turkce", "matematik", "fen", "sosyal", "ingilizce", "dinKulturu", "insanHaklari", "trafikGuvenligi", "bedenEgitimi", "gorselSanatlar", "muzik"]
+  },
+  "haftalikDersSaatiKaynak": "TTKB 09.05.2025 sayılı karar — İlköğretim Kurumları Haftalık Ders Çizelgesi (2025-2026)",
+  "kaynakNotu": "programDersleri: branş/öğretim programı ders sırası. serbestEtkinlikler çizelge saatidir, program dersi listesinde yoktur. 1–4 Türkçe/Mat, 1–3 HB, 3–4 Fen, 4 Sosyal: TYMM PDF keşif verisi. Çoklu MEB kaynağı: sources.json · listSourcesForDers."
+}

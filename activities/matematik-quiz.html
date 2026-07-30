@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Matematik Quiz — Dijital Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <style>
+    .quiz-app { max-width: 480px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 1; }
+    .quiz-card { text-align: center; }
+    .question { font-size: clamp(2rem, 8vw, 3rem); font-weight: 800; margin: 20px 0; text-shadow: 0 2px 12px rgba(0,0,0,0.2); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .option-btn {
+      padding: 18px 12px; border: 2px solid rgba(255,255,255,0.35); border-radius: 14px;
+      background: rgba(255,255,255,0.15); color: #fff; font-size: 1.3rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .option-btn:hover { background: rgba(255,255,255,0.28); transform: translateY(-2px); }
+    .option-btn.correct { background: rgba(76,175,80,0.5); border-color: #81c784; }
+    .option-btn.wrong { background: rgba(229,57,53,0.5); border-color: #ef9a9a; }
+    .score-bar { display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600; color: var(--text-soft); }
+    .level-dots { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.25); }
+    .dot.done { background: #92fe9d; }
+    .dot.current { background: #fff; box-shadow: 0 0 8px rgba(255,255,255,0.6); }
+    .feedback { font-size: 1rem; font-weight: 600; min-height: 1.5em; margin-top: 8px; }
+    .feedback.ok { color: #a5d6a7; }
+    .feedback.no { color: #ef9a9a; }
+  </style>
+</head>
+<body>
+  <div class="quiz-app">
+    <a href="../index.html" class="back-link">← Platforma Dön</a>
+    <header class="hero" style="padding:8px 0;">
+      <h2>🔢 Matematik Quiz</h2>
+      <p>Toplama ve çıkarma sorularını çöz!</p>
+    </header>
+
+    <div class="panel quiz-card">
+      <div class="score-bar">
+        <span id="levelLabel">Soru 1 / 10</span>
+        <span id="scoreLabel">Puan: 0</span>
+      </div>
+      <div class="level-dots" id="levelDots"></div>
+      <div class="question" id="question">?</div>
+      <div class="options" id="options"></div>
+      <p class="feedback" id="feedback"></p>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+    const TOTAL = 10;
+    let current = 0;
+    let score = 0;
+    let questions = [];
+
+    function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+    function generateQuestions() {
+      questions = [];
+      for (let i = 0; i < TOTAL; i++) {
+        const isAdd = Math.random() > 0.4;
+        let a, b, answer;
+        if (isAdd) {
+          a = rand(1, 20); b = rand(1, 20); answer = a + b;
+        } else {
+          a = rand(5, 30); b = rand(1, a); answer = a - b;
+        }
+        const wrong = new Set();
+        while (wrong.size < 3) {
+          const w = answer + rand(-5, 5);
+          if (w !== answer && w >= 0) wrong.add(w);
+        }
+        const options = [answer, ...wrong].sort(() => Math.random() - 0.5);
+        questions.push({ text: `${a} ${isAdd ? '+' : '−'} ${b} = ?`, answer, options });
+      }
+    }
+
+    function saveProgress() {
+      try {
+        const p = JSON.parse(localStorage.getItem('dijitalOgretmenProgress') || '{}');
+        if (!p['matematik-quiz']) p['matematik-quiz'] = { completed: 0, total: TOTAL, levels: [] };
+        if (!p['matematik-quiz'].levels.includes('quiz')) {
+          p['matematik-quiz'].levels.push('quiz');
+          p['matematik-quiz'].completed = 1;
+        }
+        localStorage.setItem('dijitalOgretmenProgress', JSON.stringify(p));
+      } catch (_) {}
+    }
+
+    function renderDots() {
+      document.getElementById('levelDots').innerHTML = Array.from({ length: TOTAL }, (_, i) => {
+        let cls = 'dot';
+        if (i < current) cls += ' done';
+        if (i === current) cls += ' current';
+        return `<div class="${cls}"></div>`;
+      }).join('');
+    }
+
+    function showQuestion() {
+      const q = questions[current];
+      document.getElementById('question').textContent = q.text;
+      document.getElementById('levelLabel').textContent = `Soru ${current + 1} / ${TOTAL}`;
+      document.getElementById('scoreLabel').textContent = `Puan: ${score}`;
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('feedback').className = 'feedback';
+      renderDots();
+
+      const optsEl = document.getElementById('options');
+      optsEl.innerHTML = q.options.map(v =>
+        `<button class="option-btn" data-val="${v}" type="button">${v}</button>`
+      ).join('');
+
+      optsEl.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = parseInt(btn.dataset.val, 10);
+          const correct = val === q.answer;
+          optsEl.querySelectorAll('.option-btn').forEach(b => {
+            b.disabled = true;
+            if (parseInt(b.dataset.val, 10) === q.answer) b.classList.add('correct');
+            else if (b === btn && !correct) b.classList.add('wrong');
+          });
+          const fb = document.getElementById('feedback');
+          if (correct) {
+            score++;
+            fb.textContent = '✅ Doğru!';
+            fb.className = 'feedback ok';
+          } else {
+            fb.textContent = `❌ Doğru cevap: ${q.answer}`;
+            fb.className = 'feedback no';
+          }
+          document.getElementById('scoreLabel').textContent = `Puan: ${score}`;
+          setTimeout(() => {
+            current++;
+            if (current >= TOTAL) {
+              if (score >= 7) saveProgress();
+              document.getElementById('question').textContent = score >= 7 ? '🎉 Tebrikler!' : '💪 Tekrar Dene!';
+              document.getElementById('options').innerHTML =
+                `<button class="option-btn" style="grid-column:span 2" type="button" onclick="location.reload()">🔄 Yeniden Başla</button>`;
+              document.getElementById('feedback').textContent = `${score} / ${TOTAL} doğru cevap`;
+            } else {
+              showQuestion();
+            }
+          }, 1200);
+        });
+      });
+    }
+
+    generateQuestions();
+    showQuestion();
+  })();
+  </script>
+</body>
+</html>

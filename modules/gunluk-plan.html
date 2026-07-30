@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Günlük Planlar — MiniBilge Öğretmen</title>
+  <link rel="stylesheet" href="../assets/css/platform.css">
+  <link rel="stylesheet" href="../assets/css/belgeler.css">
+  <link rel="stylesheet" href="../assets/css/ds.css">
+  <script src="../assets/js/components/a11y.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script>window.MINIBILGE_BASE = '../';</script>
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/core/offline-sync.js"></script>
+  <script src="../assets/js/core/calendar-engine.js"></script>
+  <script src="../assets/js/core/tpm-engine.js"></script>
+  <script src="../assets/js/core/curriculum-engine.js"></script>
+  <script src="../assets/js/core/annual-plan-engine.js"></script>
+  <script src="../assets/js/core/daily-plan-engine.js"></script>
+  <script src="../assets/js/core/validation-engine.js"></script>
+  <script src="../assets/js/core/plan-engine.js"></script>
+  <script src="../assets/js/core/evrak-engine.js"></script>
+  <script src="../assets/js/components/txs.js"></script>
+  <script src="../assets/js/components/txa.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+  (async function () {
+    const params = new URLSearchParams(location.search);
+    const preferDers = params.get('ders') || '';
+    const plans = MiniBilgeStorage.getPlans().filter(p => p.tur === 'yillik' && p.data);
+    const settings = MiniBilgeStorage.getSettings();
+    const sinif = settings.varsayilanSinif || '1';
+    const gunler = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+    const today = new Date();
+    const gunAdi = gunler[today.getDay()];
+
+    let cal;
+    try {
+      CalendarEngine.setYear(MiniBilgeStorage.getSchool().egitimYili || '2025-2026');
+      cal = await CalendarEngine.loadCalendar();
+    } catch {
+      cal = { haftalikDersSaati: { '1': { turkce: 10, matematik: 5, hayatBilgisi: 4 } } };
+    }
+    const week = CalendarEngine.getCurrentWeek ? CalendarEngine.getCurrentWeek(cal, today) : { hafta: 1 };
+    const hours = (cal.haftalikDersSaati && cal.haftalikDersSaati[String(sinif)]) || { turkce: 10, matematik: 5, hayatBilgisi: 4 };
+
+    let selectedDers = preferDers && hours[preferDers] ? preferDers : Object.keys(hours)[0];
+    let selectedKaynakId = settings.varsayilanKaynakId || null;
+    let sourceList = [];
+    let currentPlan = null;
+    let mode = 'schedule'; // schedule | detail
+
+    const DERS_ADI = {
+      turkce: 'Türkçe', matematik: 'Matematik', hayatBilgisi: 'Hayat Bilgisi',
+      fen: 'Fen Bilimleri', sosyal: 'Sosyal Bilgiler', gorselSanatlar: 'Görsel Sanatlar',
+      muzik: 'Müzik', bedenEgitimi: 'Oyun ve Fiziki Etkinlikler',
+      ingilizce: 'Yabancı Dil (İngilizce)',
+      dinKulturu: 'Din Kültürü ve Ahlak Bilgisi', serbestEtkinlikler: 'Serbest Etkinlikler',
+      trafikGuvenligi: 'Trafik Güvenliği',
+      insanHaklari: 'İnsan Hakları, Vatandaşlık ve Demokrasi'
+    };
+    if (Number(sinif) === 1) DERS_ADI.bedenEgitimi = 'Beden Eğitimi ve Oyun (Oyun ve Fiziki Etkinlikler)';
+    if (Number(sinif) === 2) DERS_ADI.bedenEgitimi = 'Oyun ve Fiziki Etkinlikler (Beden Eğitimi)';
+
+    function annualForDers(dersId) {
+      return plans.find(p => p.dersId === dersId || (p.data && p.data.dersId === dersId))
+        || plans.find(p => (p.ders || '').toLowerCase().includes((DERS_ADI[dersId] || '').toLowerCase().slice(0, 4)))
+        || null;
+    }
+
+    async function loadSourcesForSelected() {
+      if (!window.CurriculumEngine) { sourceList = []; return; }
+      sourceList = await CurriculumEngine.listSourcesForDers(selectedDers, sinif);
+      const annual = annualForDers(selectedDers);
+      if (annual && annual.data && annual.data.kaynakId) {
+        selectedKaynakId = annual.data.kaynakId;
+      } else if (!sourceList.find(s => s.id === selectedKaynakId)) {
+        selectedKaynakId = (sourceList.find(s => s.durum === 'ACTIVE') || sourceList[0] || {}).id || null;
+      }
+    }
+
+    function kaynakMetaFor(dersId) {
+      const a = annualForDers(dersId);
+      if (a && a.data) {
+        return a.data.kaynakShort || a.data.kaynak || null;
+      }
+      return null;
+    }
+
+    function render() {
+      const content = mode === 'schedule' ? renderSchedule() : renderDetail();
+      document.getElementById('app').innerHTML = MiniBilgeNav.renderLayout('gunluk-plan', content);
+      bind();
+    }
+
+    function renderSchedule() {
+      return `
+      <div class="dash">
+        <header class="dash-hero">
+          <p class="brand-kicker">Günlük Planlar</p>
+          <h1>${gunAdi} ders programı</h1>
+          <p class="dash-date">${fmt(today)} · ${sinif}. Sınıf · Hafta ${week?.hafta || '—'} · Bir derse Oluştur deyin</p>
+        </header>
+
+        <div class="quick-actions" style="margin-bottom:1rem;">
+          <a class="quick-btn primary" href="gunluk-kazanimlar.html">Günlük Kazanımlar</a>
+          <a class="quick-btn" href="yillik-plan.html">Yıllık Planlar</a>
+        </div>
+
+        ${!plans.length ? `<div class="alert alert-warn">Önce <a class="text-link" href="yillik-plan.html">yıllık plan</a> üretin (ders + MEB kaynağı seçerek); günlük plan ondan beslenir.</div>` : ''}
+
+        <section class="mb-section">
+          <h2>Bugünkü dersler</h2>
+          <p class="section-lead">Ders satırı → kaynak (yıllık plandan) → Oluştur.</p>
+          <div class="lesson-strip">
+            ${Object.keys(hours).map((id, i) => {
+              const ann = annualForDers(id);
+              const k = kaynakMetaFor(id);
+              return `
+              <div class="lesson-row">
+                <div>
+                  <div class="lesson-name">${slot(i)} · ${DERS_ADI[id] || id}</div>
+                  <div class="lesson-meta">${hours[id]} saat/hafta · yıllık ${ann ? 'hazır' : 'yok'}${k ? ' · ' + k : ''}</div>
+                </div>
+                <button type="button" class="quick-btn primary compact" data-create="${id}">Oluştur</button>
+              </div>`;
+            }).join('')}
+          </div>
+        </section>
+      </div>`;
+    }
+
+    function renderDetail() {
+      const annualWrap = annualForDers(selectedDers);
+      const annual = annualWrap && annualWrap.data;
+      const row = annual?.satirlar?.find(r => r.hafta === (week?.hafta || 1)) || annual?.satirlar?.[0];
+      const outcomes = row?.ogrenmeCiktilari || 'Yıllık plandan öğrenme çıktısı okunacak.';
+      const src = sourceList.find(s => s.id === selectedKaynakId) || sourceList[0];
+      return `
+      <div class="dash plan-layout">
+        <div class="plan-main">
+          <header class="dash-hero">
+            <p class="brand-kicker">Günlük Plan</p>
+            <h1>${DERS_ADI[selectedDers] || selectedDers}</h1>
+            <p class="dash-date">${gunAdi} · Hafta ${week?.hafta || '—'} · ${sinif}. Sınıf</p>
+          </header>
+          <div id="alerts"></div>
+
+          <section class="mb-section">
+            <h2>Ders ve MEB kaynağı</h2>
+            <p class="section-lead">Aynı dersin birden fazla MEB/TYMM kaynağı olabilir. Günlük plan, seçilen kaynaklı yıllık plandan üretilir.</p>
+            <div class="ctx-grid">
+              <div class="form-field"><label>Ders</label>
+                <input value="${DERS_ADI[selectedDers] || selectedDers}" disabled>
+              </div>
+              <div class="form-field form-field--wide"><label>Kaynak (${sourceList.length})</label>
+                <select id="kaynak" ${annual ? 'disabled' : ''}>
+                  ${sourceList.map(s => `<option value="${s.id}" ${s.id === selectedKaynakId ? 'selected' : ''}>${s.shortLabel || s.ad} · ${s.durum}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+            ${src ? `<div class="mb-source-card">
+              <strong>${src.ad}</strong>
+              <div class="mb-source-meta"><span>${src.model || ''}</span><span>Onay ${src.onayYili || '—'}</span></div>
+              ${src.kaynakUrl ? `<a class="text-link" href="${src.kaynakUrl}" target="_blank" rel="noopener">Resmî program</a>` : ''}
+              ${annual ? '<p class="section-lead">Kaynak yıllık plandan kilitli. Değiştirmek için yeni yıllık plan üretin.</p>' :
+                `<p class="section-lead">Yıllık plan yok. Önce bu kaynakla yıllık plan oluşturun.</p>
+                 <a class="quick-btn primary compact" href="yillik-plan.html">Yıllık plan (ders + kaynak)</a>`}
+            </div>` : ''}
+          </section>
+
+          <section class="mb-section">
+            <h2>Plan gövdesi</h2>
+            <p class="section-lead">Ders → Öğrenme Çıktısı → Etkinlik → Materyal → Farklılaştırma → Ölçme</p>
+            <div class="lesson-strip">
+              <div class="lesson-row"><div><div class="lesson-name">Ders</div><div class="lesson-meta">${DERS_ADI[selectedDers] || selectedDers}</div></div></div>
+              <div class="lesson-row"><div><div class="lesson-name">Öğrenme Çıktısı</div><div class="lesson-meta">${esc(String(outcomes).slice(0, 220))}</div></div></div>
+              <div class="lesson-row"><div><div class="lesson-name">Tema / Program Birimi</div><div class="lesson-meta">${esc(row?.tema || 'Yıllık plandan')}</div></div></div>
+              <div class="lesson-row"><div><div class="lesson-name">Etkinlik / Materyal / Farklılaştırma / Ölçme</div><div class="lesson-meta">Motor üretiminde doldurulur</div></div></div>
+            </div>
+            <div class="ctx-grid" style="margin-top:14px">
+              <div class="form-field"><label>Hafta</label><input type="number" id="hafta" value="${week?.hafta || 1}" min="1" max="40"></div>
+              <div class="form-field"><label>Gün</label>
+                <select id="gun">${gunler.slice(1,6).map(g => `<option value="${g}" ${g === gunAdi ? 'selected' : ''}>${g}</option>`).join('')}</select>
+              </div>
+              <div class="form-field"><label>Ders saati</label><input type="number" id="dersSaati" value="1" min="1" max="6"></div>
+              <div class="form-field"><label>Tarih</label><input type="date" id="tarih" value="${today.toISOString().slice(0,10)}"></div>
+            </div>
+            <div class="quick-actions" style="margin-top:14px">
+              <button class="quick-btn" id="btnBack" type="button">Programa dön</button>
+              <button class="quick-btn primary" id="btnGenerate" type="button" ${annual ? '' : 'disabled'}>Planı Üret</button>
+              <button class="quick-btn" id="btnPrint" type="button" disabled>PDF</button>
+              <button class="quick-btn" id="btnWord" type="button" disabled>Word</button>
+            </div>
+          </section>
+
+          <div id="previewPanel" style="display:none">
+            <section class="mb-section">
+              <h2>Üretilen günlük plan</h2>
+              <div class="plan-preview" id="preview"></div>
+            </section>
+          </div>
+        </div>
+        <aside class="plan-aside">
+          <h3>AI önerileri</h3>
+          <p class="hint">“Bugünkü ${DERS_ADI[selectedDers] || selectedDers} planını hazırla.”</p>
+          <button type="button" class="ai-chip" id="aiUret">Bu ders için üret</button>
+          <a class="text-link" href="yillik-plan.html">Yıllık plana git</a>
+        </aside>
+      </div>`;
+    }
+
+    function slot(i) {
+      const starts = ['08:30', '09:10', '10:00', '10:40', '11:20', '13:00', '13:40'];
+      return starts[i] || (8 + i) + ':30';
+    }
+
+    function bind() {
+      document.querySelectorAll('[data-create]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          selectedDers = btn.getAttribute('data-create');
+          mode = 'detail';
+          await loadSourcesForSelected();
+          render();
+        });
+      });
+      document.getElementById('btnBack')?.addEventListener('click', () => { mode = 'schedule'; render(); });
+      document.getElementById('btnGenerate')?.addEventListener('click', generate);
+      document.getElementById('aiUret')?.addEventListener('click', generate);
+      document.getElementById('kaynak')?.addEventListener('change', (e) => {
+        selectedKaynakId = e.target.value;
+      });
+      document.getElementById('btnPrint')?.addEventListener('click', () => {
+        EvrakEngine.yazdir(PlanEngine.renderGunlukPlan(currentPlan), 'Günlük Plan');
+      });
+      document.getElementById('btnWord')?.addEventListener('click', () => {
+        EvrakEngine.indirWord(PlanEngine.renderGunlukPlan(currentPlan), 'gunluk-plan', 'Günlük Plan');
+      });
+    }
+
+    function generate() {
+      const annualWrap = annualForDers(selectedDers);
+      const alerts = document.getElementById('alerts');
+      if (!annualWrap?.data) {
+        alerts.innerHTML = '<div class="alert alert-error">Bu ders için yıllık plan bulunamadı.</div>';
+        return;
+      }
+      const result = PlanEngine.uretGunlukPlan({
+        annualPlan: annualWrap.data,
+        hafta: parseInt(document.getElementById('hafta')?.value || week?.hafta || 1, 10),
+        gun: document.getElementById('gun')?.value || gunAdi,
+        dersSaati: document.getElementById('dersSaati')?.value || 1,
+        tarih: document.getElementById('tarih')?.value || today.toISOString().slice(0, 10)
+      });
+      if (!result.success) {
+        alerts.innerHTML = result.errors.map(e => `<div class="alert alert-error">${e}</div>`).join('');
+        return;
+      }
+      currentPlan = result.plan;
+      document.getElementById('preview').innerHTML = PlanEngine.renderGunlukPlan(currentPlan);
+      document.getElementById('previewPanel').style.display = 'block';
+      document.getElementById('btnPrint').disabled = false;
+      document.getElementById('btnWord').disabled = false;
+      MiniBilgeStorage.addPlan({ tur: 'gunluk', ders: currentPlan.ders, sinif: currentPlan.sinif, hafta: currentPlan.hafta, dersId: selectedDers });
+      alerts.innerHTML = '<div class="alert alert-ok">Günlük plan üretildi.</div>';
+    }
+
+    function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+    function fmt(d) {
+      const m = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+      return `${d.getDate()} ${m[d.getMonth()]} ${d.getFullYear()}`;
+    }
+
+    if (preferDers) { mode = 'detail'; selectedDers = preferDers in hours ? preferDers : selectedDers; }
+    await loadSourcesForSelected();
+    render();
+  })();
+  </script>
+</body>
+</html>

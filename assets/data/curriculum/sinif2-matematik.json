@@ -1,0 +1,264 @@
+{
+  "ders": "Matematik",
+  "dersId": "matematik",
+  "sinif": 2,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2024",
+  "kaynak": "MEB TYMM İlkokul Matematik Dersi Öğretim Programı (1-4) 2024 — onaylı PDF",
+  "kaynakUrl": "https://tymm.meb.gov.tr/upload/program/2024programmat1234Onayli.pdf",
+  "toplamDersSaati": 180,
+  "haftalikDersSaati": 5,
+  "toplamHafta": 36,
+  "ogrenmeCiktisiSayisi": 25,
+  "islenisNotu": "Temalar resmi programdaki işleniş sırasına göre dizilmiştir (Tablo: Temalar, Öğrenme Çıktıları Sayısı ve Süreleri).",
+  "temalar": [
+    {
+      "id": "m1",
+      "ad": "Nesnelerin Geometrisi (1)",
+      "dersSaati": 25,
+      "hafta": 5,
+      "kodOnEki": "MAT.2.3",
+      "ogrenmeCiktilari": [
+        {
+          "kod": "MAT.2.3.1",
+          "aciklama": "Günlük yaşamda kullanılan nesneleri biçimsel özelliklerine göre geometrik"
+        },
+        {
+          "kod": "MAT.2.3.2",
+          "aciklama": "Geometrik cisim modellerini kullanarak yapılar sentezleyebilme"
+        },
+        {
+          "kod": "MAT.2.3.3",
+          "aciklama": "Geometrik şekiller kullanarak modeller sentezleyebilme"
+        },
+        {
+          "kod": "MAT.2.3.4",
+          "aciklama": "Geometrik cisim ve şekillerin yön, konum veya büyüklükleri değiştiğinde bi -"
+        },
+        {
+          "kod": "MAT.2.3.5",
+          "aciklama": "Standart olmayan sıvı ölçme araçları ile sıvı miktarını tahmin edebilme"
+        }
+      ],
+      "icerikCercevesi": "Bu temada öğrencilerin günlük yaşamda kullanılan farklı nesneleri biçimsel özellikleri -",
+      "surecBilesenleri": [
+        "Matematiksel muhakeme",
+        "Problem çözme",
+        "Temsil"
+      ],
+      "alanBecerileri": [
+        "MAB1. Matematiksel Muhakeme",
+        "MAB2. Problem Çözme",
+        "MAB3. Matematiksel Temsil",
+        "MAB4. Veri"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, gözlem, çalışma kâğıdı"
+    },
+    {
+      "id": "m2",
+      "ad": "Sayılar ve Nicelikler (1)",
+      "dersSaati": 41,
+      "hafta": 8,
+      "kodOnEki": "MAT.2.1",
+      "ogrenmeCiktilari": [
+        {
+          "kod": "MAT.2.1.1",
+          "aciklama": "100’e kadar olan niceliklerin büyüklüklerini temsil etmede sayıların sembolik"
+        },
+        {
+          "kod": "MAT.2.1.2",
+          "aciklama": "İki basamaklı sayıları çözümleyebilme"
+        },
+        {
+          "kod": "MAT.2.1.3",
+          "aciklama": "Sayıların sırasını belirleyebilme"
+        },
+        {
+          "kod": "MAT.2.1.4",
+          "aciklama": "İleriye ve geriye doğru ritmik sayabilme"
+        },
+        {
+          "kod": "MAT.2.1.5",
+          "aciklama": "Sayı ve sayı temsiline dönüşen şekil örüntülerine dayalı çıkarım yapabilme"
+        },
+        {
+          "kod": "MAT.2.1.6",
+          "aciklama": "Bir çokluktaki ilişkilerden yararlanarak 50’ye kadar olan nesnelerin sayısını"
+        }
+      ],
+      "icerikCercevesi": "Bu temada öğrencilerin niceliklerin büyüklüklerine karşılık gelen 100’e kadar olan sayıları",
+      "surecBilesenleri": [
+        "Matematiksel muhakeme",
+        "Problem çözme",
+        "Temsil"
+      ],
+      "alanBecerileri": [
+        "MAB1. Matematiksel Muhakeme",
+        "MAB2. Problem Çözme",
+        "MAB3. Matematiksel Temsil",
+        "MAB4. Veri"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, gözlem, çalışma kâğıdı"
+    },
+    {
+      "id": "m3",
+      "ad": "İşlemlerden Cebirsel Düşünmeye",
+      "dersSaati": 55,
+      "hafta": 11,
+      "kodOnEki": "MAT.2.2",
+      "ogrenmeCiktilari": [
+        {
+          "kod": "MAT.2.2.1",
+          "aciklama": "Toplama ve çıkarma işlemleri gerektiren günlük yaşam problemlerini çözebilme"
+        },
+        {
+          "kod": "MAT.2.2.2",
+          "aciklama": "Toplama ve çıkarma işlemlerinin sonuçlarını tahminde bulunarak ve zihinden"
+        },
+        {
+          "kod": "MAT.2.2.3",
+          "aciklama": "Toplama ve çıkarma işlemlerinin ilişkisini yorumlayabilme"
+        },
+        {
+          "kod": "MAT.2.2.4",
+          "aciklama": "Çarpma ve bölme işlemlerini toplama ve çıkarma işlemlerine dayalı olarak çö-"
+        },
+        {
+          "kod": "MAT.2.2.5",
+          "aciklama": "Çarpma ve bölme işlemlerinin sonuçlarını muhakeme edebilme"
+        },
+        {
+          "kod": "MAT.2.2.6",
+          "aciklama": "Dört işlem bağlamında eşitliğin farklı anlamlarını yorumlayabilme"
+        }
+      ],
+      "icerikCercevesi": "Bu temada öğrencilerin toplama ve çıkarma işlemleri gerektiren günlük yaşam problem-",
+      "surecBilesenleri": [
+        "Matematiksel muhakeme",
+        "Problem çözme",
+        "Temsil"
+      ],
+      "alanBecerileri": [
+        "MAB1. Matematiksel Muhakeme",
+        "MAB2. Problem Çözme",
+        "MAB3. Matematiksel Temsil",
+        "MAB4. Veri"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, gözlem, çalışma kâğıdı"
+    },
+    {
+      "id": "m4",
+      "ad": "Sayılar ve Nicelikler (2)",
+      "dersSaati": 30,
+      "hafta": 6,
+      "kodOnEki": "MAT.2.1",
+      "ogrenmeCiktilari": [
+        {
+          "kod": "MAT.2.1.7",
+          "aciklama": "Bütün, yarım ve çeyrek arasındaki ilişkiyi çözümleyebilme"
+        },
+        {
+          "kod": "MAT.2.1.8",
+          "aciklama": "Paraları değerlerine göre ilişkilendirerek çözümleyebilme"
+        },
+        {
+          "kod": "MAT.2.1.9",
+          "aciklama": "Zaman ölçü birimlerini okuyabilme ve yazabilme"
+        },
+        {
+          "kod": "MAT.2.1.10",
+          "aciklama": "Standart uzunluk ve kütle ölçme araçlarının ve birimlerinin gerekliliğini yan-"
+        },
+        {
+          "kod": "MAT.2.1.11",
+          "aciklama": "Standart uzunluk ve kütle ölçü birimleri cinsinden uzunlukları ve kütleleri"
+        }
+      ],
+      "icerikCercevesi": "Bu temada öğrencilerin bütün, yarım ve çeyreği ifade ettikten sonra bütün, yarım ve çey-",
+      "surecBilesenleri": [
+        "Matematiksel muhakeme",
+        "Problem çözme",
+        "Temsil"
+      ],
+      "alanBecerileri": [
+        "MAB1. Matematiksel Muhakeme",
+        "MAB2. Problem Çözme",
+        "MAB3. Matematiksel Temsil",
+        "MAB4. Veri"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, gözlem, çalışma kâğıdı"
+    },
+    {
+      "id": "m5",
+      "ad": "Nesnelerin Geometrisi (2)",
+      "dersSaati": 11,
+      "hafta": 2,
+      "kodOnEki": "MAT.2.3",
+      "ogrenmeCiktilari": [
+        {
+          "kod": "MAT.2.3.6",
+          "aciklama": "Mesafe ve yönleri içerecek şekilde hedefe ulaşmak için uygun stratejilere"
+        },
+        {
+          "kod": "MAT.2.3.7",
+          "aciklama": "Verilen şekiller arasından simetrik olanları ayırt edebilme"
+        }
+      ],
+      "icerikCercevesi": "Bu temada öğrencilerin mesafe ve yönleri içerecek şekilde hedefe ulaşmak için kullana -",
+      "surecBilesenleri": [
+        "Matematiksel muhakeme",
+        "Problem çözme",
+        "Temsil"
+      ],
+      "alanBecerileri": [
+        "MAB1. Matematiksel Muhakeme",
+        "MAB2. Problem Çözme",
+        "MAB3. Matematiksel Temsil",
+        "MAB4. Veri"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, gözlem, çalışma kâğıdı"
+    },
+    {
+      "id": "m6",
+      "ad": "Veriye Dayalı Araştırma",
+      "dersSaati": 10,
+      "hafta": 2,
+      "kodOnEki": "MAT.2.4",
+      "ogrenmeCiktilari": [
+        {
+          "kod": "MAT.2.4.1",
+          "aciklama": "Kategorik veriye dayalı en çok iki veri grubu ile çalışabilme ve veriye dayalı"
+        }
+      ],
+      "icerikCercevesi": "Bu temada öğrencilerin istatistiksel araştırma sürecinin adımlarını kategorik veriye dayalı",
+      "surecBilesenleri": [
+        "Matematiksel muhakeme",
+        "Problem çözme",
+        "Temsil"
+      ],
+      "alanBecerileri": [
+        "MAB1. Matematiksel Muhakeme",
+        "MAB2. Problem Çözme",
+        "MAB3. Matematiksel Temsil",
+        "MAB4. Veri"
+      ],
+      "farklilastirma": "Zenginleştirme ve destekleme öğretmen tarafından planlanır",
+      "olcmeDegerlendirme": "Performans görevi, gözlem, çalışma kâğıdı"
+    },
+    {
+      "id": "otp",
+      "ad": "Okul Temelli Planlama",
+      "dersSaati": 8,
+      "hafta": 2,
+      "ogrenmeCiktilari": [],
+      "icerikCercevesi": "Zümre kararlarıyla planlanır",
+      "surecBilesenleri": [],
+      "alanBecerileri": []
+    }
+  ]
+}

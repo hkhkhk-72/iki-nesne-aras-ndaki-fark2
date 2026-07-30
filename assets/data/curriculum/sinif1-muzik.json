@@ -1,0 +1,32 @@
+{
+  "ders": "Müzik",
+  "dersId": "muzik",
+  "sinif": 1,
+  "model": "Türkiye Yüzyılı Maarif Modeli",
+  "programYili": "2025-2026",
+  "haftalikDersSaati": 1,
+  "toplamHafta": 36,
+  "temalar": [
+    {
+      "id": "mz1", "ad": "Ses ve Ritim", "hafta": 5,
+      "ogrenmeCiktilari": [
+        { "kod": "M.1.1.1", "aciklama": "Farklı ses kaynaklarını ayırt eder." },
+        { "kod": "M.1.1.2", "aciklama": "Basit ritim kalıplarını tekrarlar." }
+      ],
+      "icerikCercevesi": "Vücut perküsyonu, ritim oyunları",
+      "surecBilesenleri": ["Dinleme", "Uygulama"],
+      "alanBecerileri": ["Estetik", "Motor"],
+      "farklilastirma": "Ritim aletleri ile destekleme"
+    },
+    {
+      "id": "mz2", "ad": "Çocuk Şarkıları", "hafta": 4,
+      "ogrenmeCiktilari": [
+        { "kod": "M.1.2.1", "aciklama": "Basit çocuk şarkılarını söyler." }
+      ],
+      "icerikCercevesi": "Türkü ve şarkılar, hareket eşliğinde",
+      "surecBilesenleri": ["Dinleme", "Söyleme"],
+      "alanBecerileri": ["Estetik", "Kültürel miras"],
+      "farklilastirma": "Koro çalışması"
+    }
+  ]
+}

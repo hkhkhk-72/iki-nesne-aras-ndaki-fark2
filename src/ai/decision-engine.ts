@@ -21,6 +21,7 @@ import {
   lineForHelpLevel,
   BILGE_LAB_APPEAR_AFTER_MS,
 } from '@/world/bilge-guidance';
+import { waitHelpLayerAt } from '@/world/mavi-kitap-268-270';
 
 // ─── İzlenen davranışlar ─────────────────────────────────────
 export type TrackedBehavior =
@@ -109,9 +110,12 @@ export interface InterventionThresholds {
 
 export const DEFAULT_THRESHOLDS: InterventionThresholds = {
   thinkingSilenceMaxMs: HESITATION_THRESHOLD_MS,
-  gazeHintAfterMs: 5000,
+  /** MB-270: mimik → bakış (≈2.5s) */
+  gazeHintAfterMs: 2500,
+  /** MB-270: dünya sesi sonrası rehber (≈8s) */
   softHintAfterMs: 8000,
-  guideHintAfterMs: 14000,
+  /** MB-270: metin / konuşma en sonda (≈12s) */
+  guideHintAfterMs: 12_000,
   idleInterveneMs: IDLE_THRESHOLD_MS + 2000,
   retriesForLevel2: 1,
   retriesForLevel3: 2,
@@ -254,64 +258,35 @@ export function decideIntervention(ctx: DecisionContext): InterventionDecision {
     return fromHelpLevel(2, 'İlk takılma — küçük ipucu.', b);
   }
 
-  // ── Bekleme / idle — Karar 271: sessizlik de geri bildirim ──
+  // ── Bekleme / idle — Karar 270 yaşayan dünya + 271 sessizlik ──
   const wait = ctx.msSinceLastTouch ?? b.firstTouchLatencyMs ?? 0;
+  const waitLayer = waitHelpLayerAt(wait);
 
-  if (b.idleEvents > 0 || (b.durationMs > t.idleInterveneMs && b.totalTouches === 0)) {
-    if (!bilgeMaySpeak) {
-      return {
-        kind: 'gaze',
-        helpLevel: 1,
-        reason: 'Bekleme öğretimdir (Karar 278); sessizlik geri bildirimdir (Karar 271).',
-        bilge: {
-          trigger: 'silence',
-          silenceReason: 'child_is_thinking',
-          helpLevel: 1,
-          gazeOnly: true,
-        },
-      };
-    }
-    // Karar 278: gereksiz yönlendirme yok — eşik aşılmadan konuşma
-    return fromHelpLevel(2, 'Uzun bekleme — sakin yönlendirme.', b);
+  // MB-270: metin/konuşma en sonda — önce mimik, bakış, dünya, rehber
+  if (waitLayer === 'character_mime') {
+    return silence('child_is_thinking', 'Beklemede karakter mimiği (Karar 270); metin yok.');
   }
-
-  if (wait >= t.guideHintAfterMs && hasHesitation(b)) {
-    if (!bilgeMaySpeak) {
-      return {
-        kind: 'gaze',
-        helpLevel: 1,
-        reason: 'Uzun kararsızlık; önce bakış.',
-        bilge: {
-          trigger: 'silence',
-          silenceReason: 'child_is_thinking',
-          helpLevel: 1,
-          gazeOnly: true,
-        },
-      };
-    }
-    return fromHelpLevel(3, 'Uzun kararsızlık — yönlendirici ipucu.', b);
-  }
-  if (wait >= t.softHintAfterMs && hasHesitation(b)) {
-    if (!bilgeMaySpeak) {
-      return {
-        kind: 'gaze',
-        helpLevel: 1,
-        reason: 'Kararsızlık; Bilge konuşmadan bakış.',
-        bilge: {
-          trigger: 'silence',
-          silenceReason: 'child_is_thinking',
-          helpLevel: 1,
-          gazeOnly: true,
-        },
-      };
-    }
-    return fromHelpLevel(2, 'Kararsızlık — küçük ipucu.', b);
-  }
-  if (wait >= t.gazeHintAfterMs && hasHesitation(b)) {
+  if (waitLayer === 'character_gaze' || waitLayer === 'world_sound') {
     return {
       kind: 'gaze',
       helpLevel: 1,
-      reason: 'Düşünüyor; yalnızca bakış (Konuşmaz).',
+      reason:
+        waitLayer === 'character_gaze'
+          ? 'Beklemede karakter bakışı (Karar 270).'
+          : 'Beklemede dünya sesi; Bilge konuşmaz (Karar 270).',
+      bilge: {
+        trigger: 'silence',
+        silenceReason: 'child_is_thinking',
+        helpLevel: 1,
+        gazeOnly: true,
+      },
+    };
+  }
+  if (waitLayer === 'guide_character' && !bilgeMaySpeak) {
+    return {
+      kind: 'gaze',
+      helpLevel: 1,
+      reason: 'Rehber karakter görünür; henüz metin yok (Karar 270).',
       bilge: {
         trigger: 'silence',
         silenceReason: 'child_is_thinking',
@@ -321,8 +296,45 @@ export function decideIntervention(ctx: DecisionContext): InterventionDecision {
     };
   }
 
+  if (b.idleEvents > 0 || (b.durationMs > t.idleInterveneMs && b.totalTouches === 0)) {
+    if (!bilgeMaySpeak || waitLayer !== 'text') {
+      return {
+        kind: 'gaze',
+        helpLevel: 1,
+        reason: 'Bekleme öğretimdir (Karar 278); yaşayan dünya önce (Karar 270).',
+        bilge: {
+          trigger: 'silence',
+          silenceReason: 'child_is_thinking',
+          helpLevel: 1,
+          gazeOnly: true,
+        },
+      };
+    }
+    return fromHelpLevel(2, 'Uzun bekleme — metin katmanı (Karar 270).', b);
+  }
+
+  if (waitLayer === 'text' && hasHesitation(b)) {
+    if (!bilgeMaySpeak) {
+      return {
+        kind: 'gaze',
+        helpLevel: 1,
+        reason: 'Metin katmanı; Bilge henüz konuşmaz (MB-LAB-001).',
+        bilge: {
+          trigger: 'silence',
+          silenceReason: 'child_is_thinking',
+          helpLevel: 1,
+          gazeOnly: true,
+        },
+      };
+    }
+    return fromHelpLevel(2, 'Bekleme metin katmanı — sakin ipucu (Karar 270).', b);
+  }
+  if (waitLayer === 'guide_character' && hasHesitation(b) && bilgeMaySpeak) {
+    return fromHelpLevel(2, 'Rehber karakter katmanı — küçük ipucu.', b);
+  }
+
   // ── Düşünme penceresi: SUS ──
-  if (hasHesitation(b) && b.totalTouches === 0 && wait < t.gazeHintAfterMs) {
+  if (hasHesitation(b) && b.totalTouches === 0) {
     return silence('child_is_thinking', 'Düşünme penceresi; sessizlik öğretmendir.');
   }
 

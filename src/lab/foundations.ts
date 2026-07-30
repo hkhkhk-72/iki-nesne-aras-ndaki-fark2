@@ -72,17 +72,18 @@ export const PEDAGOGICAL_RULES: Record<
   { title: string; rule: string }
 > = {
   'MB-268': {
-    title: 'İlk Karar Güvenli Olmalıdır',
+    title: 'İlk Karar Güvenli · Bakış Nesneye',
     rule:
-      'İlk matematiksel karar asla "yanlış" etiketlenmez; sistem yalnızca gözlemler.',
+      'İlk karar "yanlış" etiketlenmez; seçimden sonra karakter önce seçilen nesneye bakar.',
   },
   'MB-269': {
-    title: 'Karşılaştırma Saymadan Önce Gelir',
-    rule: 'Önce miktar farkı hissedilir; sembol ve sayılar sonra gelir.',
+    title: 'Yanlış Seçim Yok · Keşif',
+    rule: 'Yanlış seçim yoktur; her etkileşim hikâyeyi ilerleten keşiftir.',
   },
   'MB-270': {
-    title: 'Dünya Geri Bildirim Verir',
-    rule: 'Geri bildirimi arayüz değil dünya verir (bakış, yaprak, doğal hareket).',
+    title: 'Dünya Geri Bildirim · Bekleme Önceliği',
+    rule:
+      'Beklemede: mimik → bakış → dünya sesi → rehber → metin. Arayüz doğru/yanlış demez.',
   },
   'MB-271': {
     title: 'Sessizlik de Bir Geri Bildirimdir',

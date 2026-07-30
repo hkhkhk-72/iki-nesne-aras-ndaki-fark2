@@ -26,7 +26,7 @@ import {
   INTERACTION_LATENCY_MAX_MS,
   PRIMARY_MOTIVATION,
 } from '@/benchmark';
-import { KARAR_268, KARAR_269, KARAR_270 } from '@/world/mavi-kitap-268-270';
+import { KARAR_268, KARAR_269, KARAR_270, WAIT_HELP_PRIORITY } from '@/world/mavi-kitap-268-270';
 import { KARAR_271, KARAR_272, KARAR_273, REFLECTION_TIME_METRIC } from '@/world/mavi-kitap-271-273';
 import { KARAR_274, KARAR_275, KARAR_276, PROCESS_AI_METRICS } from '@/world/mavi-kitap-274-276';
 import { KARAR_277, KARAR_278, KARAR_279 } from '@/world/mavi-kitap-277-279';
@@ -142,13 +142,14 @@ if (!praiseOk) failed = true;
 
 // ── MB-AI-001 karar motoru ──
 console.log('\nMB-AI-001 Karar Motoru');
+// MB-270: mimik (silence) → bakış (gaze) → … → metin
 const silentThink = decideIntervention({
-  behavior: stubBehavior({ firstTouchLatencyMs: 3000 }),
-  msSinceLastTouch: 3000,
+  behavior: stubBehavior({ firstTouchLatencyMs: 1500 }),
+  msSinceLastTouch: 1500,
 });
 const gaze = decideIntervention({
-  behavior: stubBehavior({ firstTouchLatencyMs: 5500 }),
-  msSinceLastTouch: 5500,
+  behavior: stubBehavior({ firstTouchLatencyMs: 3500 }),
+  msSinceLastTouch: 3500,
 });
 const dragSilent = decideIntervention({
   behavior: stubBehavior({ retries: 5 }),
@@ -243,18 +244,25 @@ for (const exp of MATH_EXPERIENCES) {
     firstChoose?.firstMathDecision === true &&
     (firstChoose.interaction.kind === 'choose'
       ? firstChoose.interaction.countVisibility === 'never'
-      : false);
-  const k269 = exp.scenes
-    .filter((s) => s.interaction.kind === 'choose')
-    .every((s) =>
-      s.interaction.kind === 'choose'
-        ? s.interaction.countVisibility === 'never' ||
-          s.interaction.groups.every((g) => g.count >= 5)
-        : true,
-    );
-  const k270 = exp.scenes
-    .filter((s) => s.interaction.kind === 'choose' || s.interaction.kind === 'observe')
-    .every((s) => s.worldFeedback !== false);
+      : false) &&
+    KARAR_268.rule.includes('seçilen nesneye');
+  // MB-269: yanlış seçim yok + saymadan karşılaştırma (Karar 231 / countVisibility)
+  const k269 =
+    KARAR_269.rule.includes('yanlış seçim') &&
+    exp.scenes
+      .filter((s) => s.interaction.kind === 'choose')
+      .every((s) =>
+        s.interaction.kind === 'choose'
+          ? s.interaction.countVisibility === 'never' ||
+            s.interaction.groups.every((g) => g.count >= 5)
+          : true,
+      );
+  const k270 =
+    WAIT_HELP_PRIORITY[0] === 'character_mime' &&
+    WAIT_HELP_PRIORITY[4] === 'text' &&
+    exp.scenes
+      .filter((s) => s.interaction.kind === 'choose' || s.interaction.kind === 'observe')
+      .every((s) => s.worldFeedback !== false);
   const k271 = KARAR_271.title.includes('Sessizlik');
   const k272 = KARAR_272.title.includes('Hata');
   const k273 =

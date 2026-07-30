@@ -111,32 +111,38 @@ ve öğrenme stratejisine yöneliktir.
 
 ---
 
-## 📘 Karar No: 268 — İlk Karar Güvenli Olmalıdır
+## 📘 Karar No: 268 — İlk Karar Güvenli · Bakış Nesneye
 
 Çocuğun verdiği ilk matematiksel karar hiçbir zaman "yanlış" olarak
-etiketlenmez. Sistem, ilk kararları öğrenme sürecinin doğal bir parçası
-olarak kabul eder ve yalnızca gözlemler.
+etiketlenmez. Seçimden sonra karakter önce çocuğa değil, seçilen nesneye
+bakar — "beni dinliyor" hissini güçlendirir.
 
-**Kod:** `firstMathDecision` · `src/world/mavi-kitap-268-270.ts` · ChooseScene güvenli yol.
-
----
-
-## 📘 Karar No: 269 — Karşılaştırma Saymadan Önce Gelir
-
-Karşılaştırma becerisi, sayma becerisinden önce geliştirilir. Çocuk önce
-miktar farkını hisseder, daha sonra semboller ve sayılarla tanışır.
-
-**Kod:** `countVisibility: 'never'` (ilk karşılaştırma) · `edu.visualCompare` / `edu.compare`.
+**Kod:** `firstMathDecision` · `gazeAtSelectionCue` · ChooseScene bakış vurgusu · `src/world/mavi-kitap-268-270.ts`.
 
 ---
 
-## 📘 Karar No: 270 — Dünya Geri Bildirim Verir
+## 📘 Karar No: 269 — Yanlış Seçim Yok · Keşif
 
-Geri bildirimi arayüz değil, dünyanın kendisi verir. Yaprakların hareketi,
-Fındık'ın bakışı ve nesnelerin doğal animasyonları; "doğru/yanlış"
-mesajlarının yerini alır.
+MiniBilge'de yanlış seçim kavramı yoktur. Her etkileşim hikâyeyi ilerleten
+doğal bir keşif olarak değerlendirilir. (Karşılaştırma saymadan önce gelir —
+Karar 231 / `countVisibility`.)
 
-**Kod:** `worldFeedback` · dünya cue + karakter repliği; UI rozeti yok.
+**Kod:** `aligned` / `explored` gözlem dili · misconception etiketi yok · `countVisibility: 'never'`.
+
+---
+
+## 📘 Karar No: 270 — Dünya Geri Bildirim · Beklemede Yaşayan Dünya
+
+Geri bildirimi arayüz değil, dünyanın kendisi verir. Bekleme durumlarında
+yardım metni yerine yaşayan dünya kullanılır. Öncelik sırası:
+
+1. Karakter mimiği  
+2. Karakter bakışı  
+3. Dünya sesi  
+4. Rehber karakter  
+5. Metin  
+
+**Kod:** `WAIT_HELP_PRIORITY` · `waitHelpLayerAt` · `worldFeedback` · `decideIntervention`.
 
 ---
 

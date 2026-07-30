@@ -16,7 +16,7 @@
 | GRS-001C | Figma Foundation (ürün) | `src/design-tokens/` + Figma `01 Tokens` |
 | MB-LAB-001 | Az/Çok/Eşit bilimsel temel | `src/lab/` · `src/qa/lab-qa.ts` · `docs/16-…` |
 | MBA-BENCHMARK-001 | Küresel üretim eşiği v1.1 | `src/benchmark/` · `src/qa/benchmark-qa.ts` · `docs/17-…` |
-| Karar 268–270 | İlk karar güvenli · karşılaştırma önce · dünya feedback | `src/world/mavi-kitap-268-270.ts` · ChooseScene |
+| Karar 268–270 | Bakış nesneye · yanlış seçim yok · beklemede yaşayan dünya | `src/world/mavi-kitap-268-270.ts` · ChooseScene · `decideIntervention` |
 | Karar 271–273 | Sessizlik · hata hissettirilir · Reflection Time | `src/world/mavi-kitap-271-273.ts` · `reflectionTimeMs` |
 | Karar 274–276 | Keşif çocuğa ait · dünya kutlar · süreç > sonuç | `src/world/mavi-kitap-274-276.ts` |
 | Karar 277–279 | Davranışla soru · beklemek öğretim · merak önce | `src/world/mavi-kitap-277-279.ts` · SceneStage |

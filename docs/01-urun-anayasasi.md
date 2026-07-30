@@ -77,9 +77,9 @@ Amaç çok oyun yapmak değil; **çocukların matematiği sevmesini sağlamak**.
 | 237 | Sessizlik de rehberliğin bir parçasıdır |
 | 238 | Yardım basamaklıdır (4 seviye; çözüm yok) |
 | 239 | Başarı sonuçta değil süreçtedir |
-| 268 | İlk karar güvenli olmalıdır |
-| 269 | Karşılaştırma saymadan önce gelir |
-| 270 | Dünya geri bildirim verir |
+| 268 | İlk karar güvenli · bakış seçilen nesneye |
+| 269 | Yanlış seçim yok · her etkileşim keşif |
+| 270 | Beklemede yaşayan dünya (mimik→bakış→ses→rehber→metin) |
 | 271 | Sessizlik de bir geri bildirimdir |
 | 272 | Hata söylenmez, hissettirilir |
 | 273 | Düşünme süresi başarı süresinden değerlidir (Reflection Time) |

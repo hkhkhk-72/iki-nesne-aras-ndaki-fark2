@@ -25,17 +25,17 @@ Yeni anayasa değildir; laboratuvarın ürün üretim standardıdır.
 
 ## 2. Pedagojik Kurallar (Mavi Kitap + LAB)
 
-### MB-268 — İlk Karar Güvenli Olmalıdır
+### MB-268 — İlk Karar Güvenli · Bakış Nesneye
 
-İlk matematiksel karar asla "yanlış" etiketlenmez; sistem yalnızca gözlemler.
+İlk matematiksel karar asla "yanlış" etiketlenmez; seçimden sonra karakter önce seçilen nesneye bakar.
 
-### MB-269 — Karşılaştırma Saymadan Önce Gelir
+### MB-269 — Yanlış Seçim Yok · Keşif
 
-Önce miktar farkı hissedilir; sembol ve sayılar sonra gelir.
+Yanlış seçim yoktur; her etkileşim hikâyeyi ilerleten doğal bir keşiftir. (Saymadan karşılaştırma: Karar 231.)
 
-### MB-270 — Dünya Geri Bildirim Verir
+### MB-270 — Dünya Geri Bildirim · Beklemede Yaşayan Dünya
 
-Geri bildirimi arayüz değil dünya verir (bakış, yaprak, doğal hareket).
+Beklemede yardım metni yerine yaşayan dünya: mimik → bakış → dünya sesi → rehber → metin.
 
 ### MB-271 — Sessizlik de Bir Geri Bildirimdir
 

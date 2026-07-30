@@ -6,6 +6,7 @@ import { varyScenes, createSessionSeed } from '@/mes/replay';
 import { ExperienceObserver, type SceneBehavior } from '@/ai/observer';
 import { buildInsights, type ExperienceInsights } from '@/ai/insights';
 import { getCharacter } from '@/world/characters';
+import { gazeAtSelectionCue, waitHelpLayerAt } from '@/world/mavi-kitap-268-270';
 import { Button } from '@/components/ui';
 import { colors, radius, spacing, typography } from '@/theme';
 import type { AppSettings } from '@/core/settings-store';
@@ -423,71 +424,77 @@ function PairScene({ scene, settings, observer, onAdvance }: SceneProps) {
   );
 }
 
-// ─── Seçim: Karar 268/269/270 — güvenli ilk karar, dünya geri bildirimi ──
+// ─── Seçim: MB-268 bakış nesneye · MB-269 keşif · MB-270 dünya ──
 function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
   const i = scene.interaction as Extract<SceneSpec['interaction'], { kind: 'choose' }>;
   const [attempts, setAttempts] = useState(0);
   const [solved, setSolved] = useState(false);
   const [hintIndex, setHintIndex] = useState(-1);
   const [worldCue, setWorldCue] = useState<string | null>(null);
+  const [gazedOptionId, setGazedOptionId] = useState<string | null>(null);
+  const [waitLayer, setWaitLayer] = useState<ReturnType<typeof waitHelpLayerAt>>('character_mime');
+  const [waitStartedAt, setWaitStartedAt] = useState(() => Date.now());
   const firstChoiceRecorded = useRef(false);
-  const firstMathSafe = Boolean(scene.firstMathDecision);
   const worldFeedback = scene.worldFeedback !== false;
+  const findik = getCharacter('findik');
+
+  // MB-270: beklemede metin en sonda — katmanlar zamanla yükselir
+  useEffect(() => {
+    if (solved) return;
+    const tick = setInterval(() => {
+      setWaitLayer(waitHelpLayerAt(Date.now() - waitStartedAt));
+    }, 500);
+    return () => clearInterval(tick);
+  }, [waitStartedAt, solved]);
+
+  // Metin ipucu yalnızca text katmanında (veya yeterli keşif sonrası)
+  useEffect(() => {
+    if (solved || attempts === 0 || i.hints.length === 0) return;
+    if (waitLayer !== 'text' && attempts < 2) return;
+    if (hintIndex >= 0) return;
+    setHintIndex(0);
+    observer.record(scene.id, 'hint_shown');
+  }, [waitLayer, attempts, solved, i.hints.length, hintIndex, observer, scene.id]);
 
   const choose = (optionId: string) => {
     if (solved) return;
     const aligned = optionId === i.answerId;
+    const opt = i.options.find((o) => o.id === optionId);
+    const group = i.groups.find((g) => g.id === optionId);
+
+    // MB-268: karakter önce seçilen nesneye bakar (çocuğa değil)
+    setGazedOptionId(optionId);
+    setWorldCue(gazeAtSelectionCue(opt?.label ?? group?.label ?? 'seçimin'));
+    setWaitStartedAt(Date.now());
+    setWaitLayer('character_mime');
+    setHintIndex(-1);
 
     if (!firstChoiceRecorded.current) {
-      // Karar 268: ilk karar "incorrect/wrong" etiketi almaz — yalnızca gözlem.
-      const detail = firstMathSafe
-        ? aligned
-          ? 'aligned'
-          : 'explored'
-        : aligned
-          ? 'correct'
-          : 'incorrect';
-      observer.record(scene.id, 'first_choice', detail);
-      // Karar 273: Reflection Time — hız değil, düşünme süresi
-      observer.record(scene.id, 'reflection_time', detail);
+      // MB-269: yanlış yok — aligned | explored
+      observer.record(scene.id, 'first_choice', aligned ? 'aligned' : 'explored');
+      observer.record(scene.id, 'reflection_time', aligned ? 'aligned' : 'explored');
       firstChoiceRecorded.current = true;
     }
     observer.record(scene.id, 'touch', optionId);
+    observer.record(scene.id, 'visual_focus', optionId);
 
     if (aligned) {
       setSolved(true);
-      setWorldCue(scene.atmosphere?.worldCue ?? 'Yapraklar hafifçe kıpırdar…');
+      setWorldCue(
+        `${findik.visual} seçtiğin yığına bakıyor… ${scene.atmosphere?.worldCue ?? 'Yapraklar kıpırdar.'}`,
+      );
       if (!settings.reduceMotion) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       }
       return;
     }
 
-    // Karar 268: ilk matematiksel kararda misconception / "yanlış" yolu yok.
-    if (firstMathSafe && attempts === 0) {
-      observer.record(scene.id, 'observe_pattern', 'first_decision_safe');
-      const nextHint = Math.min(0, i.hints.length - 1);
-      setHintIndex(nextHint);
-      if (nextHint >= 0) observer.record(scene.id, 'hint_shown');
-      setWorldCue('Fındık gülümseyerek iki yığına tekrar bakar…');
-      if (!settings.reduceMotion) {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-      }
-      setAttempts((a) => a + 1);
-      return;
-    }
-
-    // Sonraki denemeler: sahne değişmez; dünya/karakter yönlendirir (Karar 270).
-    observer.record(scene.id, 'retry', optionId);
-    observer.record(scene.id, 'misconception', `${i.answerId}_yerine_${optionId}`);
-    const nextHint = Math.min(hintIndex + 1, i.hints.length - 1);
-    setHintIndex(nextHint);
-    if (nextHint >= 0) observer.record(scene.id, 'hint_shown');
-    setWorldCue('Yığınlar yerinde durur; Fındık merakla bekler…');
+    // MB-269: keşif — misconception / "yanlış" yolu yok; hikâye yumuşak ilerler
+    observer.record(scene.id, 'observe_pattern', 'discovery_explore');
+    setAttempts((a) => a + 1);
     if (!settings.reduceMotion) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
-    setAttempts((a) => a + 1);
   };
 
   const countVisibility = i.countVisibility ?? 'after_attempt';
@@ -504,6 +511,23 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
       registerLabObservation(observer, scene.id, 'subitize_attempt', 'choose_perceptual');
     }
   }, [i.groups, observer, scene.id]);
+
+  const showTextHint =
+    !solved && hintIndex >= 0 && (waitLayer === 'text' || attempts >= 2);
+  const waitLivingCue =
+    !solved && !showTextHint
+      ? waitLayer === 'character_mime'
+        ? `${findik.visual} sessizce bekliyor…`
+        : waitLayer === 'character_gaze'
+          ? gazedOptionId
+            ? `${findik.visual} seçtiğin tarafa bakmayı sürdürür…`
+            : `${findik.visual} yığınlara bakıyor…`
+          : waitLayer === 'world_sound'
+            ? 'Yaprak ve rüzgâr sesi… acele yok.'
+            : waitLayer === 'guide_character'
+              ? 'Bilge dalda sessizce gülümser…'
+              : null
+      : null;
 
   return (
     <SceneStage
@@ -530,7 +554,8 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
             label={g.label}
             emoji={g.emoji}
             count={g.count}
-            /** MB-280: 1–4 nesnede sayı asla gösterilmez. */
+            /** MB-268: bakış seçilen nesneye. */
+            highlighted={gazedOptionId === g.id}
             showCount={baseShowCount && !isPerceptualCount(g.count)}
             settings={settings}
             layoutSeed={scene.order * 13 + gi + attempts}
@@ -541,6 +566,7 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
       <View style={styles.optionRow}>
         {i.options.map((opt) => {
           const isAnswer = opt.id === i.answerId;
+          const isGazed = gazedOptionId === opt.id;
           return (
             <TouchableOpacity
               key={opt.id}
@@ -548,7 +574,7 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
               disabled={solved}
               style={[
                 styles.option,
-                // Karar 270: UI "doğru" rozeti yok — dünya/karakter konuşur.
+                isGazed && styles.optionGazed,
                 !worldFeedback && solved && isAnswer && styles.optionCorrect,
               ]}
               accessibilityLabel={opt.label}
@@ -563,6 +589,7 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
       </View>
 
       {worldCue ? <Text style={styles.worldCue}>{worldCue}</Text> : null}
+      {waitLivingCue ? <Text style={styles.worldCue}>{waitLivingCue}</Text> : null}
 
       {solved ? (
         <SpeechBubble
@@ -570,7 +597,7 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
           line={scene.feedback.positive}
           settings={settings}
         />
-      ) : hintIndex >= 0 ? (
+      ) : showTextHint ? (
         <SpeechBubble
           speaker={scene.feedback.speaker}
           line={i.hints[hintIndex]}
@@ -734,6 +761,10 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   optionCorrect: { borderColor: colors.success, backgroundColor: colors.successLight },
+  optionGazed: {
+    borderColor: colors.secondary,
+    backgroundColor: '#FFF8E7',
+  },
   optionVisual: { fontSize: 30 },
   optionLabel: { color: colors.text, fontWeight: '700', textAlign: 'center' },
 

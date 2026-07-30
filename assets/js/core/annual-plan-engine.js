@@ -2,22 +2,32 @@
   'use strict';
 
   async function generateAnnualPlan(options) {
-    const { sinif, dersId, okul, ogretmen, egitimYili, kaynakId } = options;
+    const { sinif, dersId, okul, ogretmen, kaynakId, sube } = options;
+    const egitimYili = options.egitimYili || okul?.egitimYili;
 
+    if (egitimYili && typeof CalendarEngine.setYear === 'function') {
+      CalendarEngine.setYear(egitimYili);
+    }
     const cal = await CalendarEngine.loadCalendar();
     const curriculum = await CurriculumEngine.loadCurriculum(dersId, sinif, { kaynakId: kaynakId });
     const weeks = CalendarEngine.getTeachingWeeks(cal);
+    if (!weeks.length) {
+      throw new Error('Öğretim haftası bulunamadı. Takvim dosyasını kontrol edin.');
+    }
     const weekPlan = CurriculumEngine.distributeThemesToWeeks(curriculum, weeks.length);
 
     const rows = weeks.map((w, idx) => {
-      const wp = weekPlan[idx] || weekPlan[weekPlan.length - 1];
+      const wp = weekPlan[idx] || weekPlan[weekPlan.length - 1] || {};
+      const ciktilar = Array.isArray(wp.ogrenmeCiktilari) ? wp.ogrenmeCiktilari : [];
       return {
         hafta: w.hafta,
         tarihAraligi: `${CalendarEngine.fmtDate(w.baslangic)} – ${CalendarEngine.fmtDate(w.bitis)}`,
         donem: w.donem,
-        tema: wp.temaAd,
-        ogrenmeCiktilari: wp.ogrenmeCiktilari.map(o => o.kod + ': ' + o.aciklama).join('; '),
-        icerikCercevesi: wp.icerikCercevesi,
+        tema: wp.temaAd || wp.tema || 'Tema atanacak',
+        ogrenmeCiktilari: ciktilar.length
+          ? ciktilar.map(o => (o.kod ? o.kod + ': ' : '') + (o.aciklama || '')).join('; ')
+          : (wp.icerikCercevesi || 'Öğrenme çıktısı atanacak'),
+        icerikCercevesi: wp.icerikCercevesi || '',
         surecBilesenleri: (wp.surecBilesenleri || []).join(', '),
         olcmeDegerlendirme: wp.olcmeDegerlendirme || '',
         alanBecerileri: (wp.alanBecerileri || []).join(', '),
@@ -32,6 +42,7 @@
       sinif,
       ders: curriculum.ders,
       dersId,
+      sube: sube || options.sube || 'A',
       kaynakId: curriculum.kaynakId || kaynakId || null,
       kaynak: (curriculum.kaynakMeta && curriculum.kaynakMeta.ad) || curriculum.kaynak || null,
       kaynakUrl: (curriculum.kaynakMeta && curriculum.kaynakMeta.kaynakUrl) || curriculum.kaynakUrl || null,
@@ -73,7 +84,8 @@
           </div>
         </div>
         <h1 class="doc-title">YILLIK PLAN</h1>
-        <p class="doc-meta">${esc(plan.model)} · Otomatik üretilmiştir · ${new Date(plan.olusturmaTarihi).toLocaleDateString('tr-TR')}</p>
+        <p class="doc-meta">${esc(plan.model)} · ${esc(plan.kaynakShort || plan.kaynak || '')} · ${new Date(plan.olusturmaTarihi).toLocaleDateString('tr-TR')}</p>
+        ${plan.sube ? `<p class="doc-meta">Şube: <strong>${esc(plan.sube)}</strong></p>` : ''}
       </div>
       <table class="doc-table compact">
         <thead><tr>

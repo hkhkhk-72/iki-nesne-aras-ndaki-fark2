@@ -55,13 +55,16 @@
 
 ---
 
-## 3. Bu tur özeti (ADR + LIFE)
+## 3. Bu tur özeti (Yıllık plan hazır)
 
 | Kalem | Tamam | Kaldı |
 |-------|------:|------:|
+| Yıllık plan uçtan uca (sınıf → ders+kaynak → bilgiler → üret → Word/PDF/HTML) | **92%** | **8%** |
+| Boş profil ile üretim (uyarı + fallback) | 100% | 0% |
 | ADR kısa format + ADR-042…045 (Karar 66–85) | 100% | 0% |
 | Öğretmen meslek hayatı kataloğu (MB-LIFE-001) | 35% | 65% |
-| Sonraki: LIFE maddelerine belge/workflow bağla | — | — |
+
+**Kalan (yıllık):** OTP/pekiştirme haftaları (MB-ALG-001) · kitap seçimi (ADR-043) · daha fazla ders kaynağı
 
 ---
 
@@ -76,7 +79,7 @@ Ana sayfadaki her başlıkta renkli rozet (`%tamam · kaldı %`):
 | Bugün | `home.bugun` | 90% |
 | Dersleri | `home.dersler` | 85% |
 | Ana Modüller | `home.ana-moduller` | 78% |
-| Planlar … AI (8 hub) | `home.hubs.*` | 40–82% |
+| Planlar … AI (8 hub) | `home.hubs.*` | 40–92% |
 
 Renk: **≥90 yeşil** · **70–89 teal** · **40–69 kehribar** · **&lt;40 kırmızı**
 

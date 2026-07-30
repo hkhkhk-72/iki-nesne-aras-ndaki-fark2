@@ -129,13 +129,18 @@
           </section>
 
           ${primaryHtml}
-          <div class="quick-actions no-print" style="display:none">
+          <div class="quick-actions no-print" style="margin:12px 0">
             ${step > 1 ? '<button class="quick-btn" id="btnPrev" type="button">Geri</button>' : ''}
             ${step < 4 ? '<button class="quick-btn primary" id="btnNext" type="button">İleri</button>' : ''}
+            ${step === 4 ? '<button class="quick-btn primary" id="btnGenerate" type="button">Yıllık Planı Üret</button>' : ''}
           </div>
-          ${step > 1 ? '<button class="quick-btn compact no-print" id="btnPrev" type="button" style="margin-bottom:12px">Geri</button>' : ''}
 
           <div id="txa-doc-host"></div>
+          <div id="exportBar" class="quick-actions no-print" style="display:none;margin:12px 0;gap:8px;flex-wrap:wrap">
+            <button type="button" class="quick-btn primary" id="btnWord">Word indir</button>
+            <button type="button" class="quick-btn" id="btnPdf">PDF / Yazdır</button>
+            <button type="button" class="quick-btn" id="btnHtml">HTML indir</button>
+          </div>
           <div id="txa-versions-host"></div>
 
           <div id="previewPanel" style="display:none">
@@ -257,13 +262,15 @@
     }
 
     function stepBilgiler() {
+      const okulAdi = school.okulAdi || '';
+      const ogretmen = profile.adSoyad || '';
       return `<div class="ctx-grid">
-        <div class="form-field"><label>Okul</label><input id="okulAdi" name="okul" data-txa-field="okul" value="${school.okulAdi || ''}"></div>
-        <div class="form-field"><label>İl</label><input id="il" name="il" data-txa-field="il" value="${school.il || ''}"></div>
-        <div class="form-field"><label>İlçe</label><input id="ilce" name="ilce" data-txa-field="ilce" value="${school.ilce || ''}"></div>
-        <div class="form-field"><label>Öğretmen</label><input id="ogretmenAdi" name="ogretmen" data-txa-field="ogretmen" value="${profile.adSoyad || ''}"></div>
+        <div class="form-field"><label>Okul</label><input id="okulAdi" name="okul" data-txa-field="okul" value="${escAttr(okulAdi)}" placeholder="Okul adı"></div>
+        <div class="form-field"><label>İl</label><input id="il" name="il" data-txa-field="il" value="${escAttr(school.il || '')}"></div>
+        <div class="form-field"><label>İlçe</label><input id="ilce" name="ilce" data-txa-field="ilce" value="${escAttr(school.ilce || '')}"></div>
+        <div class="form-field"><label>Öğretmen</label><input id="ogretmenAdi" name="ogretmen" data-txa-field="ogretmen" value="${escAttr(ogretmen)}" placeholder="Ad Soyad"></div>
         <div class="form-field"><label>Sınıf</label><input value="${state.sinif}" disabled></div>
-        <div class="form-field"><label>Şube</label><input id="sube2" name="sube" data-txa-field="sube" value="${state.sube}"></div>
+        <div class="form-field"><label>Şube</label><input id="sube2" name="sube" data-txa-field="sube" value="${escAttr(state.sube)}"></div>
         <div class="form-field"><label>Yıl</label>
           <select id="egitimYili" name="egitimYili" data-txa-field="egitimYili">
             <option value="2025-2026" ${school.egitimYili !== '2026-2027' ? 'selected' : ''}>2025-2026</option>
@@ -271,7 +278,15 @@
           </select>
         </div>
       </div>
-      <p class="empty-state" style="text-align:left;margin-top:10px">TXA-002 — kayıtlı bilgiler otomatik dolar. Kalıcı için <a class="text-link" href="hesabim.html">Hesabım</a>.</p>`;
+      <div class="quick-actions" style="margin-top:12px">
+        <button type="button" class="quick-btn compact" id="btnFillDemo">Örnek bilgilerle doldur</button>
+        <a class="text-link" href="hesabim.html">Kalıcı kayıt: Hesabım</a>
+      </div>
+      <p class="empty-state" style="text-align:left;margin-top:10px">Boş bırakırsanız belge yine üretilir; okul/öğretmen alanları uyarı ile dolar.</p>`;
+    }
+
+    function escAttr(s) {
+      return String(s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
     }
 
     function stepUret(weeks, tatilCount, gunCount) {
@@ -286,60 +301,140 @@
           <div class="cal-pill"><strong>Kaynak</strong><span>${src ? (src.shortLabel || src.ad) : '—'}</span></div>
         </div>
         <div class="quick-actions">
-          <button class="quick-btn primary txa-dominant" id="btnGenerate" type="button">Yıllık Planı Üret</button>
+          <button class="quick-btn primary txa-dominant" id="btnGenerateTop" type="button">Yıllık Planı Üret</button>
         </div>`;
     }
 
+    function captureBilgiler() {
+      const okulEl = document.getElementById('okulAdi');
+      const ilEl = document.getElementById('il');
+      const ilceEl = document.getElementById('ilce');
+      const ogEl = document.getElementById('ogretmenAdi');
+      const yilEl = document.getElementById('egitimYili');
+      const subeEl = document.getElementById('sube2') || document.getElementById('sube');
+      if (okulEl) school.okulAdi = okulEl.value.trim();
+      if (ilEl) school.il = ilEl.value.trim();
+      if (ilceEl) school.ilce = ilceEl.value.trim();
+      if (yilEl) school.egitimYili = yilEl.value;
+      if (ogEl) profile.adSoyad = ogEl.value.trim();
+      if (subeEl) state.sube = (subeEl.value || state.sube || 'A').trim() || 'A';
+    }
+
     function collectCtx() {
-      const yil = document.getElementById('egitimYili')?.value || school.egitimYili || '2025-2026';
-      state.sube = document.getElementById('sube2')?.value || document.getElementById('sube')?.value || state.sube;
+      captureBilgiler();
+      const yil = school.egitimYili || '2025-2026';
       return {
         sinif: state.sinif,
         dersId: state.dersId,
         kaynakId: state.kaynakId,
         sube: state.sube,
         okul: {
-          okulAdi: document.getElementById('okulAdi')?.value || school.okulAdi,
-          il: document.getElementById('il')?.value || school.il,
-          ilce: document.getElementById('ilce')?.value || school.ilce,
+          okulAdi: school.okulAdi || '',
+          il: school.il || '',
+          ilce: school.ilce || '',
           egitimYili: yil
         },
-        ogretmen: { adSoyad: document.getElementById('ogretmenAdi')?.value || profile.adSoyad }
+        ogretmen: { adSoyad: profile.adSoyad || '' }
       };
     }
 
-    async function generate() {
+    function showAlerts(items) {
       const alerts = document.getElementById('alerts');
-      const ctx = collectCtx();
-      await loadCal(ctx.okul.egitimYili);
-      const result = await PlanEngine.uretYillikPlan(ctx);
-      if (!result.success) {
-        alerts.innerHTML = result.errors.map(e => `<div class="alert alert-error">${e}</div>`).join('');
-        return;
-      }
-      currentPlan = result.plan;
-      currentPlan.sube = ctx.sube;
-      document.getElementById('preview').innerHTML = PlanEngine.renderYillikPlan(currentPlan);
-      document.getElementById('previewPanel').style.display = 'block';
-      MiniBilgeStorage.addPlan({
-        tur: 'yillik', sinif: currentPlan.sinif, ders: currentPlan.ders,
-        dersId: currentPlan.dersId, kaynakId: currentPlan.kaynakId, sube: ctx.sube, data: currentPlan
-      });
-      MiniBilgeStorage.saveSettings({
-        varsayilanSinif: state.sinif,
-        varsayilanDers: state.dersId,
-        varsayilanKaynakId: state.kaynakId,
-        sube: state.sube
-      });
-      if (window.MiniBilgeTxa) {
-        MiniBilgeTxa.VersionHistory.push('yillik-plan', currentPlan, {
-          label: currentPlan.sinif + '/' + ctx.sube + ' · ' + (currentPlan.ders || currentPlan.dersId) +
-            (currentPlan.kaynakShort ? ' · ' + currentPlan.kaynakShort : '')
+      if (!alerts) return;
+      alerts.innerHTML = (items || []).map(a => {
+        const cls = a.type === 'err' ? 'alert-error' : (a.type === 'warn' ? 'alert-warn' : 'alert-ok');
+        return `<div class="alert ${cls}">${a.text}</div>`;
+      }).join('');
+    }
+
+    function fillDemo() {
+      const okul = document.getElementById('okulAdi');
+      const il = document.getElementById('il');
+      const ilce = document.getElementById('ilce');
+      const og = document.getElementById('ogretmenAdi');
+      if (okul) okul.value = 'Atatürk İlkokulu';
+      if (il) il.value = 'Ankara';
+      if (ilce) ilce.value = 'Çankaya';
+      if (og) og.value = 'Ayşe Yılmaz';
+      captureBilgiler();
+      showAlerts([{ type: 'ok', text: 'Örnek okul / öğretmen bilgileri dolduruldu. İleri → Üret ile devam edin.' }]);
+    }
+
+    function showExportBar(show) {
+      const bar = document.getElementById('exportBar');
+      if (bar) bar.style.display = show ? 'flex' : 'none';
+    }
+
+    async function generate() {
+      showAlerts([]);
+      try {
+        const ctx = collectCtx();
+        if (!ctx.sinif) {
+          showAlerts([{ type: 'err', text: 'Sınıf seçiniz.' }]);
+          return;
+        }
+        if (!ctx.dersId) {
+          showAlerts([{ type: 'err', text: 'Ders seçiniz.' }]);
+          return;
+        }
+        if (!ctx.kaynakId) {
+          showAlerts([{ type: 'err', text: 'Müfredat kaynağı seçiniz.' }]);
+          return;
+        }
+
+        if (ctx.okul.okulAdi && ctx.okul.okulAdi !== 'Okul adı girilmedi') {
+          MiniBilgeStorage.saveSchool({
+            okulAdi: ctx.okul.okulAdi,
+            il: ctx.okul.il,
+            ilce: ctx.okul.ilce,
+            egitimYili: ctx.okul.egitimYili
+          });
+          Object.assign(school, MiniBilgeStorage.getSchool());
+        }
+        if (ctx.ogretmen.adSoyad && ctx.ogretmen.adSoyad !== 'Öğretmen') {
+          MiniBilgeStorage.saveProfile({ adSoyad: ctx.ogretmen.adSoyad });
+          Object.assign(profile, MiniBilgeStorage.getProfile());
+        }
+
+        await loadCal(ctx.okul.egitimYili);
+        const result = await PlanEngine.uretYillikPlan(ctx);
+        if (!result.success) {
+          showAlerts((result.errors || ['Plan üretilemedi.']).map(e => ({ type: 'err', text: e })));
+          return;
+        }
+        currentPlan = result.plan;
+        currentPlan.sube = ctx.sube;
+        document.getElementById('preview').innerHTML = PlanEngine.renderYillikPlan(currentPlan);
+        document.getElementById('previewPanel').style.display = 'block';
+        showExportBar(true);
+        MiniBilgeStorage.addPlan({
+          tur: 'yillik', sinif: currentPlan.sinif, ders: currentPlan.ders,
+          dersId: currentPlan.dersId, kaynakId: currentPlan.kaynakId, sube: ctx.sube, data: currentPlan
         });
-        mountDocActions();
-        MiniBilgeTxa.VersionHistory.render('yillik-plan').mount('#txa-versions-host');
+        MiniBilgeStorage.saveSettings({
+          varsayilanSinif: state.sinif,
+          varsayilanDers: state.dersId,
+          varsayilanKaynakId: state.kaynakId,
+          sube: state.sube
+        });
+        if (window.MiniBilgeTxa) {
+          MiniBilgeTxa.VersionHistory.push('yillik-plan', currentPlan, {
+            label: currentPlan.sinif + '/' + ctx.sube + ' · ' + (currentPlan.ders || currentPlan.dersId) +
+              (currentPlan.kaynakShort ? ' · ' + currentPlan.kaynakShort : '')
+          });
+          mountDocActions();
+          MiniBilgeTxa.VersionHistory.render('yillik-plan').mount('#txa-versions-host');
+        }
+        const msgs = [
+          { type: 'ok', text: `${currentPlan.toplamHafta} haftalık yıllık plan üretildi · kaynak: ${currentPlan.kaynakShort || currentPlan.kaynak || '—'} · Word / PDF / HTML hazır.` }
+        ];
+        (result.warnings || []).forEach(w => msgs.push({ type: 'warn', text: w }));
+        showAlerts(msgs);
+        document.getElementById('previewPanel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (err) {
+        console.error(err);
+        showAlerts([{ type: 'err', text: err.message || String(err) }]);
       }
-      alerts.innerHTML = `<div class="alert alert-ok">${currentPlan.toplamHafta} haftalık yıllık plan üretildi · kaynak: ${currentPlan.kaynakShort || currentPlan.kaynak || '—'} · TXA-008 sürüm kaydedildi.</div>`;
     }
 
     function bindEvents() {
@@ -347,20 +442,47 @@
         if (step === 1) {
           state.sinif = document.getElementById('sinif')?.value || state.sinif;
           state.sube = document.getElementById('sube')?.value || state.sube;
+          if (!state.sinif) {
+            showAlerts([{ type: 'err', text: 'Sınıf seçiniz.' }]);
+            return;
+          }
           await loadCourses();
         }
         if (step === 2) {
           state.dersId = document.getElementById('ders')?.value || state.dersId;
           state.kaynakId = document.getElementById('kaynak')?.value || state.kaynakId;
+          if (!state.dersId) {
+            showAlerts([{ type: 'err', text: 'Ders seçiniz.' }]);
+            return;
+          }
+          if (!state.kaynakId) {
+            showAlerts([{ type: 'err', text: 'Müfredat kaynağı seçiniz.' }]);
+            return;
+          }
         }
         if (step === 3) {
-          const yil = document.getElementById('egitimYili')?.value;
-          await loadCal(yil);
+          captureBilgiler();
+          await loadCal(school.egitimYili);
         }
+        showAlerts([]);
         if (step < 4) { step++; render(); }
       });
       document.getElementById('btnPrev')?.addEventListener('click', () => { if (step > 1) { step--; render(); } });
       document.getElementById('btnGenerate')?.addEventListener('click', generate);
+      document.getElementById('btnGenerateTop')?.addEventListener('click', generate);
+      document.getElementById('btnFillDemo')?.addEventListener('click', fillDemo);
+      document.getElementById('btnWord')?.addEventListener('click', () => {
+        if (!currentPlan) return;
+        EvrakEngine.indirWord(PlanEngine.renderYillikPlan(currentPlan), 'yillik-plan', 'Yıllık Plan');
+      });
+      document.getElementById('btnPdf')?.addEventListener('click', () => {
+        if (!currentPlan) return;
+        EvrakEngine.yazdir(PlanEngine.renderYillikPlan(currentPlan), 'Yıllık Plan');
+      });
+      document.getElementById('btnHtml')?.addEventListener('click', () => {
+        if (!currentPlan) return;
+        EvrakEngine.indirHtml(PlanEngine.renderYillikPlan(currentPlan), 'yillik-plan', 'Yıllık Plan');
+      });
       document.getElementById('ders')?.addEventListener('change', async (e) => {
         state.dersId = e.target.value;
         await loadSources();
@@ -379,8 +501,7 @@
           } else if (k === 'takvim') {
             location.href = 'takvim.html';
           } else {
-            const alerts = document.getElementById('alerts');
-            alerts.innerHTML = '<div class="alert alert-warn">OTP / pekiştirme haftaları plan motorunda MB-ALG-001 ile ayrılacak.</div>';
+            showAlerts([{ type: 'warn', text: 'OTP / pekiştirme haftaları plan motorunda MB-ALG-001 ile ayrılacak.' }]);
           }
         });
       });

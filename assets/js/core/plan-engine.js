@@ -10,12 +10,17 @@
     if (!validation.valid) {
       return { success: false, errors: validation.errors, warnings: validation.warnings };
     }
-    const plan = await AnnualPlanEngine.generateAnnualPlan(ctx);
-    const planCheck = ValidationEngine.validateAnnualPlan(plan);
-    if (!planCheck.valid) {
-      return { success: false, errors: planCheck.errors, warnings: validation.warnings };
+    try {
+      const cleanCtx = validation.ctx || ctx;
+      const plan = await AnnualPlanEngine.generateAnnualPlan(cleanCtx);
+      const planCheck = ValidationEngine.validateAnnualPlan(plan);
+      if (!planCheck.valid) {
+        return { success: false, errors: planCheck.errors, warnings: validation.warnings };
+      }
+      return { success: true, plan, warnings: validation.warnings || [] };
+    } catch (err) {
+      return { success: false, errors: [err.message || String(err)], warnings: validation.warnings || [] };
     }
-    return { success: true, plan, warnings: validation.warnings };
   }
 
   function uretGunlukPlan(ctx) {

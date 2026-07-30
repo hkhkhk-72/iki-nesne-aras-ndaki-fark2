@@ -4,16 +4,27 @@
   function validatePlanContext(ctx) {
     const errors = [];
     const warnings = [];
+    ctx = ctx || {};
+    ctx.okul = ctx.okul || {};
+    ctx.ogretmen = ctx.ogretmen || {};
 
-    if (!ctx.okul?.okulAdi) errors.push('Okul adı girilmemiş.');
-    if (!ctx.ogretmen?.adSoyad) errors.push('Öğretmen adı soyadı girilmemiş.');
     if (!ctx.sinif) errors.push('Sınıf seçilmemiş.');
     if (!ctx.dersId) errors.push('Ders seçilmemiş.');
 
-    if (!ctx.okul?.mudurAdi) warnings.push('Müdür adı eksik — resmî belgelerde gerekebilir.');
-    if (!ctx.ogretmen?.imza) warnings.push('İmza bilgisi eksik.');
+    if (!String(ctx.okul.okulAdi || '').trim()) {
+      warnings.push('Okul adı boş — belgede “Okul adı girilmedi” yazılacak. Hesabım’dan kalıcı kaydedin.');
+      ctx.okul.okulAdi = 'Okul adı girilmedi';
+    }
+    if (!String(ctx.ogretmen.adSoyad || '').trim()) {
+      warnings.push('Öğretmen adı boş — belgede “Öğretmen” yazılacak. Hesabım’dan kalıcı kaydedin.');
+      ctx.ogretmen.adSoyad = 'Öğretmen';
+    }
 
-    return { valid: errors.length === 0, errors, warnings };
+    if (!ctx.okul.mudurAdi) warnings.push('Müdür adı eksik — resmî belgelerde gerekebilir.');
+    if (!ctx.ogretmen.imza) warnings.push('İmza bilgisi eksik.');
+    if (!ctx.kaynakId) warnings.push('Kaynak seçilmedi — varsayılan müfredat kullanılacak.');
+
+    return { valid: errors.length === 0, errors, warnings, ctx };
   }
 
   function validateAnnualPlan(plan) {

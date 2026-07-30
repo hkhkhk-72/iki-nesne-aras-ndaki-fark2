@@ -36,3 +36,10 @@ export {
   assertMbaQa001Registry,
   type Ls011QaChecklistKey,
 } from './qa-001';
+
+export {
+  MBA_LIFE_001,
+  MBA_LIFE_001_PURPOSE,
+  LS_LIFE_REGISTERED,
+  assertMbaLife001Registry,
+} from './life-001';

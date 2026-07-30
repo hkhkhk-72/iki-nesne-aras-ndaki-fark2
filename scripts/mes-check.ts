@@ -45,11 +45,18 @@ import {
   MBA_CHAR_DNA_001,
   MBA_MOTION_001,
   MBA_QA_001,
+  MBA_LIFE_001,
   assertMbaToken001Registry,
   assertMbaCharDna001Registry,
   assertMbaMotion001Registry,
+  assertMbaLife001Registry,
   runMbaQa001Gate,
 } from '@/mba';
+import { runMbaLife001PrepQa } from '@/qa/life-qa';
+import { LIFE_LAYERS, LIFE_TOKEN_GROUPS } from '@/design-tokens';
+import { assertRandomSchedulerContract } from '@/life/random-scheduler';
+import { assertLifePerfContract } from '@/life/performance';
+import { assertLayeredIdleSupport } from '@/life/layers';
 
 function collectLines(exp: MicroExperience): { line: string; speaker: CharacterId }[] {
   const lines: { line: string; speaker: CharacterId }[] = [];
@@ -411,6 +418,26 @@ if (!mbaRegs) {
   });
   failed = true;
 }
+
+// ── MBA-LIFE-001 Preparation (altyapı — gameplay yok) ──
+console.log(`\n${MBA_LIFE_001} Preparation (GRP-001)`);
+const lifeQa = runMbaLife001PrepQa();
+console.log(`  Character Life QA: ${lifeQa.ok ? 'GEÇTİ' : 'BAŞARISIZ'}`);
+if (!lifeQa.ok) {
+  console.log('  LIFE sorunlar:', lifeQa.issues);
+  failed = true;
+}
+const lifeEngineOk =
+  assertMbaLife001Registry() &&
+  assertLayeredIdleSupport() &&
+  assertRandomSchedulerContract() &&
+  assertLifePerfContract() &&
+  LIFE_LAYERS.length === 8 &&
+  LIFE_TOKEN_GROUPS.length === 6;
+console.log(
+  `  life.* / layered idle / random / perf: ${lifeEngineOk ? 'GEÇTİ' : 'BAŞARISIZ'}`,
+);
+if (!lifeEngineOk) failed = true;
 
 console.log(`\nSonuç: ${failed ? 'BAŞARISIZ' : 'TÜM KONTROLLER GEÇTİ'}`);
 process.exit(failed ? 1 : 0);

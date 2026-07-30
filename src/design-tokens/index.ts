@@ -33,5 +33,17 @@ export {
   assertLs011PerfContract,
   type Ls011PerfContract,
 } from './performance';
+export {
+  lifeTokens,
+  LIFE_LAYERS,
+  LIFE_TOKEN_GROUPS,
+  LIFE_TOKEN_NAMESPACE,
+  isLifeTokenId,
+  lifeTokensInGroup,
+  type LifeToken,
+  type LifeTokenId,
+  type LifeTokenGroup,
+  type LifeLayerId,
+} from './life';
 
 /** @deprecated Geriye dönük not — ekran stilleri için `@/theme` kullanın. */

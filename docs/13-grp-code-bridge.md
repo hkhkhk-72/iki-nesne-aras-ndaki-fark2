@@ -20,6 +20,7 @@
 | MBA-CHAR-DNA-001 | FN-001 / BO-001 DNA | `src/mba/char-dna-001.ts` |
 | MBA-MOTION-001 | Motion / FX kayıt | `src/mba/motion-001.ts` |
 | MBA-QA-001 | Quality Gate (LS-011) | `src/mba/qa-001.ts` · `src/qa/ls011-prep-qa.ts` |
+| MBA-LIFE-001 | Character Life System (prep) | `src/mba/life-001.ts` · `src/life/` · `src/design-tokens/life.ts` · `docs/19-…` |
 | Karar 268–270 | Bakış nesneye · yanlış seçim yok · beklemede yaşayan dünya | `src/world/mavi-kitap-268-270.ts` · ChooseScene · `decideIntervention` |
 | Karar 271–273 | Sessizlik · hata hissettirilir · Reflection Time | `src/world/mavi-kitap-271-273.ts` · `reflectionTimeMs` |
 | Karar 274–276 | Keşif çocuğa ait · dünya kutlar · süreç > sonuç | `src/world/mavi-kitap-274-276.ts` |

@@ -29,6 +29,7 @@
 | **MD-044** | Motion Language | UX / MB-DS-005 | ✅ freeze |
 | **MD-045** | Teacher Experience Architecture (TXA) | UX / MB-DS-006 | ✅ freeze |
 | **MD-046** | Universal Component Library (UCL) | UX / MB-DS-007 | ✅ freeze |
+| **MD-047** | Document Operating System Core | Document OS / MB-DOS-002 | ✅ freeze |
 
 ### Numara notu
 
@@ -44,7 +45,9 @@ Taslakta Document OS ilkeleri MD-025…030 diye anılmıştı.
 **MD-044** — Motion Language: yalnızca success/error/loading/transition · max 300 ms · bekletmez.  
 **MD-045** — Teacher Experience Architecture (TXA): ekran değil workflow; tek amaç, ≤3 aksiyon, autosave, belge adımları, version history, context-aware.  
 *(Taslak MD-025 istemişti; MD-025 dolu → MD-045.)*  
-**MD-046** — Universal Component Library: standart `Mb*` kataloğu (MbButton…MbSyncIndicator).
+**MD-046** — Universal Component Library: standart `Mb*` kataloğu (MbButton…MbSyncIndicator).  
+**MD-047** — Document OS Core: canlı belge entity, Event Bus, Dependency Graph, Document Engine; hard-coded üretim yasak.  
+*(Taslak MB-DOS-003 istemişti; MB-DOS-003 = LEE → kayıt MB-DOS-002 / MD-047.)*
 
 ---
 
@@ -105,5 +108,9 @@ Detay: `docs/MB-DS-006-TEACHER-EXPERIENCE-ARCHITECTURE.md` · `docs/MD-045-TEACH
 ### MD-046 — Universal Component Library (UCL)
 Standart Mb* bileşen kataloğu; yeni UI katalog dışına çıkmaz.  
 Detay: `docs/MB-DS-007-UNIVERSAL-COMPONENT-LIBRARY.md` · `docs/MD-046-UNIVERSAL-COMPONENT-LIBRARY.md` · `assets/js/components/mb-library.js`
+
+### MD-047 — Document Operating System Core
+Belge dosya değildir: entity · status · version · events · dependency graph · Document Engine.  
+Detay: `docs/MB-DOS-002-DOCUMENT-OS-CORE.md` · `docs/MD-047-DOCUMENT-OS-CORE.md` · `assets/js/core/document/`
 
 Detay: `docs/MB-IA-003-AKILLI-BELGE-URETIM-MOTORU.md` · `docs/MB-DOS-000-DOCUMENT-OS.md`

@@ -47,6 +47,7 @@ Prop adları web `MiniBilgeComponents.*` ile hizalanır.
 
 ## 4. Bu belgenin sonraki sürümü
 
-v1.0’da: klasör ağacı, Riverpod provider haritası, DB seçimi, sync stratejisi, modül sınırları.
+v1.0’da: klasör ağacı, Riverpod provider haritası, DB seçimi (**Isar**), sync stratejisi, modül sınırları.  
+Document OS Core (MD-047): `core/document/` → domain / application / infrastructure / presentation.
 
-*Şimdilik yer tutucu — FAZ 6 tamamlandıkça doldurulur.*
+*Şimdilik yer tutucu — FAZ 6 + DOS-002 web sözleşmesi olgunlaştıkça doldurulur.*

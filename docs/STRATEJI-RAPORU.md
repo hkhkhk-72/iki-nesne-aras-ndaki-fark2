@@ -69,6 +69,7 @@ Bağlayıcı sıra:
 2g. **MB-IA-002** — Belge yaşam döngüsü 🔒 **Architecture Freeze** → `docs/MB-IA-002-BELGE-YASAM-DONGUSU.md`  
 2h. **MB-IA-003** — Akıllı Belge Üretim Motoru ✅ → `docs/MB-IA-003-AKILLI-BELGE-URETIM-MOTORU.md`  
 2i. **MB-DOS-000 / DOS-001** — Document OS + katalog şeması (tohum) 🔵  
+2i2. **MB-DOS-002 / MD-047** — Document OS Core (Entity · Event Bus · Engine) ✅  
 2j. **MD-038** — Context Cache Engine (Load Once — Use Everywhere) ✅  
 2k. **MB-WFE-001 / MD-039** — Teacher Workflow Engine v2 + Workflow First ✅  
 2l. **MB-DOS-003 / MD-040** — Lesson Execution Engine (LEE) ✅  
@@ -104,9 +105,10 @@ Her teslimatta: **hangi kalem · % tamam · % kaldı**.
 | Paket | Tamam | Kaldı |
 |-------|------:|------:|
 | MB-DS-001…007 | 84% | 16% |
+| MB-DOS-002 Core (MD-047) | 70% | 30% |
 | Web omurgası | 85% | 15% |
 | DOS-001 DNA katalog (sonraki) | 55% | 45% |
 
 ---
 
-*Son güncelleme: İlerleme panosu — 30 Temmuz 2026 · MB-DS-007*
+*Son güncelleme: 30 Temmuz 2026 · MB-DOS-002 / MD-047*

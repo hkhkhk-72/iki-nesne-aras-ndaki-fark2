@@ -2006,6 +2006,44 @@ html[data-theme="dark"] .mb-lib-cmd { background: #16202C; }
 }
 .mb-lib-catalog-item code { color: var(--mb-accent); font-weight: 800; }
 
+.mb-lib-deps {
+  border: 1px solid var(--mb-line);
+  border-radius: 14px;
+  padding: 14px;
+  background: var(--mb-surface);
+}
+.mb-lib-deps-nodes {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mb-lib-deps-nodes li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+  font-weight: 600;
+  font-size: max(var(--mb-font-min), 0.88rem);
+}
+.mb-lib-deps-nodes code {
+  color: var(--mb-accent);
+  font-weight: 800;
+}
+.mb-lib-deps-nodes em {
+  font-style: normal;
+  font-size: 0.78rem;
+  color: var(--mb-ink-soft);
+  font-weight: 700;
+}
+.mb-doc-status[data-status="Approved"] { background: rgba(47,125,74,0.16); color: #1F5C34; }
+.mb-doc-status[data-status="Generating"],
+.mb-doc-status[data-status="WaitingApproval"] { background: rgba(201,132,47,0.18); color: #8A4E0A; }
+.mb-doc-status[data-status="Rejected"],
+.mb-doc-status[data-status="Deleted"] { background: rgba(179,58,58,0.14); color: #8A2E2E; }
+
 /* ===== MB-DS-006 Teacher Experience Architecture (TXA) ===== */
 
 .txa-purpose {

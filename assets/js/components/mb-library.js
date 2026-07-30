@@ -411,10 +411,30 @@
 
   function MbDocumentStatus(opts) {
     const o = opts || {};
-    const status = o.status || 'draft';
-    if (C.StatusBadge) return C.StatusBadge({ status: status });
-    const map = { draft: 'Taslak', ready: 'Hazır', editing: 'Düzenleniyor', locked: 'Kilitli', official: 'Resmi' };
-    return component(`<span class="mb-lib-badge mb-lib-badge--mid">${esc(o.label || map[status] || status)}</span>`);
+    const raw = o.status || 'Draft';
+    const legacy = {
+      draft: 'Draft', ready: 'Approved', editing: 'Draft', missing: 'Draft',
+      updated: 'Approved', locked: 'WaitingApproval', official: 'Approved',
+      validating: 'Generating', exported: 'Approved', shared: 'Approved', archived: 'Archived'
+    };
+    const status = legacy[String(raw).toLowerCase()] || raw;
+    const labels = {
+      Draft: 'Taslak',
+      Generating: 'Üretiliyor',
+      WaitingApproval: 'Onay bekliyor',
+      Approved: 'Onaylı',
+      Rejected: 'Reddedildi',
+      Archived: 'Arşiv',
+      Expired: 'Süresi dolmuş',
+      Deleted: 'Silindi'
+    };
+    const tone = {
+      Draft: 'mid', Generating: 'low', WaitingApproval: 'low',
+      Approved: 'hi', Rejected: 'low', Archived: 'mid', Expired: 'low', Deleted: 'low'
+    };
+    const label = o.label || labels[status] || status;
+    const html = `<span class="mb-lib-badge mb-lib-badge--${esc(tone[status] || 'mid')} mb-doc-status" data-status="${esc(status)}" role="status">${esc(label)}</span>`;
+    return component(html);
   }
 
   function MbAutosaveIndicator(opts) {
@@ -427,8 +447,59 @@
 
   function MbVersionHistory(opts) {
     const o = opts || {};
+    if (o.documentId && window.DocumentEngine) {
+      const versions = DocumentEngine.versions(o.documentId);
+      if (versions.length) {
+        return MbTimeline({
+          items: versions.map(function (v) {
+            return {
+              title: 'v' + v.version + (v.reason ? ' — ' + v.reason : ''),
+              meta: (v.at || '').slice(0, 16).replace('T', ' '),
+              body: v.status || ''
+            };
+          })
+        });
+      }
+    }
     if (window.MiniBilgeTxa && o.docId) return MiniBilgeTxa.VersionHistory.render(o.docId);
     return component('<div class="txa-versions"><strong>Sürüm geçmişi</strong><p class="section-lead">Belge kaydı sonrası görünür.</p></div>');
+  }
+
+  function MbDependencyViewer(opts) {
+    const o = opts || {};
+    let graph = o.graph;
+    if (!graph && o.documentId && window.DocumentEngine) {
+      graph = DocumentEngine.dependencyGraph(o.documentId);
+    }
+    graph = graph || { nodes: [], edges: [] };
+    const html = `
+      <div class="mb-lib-deps" data-mb="dependency-viewer">
+        <strong>Bağımlılık grafiği</strong>
+        ${graph.nodes.length ? `
+          <ul class="mb-lib-deps-nodes">
+            ${graph.nodes.map(function (n) {
+              return `<li><code>${esc(n.type || '')}</code> ${esc(n.title || n.id)}
+                <em>${esc(n.status || '')}</em></li>`;
+            }).join('')}
+          </ul>
+          <p class="section-lead">${graph.edges.length} bağlantı</p>
+        ` : '<p class="section-lead">Bağımlılık yok — DNA related / dependencies eklenince dolar.</p>'}
+      </div>`;
+    return component(html);
+  }
+
+  function MbDocWorkflowTimeline(opts) {
+    const o = opts || {};
+    const steps = o.steps || (window.DocumentWorkflowSteps) || [
+      'Create', 'Validate', 'Preview', 'Customize', 'Generate',
+      'Export', 'Print', 'Share', 'Archive', 'Sync', 'Version'
+    ];
+    const active = o.active || 'Create';
+    const idx = Math.max(0, steps.indexOf(active));
+    return MbStepper({
+      steps: steps.map(function (s) { return { label: s }; }),
+      active: idx + 1
+    });
   }
 
   function MbTeacherDashboard(opts) {
@@ -594,6 +665,7 @@
       'MbStepper', 'MbTimeline', 'MbCalendar', 'MbPreview', 'MbWizard', 'MbProgress', 'MbTabs',
       'MbContextBar', 'MbClassSelector', 'MbFloatingAI', 'MbNotificationCenter', 'MbCommandPalette',
       'MbQuickActions', 'MbRecentDocuments', 'MbDocumentStatus', 'MbAutosaveIndicator', 'MbVersionHistory',
+      'MbDependencyViewer', 'MbDocWorkflowTimeline',
       'MbTeacherDashboard', 'MbWorkflowStepper', 'MbLessonTimeline', 'MbLessonExecution', 'MbAttendanceBar',
       'MbReflectionCard', 'MbAssessmentPanel', 'MbAnalyticsCard', 'MbEmptyState', 'MbSkeletonLoader',
       'MbOfflineBanner', 'MbSyncIndicator'
@@ -602,6 +674,7 @@
     MbStepper, MbTimeline, MbCalendar, MbPreview, MbWizard, MbProgress, MbTabs,
     MbContextBar, MbClassSelector, MbFloatingAI, MbNotificationCenter, MbCommandPalette,
     MbQuickActions, MbRecentDocuments, MbDocumentStatus, MbAutosaveIndicator, MbVersionHistory,
+    MbDependencyViewer, MbDocWorkflowTimeline,
     MbTeacherDashboard, MbWorkflowStepper, MbLessonTimeline, MbLessonExecution, MbAttendanceBar,
     MbReflectionCard, MbAssessmentPanel, MbAnalyticsCard, MbEmptyState, MbSkeletonLoader,
     MbOfflineBanner, MbSyncIndicator

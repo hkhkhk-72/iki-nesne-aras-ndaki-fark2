@@ -5,10 +5,11 @@
 **Durum:** Bağlayıcı Document OS modülü  
 **Kod:** `MB-LEE`  
 **Karar:** MD-040 — LessonExecution is Single Source of Truth  
-**Üst:** MB-DOS-000 · MB-WFE-001 · MD-038 · MD-039 · MB-IA-002
+**Üst:** MB-DOS-000 · **MB-DOS-002** · MB-WFE-001 · MD-038 · MD-039 · MB-IA-002
 
 > MiniBilge’de **Ders Defteri bağımsız bir belge değildir.**  
-> Merkezde `LessonExecution` domain entity’si vardır. Tamamlanınca kayıtlar **otomatik** doğar.
+> Merkezde `LessonExecution` domain entity’si vardır. Tamamlanınca kayıtlar **otomatik** doğar.  
+> Üretilen kayıtlar **Document Engine (MB-DOS-002 / MD-047)** üzerinden yaşar.
 
 ---
 

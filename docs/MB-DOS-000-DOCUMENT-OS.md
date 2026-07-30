@@ -39,6 +39,13 @@ Teacher Context → Document Context → Validation → Generation → Preview �
 Tüm belgeler **MB-DOS-001** kataloğunda DNA ile tanımlıdır.  
 Kod iskeleti: `assets/data/document-catalog.json`
 
+## 5. Document OS Core
+
+Bağlayıcı çekirdek: **`docs/MB-DOS-002-DOCUMENT-OS-CORE.md`** (MD-047)  
+Runtime: `assets/js/core/document/` · Event Bus · Dependency Graph · Document Engine
+
+> Belge dosya değildir. Hard-coded üretim yoktur. Workflow → Document Engine.
+
 ---
 
-*Yeni belge eklemek = kataloğa DNA satırı + şablon + (gerekirse) motor kancası.*
+*Yeni belge eklemek = kataloğa DNA satırı + şablon + Document Engine (ekran/modül kopyalamak değil).*

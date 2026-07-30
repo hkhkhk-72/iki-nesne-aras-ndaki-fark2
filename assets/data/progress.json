@@ -64,6 +64,7 @@
     { "id": "MB-IA-002", "complete": 70, "remaining": 30 },
     { "id": "MB-IA-003", "complete": 80, "remaining": 20 },
     { "id": "MB-DOS-000-001", "complete": 55, "remaining": 45 },
+    { "id": "MB-DOS-002", "complete": 70, "remaining": 30 },
     { "id": "MD-038", "complete": 100, "remaining": 0 },
     { "id": "MB-WFE-001", "complete": 90, "remaining": 10 },
     { "id": "MB-DOS-003", "complete": 85, "remaining": 15 },
@@ -79,6 +80,13 @@
     "title": "Document DNA katalog genişletme",
     "complete": 55,
     "remaining": 45
+  },
+  "documentOsCore": {
+    "id": "MB-DOS-002",
+    "decision": "MD-047",
+    "complete": 70,
+    "remaining": 30,
+    "left": "Flutter Isar/Riverpod · Background Sync · legacy addDocument migrate"
   },
   "home": {
     "baglam": { "complete": 95, "label": "Sınıf bağlamı" },

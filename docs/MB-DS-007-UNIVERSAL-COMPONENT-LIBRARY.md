@@ -53,6 +53,8 @@
 | **MbDocumentStatus** | Belge durumu |
 | **MbAutosaveIndicator** | Autosave durumu |
 | **MbVersionHistory** | Sürüm geçmişi |
+| **MbDependencyViewer** | Dependency Graph (MD-047) |
+| **MbDocWorkflowTimeline** | Belge workflow adımları |
 | **MbTeacherDashboard** | Bugün panosu kabuğu |
 | **MbWorkflowStepper** | Workflow aşaması |
 | **MbLessonTimeline** | Ders zaman çizgisi |

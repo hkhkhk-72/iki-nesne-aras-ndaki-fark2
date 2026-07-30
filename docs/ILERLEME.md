@@ -36,6 +36,7 @@
 | MB-IA-002 Belge yaşam döngüsü | 70% | 30% | Architecture freeze; motor bağları |
 | MB-IA-003 Akıllı belge motoru | 80% | 20% | DNA katalog genişletme |
 | MB-DOS-000/001 Document OS | 55% | 45% | Katalog ~14 → ~300 DNA |
+| **MB-DOS-002 / MD-047 Core** | **70%** | **30%** | Flutter Isar/Riverpod · Sync derinliği · legacy migrate |
 | MD-038 Context Cache | 100% | 0% | |
 | MB-WFE-001 / MD-039 | 90% | 10% | Deadline/UI derinliği |
 | MB-DOS-003 / MD-040 LEE | 85% | 15% | Canlı ders kanıtı / sync |
@@ -50,10 +51,11 @@
 
 ---
 
-## 3. Bu tur özeti (DS-007 UCL)
+## 3. Bu tur özeti (DOS-002 Core)
 
 | Kalem | Tamam | Kaldı |
 |-------|------:|------:|
+| Document OS Core (MB-DOS-002 / MD-047) | 70% | 30% |
 | Universal Component Library (MB-DS-007) | 75% | 25% |
 | DS paketi (001…007) | 84% | 16% |
 | Sonraki öncelik adayı | — | DOS-001 DNA katalog **45% kaldı** |

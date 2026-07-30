@@ -64,6 +64,7 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 | 2g | MB-IA-002 | 70% | 30% |
 | 2h | MB-IA-003 | 80% | 20% |
 | 2i | MB-DOS-000/001 | 55% | 45% |
+| 2i2 | **MB-DOS-002** Core | **70%** | **30%** |
 | 2j | MD-038 Cache | 100% | 0% |
 | 2k | MB-WFE-001 | 90% | 10% |
 | 2l | MB-DOS-003 LEE | 85% | 15% |

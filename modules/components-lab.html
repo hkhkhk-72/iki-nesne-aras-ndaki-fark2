@@ -17,6 +17,10 @@
   <script src="../assets/js/core/hub-config.js"></script>
   <script src="../assets/js/core/calendar-engine.js"></script>
   <script src="../assets/js/core/document-dna.js"></script>
+  <script src="../assets/js/core/document/event-bus.js"></script>
+  <script src="../assets/js/core/document/repository.js"></script>
+  <script src="../assets/js/core/document/services.js"></script>
+  <script src="../assets/js/core/document/engine.js"></script>
   <script src="../assets/js/core/context-cache.js"></script>
   <script src="../assets/js/core/context-engine.js"></script>
   <script src="../assets/js/components/mb-components.js"></script>
@@ -139,6 +143,12 @@
             <div id="lab-ucl-workflow" style="margin-bottom:14px;"></div>
             <div id="lab-ucl-state" style="margin-bottom:14px;"></div>
             <div id="lab-ucl-catalog"></div>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>DOS-002 — Document OS Core (MD-047)</h2>
+            <p class="section-lead">Belge canlı entity · Event Bus · Dependency Graph · Workflow → Engine · %70 tamam · %30 kaldı</p>
+            <div id="lab-dos-core"></div>
           </section>
         </div>`;
 
@@ -477,6 +487,90 @@
           });
           cat.appendChild(grid);
         }
+      })();
+
+      /* MB-DOS-002 — Document OS Core */
+      (function dosCoreDemo() {
+        const host = document.getElementById('lab-dos-core');
+        if (!host || !window.DocumentEngine) {
+          if (host) host.innerHTML = '<p class="empty-state">Document Engine yüklenemedi.</p>';
+          return;
+        }
+        const L = window.MiniBilgeLib;
+        const E = window.DocumentEngine;
+        const log = [];
+        if (window.DocumentEventBus) {
+          DocumentEventBus.onAny(function (evt) {
+            log.unshift(evt.type + ' · ' + (evt.payload && evt.payload.documentId || ''));
+          });
+        }
+
+        let doc = E.CreateDocument({
+          documentType: 'yillik-plan',
+          title: 'Demo Yıllık Plan',
+          dependencies: [],
+          tags: ['lab', 'demo'],
+          metadata: { inputs: {} }
+        });
+        const gen = E.GenerateDocument(doc.id, {});
+        doc = gen.document;
+        E.PreviewDocument(doc.id);
+        const exported = E.ExportDocument(doc.id, 'html');
+
+        host.innerHTML = '';
+        const intro = document.createElement('div');
+        intro.className = 'mbc-banner mbc-banner--success';
+        intro.style.marginBottom = '12px';
+        intro.innerHTML = 'MD-047 Document Engine · <strong>' + doc.id + '</strong> · v' + doc.version +
+          ' · export ' + (exported && exported.format);
+        host.appendChild(intro);
+
+        function slot() {
+          const d = document.createElement('div');
+          d.style.marginBottom = '10px';
+          host.appendChild(d);
+          return d;
+        }
+        if (L) {
+          L.MbDocumentStatus({ status: doc.status }).mount(slot());
+          L.MbDocWorkflowTimeline({ active: 'Generate' }).mount(slot());
+          L.MbVersionHistory({ documentId: doc.id }).mount(slot());
+          L.MbDependencyViewer({ documentId: doc.id }).mount(slot());
+        }
+
+        const events = document.createElement('div');
+        events.className = 'mb-lib-card';
+        events.innerHTML = '<strong>Event Bus (son)</strong><ul style="margin:8px 0 0;padding-left:18px;">' +
+          (DocumentEventBus.getHistory().slice(-8).reverse().map(function (e) {
+            return '<li><code>' + e.type + '</code> · ' + (e.at || '').slice(11, 19) + '</li>';
+          }).join('') || '<li>Yok</li>') + '</ul>';
+        host.appendChild(events);
+
+        const actions = document.createElement('div');
+        actions.className = 'mbc-lab-row';
+        actions.style.cssText = 'gap:8px;flex-wrap:wrap;margin-top:12px;';
+        const archBtn = document.createElement('button');
+        archBtn.type = 'button';
+        archBtn.className = 'quick-btn compact';
+        archBtn.textContent = 'Arşivle';
+        archBtn.addEventListener('click', function () {
+          E.ArchiveDocument(doc.id);
+          C.notify.success('Arşivlendi');
+          dosCoreDemo();
+        });
+        actions.appendChild(archBtn);
+        const wfBtn = document.createElement('button');
+        wfBtn.type = 'button';
+        wfBtn.className = 'quick-btn primary compact';
+        wfBtn.textContent = 'Workflow → Create';
+        wfBtn.addEventListener('click', function () {
+          if (window.WorkflowEngine) {
+            const r = WorkflowEngine.triggerDocument('gunluk-plan', { title: 'Workflow günlük plan' });
+            C.notify.success(r.document ? r.document.id : 'tetiklendi');
+          }
+        });
+        actions.appendChild(wfBtn);
+        host.appendChild(actions);
       })();
     })();
   </script>

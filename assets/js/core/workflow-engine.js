@@ -207,14 +207,28 @@
     return Object.assign({}, task, { href });
   }
 
-  /** Rule-003 — belge üretimini workflow tetikler */
+  /** Rule-003 — belge üretimini workflow tetikler → Document Engine (MD-047) */
   function triggerDocument(docHint, meta) {
     const detail = emit(EVENTS.DocumentGenerated, {
       docHint,
       meta: meta || {},
       source: 'WorkflowEngine'
     });
-    return detail;
+    let document = null;
+    if (window.DocumentEngine && docHint) {
+      try {
+        document = DocumentEngine.createFromWorkflow({
+          id: (meta && meta.taskId) || null,
+          documentType: typeof docHint === 'string' ? docHint : (docHint.id || docHint.type),
+          title: (meta && meta.title) || (docHint && docHint.title) || null,
+          dependencies: (meta && meta.dependencies) || [],
+          tags: ['workflow-triggered']
+        });
+      } catch (err) {
+        console.warn('[WorkflowEngine] DocumentEngine', err);
+      }
+    }
+    return Object.assign({}, detail, { document: document });
   }
 
   function completeTask(taskId) {

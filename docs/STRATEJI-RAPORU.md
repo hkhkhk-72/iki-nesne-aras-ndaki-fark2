@@ -63,6 +63,8 @@ Bağlayıcı sıra:
 
 1. **MB-DM-001** — Domain Modeli ✅  
 1a. **MB-VIS-001** — Ürün vizyonu (MEB/TYMM · ders+kaynak · AI) ✅  
+1a2. **MB-ADR-042…045** — Kısa kararlar (Karar 66–85) ✅ · `docs/ADR-FORMAT.md`  
+1a3. **MB-LIFE-001** — Öğretmen meslek hayatı kataloğu 🔵 (91 iş)  
 1b. **MB-AOS-001 / MD-048** — Academic Operating System (Academic Kernel) ✅  
 2. **MB-ARCH-001** — Platform Mimari Freeze ✅  
 2b–2d. **MB-UI-001 / DS-001 / UI-002** ✅  

@@ -52,6 +52,8 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 |---|--------|------:|------:|
 | 0 | **MB-AOS-001** Academic Kernel | **68%** | **32%** |
 | 0b | **MB-VIS-001** Vizyon + ders/kaynak | **90%** / kaynak **85%** | **10%** / **15%** |
+| 0c | **MB-ADR-042…045** | **100%** | **0%** |
+| 0d | **MB-LIFE-001** Meslek hayatı | **35%** | **65%** |
 | 1 | MB-DM-001 Domain | 100% | 0% |
 | 2 | MB-ARCH-001 Mimari | 100% | 0% |
 | 2b | MB-UI-001…003 | 95% | 5% |

@@ -30,6 +30,8 @@
 | Kod | Tamam | Kaldı | Not |
 |-----|------:|------:|-----|
 | MB-DM-001 Domain | 100% | 0% | Freeze |
+| **MB-ADR-042…045** | **100%** | **0%** | Karar 66–85 LOCKED (kısa format) |
+| **MB-LIFE-001 Meslek hayatı** | **35%** | **65%** | 91 iş listelendi; belge/workflow bağları |
 | **MB-VIS-001 Ürün vizyonu** | **90%** | **10%** | Yıllık kaynak güncelleme süreci |
 | **MB-AOS-001 / MD-048 Kernel** | **68%** | **32%** | Flutter Feature-First · Security derinliği · legacy boot |
 | MB-ARCH-001 Mimari | 100% | 0% | Freeze |
@@ -53,15 +55,13 @@
 
 ---
 
-## 3. Bu tur özeti (VIS-001 + ders/kaynak)
+## 3. Bu tur özeti (ADR + LIFE)
 
 | Kalem | Tamam | Kaldı |
 |-------|------:|------:|
-| Ürün vizyonu (MB-VIS-001) | 90% | 10% |
-| Ders + MEB kaynak seçimi (Curriculum sources) | 85% | 15% |
-| Academic Kernel (MB-AOS-001 / MD-048) | 68% | 32% |
-| Document OS Core (MB-DOS-002 / MD-047) | 70% | 30% |
-| Sonraki: yeni yıl program kaynakları sources.json’a | — | sürekli |
+| ADR kısa format + ADR-042…045 (Karar 66–85) | 100% | 0% |
+| Öğretmen meslek hayatı kataloğu (MB-LIFE-001) | 35% | 65% |
+| Sonraki: LIFE maddelerine belge/workflow bağla | — | — |
 
 ---
 

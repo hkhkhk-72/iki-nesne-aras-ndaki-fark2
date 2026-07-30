@@ -77,10 +77,21 @@
   ],
   "webSpine": { "complete": 85, "remaining": 15 },
   "nextPriority": {
-    "id": "MB-DOS-001",
-    "title": "Document DNA katalog genişletme",
-    "complete": 55,
-    "remaining": 45
+    "id": "MB-LIFE-001",
+    "title": "Öğretmen meslek hayatı kataloğu — belge/workflow bağları",
+    "complete": 35,
+    "remaining": 65
+  },
+  "adr": {
+    "format": "docs/ADR-FORMAT.md",
+    "lastDecision": 85,
+    "packages": ["MB-ADR-042", "MB-ADR-043", "MB-ADR-044", "MB-ADR-045"]
+  },
+  "teacherLife": {
+    "id": "MB-LIFE-001",
+    "complete": 35,
+    "remaining": 65,
+    "jobCount": 91
   },
   "documentOsCore": {
     "id": "MB-DOS-002",

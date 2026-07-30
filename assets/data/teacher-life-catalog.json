@@ -1,0 +1,906 @@
+{
+  "version": "0.1",
+  "updated": "2026-07-30",
+  "decision": "MB-LIFE-001",
+  "complete": 35,
+  "remaining": 65,
+  "count": 91,
+  "categories": [
+    {
+      "id": "year-start",
+      "title": "Yıl başı / okul açılışı",
+      "count": 9
+    },
+    {
+      "id": "parents",
+      "title": "Veli ve iletişim",
+      "count": 7
+    },
+    {
+      "id": "meetings",
+      "title": "Zümre / kurul / idare",
+      "count": 7
+    },
+    {
+      "id": "planning",
+      "title": "Ders ve planlama",
+      "count": 8
+    },
+    {
+      "id": "lesson",
+      "title": "Ders yürütme",
+      "count": 6
+    },
+    {
+      "id": "assessment",
+      "title": "Ölçme",
+      "count": 7
+    },
+    {
+      "id": "special",
+      "title": "Özel eğitim / rehberlik",
+      "count": 8
+    },
+    {
+      "id": "social",
+      "title": "Kulüp / gezi / sosyal",
+      "count": 7
+    },
+    {
+      "id": "calendar",
+      "title": "Takvim / tören",
+      "count": 5
+    },
+    {
+      "id": "duty",
+      "title": "Nöbet / okul yaşamı",
+      "count": 5
+    },
+    {
+      "id": "eokul",
+      "title": "e-Okul / resmî",
+      "count": 5
+    },
+    {
+      "id": "year-end",
+      "title": "Karne / yıl sonu",
+      "count": 6
+    },
+    {
+      "id": "inspect",
+      "title": "Denetim",
+      "count": 3
+    },
+    {
+      "id": "emergency",
+      "title": "Acil / özel",
+      "count": 4
+    },
+    {
+      "id": "growth",
+      "title": "Mesleki gelişim",
+      "count": 4
+    }
+  ],
+  "jobs": [
+    {
+      "id": "LIFE-001",
+      "title": "Okul açılışı hazırlığı",
+      "category": "year-start",
+      "categoryTitle": "Yıl başı / okul açılışı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-002",
+      "title": "Sınıf listesi / e-Okul",
+      "category": "year-start",
+      "categoryTitle": "Yıl başı / okul açılışı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-003",
+      "title": "Oturma planı",
+      "category": "year-start",
+      "categoryTitle": "Yıl başı / okul açılışı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-004",
+      "title": "Materyal kontrolü",
+      "category": "year-start",
+      "categoryTitle": "Yıl başı / okul açılışı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-005",
+      "title": "Yıllık plan",
+      "category": "year-start",
+      "categoryTitle": "Yıl başı / okul açılışı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-006",
+      "title": "Günlük plan başlangıcı",
+      "category": "year-start",
+      "categoryTitle": "Yıl başı / okul açılışı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-007",
+      "title": "Branş / destek sınıfı",
+      "category": "year-start",
+      "categoryTitle": "Yıl başı / okul açılışı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-008",
+      "title": "Nöbet çizelgesi",
+      "category": "year-start",
+      "categoryTitle": "Yıl başı / okul açılışı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-009",
+      "title": "İlk gün karşılama",
+      "category": "year-start",
+      "categoryTitle": "Yıl başı / okul açılışı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-020",
+      "title": "İlk veli toplantısı",
+      "category": "parents",
+      "categoryTitle": "Veli ve iletişim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-021",
+      "title": "Dönem veli toplantısı",
+      "category": "parents",
+      "categoryTitle": "Veli ve iletişim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-022",
+      "title": "Bireysel veli görüşmesi",
+      "category": "parents",
+      "categoryTitle": "Veli ve iletişim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-023",
+      "title": "Veli bilgilendirme",
+      "category": "parents",
+      "categoryTitle": "Veli ve iletişim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-024",
+      "title": "İmza sirküsü",
+      "category": "parents",
+      "categoryTitle": "Veli ve iletişim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-025",
+      "title": "Telefon/mesaj kaydı",
+      "category": "parents",
+      "categoryTitle": "Veli ve iletişim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-026",
+      "title": "Sorunlu veli süreci",
+      "category": "parents",
+      "categoryTitle": "Veli ve iletişim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-030",
+      "title": "Sene başı zümre",
+      "category": "meetings",
+      "categoryTitle": "Zümre / kurul / idare",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-031",
+      "title": "Ara zümre",
+      "category": "meetings",
+      "categoryTitle": "Zümre / kurul / idare",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-032",
+      "title": "Sene sonu zümre",
+      "category": "meetings",
+      "categoryTitle": "Zümre / kurul / idare",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-033",
+      "title": "ŞÖK",
+      "category": "meetings",
+      "categoryTitle": "Zümre / kurul / idare",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-034",
+      "title": "Tutanak",
+      "category": "meetings",
+      "categoryTitle": "Zümre / kurul / idare",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-035",
+      "title": "İdare yazışma",
+      "category": "meetings",
+      "categoryTitle": "Zümre / kurul / idare",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-036",
+      "title": "Dilekçe",
+      "category": "meetings",
+      "categoryTitle": "Zümre / kurul / idare",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-040",
+      "title": "Müfredat/kaynak",
+      "category": "planning",
+      "categoryTitle": "Ders ve planlama",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-041",
+      "title": "Kitap seçimi",
+      "category": "planning",
+      "categoryTitle": "Ders ve planlama",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-042",
+      "title": "Yıllık güncelleme",
+      "category": "planning",
+      "categoryTitle": "Ders ve planlama",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-043",
+      "title": "Günlük plan",
+      "category": "planning",
+      "categoryTitle": "Ders ve planlama",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-044",
+      "title": "Haftalık program",
+      "category": "planning",
+      "categoryTitle": "Ders ve planlama",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-045",
+      "title": "Telafi",
+      "category": "planning",
+      "categoryTitle": "Ders ve planlama",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-046",
+      "title": "Ödev",
+      "category": "planning",
+      "categoryTitle": "Ders ve planlama",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-047",
+      "title": "Performans görevi",
+      "category": "planning",
+      "categoryTitle": "Ders ve planlama",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-050",
+      "title": "Dersi başlat",
+      "category": "lesson",
+      "categoryTitle": "Ders yürütme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-051",
+      "title": "Yoklama",
+      "category": "lesson",
+      "categoryTitle": "Ders yürütme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-052",
+      "title": "LEE / defter",
+      "category": "lesson",
+      "categoryTitle": "Ders yürütme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-053",
+      "title": "Kanıt",
+      "category": "lesson",
+      "categoryTitle": "Ders yürütme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-054",
+      "title": "Yansıtma",
+      "category": "lesson",
+      "categoryTitle": "Ders yürütme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-055",
+      "title": "Disiplin kaydı",
+      "category": "lesson",
+      "categoryTitle": "Ders yürütme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-060",
+      "title": "Gözlem",
+      "category": "assessment",
+      "categoryTitle": "Ölçme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-061",
+      "title": "Rubrik",
+      "category": "assessment",
+      "categoryTitle": "Ölçme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-062",
+      "title": "Kontrol listesi",
+      "category": "assessment",
+      "categoryTitle": "Ölçme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-063",
+      "title": "Yazılı",
+      "category": "assessment",
+      "categoryTitle": "Ölçme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-064",
+      "title": "Performans",
+      "category": "assessment",
+      "categoryTitle": "Ölçme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-065",
+      "title": "Karne hazırlığı",
+      "category": "assessment",
+      "categoryTitle": "Ölçme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-066",
+      "title": "Gelişim raporu",
+      "category": "assessment",
+      "categoryTitle": "Ölçme",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-070",
+      "title": "Kaynaştırma",
+      "category": "special",
+      "categoryTitle": "Özel eğitim / rehberlik",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-071",
+      "title": "BEP",
+      "category": "special",
+      "categoryTitle": "Özel eğitim / rehberlik",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-072",
+      "title": "Destek eğitim",
+      "category": "special",
+      "categoryTitle": "Özel eğitim / rehberlik",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-073",
+      "title": "İYEP",
+      "category": "special",
+      "categoryTitle": "Özel eğitim / rehberlik",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-074",
+      "title": "RAM",
+      "category": "special",
+      "categoryTitle": "Özel eğitim / rehberlik",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-075",
+      "title": "Risk takip",
+      "category": "special",
+      "categoryTitle": "Özel eğitim / rehberlik",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-076",
+      "title": "Rehberlik",
+      "category": "special",
+      "categoryTitle": "Özel eğitim / rehberlik",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-077",
+      "title": "Zorbalık kaydı",
+      "category": "special",
+      "categoryTitle": "Özel eğitim / rehberlik",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-080",
+      "title": "Kulüp",
+      "category": "social",
+      "categoryTitle": "Kulüp / gezi / sosyal",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-081",
+      "title": "Kulüp etkinliği",
+      "category": "social",
+      "categoryTitle": "Kulüp / gezi / sosyal",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-082",
+      "title": "Toplum hizmeti",
+      "category": "social",
+      "categoryTitle": "Kulüp / gezi / sosyal",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-083",
+      "title": "Gezi",
+      "category": "social",
+      "categoryTitle": "Kulüp / gezi / sosyal",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-084",
+      "title": "Gezi izni",
+      "category": "social",
+      "categoryTitle": "Kulüp / gezi / sosyal",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-085",
+      "title": "Sosyal etkinlik",
+      "category": "social",
+      "categoryTitle": "Kulüp / gezi / sosyal",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-086",
+      "title": "Yarışma",
+      "category": "social",
+      "categoryTitle": "Kulüp / gezi / sosyal",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-090",
+      "title": "Belirli gün",
+      "category": "calendar",
+      "categoryTitle": "Takvim / tören",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-091",
+      "title": "Resmî tören",
+      "category": "calendar",
+      "categoryTitle": "Takvim / tören",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-092",
+      "title": "Millî bayram",
+      "category": "calendar",
+      "categoryTitle": "Takvim / tören",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-093",
+      "title": "Tatil",
+      "category": "calendar",
+      "categoryTitle": "Takvim / tören",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-094",
+      "title": "Sınav haftası",
+      "category": "calendar",
+      "categoryTitle": "Takvim / tören",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-100",
+      "title": "Nöbet",
+      "category": "duty",
+      "categoryTitle": "Nöbet / okul yaşamı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-101",
+      "title": "Nöbet olayı",
+      "category": "duty",
+      "categoryTitle": "Nöbet / okul yaşamı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-102",
+      "title": "Bahçe gözetimi",
+      "category": "duty",
+      "categoryTitle": "Nöbet / okul yaşamı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-103",
+      "title": "Taşımalı",
+      "category": "duty",
+      "categoryTitle": "Nöbet / okul yaşamı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-104",
+      "title": "Yemekhane",
+      "category": "duty",
+      "categoryTitle": "Nöbet / okul yaşamı",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-110",
+      "title": "e-Okul yoklama",
+      "category": "eokul",
+      "categoryTitle": "e-Okul / resmî",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-111",
+      "title": "Not girişi",
+      "category": "eokul",
+      "categoryTitle": "e-Okul / resmî",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-112",
+      "title": "Devamsızlık",
+      "category": "eokul",
+      "categoryTitle": "e-Okul / resmî",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-113",
+      "title": "Nakil/kayıt",
+      "category": "eokul",
+      "categoryTitle": "e-Okul / resmî",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-114",
+      "title": "Onay/mühür",
+      "category": "eokul",
+      "categoryTitle": "e-Okul / resmî",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-120",
+      "title": "Karne dönemi",
+      "category": "year-end",
+      "categoryTitle": "Karne / yıl sonu",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-121",
+      "title": "Şube öğretmenler kurulu",
+      "category": "year-end",
+      "categoryTitle": "Karne / yıl sonu",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-122",
+      "title": "Yıl sonu",
+      "category": "year-end",
+      "categoryTitle": "Karne / yıl sonu",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-123",
+      "title": "Arşiv teslimi",
+      "category": "year-end",
+      "categoryTitle": "Karne / yıl sonu",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-124",
+      "title": "Envanter",
+      "category": "year-end",
+      "categoryTitle": "Karne / yıl sonu",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-125",
+      "title": "Şube geçişi",
+      "category": "year-end",
+      "categoryTitle": "Karne / yıl sonu",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-130",
+      "title": "Müfettiş hazırlığı",
+      "category": "inspect",
+      "categoryTitle": "Denetim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-131",
+      "title": "Dosya kontrol",
+      "category": "inspect",
+      "categoryTitle": "Denetim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-132",
+      "title": "Denetim sonrası",
+      "category": "inspect",
+      "categoryTitle": "Denetim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-140",
+      "title": "Kaza/ilk yardım",
+      "category": "emergency",
+      "categoryTitle": "Acil / özel",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-141",
+      "title": "Afet/tatbikat",
+      "category": "emergency",
+      "categoryTitle": "Acil / özel",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-142",
+      "title": "Uzaktan eğitim",
+      "category": "emergency",
+      "categoryTitle": "Acil / özel",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-143",
+      "title": "Yas süreci",
+      "category": "emergency",
+      "categoryTitle": "Acil / özel",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-150",
+      "title": "Hizmet içi",
+      "category": "growth",
+      "categoryTitle": "Mesleki gelişim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-151",
+      "title": "Zümre paylaşımı",
+      "category": "growth",
+      "categoryTitle": "Mesleki gelişim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-152",
+      "title": "AI merak",
+      "category": "growth",
+      "categoryTitle": "Mesleki gelişim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    },
+    {
+      "id": "LIFE-153",
+      "title": "Portfolyo",
+      "category": "growth",
+      "categoryTitle": "Mesleki gelişim",
+      "status": "listed",
+      "documentCodes": [],
+      "workflowId": null
+    }
+  ]
+}

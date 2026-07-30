@@ -1,0 +1,18 @@
+{
+  "version": "0.1",
+  "updated": "2026-07-30",
+  "decision": "MB-ADR-043",
+  "aciklama": "Karar 71–75 — ders başına birden fazla kitap. Plan: önce müfredat, sonra kitap.",
+  "books": {
+    "turkce": [
+      { "id": "book:turkce:meb", "ad": "MEB", "publisher": "MEB", "durum": "ACTIVE" },
+      { "id": "book:turkce:koza", "ad": "Koza", "publisher": "Koza", "durum": "PLANNED" },
+      { "id": "book:turkce:pasifik", "ad": "Pasifik", "publisher": "Pasifik", "durum": "PLANNED" },
+      { "id": "book:turkce:gizem", "ad": "Gizem", "publisher": "Gizem", "durum": "PLANNED" }
+    ],
+    "matematik": [
+      { "id": "book:matematik:meb", "ad": "MEB", "publisher": "MEB", "durum": "ACTIVE" },
+      { "id": "book:matematik:koza", "ad": "Koza", "publisher": "Koza", "durum": "PLANNED" }
+    ]
+  }
+}

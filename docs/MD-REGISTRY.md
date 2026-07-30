@@ -32,6 +32,18 @@
 | **MD-047** | Document Operating System Core | Document OS / MB-DOS-002 | ✅ freeze |
 | **MD-048** | Academic Operating System (Academic Kernel) | AOS / MB-AOS-001 | ✅ freeze |
 
+### Kısa ADR dizisi (MB-ADR)
+
+Format: `docs/ADR-FORMAT.md` · İndeks: `docs/ADR-REGISTRY.md`  
+`MD-042` ≠ `MB-ADR-042` (farklı diziler).
+
+| ADR | Başlık | Kararlar |
+|-----|--------|----------|
+| **MB-ADR-042** | Öğretmen Profili | 66–70 |
+| **MB-ADR-043** | Ders ve Kaynak / Kitap | 71–75 |
+| **MB-ADR-044** | Yapay Zeka | 76–80 |
+| **MB-ADR-045** | Belgeler | 81–85 |
+
 ### Numara notu
 
 Taslakta Document OS ilkeleri MD-025…030 diye anılmıştı.  

@@ -31,6 +31,9 @@ Aynı ders için Milli Eğitim’in **birden fazla kaynağı** olabilir (TYMM PD
 Ders seç → Tüm MEB/TYMM kaynaklarını göster → Kaynağı seç → Plan motoru çalışır
 ```
 
+Kitaplar (yayınevi): **MB-ADR-043** Karar 71–75 · `assets/data/curriculum/books.json`  
+Plan: önce müfredat, sonra kitap.
+
 | Dosya | Rol |
 |-------|-----|
 | `assets/data/curriculum/sources.json` | Kaynak kataloğu |

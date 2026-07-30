@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import * as Haptics from 'expo-haptics';
 import type { MicroExperience, SceneSpec } from '@/mes/types';
 import { varyScenes, createSessionSeed } from '@/mes/replay';
 import { ExperienceObserver, type SceneBehavior } from '@/ai/observer';
@@ -11,9 +10,10 @@ import { Button } from '@/components/ui';
 import { colors, radius, spacing, typography } from '@/theme';
 import type { AppSettings } from '@/core/settings-store';
 import { scaleFont } from '@/core/settings-store';
+import { lightTap, successTap } from '@/core/haptics';
 import { SceneStage, GroupDisplay, SpeechBubble } from './SceneStage';
-import { TrustReaction, DecisionRipple, SceneTransition } from '@/components/scene';
-import { registerFirstSuccess, registerLabObservation } from '@/ai/analytics';
+import { SoftBounce, TrustReaction, DecisionRipple, SceneTransition } from '@/components/scene';
+import { registerFirstSuccess, registerLabObservation, registerObserveCompareV2 } from '@/ai/analytics';
 import { motionTokens, storyTokens } from '@/design-tokens';
 import { isPerceptualCount, naturalLayout } from '@/lab';
 
@@ -164,7 +164,7 @@ function NarrativeScene({ scene, settings, observer, onAdvance }: SceneProps) {
     const latency = Date.now() - enteredAt.current;
     observer.record(scene.id, 'touch', `help_${latency}`);
     if (!settings.reduceMotion) {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      void successTap(true);
     }
     if (i.bondMoment && scene.feedback.positive) {
       setPhase('bond');
@@ -230,9 +230,12 @@ function NarrativeScene({ scene, settings, observer, onAdvance }: SceneProps) {
 function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
   const i = scene.interaction as Extract<SceneSpec['interaction'], { kind: 'discover' }>;
   const [found, setFound] = useState<Set<string>>(new Set());
+  const [bounceId, setBounceId] = useState<string | null>(null);
   const allFound = found.size === i.items.length;
   const field = 220;
   const itemSize = 64;
+  const useSoftBounce =
+    scene.motionToken === 'motion.softBounce' || scene.storyToken === 'story.discover';
   const points = useMemo(
     () =>
       naturalLayout({
@@ -254,7 +257,11 @@ function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
     if (found.has(id)) return;
     observer.record(scene.id, 'touch', id);
     registerLabObservation(observer, scene.id, 'visual_focus', id);
-    if (!settings.reduceMotion) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    void lightTap(!settings.reduceMotion);
+    if (useSoftBounce) {
+      setBounceId(id);
+      setTimeout(() => setBounceId((cur) => (cur === id ? null : cur)), 220);
+    }
     setFound((prev) => new Set(prev).add(id));
   };
 
@@ -296,7 +303,13 @@ function DiscoverScene({ scene, settings, observer, onAdvance }: SceneProps) {
               ]}
               accessibilityLabel={item.label ?? item.emoji}
             >
-              <Text style={styles.discoverEmoji}>{item.emoji}</Text>
+              <SoftBounce
+                active={bounceId === item.id}
+                reduceMotion={settings.reduceMotion}
+                soundEnabled={settings.soundEnabled}
+              >
+                <Text style={styles.discoverEmoji}>{item.emoji}</Text>
+              </SoftBounce>
               {isFound ? <Text style={styles.discoverCheck}>✓</Text> : null}
             </TouchableOpacity>
           );
@@ -382,7 +395,7 @@ function PairScene({ scene, settings, observer, onAdvance }: SceneProps) {
   const makePair = () => {
     if (done) return;
     observer.record(scene.id, 'touch', `pair-${pairs + 1}`);
-    if (!settings.reduceMotion) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    void lightTap(!settings.reduceMotion);
     setPairs((p) => p + 1);
   };
 
@@ -435,8 +448,17 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
   const [waitLayer, setWaitLayer] = useState<ReturnType<typeof waitHelpLayerAt>>('character_mime');
   const [waitStartedAt, setWaitStartedAt] = useState(() => Date.now());
   const firstChoiceRecorded = useRef(false);
+  const firstViewedRef = useRef<string | null>(null);
+  const sceneEnteredAt = useRef(Date.now());
+  const [bounceId, setBounceId] = useState<string | null>(null);
   const worldFeedback = scene.worldFeedback !== false;
   const findik = getCharacter('findik');
+  const useSoftBounce = scene.motionToken === 'motion.softBounce';
+
+  useEffect(() => {
+    sceneEnteredAt.current = Date.now();
+    firstViewedRef.current = null;
+  }, [scene.id]);
 
   // MB-270: beklemede metin en sonda — katmanlar zamanla yükselir
   useEffect(() => {
@@ -461,6 +483,7 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
     const aligned = optionId === i.answerId;
     const opt = i.options.find((o) => o.id === optionId);
     const group = i.groups.find((g) => g.id === optionId);
+    if (!firstViewedRef.current) firstViewedRef.current = optionId;
 
     // MB-268: karakter önce seçilen nesneye bakar (çocuğa değil)
     setGazedOptionId(optionId);
@@ -468,6 +491,10 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
     setWaitStartedAt(Date.now());
     setWaitLayer('character_mime');
     setHintIndex(-1);
+    if (useSoftBounce) {
+      setBounceId(optionId);
+      setTimeout(() => setBounceId((cur) => (cur === optionId ? null : cur)), 220);
+    }
 
     if (!firstChoiceRecorded.current) {
       // MB-269: yanlış yok — aligned | explored
@@ -483,18 +510,22 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
       setWorldCue(
         `${findik.visual} seçtiğin yığına bakıyor… ${scene.atmosphere?.worldCue ?? 'Yapraklar kıpırdar.'}`,
       );
-      if (!settings.reduceMotion) {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-      }
+      void lightTap(!settings.reduceMotion);
+      registerObserveCompareV2(observer, scene.id, {
+        firstViewedGroup: firstViewedRef.current,
+        firstTouchedGroup: optionId,
+        decisionTime: Date.now() - sceneEnteredAt.current,
+        wrongTouchCount: attempts,
+        idleTime: Date.now() - waitStartedAt,
+        comparisonStrategy: attempts === 0 ? 'touch_first_seen' : 'hesitate_then_choose',
+      });
       return;
     }
 
     // MB-269: keşif — misconception / "yanlış" yolu yok; hikâye yumuşak ilerler
     observer.record(scene.id, 'observe_pattern', 'discovery_explore');
     setAttempts((a) => a + 1);
-    if (!settings.reduceMotion) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    }
+    void lightTap(!settings.reduceMotion);
   };
 
   const countVisibility = i.countVisibility ?? 'after_attempt';
@@ -579,10 +610,16 @@ function ChooseScene({ scene, settings, observer, onAdvance }: SceneProps) {
               ]}
               accessibilityLabel={opt.label}
             >
-              <Text style={styles.optionVisual}>{opt.visual}</Text>
-              <Text style={[styles.optionLabel, { fontSize: scaleFont(settings, 14) }]}>
-                {opt.label}
-              </Text>
+              <SoftBounce
+                active={bounceId === opt.id}
+                reduceMotion={settings.reduceMotion || !useSoftBounce}
+                soundEnabled={settings.soundEnabled}
+              >
+                <Text style={styles.optionVisual}>{opt.visual}</Text>
+                <Text style={[styles.optionLabel, { fontSize: scaleFont(settings, 14) }]}>
+                  {opt.label}
+                </Text>
+              </SoftBounce>
             </TouchableOpacity>
           );
         })}

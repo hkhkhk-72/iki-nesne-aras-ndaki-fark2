@@ -8,6 +8,7 @@ import { scaleFont, touchTargetFor } from '@/core/settings-store';
 import { isConceptualCount, naturalLayout, pickGrouping } from '@/lab';
 import { TOUCH_TARGET_MIN_PX } from '@/benchmark';
 import { motionTokens } from '@/design-tokens';
+import { SceneLifeLayer } from './SceneLifeLayer';
 
 /** Karakter repliği — sahnenin duygusal taşıyıcısı. */
 export function SpeechBubble({
@@ -154,6 +155,7 @@ export function SceneStage({
         ) : behaviorFirst && waitTeaching ? (
           <Text style={styles.waitCue}>Fındık bakar… sen de bak.</Text>
         ) : null}
+        <SceneLifeLayer scene={scene} settings={settings} />
         {children}
       </ScrollView>
       {footer ? <View style={styles.footer}>{footer}</View> : null}

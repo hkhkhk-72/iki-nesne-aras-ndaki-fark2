@@ -76,13 +76,26 @@ export function calculateOutcomeProgress(
   progress: StudentProgress[],
 ): number {
   const activityIds = outcome.activities.map((a) => a.id);
-  if (activityIds.length === 0) return 0;
-  const completed = activityIds.filter((id) =>
+  const uniqueExp = new Set(
+    progress
+      .filter(
+        (p) =>
+          matchesOutcome(p, outcome.id, outcome.subject) &&
+          p.completed &&
+          p.activityId.startsWith('exp-'),
+      )
+      .map((p) => p.activityId),
+  );
+  const total = activityIds.length + (uniqueExp.size > 0 ? uniqueExp.size : 0);
+  if (total === 0) return 0;
+
+  const completedActivities = activityIds.filter((id) =>
     progress.some(
       (p) => matchesOutcome(p, outcome.id, outcome.subject) && p.activityId === id && p.completed,
     ),
   ).length;
-  return Math.round((completed / activityIds.length) * 100);
+  const completed = completedActivities + uniqueExp.size;
+  return Math.min(100, Math.round((completed / total) * 100));
 }
 
 export function countCompletedLessons(

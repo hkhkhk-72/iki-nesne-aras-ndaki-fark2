@@ -29,9 +29,9 @@ export default function RootLayout() {
         <Stack.Screen name="outcome/[grade]/[outcomeId]" />
         <Stack.Screen name="activity/[grade]/[outcomeId]/[activityId]" />
         <Stack.Screen name="experience/[code]" />
+        <Stack.Screen name="settings" />
         <Stack.Screen name="teacher/index" />
-        <Stack.Screen name="smartboard/[grade]/[outcomeId]" />
-      </Stack>
+        <Stack.Screen name="smartboard/[grade]/[outcomeId]" />      </Stack>
     </GestureHandlerRootView>
   );
 }

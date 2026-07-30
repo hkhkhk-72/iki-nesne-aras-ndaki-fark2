@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { useRouter, useFocusEffect } from 'expo-router';
+import { useRouter, useFocusEffect, type Href } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, Card } from '@/components/ui';
@@ -81,6 +81,21 @@ export default function HomeScreen() {
           })}
 
           <View style={styles.actions}>
+            <Button
+              title="Fındık ile Maceraya Başla"
+              icon="🐿️"
+              onPress={() =>
+                router.push({ pathname: '/experience/[code]', params: { code: 'MB-MAT-1.1.01' } })
+              }
+              fullWidth
+            />
+            <Button
+              title="Ayarlar"
+              icon="⚙️"
+              variant="outline"
+              onPress={() => router.push('/settings' as Href)}
+              fullWidth
+            />
             <Button
               title="Öğretmen Paneli"
               icon="👩‍🏫"

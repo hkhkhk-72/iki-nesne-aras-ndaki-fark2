@@ -34,8 +34,8 @@ export default function TeacherScreen() {
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
-            <Text style={styles.statNumber}>24</Text>
-            <Text style={styles.statLabel}>Öğrenci</Text>
+            <Text style={styles.statNumber}>{records.length || '—'}</Text>
+            <Text style={styles.statLabel}>Macera kaydı</Text>
           </View>
           <View style={styles.statCard}>
             <Text style={styles.statNumber}>{stats.outcomes}</Text>
@@ -49,9 +49,28 @@ export default function TeacherScreen() {
 
         <Text style={styles.sectionTitle}>Hızlı İşlemler</Text>
         <View style={styles.actions}>
-          <Button title="Akıllı Tahta Modu" icon="📺" onPress={() => router.push('/smartboard/1/out-1-1-1')} fullWidth />
-          <Button title="Sınıf Yarışması Başlat" icon="🏆" variant="secondary" onPress={() => {}} fullWidth />
-          <Button title="Yazdırılabilir Etkinlik" icon="📄" variant="outline" onPress={() => {}} fullWidth />
+          <Button
+            title="Akıllı Tahta Modu"
+            icon="📺"
+            onPress={() => router.push('/smartboard/1/out-1-1-1')}
+            fullWidth
+          />
+          <Button
+            title="Altın Macera (MB-MAT-1.1.01)"
+            icon="🐿️"
+            variant="secondary"
+            onPress={() =>
+              router.push({ pathname: '/experience/[code]', params: { code: 'MB-MAT-1.1.01' } })
+            }
+            fullWidth
+          />
+          <Button
+            title="Kazanıma Git"
+            icon="📖"
+            variant="outline"
+            onPress={() => router.push('/outcome/1/out-1-1-1')}
+            fullWidth
+          />
         </View>
 
         <Text style={styles.sectionTitle}>Sınıf Seç</Text>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter, useFocusEffect } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScreenHeader, Button, ProgressBar } from '@/components/ui';
 import { getOutcome } from '@/core/content-loader';
@@ -22,10 +22,11 @@ export default function OutcomeScreen() {
   const outcome = getOutcome(gradeNum, outcomeId);
   const [progress, setProgress] = useState<StudentProgress[]>([]);
 
-  useEffect(() => {
-    loadAllProgress().then(setProgress);
-  }, []);
-
+  useFocusEffect(
+    useCallback(() => {
+      loadAllProgress().then(setProgress);
+    }, []),
+  );
   if (!outcome) {
     return (
       <SafeAreaView style={styles.safe}>
@@ -67,7 +68,9 @@ export default function OutcomeScreen() {
           <TouchableOpacity
             key={exp.code}
             style={styles.experienceCard}
-            onPress={() => router.push(`/experience/${exp.code}`)}
+            onPress={() =>
+              router.push({ pathname: '/experience/[code]', params: { code: exp.code } })
+            }
           >
             <View style={styles.experienceBadge}>
               <Text style={styles.experienceBadgeText}>MACERA</Text>

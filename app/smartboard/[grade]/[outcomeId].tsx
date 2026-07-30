@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import * as Haptics from 'expo-haptics';
-import { ScreenHeader } from '@/components/ui';
+import { ScreenHeader, Button } from '@/components/ui';
 import { getOutcome } from '@/core/content-loader';
+import { saveActivityProgress } from '@/core/progress-store';
+import { DEFAULT_SUBJECT } from '@/core/subject-registry';
+import { lightTap, successTap } from '@/core/haptics';
 import { colors, spacing, typography, radius } from '@/theme';
 import type { ComparisonPayload, ComparisonSymbol } from '@/core/types';
 
@@ -16,19 +18,81 @@ const SYMBOLS: { key: ComparisonSymbol; label: string }[] = [
   { key: 'equal', label: 'Eşit' },
 ];
 
+/** Tur varyasyonu — aynı payload'u hafifçe kaydırır. */
+function roundPayload(base: ComparisonPayload, round: number): ComparisonPayload {
+  const shift = (round - 1) % 3;
+  if (shift === 0) return base;
+  if (shift === 1) {
+    return {
+      ...base,
+      left: { ...base.right },
+      right: { ...base.left },
+      correctAnswer:
+        base.correctAnswer === 'more'
+          ? 'less'
+          : base.correctAnswer === 'less'
+            ? 'more'
+            : 'equal',
+    };
+  }
+  const bump = (base.left.count % 2) + 1;
+  return {
+    ...base,
+    left: { ...base.left, count: Math.max(1, base.left.count + bump) },
+    right: { ...base.right, count: Math.max(1, base.right.count + bump) },
+    correctAnswer:
+      base.left.count + bump === base.right.count + bump
+        ? 'equal'
+        : base.left.count + bump > base.right.count + bump
+          ? 'more'
+          : 'less',
+  };
+}
+
 export default function SmartboardScreen() {
   const { grade, outcomeId } = useLocalSearchParams<{ grade: string; outcomeId: string }>();
   const router = useRouter();
   const outcome = getOutcome(Number(grade), outcomeId);
   const smartboardActivity = outcome?.activities.find((a) => a.mode === 'smartboard');
   const fallbackComparison = outcome?.activities.find((a) => a.engineId === 'comparison');
-  const payload = (smartboardActivity?.payload ?? fallbackComparison?.payload) as ComparisonPayload | undefined;
+  const basePayload = (smartboardActivity?.payload ?? fallbackComparison?.payload) as
+    | ComparisonPayload
+    | undefined;
 
   const [scores, setScores] = useState({ left: 0, right: 0 });
   const [round, setRound] = useState(1);
   const [answered, setAnswered] = useState(false);
   const [winner, setWinner] = useState<Player>(null);
+  const [saved, setSaved] = useState(false);
   const totalRounds = 5;
+  const saving = useRef(false);
+
+  const payload = useMemo(
+    () => (basePayload ? roundPayload(basePayload, round) : undefined),
+    [basePayload, round],
+  );
+
+  const persistComplete = useCallback(async () => {
+    if (!smartboardActivity || saving.current) return;
+    saving.current = true;
+    await saveActivityProgress({
+      subject: DEFAULT_SUBJECT,
+      outcomeId,
+      activityId: smartboardActivity.id,
+      completed: true,
+      score: 100,
+      attempts: 1,
+      lastPlayedAt: new Date().toISOString(),
+    });
+    setSaved(true);
+    void successTap(true);
+  }, [outcomeId, smartboardActivity]);
+
+  useEffect(() => {
+    if (round >= totalRounds && answered && !saved) {
+      void persistComplete();
+    }
+  }, [answered, persistComplete, round, saved]);
 
   const handleAnswer = (player: 'left' | 'right', answer: ComparisonSymbol) => {
     if (answered || !payload) return;
@@ -38,15 +102,15 @@ export default function SmartboardScreen() {
     const playerWins =
       (answer === 'more' && player === 'left') ||
       (answer === 'less' && player === 'right') ||
-      (answer === 'equal');
+      (answer === 'equal' && isCorrect);
 
     if (isCorrect && playerWins) {
       setScores((s) => ({ ...s, [player]: s[player] + 1 }));
       setWinner(player);
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      void successTap(true);
     } else {
       setWinner(null);
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      void lightTap(true);
     }
 
     setTimeout(() => {
@@ -54,7 +118,7 @@ export default function SmartboardScreen() {
       setRound((r) => r + 1);
       setAnswered(false);
       setWinner(null);
-    }, 2000);
+    }, 1200);
   };
 
   if (!payload) {
@@ -98,7 +162,7 @@ export default function SmartboardScreen() {
             emoji={payload.left.emoji}
             label="Öğrenci 1"
             onAnswer={(ans) => handleAnswer('left', ans)}
-            disabled={answered}
+            disabled={answered || gameOver}
             isWinner={winner === 'left'}
           />
           <PlayerSide
@@ -107,7 +171,7 @@ export default function SmartboardScreen() {
             emoji={payload.right.emoji}
             label="Öğrenci 2"
             onAnswer={(ans) => handleAnswer('right', ans)}
-            disabled={answered}
+            disabled={answered || gameOver}
             isWinner={winner === 'right'}
           />
         </View>
@@ -125,11 +189,13 @@ export default function SmartboardScreen() {
             <Text style={styles.finalScore}>
               {scores.left} - {scores.right}
             </Text>
+            {saved ? <Text style={styles.savedNote}>İlerleme kaydedildi ✓</Text> : null}
+            <Button title="Kazanıma Dön" onPress={() => router.back()} fullWidth />
           </View>
         ) : null}
 
         <Text style={styles.rules}>
-          İlk doğru cevap veren puan kazanır. Yanlış cevapta soru değişmez.
+          İlk doğru cevap veren puan kazanır. 5 tur bitince ilerleme kaydolur.
         </Text>
       </SafeAreaView>
     </View>
@@ -153,7 +219,7 @@ function PlayerSide({
   disabled: boolean;
   isWinner: boolean;
 }) {
-  const dots = Array.from({ length: count }, (_, i) => i);
+  const dots = Array.from({ length: Math.min(count, 12) }, (_, i) => i);
   const color = side === 'left' ? '#00D4FF' : '#FF6B6B';
 
   return (
@@ -234,6 +300,7 @@ const styles = StyleSheet.create({
   gameOverTitle: { fontSize: 36, color: colors.star },
   gameOverScore: { ...typography.heading, color: colors.textLight },
   finalScore: { fontSize: 48, fontWeight: '800', color: colors.smartboardAccent },
+  savedNote: { ...typography.bodyBold, color: colors.success },
   rules: { ...typography.caption, color: '#666', textAlign: 'center', padding: spacing.md },
   error: { ...typography.body, color: colors.error, textAlign: 'center' },
 });

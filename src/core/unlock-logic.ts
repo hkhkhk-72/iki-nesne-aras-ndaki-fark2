@@ -5,6 +5,7 @@ import type {
   SubjectId,
 } from './types';
 import { DEFAULT_SUBJECT } from './subject-registry';
+import { calculateStudentOutcomeProgress } from './grade1-progress';
 
 const LESSON_ACTIVITY_SUFFIX = '-learn';
 
@@ -71,31 +72,16 @@ export function getUnlockedActivities(
   }));
 }
 
+/**
+ * Öğrenci yolu ilerlemesi (akıllı tahta / sınıf / öğretmen modları hariç).
+ * `requiredExperienceCodes` verilirse MES maceraları da zorunlu sayılır.
+ */
 export function calculateOutcomeProgress(
   outcome: LearningOutcome,
   progress: StudentProgress[],
+  requiredExperienceCodes: readonly string[] = [],
 ): number {
-  const activityIds = outcome.activities.map((a) => a.id);
-  const uniqueExp = new Set(
-    progress
-      .filter(
-        (p) =>
-          matchesOutcome(p, outcome.id, outcome.subject) &&
-          p.completed &&
-          p.activityId.startsWith('exp-'),
-      )
-      .map((p) => p.activityId),
-  );
-  const total = activityIds.length + (uniqueExp.size > 0 ? uniqueExp.size : 0);
-  if (total === 0) return 0;
-
-  const completedActivities = activityIds.filter((id) =>
-    progress.some(
-      (p) => matchesOutcome(p, outcome.id, outcome.subject) && p.activityId === id && p.completed,
-    ),
-  ).length;
-  const completed = completedActivities + uniqueExp.size;
-  return Math.min(100, Math.round((completed / total) * 100));
+  return calculateStudentOutcomeProgress(outcome, progress, requiredExperienceCodes);
 }
 
 export function countCompletedLessons(

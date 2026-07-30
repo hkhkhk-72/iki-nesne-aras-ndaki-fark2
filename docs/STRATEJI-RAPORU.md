@@ -77,6 +77,7 @@ Bağlayıcı sıra:
 2o. **MB-DS-004 / MD-043** — Accessibility (A11Y-001…008) ✅  
 2p. **MB-DS-005 / MD-044** — Motion Language (ML-001…004 · max 300ms) ✅  
 2q. **MB-DS-006 / MD-045** — Teacher Experience Architecture (TXA-001…010) ✅  
+2r. **MB-DS-007 / MD-046** — Universal Component Library (Mb* katalog) ✅  
 3. **MB-DM-002** — Entity Detay ✅  
 4. **MB-TPM-001** — 1. sınıf Türkçe domain ✅  
 5. **FAZ 6 / MB-COMP-001…008** — Bileşen mimarisi *(aktif)*  
@@ -102,10 +103,10 @@ Her teslimatta: **hangi kalem · % tamam · % kaldı**.
 
 | Paket | Tamam | Kaldı |
 |-------|------:|------:|
-| MB-DS-001…006 | 86% | 14% |
-| Web omurgası | 86% | 14% |
+| MB-DS-001…007 | 84% | 16% |
+| Web omurgası | 85% | 15% |
 | DOS-001 DNA katalog (sonraki) | 55% | 45% |
 
 ---
 
-*Son güncelleme: İlerleme panosu — 29 Temmuz 2026*
+*Son güncelleme: İlerleme panosu — 30 Temmuz 2026 · MB-DS-007*

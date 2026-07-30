@@ -18,8 +18,10 @@
 | **MB-DS-004** | Accessibility | **85%** | **15%** | Tam SR denetim / CI |
 | **MB-DS-005** | Motion Language | **100%** | **0%** | Anayasa + runtime kabulü dolu |
 | **MB-DS-006** | TXA (mimari) | **70%** | **30%** | Tüm belge modüllerinde TXA-007/008 |
+| **MB-DS-007** | Universal Component Library | **75%** | **25%** | Flutter port · derin motor bağları |
 
-**DS paket ortalaması:** **86%** tamam · **14%** kaldı
+**DS paket ortalaması:** **84%** tamam · **16%** kaldı  
+*(90+85+85+85+100+70+75) / 7*
 
 ---
 
@@ -37,23 +39,23 @@
 | MD-038 Context Cache | 100% | 0% | |
 | MB-WFE-001 / MD-039 | 90% | 10% | Deadline/UI derinliği |
 | MB-DOS-003 / MD-040 LEE | 85% | 15% | Canlı ders kanıtı / sync |
-| FAZ 6 MB-COMP | 75% | 25% | Tüm ekranlarda bileşen kapsaması |
+| FAZ 6 MB-COMP | 82% | 18% | UCL (MD-046) katalog + lab |
 | MB-DM-002 Entity | 100% | 0% | Spec |
 | MB-TPM-001 1.sınıf Türkçe | 80% | 20% | Diğer dersler |
 | MB-ARCH-002 Flutter | 0% | 100% | Sırada |
 | MB-DB-001 → APP-001 | 0% | 100% | Sırada |
 
 **Yol haritası ağırlıklı (aktif web ürünü):** ≈ **78%** tamam · **22%** kaldı  
-*(Flutter + DB hattı hariç tutulursa web omurgası ≈ **86%** / **14%**)*
+*(Flutter + DB hattı hariç tutulursa web omurgası ≈ **85%** / **15%**)*
 
 ---
 
-## 3. Bu tur özeti (DS-006 TXA)
+## 3. Bu tur özeti (DS-007 UCL)
 
 | Kalem | Tamam | Kaldı |
 |-------|------:|------:|
-| Teacher Experience Architecture (MB-DS-006) | 70% | 30% |
-| DS paketi (001…006) | 86% | 14% |
+| Universal Component Library (MB-DS-007) | 75% | 25% |
+| DS paketi (001…007) | 84% | 16% |
 | Sonraki öncelik adayı | — | DOS-001 DNA katalog **45% kaldı** |
 
 ---
@@ -64,7 +66,7 @@ Ana sayfadaki her başlıkta renkli rozet (`%tamam · kaldı %`):
 
 | Başlık | Anahtar | Tamam |
 |--------|---------|------:|
-| Öğretmen / web omurgası | `webSpine` | 86% |
+| Öğretmen / web omurgası | `webSpine` | 85% |
 | Sınıfını Seç | `home.baglam` | 95% |
 | Bugün | `home.bugun` | 90% |
 | Dersleri | `home.dersler` | 85% |

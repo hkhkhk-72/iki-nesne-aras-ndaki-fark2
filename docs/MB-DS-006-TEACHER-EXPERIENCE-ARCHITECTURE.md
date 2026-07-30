@@ -138,4 +138,5 @@ API: `MiniBilgeTxa.watchContext({ onChange })` · class switch → reload/re-ren
 
 ---
 
-*Yeni ekran PR’ında “TXA hangi maddelere uydu?” belirtilir.*
+*Yeni ekran PR’ında “TXA hangi maddelere uydu?” belirtilir.*  
+*UI bileşenleri: `docs/MB-DS-007-UNIVERSAL-COMPONENT-LIBRARY.md` (MD-046).*

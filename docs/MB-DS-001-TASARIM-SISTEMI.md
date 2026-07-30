@@ -140,7 +140,8 @@ Görsel dil bu belgededir.
 | Erişilebilirlik (A11Y) | `docs/MB-DS-004-ACCESSIBILITY.md` |
 | Hareket (ML) | `docs/MB-DS-005-MOTION-LANGUAGE.md` |
 | Ekran mimarisi (TXA) | `docs/MB-DS-006-TEACHER-EXPERIENCE-ARCHITECTURE.md` |
+| Bileşen kataloğu (UCL) | `docs/MB-DS-007-UNIVERSAL-COMPONENT-LIBRARY.md` |
 
 ---
 
-*Bu sistem UI-001 ekranlarına uygulanır; yeni ekran DS onayı olmadan stil eklemez.*
+*Bu sistem UI-001 ekranlarına uygulanır; yeni ekran DS onayı olmadan stil eklemez. Yeni UI `Mb*` katalog dışına çıkmaz (MD-046).*

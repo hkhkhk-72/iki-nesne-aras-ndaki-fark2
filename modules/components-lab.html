@@ -20,6 +20,7 @@
   <script src="../assets/js/core/context-cache.js"></script>
   <script src="../assets/js/core/context-engine.js"></script>
   <script src="../assets/js/components/mb-components.js"></script>
+  <script src="../assets/js/components/mb-library.js"></script>
   <script src="../assets/js/components/nav.js"></script>
   <script src="../assets/js/components/status.js"></script>
   <script src="../assets/js/components/interaction.js"></script>
@@ -128,6 +129,16 @@
               <input class="mbc-input" name="not" placeholder="Not yazın" style="margin-bottom:8px;">
               <button type="button" class="quick-btn compact" id="lab-is-flush">Şimdi kaydet</button>
             </form>
+          </section>
+
+          <section class="mbc-lab-section">
+            <h2>UCL — Universal Component Library (MB-DS-007 · MD-046)</h2>
+            <p class="section-lead">Standart Mb* API · MiniBilgeLib · %75 tamam · %25 kaldı</p>
+            <div id="lab-ucl-core" style="margin-bottom:14px;"></div>
+            <div id="lab-ucl-doc" style="margin-bottom:14px;"></div>
+            <div id="lab-ucl-workflow" style="margin-bottom:14px;"></div>
+            <div id="lab-ucl-state" style="margin-bottom:14px;"></div>
+            <div id="lab-ucl-catalog"></div>
           </section>
         </div>`;
 
@@ -332,6 +343,140 @@
           </div>`;
         }).join('');
         host.innerHTML = cacheLine + (rows || '<p class="empty-state">Katalog boş.</p>');
+      })();
+
+      /* MB-DS-007 — Universal Component Library */
+      (function uclDemo() {
+        const L = window.MiniBilgeLib;
+        if (!L) return;
+
+        function slot(parent) {
+          const d = document.createElement('div');
+          d.style.marginBottom = '10px';
+          parent.appendChild(d);
+          return d;
+        }
+        function rowSlot(parent) {
+          const row = document.createElement('div');
+          row.className = 'mbc-lab-row';
+          row.style.cssText = 'gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;';
+          parent.appendChild(row);
+          return row;
+        }
+        function into(row) {
+          const d = document.createElement('div');
+          row.appendChild(d);
+          return d;
+        }
+
+        const core = document.getElementById('lab-ucl-core');
+        if (core) {
+          core.innerHTML = '<h3 class="mbc-lab-sub">Core</h3>';
+          const row = rowSlot(core);
+          L.MbButton({ label: 'Kaydet', primary: true, onClick() { C.notify.success('MbButton'); } }).mount(into(row));
+          L.MbButton({ label: 'İkincil', variant: 'ghost' }).mount(into(row));
+          L.MbBadge({ label: 'Taslak', tone: 'low' }).mount(into(row));
+          L.MbAvatar({ name: 'Ayşe Öğretmen' }).mount(into(row));
+          L.MbInput({ label: 'Başlık', placeholder: 'Belge adı' }).mount(slot(core));
+          L.MbDropdown({
+            label: 'Dönem',
+            options: [{ value: '1', label: '1. Dönem' }, { value: '2', label: '2. Dönem' }],
+            value: '1'
+          }).mount(slot(core));
+          L.MbSearch({ placeholder: 'Belge ara…', onSearch(v) { if (v) C.notify.info(v, 'MbSearch'); } }).mount(slot(core));
+          L.MbCard({ title: 'MbCard', body: 'Standart kart — Atölye Işığı yüzeyi.' }).mount(slot(core));
+          L.MbProgress({ label: 'İlerleme', complete: 75 }).mount(slot(core));
+          L.MbTabs({
+            tabs: [{ id: 'a', label: 'Özet' }, { id: 'b', label: 'Detay' }],
+            active: 'a',
+            onChange(id) { C.notify.info(id, 'MbTabs'); }
+          }).mount(slot(core));
+          L.MbContextBar({}).mount(slot(core));
+          L.MbClassSelector({ activeSinif: '1', activeSube: 'A' }).mount(slot(core));
+          L.MbCommandPalette({}).mount(slot(core));
+          L.MbFloatingAI({ screen: 'components-lab' });
+        }
+
+        const doc = document.getElementById('lab-ucl-doc');
+        if (doc) {
+          doc.innerHTML = '<h3 class="mbc-lab-sub">Belge</h3>';
+          const row = rowSlot(doc);
+          L.MbDocumentStatus({ status: 'editing' }).mount(into(row));
+          L.MbAutosaveIndicator({ state: 'saved' }).mount(into(row));
+          L.MbSyncIndicator({ state: 'synced' }).mount(into(row));
+          L.MbRecentDocuments({ documents: [
+            { id: '1', title: '5-A Matematik Yıllık Plan', createdAt: '2026-07-30' },
+            { id: '2', title: 'Günlük Plan — Kesirler', createdAt: '2026-07-29' }
+          ] }).mount(slot(doc));
+          L.MbVersionHistory({}).mount(slot(doc));
+          L.MbPreview({ title: 'Önizleme', body: 'Belge önizleme gövdesi', status: 'ready' }).mount(slot(doc));
+          L.MbNotificationCenter({}).mount(slot(doc));
+        }
+
+        const wf = document.getElementById('lab-ucl-workflow');
+        if (wf) {
+          wf.innerHTML = '<h3 class="mbc-lab-sub">İş akışı</h3>';
+          L.MbTeacherDashboard({ title: 'Bugün', complete: 90 }).mount(slot(wf));
+          L.MbWorkflowStepper({ stages: ['Hazırlık', 'Uygulama', 'Ölçme', 'Yansıtma'], active: 2 }).mount(slot(wf));
+          L.MbLessonTimeline({}).mount(slot(wf));
+          L.MbLessonExecution({ status: 'READY' }).mount(slot(wf));
+          L.MbAttendanceBar({ present: 24, absent: 2, late: 1 }).mount(slot(wf));
+          L.MbReflectionCard({ text: 'Ders sonrası kısa yansıtma' }).mount(slot(wf));
+          L.MbAssessmentPanel({}).mount(slot(wf));
+          L.MbAnalyticsCard({}).mount(slot(wf));
+          L.MbCalendar({ title: 'Haftalık', week: 12 }).mount(slot(wf));
+          L.MbWizard({
+            steps: ['Bağlam', 'İçerik', 'Onay'],
+            step: 1,
+            bodyHtml: '<p class="section-lead">Sınıf / ders seç</p>',
+            onNext() { C.notify.info('İleri', 'MbWizard'); }
+          }).mount(slot(wf));
+          L.MbQuickActions({
+            items: [
+              { label: 'Yıllık plan', href: 'yillik-plan.html' },
+              { label: 'Günlük plan', href: 'gunluk-plan.html' },
+              { label: 'Yoklama', href: '../documents/olustur.html?id=devamsizlik-takip' }
+            ]
+          }).mount(slot(wf));
+          L.MbTable({
+            columns: [{ id: 'ad', label: 'Ad' }, { id: 'durum', label: 'Durum' }],
+            rows: [{ id: '1', ad: 'Yıllık Plan', durum: 'Taslak' }, { id: '2', ad: 'Günlük Plan', durum: 'Hazır' }]
+          }).mount(slot(wf));
+          L.MbStepper({ steps: ['Bilgi', 'Doğrula', 'Üret'], active: 2 }).mount(slot(wf));
+          L.MbTimeline({
+            items: [
+              { title: 'Hazırlık', meta: '08:30', body: 'Materyal kontrol' },
+              { title: 'Uygulama', meta: '09:00', body: 'Ana etkinlik' }
+            ]
+          }).mount(slot(wf));
+        }
+
+        const st = document.getElementById('lab-ucl-state');
+        if (st) {
+          st.innerHTML = '<h3 class="mbc-lab-sub">Durum</h3>';
+          L.MbEmptyState({
+            title: 'Henüz belge yok',
+            message: 'İlk belgeni oluşturarak başla.',
+            actions: [{ label: 'Yeni belge', href: '../index.html', primary: true }]
+          }).mount(slot(st));
+          L.MbSkeletonLoader({ lines: 3 }).mount(slot(st));
+          L.MbOfflineBanner({ message: 'Çevrimdışı demo — değişiklikler yerelde saklanır.' }).mount(slot(st));
+        }
+
+        const cat = document.getElementById('lab-ucl-catalog');
+        if (cat) {
+          const missing = L.catalog.filter(function (name) { return typeof L[name] !== 'function'; });
+          cat.innerHTML = '<h3 class="mbc-lab-sub">Katalog · ' + L.catalog.length + ' Mb* · eksik: ' + missing.length + '</h3>';
+          const grid = document.createElement('div');
+          grid.className = 'mb-lib-catalog-grid';
+          L.catalog.forEach(function (name) {
+            const item = document.createElement('div');
+            item.className = 'mb-lib-catalog-item';
+            item.innerHTML = '<code>' + name + '</code>';
+            grid.appendChild(item);
+          });
+          cat.appendChild(grid);
+        }
       })();
     })();
   </script>

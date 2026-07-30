@@ -2,7 +2,7 @@
 
 ## Gelişim Raporu v1.1
 
-**Güncelleme:** 29 Temmuz 2026 — Strateji raporu ile uyumlu
+**Güncelleme:** 30 Temmuz 2026 — MB-DS-007 UCL + ilerleme panosu
 
 ---
 
@@ -59,6 +59,7 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 | 2o | **MB-DS-004** A11Y | **85%** | **15%** |
 | 2p | **MB-DS-005** Motion | **100%** | **0%** |
 | 2q | **MB-DS-006** TXA | **70%** | **30%** |
+| 2r | **MB-DS-007** UCL | **75%** | **25%** |
 | 2f | MB-IA-001 | 100% | 0% |
 | 2g | MB-IA-002 | 70% | 30% |
 | 2h | MB-IA-003 | 80% | 20% |
@@ -68,12 +69,12 @@ Kategoriler: Planlar, Zümre, Özel Eğitim/Rehberlik, Kulüp, Ölçme, Veli/İd
 | 2l | MB-DOS-003 LEE | 85% | 15% |
 | 3 | MB-DM-002 Entity | 100% | 0% |
 | 4 | MB-TPM-001 | 80% | 20% |
-| 5 | FAZ 6 COMP | 75% | 25% |
+| 5 | FAZ 6 COMP | 82% | 18% |
 | 6 | MB-ARCH-002 Flutter | 0% | 100% |
 | 7 | MB-DB→APP | 0% | 100% |
 
-**DS paketi (001…005):** **89% tamam · 11% kaldı**  
-**Web omurgası:** **86% tamam · 14% kaldı**
+**DS paketi (001…007):** **84% tamam · 16% kaldı**  
+**Web omurgası:** **85% tamam · 15% kaldı**
 
 > MD-025: Everything is a Component. Ana ekran: sınıf sekmeleri → hub (UI-002). Components Lab: `modules/components-lab.html`.
 

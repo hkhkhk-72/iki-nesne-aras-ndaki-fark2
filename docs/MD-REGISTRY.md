@@ -28,6 +28,7 @@
 | **MD-043** | Accessibility | UX / MB-DS-004 | ✅ freeze |
 | **MD-044** | Motion Language | UX / MB-DS-005 | ✅ freeze |
 | **MD-045** | Teacher Experience Architecture (TXA) | UX / MB-DS-006 | ✅ freeze |
+| **MD-046** | Universal Component Library (UCL) | UX / MB-DS-007 | ✅ freeze |
 
 ### Numara notu
 
@@ -42,7 +43,8 @@ Taslakta Document OS ilkeleri MD-025…030 diye anılmıştı.
 **MD-043** — Accessibility: min 14px, 44×44, klavye/SR, WCAG AA, dark mode, large text, offline sync.  
 **MD-044** — Motion Language: yalnızca success/error/loading/transition · max 300 ms · bekletmez.  
 **MD-045** — Teacher Experience Architecture (TXA): ekran değil workflow; tek amaç, ≤3 aksiyon, autosave, belge adımları, version history, context-aware.  
-*(Taslak MD-025 istemişti; MD-025 dolu → MD-045.)*
+*(Taslak MD-025 istemişti; MD-025 dolu → MD-045.)*  
+**MD-046** — Universal Component Library: standart `Mb*` kataloğu (MbButton…MbSyncIndicator).
 
 ---
 
@@ -99,5 +101,9 @@ Detay: `docs/MB-DS-005-MOTION-LANGUAGE.md` · `docs/MD-044-MOTION-LANGUAGE.md`
 ### MD-045 — Teacher Experience Architecture (TXA)
 Ekran odaklı değil; iş akışı odaklı. TXA-001…010.  
 Detay: `docs/MB-DS-006-TEACHER-EXPERIENCE-ARCHITECTURE.md` · `docs/MD-045-TEACHER-EXPERIENCE-ARCHITECTURE.md`
+
+### MD-046 — Universal Component Library (UCL)
+Standart Mb* bileşen kataloğu; yeni UI katalog dışına çıkmaz.  
+Detay: `docs/MB-DS-007-UNIVERSAL-COMPONENT-LIBRARY.md` · `docs/MD-046-UNIVERSAL-COMPONENT-LIBRARY.md` · `assets/js/components/mb-library.js`
 
 Detay: `docs/MB-IA-003-AKILLI-BELGE-URETIM-MOTORU.md` · `docs/MB-DOS-000-DOCUMENT-OS.md`

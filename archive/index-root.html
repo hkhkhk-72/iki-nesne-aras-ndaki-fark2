@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>SPOTIX CHALLENGE</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #050a12;
+      --panel: #0a1420;
+      --panel2: #0f1e30;
+      --border: #1a3a5c;
+      --neon-blue: #00d4ff;
+      --neon-green: #00ff9d;
+      --neon-blue-dim: rgba(0, 212, 255, 0.15);
+      --neon-green-dim: rgba(0, 255, 157, 0.15);
+      --text: #c8e6f5;
+      --text-dim: #5a8aaa;
+      --danger: #ff4466;
+      --gold: #ffd700;
+      --purple: #b44dff;
+    }
+
+    html { font-size: 16px; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,212,255,0.02) 2px, rgba(0,212,255,0.02) 4px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .screen {
+      display: none;
+      min-height: 100dvh;
+      flex-direction: column;
+      animation: fadeIn 0.4s ease;
+    }
+    .screen.active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MENU ── */
+    .menu-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,212,255,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 90%, rgba(0,255,157,0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .logo {
+      position: relative;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .logo-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      color: var(--neon-green);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .logo h1 {
+      font-size: clamp(2rem, 8vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(0,212,255,0.4));
+    }
+    .logo p {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .profile-card {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 20px 0;
+      box-shadow: 0 0 40px rgba(0,212,255,0.08);
+    }
+    .profile-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--bg);
+      flex-shrink: 0;
+      box-shadow: 0 0 20px rgba(0,212,255,0.4);
+    }
+    .profile-info h3 { font-size: 1rem; color: var(--neon-blue); }
+    .profile-info span { font-size: 0.8rem; color: var(--text-dim); }
+
+    .xp-bar-wrap { margin-top: 4px; }
+    .xp-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+    .xp-bar {
+      height: 8px;
+      background: var(--panel2);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .xp-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+      border-radius: 4px;
+      transition: width 0.5s ease;
+      box-shadow: 0 0 10px rgba(0,255,157,0.5);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .stat-pill {
+      text-align: center;
+      background: var(--panel2);
+      border-radius: 10px;
+      padding: 8px 4px;
+      border: 1px solid var(--border);
+    }
+    .stat-pill .val {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--neon-green);
+    }
+    .stat-pill .lbl {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badges-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      justify-content: center;
+    }
+    .badge-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--panel2);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      opacity: 0.3;
+      filter: grayscale(1);
+      transition: all 0.3s;
+      cursor: default;
+      position: relative;
+    }
+    .badge-icon.unlocked {
+      opacity: 1;
+      filter: none;
+      border-color: var(--neon-green);
+      box-shadow: 0 0 12px rgba(0,255,157,0.3);
+    }
+    .badge-icon[title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      white-space: nowrap;
+      color: var(--text);
+      z-index: 10;
+    }
+
+    .mode-grid {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .btn:hover::before, .btn:active::before { opacity: 1; }
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon-blue), #0088cc);
+      color: var(--bg);
+      box-shadow: 0 4px 24px rgba(0,212,255,0.35);
+    }
+    .btn-green {
+      background: linear-gradient(135deg, var(--neon-green), #00cc7a);
+      color: var(--bg);
+      box-shadow: 0 4px 24px rgba(0,255,157,0.3);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--neon-blue);
+      border: 2px solid var(--neon-blue);
+    }
+    .btn-danger {
+      background: linear-gradient(135deg, var(--danger), #cc2244);
+      color: #fff;
+    }
+    .btn-sm {
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      border-radius: 10px;
+    }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .mode-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-align: center;
+      margin-top: -6px;
+    }
+
+    .streak-banner {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      background: linear-gradient(90deg, rgba(255,215,0,0.1), rgba(0,212,255,0.1));
+      border: 1px solid rgba(255,215,0,0.3);
+      border-radius: 12px;
+      padding: 10px 16px;
+      text-align: center;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+    .streak-banner strong { color: var(--gold); }
+
+    /* ── GAME HUD ── */
+    .game-header {
+      padding: 12px 16px 8px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .hud-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .hud-level {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--neon-blue);
+      background: var(--neon-blue-dim);
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(0,212,255,0.3);
+    }
+    .hud-mode {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .timer-display {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .timer-num {
+      font-size: clamp(2.5rem, 10vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      transition: color 0.3s;
+    }
+    .timer-num.warning { color: var(--danger); animation: timerPulse 0.5s ease infinite; }
+    .timer-num.frozen { color: var(--purple); text-shadow: 0 0 20px var(--purple); }
+    @keyframes timerPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .timer-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .progress-wrap {
+      margin-bottom: 8px;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+    .progress-bar {
+      height: 6px;
+      background: var(--panel2);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+
+    .hud-stats {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .hud-stat {
+      flex: 1;
+      min-width: 70px;
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 6px 10px;
+      text-align: center;
+    }
+    .hud-stat .v {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--neon-green);
+    }
+    .hud-stat .l {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+    .combo-display {
+      color: var(--gold) !important;
+      animation: comboPop 0.3s ease;
+    }
+    @keyframes comboPop {
+      0% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+
+    /* ── GAME AREA ── */
+    .game-body {
+      flex: 1;
+      padding: 12px 16px 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .panels-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      max-width: 700px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .panel-label {
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .scene-panel {
+      position: relative;
+      aspect-ratio: 1;
+      background: var(--panel2);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: crosshair;
+      transition: border-color 0.3s;
+    }
+    .scene-panel.magnified {
+      transform: scale(1.5);
+      transform-origin: center center;
+      z-index: 50;
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 30px rgba(0,212,255,0.4);
+    }
+    .scene-panel.found-flash {
+      animation: foundFlash 0.4s ease;
+    }
+    @keyframes foundFlash {
+      0%, 100% { border-color: var(--border); }
+      50% { border-color: var(--neon-green); box-shadow: 0 0 20px rgba(0,255,157,0.5); }
+    }
+
+    .scene-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #0a1a2e 0%, #061018 100%);
+    }
+    .scene-star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0.6;
+      animation: twinkle 3s ease infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+
+    .scene-el {
+      position: absolute;
+      transition: all 0.3s ease;
+    }
+    .scene-el.circle { border-radius: 50%; }
+    .scene-el.square { border-radius: 4px; }
+    .scene-el.triangle {
+      width: 0 !important;
+      height: 0 !important;
+      background: transparent !important;
+      border-left: solid transparent;
+      border-right: solid transparent;
+      border-bottom-style: solid;
+    }
+    .scene-el.diamond {
+      transform: rotate(45deg);
+      border-radius: 4px;
+    }
+
+    .diff-marker {
+      position: absolute;
+      border: 3px solid var(--neon-green);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: markerPop 0.5s ease forwards;
+      box-shadow: 0 0 15px rgba(0,255,157,0.6);
+    }
+    @keyframes markerPop {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .hint-pulse {
+      position: absolute;
+      border: 3px dashed var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: hintPulse 1s ease infinite;
+    }
+    @keyframes hintPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.15); opacity: 0.5; }
+    }
+
+    .wrong-flash {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,68,102,0.2);
+      pointer-events: none;
+      animation: wrongFade 0.4s ease forwards;
+    }
+    @keyframes wrongFade {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    /* Power-ups bar */
+    .powerups-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--panel);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      z-index: 100;
+    }
+    .powerup-btn {
+      flex: 1;
+      max-width: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 10px 8px;
+      background: var(--panel2);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      color: var(--text);
+    }
+    .powerup-btn:hover:not(:disabled) {
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0,212,255,0.2);
+    }
+    .powerup-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .powerup-btn .icon { font-size: 1.4rem; }
+    .powerup-btn .name { font-size: 0.65rem; font-weight: 700; color: var(--neon-blue); }
+    .powerup-btn .count {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+    }
+
+    /* Motivational toast */
+    .toast {
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: var(--panel);
+      border: 1px solid var(--neon-green);
+      color: var(--neon-green);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      box-shadow: 0 0 20px rgba(0,255,157,0.2);
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Achievement popup */
+    .achievement-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: linear-gradient(135deg, var(--panel), var(--panel2));
+      border: 2px solid var(--gold);
+      border-radius: 20px;
+      padding: 24px 32px;
+      text-align: center;
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 0 60px rgba(255,215,0,0.3);
+      max-width: 90vw;
+    }
+    .achievement-popup.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: auto;
+    }
+    .achievement-popup .ach-icon { font-size: 3rem; margin-bottom: 8px; }
+    .achievement-popup h3 { color: var(--gold); font-size: 1.1rem; margin-bottom: 4px; }
+    .achievement-popup p { color: var(--text-dim); font-size: 0.85rem; }
+
+    /* Overlay modals */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5,10,18,0.85);
+      backdrop-filter: blur(6px);
+      z-index: 250;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .overlay.active { display: flex; }
+
+    .modal {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 24px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      animation: modalIn 0.4s ease;
+    }
+    @keyframes modalIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal h2 {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .modal p { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 16px; }
+    .modal .score-big {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--neon-green);
+      margin: 12px 0;
+    }
+    .modal .btn-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .result-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .result-stat {
+      background: var(--panel2);
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid var(--border);
+    }
+    .result-stat .rv { font-size: 1.3rem; font-weight: 800; color: var(--neon-blue); }
+    .result-stat .rl { font-size: 0.7rem; color: var(--text-dim); }
+
+    /* Particles canvas */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 150;
+    }
+
+    /* Success / fail fullscreen */
+    .fullscreen-fx {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 180;
+      display: none;
+    }
+    .fullscreen-fx.active { display: block; }
+    .fullscreen-fx.success {
+      background: radial-gradient(circle, rgba(0,255,157,0.15) 0%, transparent 70%);
+      animation: successFx 0.8s ease forwards;
+    }
+    .fullscreen-fx.fail {
+      background: radial-gradient(circle, rgba(255,68,102,0.2) 0%, transparent 70%);
+      animation: failFx 0.8s ease forwards;
+    }
+    @keyframes successFx {
+      0% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 1; }
+      100% { opacity: 0; transform: scale(1.5); }
+    }
+    @keyframes failFx {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      font-family: inherit;
+    }
+    .back-btn:hover { color: var(--neon-blue); }
+
+    .daily-banner {
+      background: linear-gradient(90deg, rgba(180,77,255,0.15), rgba(0,212,255,0.15));
+      border: 1px solid rgba(180,77,255,0.4);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      text-align: center;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+    }
+    .daily-banner h3 { color: var(--purple); font-size: 0.9rem; margin-bottom: 4px; }
+    .daily-banner p { font-size: 0.75rem; color: var(--text-dim); }
+
+    @media (max-width: 480px) {
+      .panels-wrap { gap: 4px; }
+      .scene-panel { border-radius: 8px; }
+      .powerup-btn .name { font-size: 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div class="fullscreen-fx" id="fullscreenFx"></div>
+<div class="toast" id="toast"></div>
+<div class="achievement-popup" id="achievementPopup">
+  <div class="ach-icon" id="achIcon">🏆</div>
+  <h3 id="achTitle">Achievement!</h3>
+  <p id="achDesc">You unlocked something awesome!</p>
+</div>
+
+<!-- MENU SCREEN -->
+<div class="screen active" id="menuScreen">
+  <div class="menu-wrap">
+    <div class="menu-bg"></div>
+    <div class="logo">
+      <div class="logo-badge">★ Viral Challenge ★</div>
+      <h1>SPOTIX<br>CHALLENGE</h1>
+      <p>Find 5 differences. Beat the clock. Become a legend.</p>
+    </div>
+
+    <div class="streak-banner" id="streakBanner">
+      🔥 <strong>0 day</strong> streak — Play daily to grow your reward streak!
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-top">
+        <div class="avatar" id="avatarEl">1</div>
+        <div class="profile-info">
+          <h3>Spotter Lv.<span id="playerLevel">1</span></h3>
+          <span id="playerTitle">Rookie Observer</span>
+        </div>
+      </div>
+      <div class="xp-bar-wrap">
+        <div class="xp-label">
+          <span>XP Progress</span>
+          <span id="xpText">0 / 500</span>
+        </div>
+        <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-pill"><div class="val" id="bestScoreMenu">0</div><div class="lbl">Best Score</div></div>
+        <div class="stat-pill"><div class="val" id="classicLevelMenu">1</div><div class="lbl">Classic Lv</div></div>
+        <div class="stat-pill"><div class="val" id="totalFoundMenu">0</div><div class="lbl">Found</div></div>
+      </div>
+      <div class="badges-row" id="badgesRow"></div>
+    </div>
+
+    <div class="mode-grid">
+      <button class="btn btn-primary" onclick="startGame('classic')">🎯 Classic Mode</button>
+      <p class="mode-desc">Progress through levels. Unlock harder challenges.</p>
+      <button class="btn btn-green" onclick="startGame('speed')">⚡ Speed Mode</button>
+      <p class="mode-desc">60 seconds — complete as many levels as you can!</p>
+      <button class="btn btn-outline" onclick="startGame('daily')">📅 Daily Challenge</button>
+      <p class="mode-desc">One special puzzle per day. Beat your daily best!</p>
+    </div>
+  </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div class="screen" id="gameScreen">
+  <div class="game-header">
+    <div class="hud-top">
+      <button class="back-btn" onclick="confirmQuit()">← Quit</button>
+      <span class="hud-mode" id="hudMode">CLASSIC</span>
+      <span class="hud-level" id="hudLevel">Level 1</span>
+    </div>
+    <div class="timer-display">
+      <div class="timer-num" id="timerNum">15</div>
+      <div class="timer-label" id="timerLabel">Seconds Left</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Differences Found</span>
+        <span id="progressText">0 / 5</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+    <div class="hud-stats">
+      <div class="hud-stat"><div class="v" id="scoreDisplay">0</div><div class="l">Score</div></div>
+      <div class="hud-stat"><div class="v" id="bestDisplay">0</div><div class="l">Best</div></div>
+      <div class="hud-stat"><div class="v combo-display" id="comboDisplay">x1</div><div class="l">Combo</div></div>
+      <div class="hud-stat" id="speedLevelStat" style="display:none"><div class="v" id="speedLevels">0</div><div class="l">Levels</div></div>
+    </div>
+  </div>
+
+  <div class="game-body">
+    <div class="daily-banner" id="dailyBanner" style="display:none">
+      <h3>📅 Daily Challenge — <span id="dailyDate"></span></h3>
+      <p>Today's best: <strong id="dailyBest">0</strong> pts</p>
+    </div>
+    <div class="panels-wrap">
+      <div>
+        <div class="panel-label">Original</div>
+        <div class="scene-panel" id="panelLeft"></div>
+      </div>
+      <div>
+        <div class="panel-label">Find Differences →</div>
+        <div class="scene-panel" id="panelRight"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="powerups-bar">
+    <button class="powerup-btn" id="hintBtn" onclick="useHint()">
+      <span class="icon">💡</span>
+      <span class="name">Hint</span>
+      <span class="count" id="hintCount">x2</span>
+    </button>
+    <button class="powerup-btn" id="freezeBtn" onclick="useFreeze()">
+      <span class="icon">❄️</span>
+      <span class="name">Freeze</span>
+      <span class="count" id="freezeCount">x1</span>
+    </button>
+    <button class="powerup-btn" id="magnifyBtn" onclick="useMagnify()">
+      <span class="icon">🔍</span>
+      <span class="name">Zoom</span>
+      <span class="count" id="magnifyCount">x1</span>
+    </button>
+  </div>
+</div>
+
+<!-- RESULT OVERLAY -->
+<div class="overlay" id="resultOverlay">
+  <div class="modal" id="resultModal">
+    <h2 id="resultTitle">Level Complete!</h2>
+    <p id="resultSubtitle">Amazing spotting skills!</p>
+    <div class="score-big" id="resultScore">0</div>
+    <div class="result-stats">
+      <div class="result-stat"><div class="rv" id="resultTimeBonus">+0</div><div class="rl">Time Bonus</div></div>
+      <div class="result-stat"><div class="rv" id="resultComboBonus">+0</div><div class="rl">Combo Bonus</div></div>
+      <div class="result-stat"><div class="rv" id="resultXp">+0</div><div class="rl">XP Earned</div></div>
+      <div class="result-stat"><div class="rv" id="resultLevels">1</div><div class="rl">Levels Done</div></div>
+    </div>
+    <p id="motivationalMsg" style="color:var(--neon-green);font-weight:600;margin-bottom:0"></p>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="resultContinueBtn" onclick="continueAfterResult()">Continue</button>
+      <button class="btn btn-outline btn-sm" onclick="shareScore()">📤 Share Score</button>
+      <button class="btn btn-outline btn-sm" onclick="copyResult()">📋 Copy Result</button>
+      <button class="btn btn-outline btn-sm" onclick="goMenu()">🏠 Main Menu</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUIT CONFIRM -->
+<div class="overlay" id="quitOverlay">
+  <div class="modal">
+    <h2>Quit Game?</h2>
+    <p>Your current progress in this session will be lost.</p>
+    <div class="btn-row">
+      <button class="btn btn-danger" onclick="goMenu()">Yes, Quit</button>
+      <button class="btn btn-outline" onclick="closeQuit()">Keep Playing</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const STORAGE_KEY = 'spotix_challenge_v1';
+  const DIFFS_PER_LEVEL = 5;
+  const LEVEL_TIMES = { 1: 15, 2: 12, 3: 10, 4: 8 };
+  const BADGES = [
+    { id: 'beginner', icon: '👁️', name: 'Beginner', desc: 'Complete Level 1' },
+    { id: 'sharp_eye', icon: '🔍', name: 'Sharp Eye', desc: 'Find 50 differences total' },
+    { id: 'detective', icon: '🕵️', name: 'Detective', desc: 'Reach Level 5' },
+    { id: 'master', icon: '⭐', name: 'Master Spotter', desc: 'Reach Player Level 10' },
+    { id: 'legend', icon: '👑', name: 'Spotix Legend', desc: 'Score 10,000 points in one game' }
+  ];
+
+  const ENCOURAGE = [
+    'Sharp eyes! Keep going!', 'You\'re on fire!', 'Nobody spots like you!',
+    'Incredible focus!', 'Difference destroyed!', 'Laser vision activated!',
+    'The legend grows!', 'Unstoppable spotter!', 'Pure talent!', 'Combo king!'
+  ];
+
+  const TITLES = ['Rookie Observer', 'Keen Lookout', 'Detail Hunter', 'Pattern Seeker',
+    'Visual Ace', 'Difference Pro', 'Elite Spotter', 'Master Observer', 'Grand Detective', 'Spotix Legend'];
+
+  const COLORS = ['#00d4ff', '#00ff9d', '#ff4466', '#ffd700', '#b44dff', '#ff8844', '#44ff88', '#ff44cc'];
+  const SHAPES = ['circle', 'square', 'triangle', 'diamond'];
+
+  let audioCtx = null;
+  let saveData = loadSave();
+  let game = null;
+  let particles = [];
+  let animFrame = null;
+  let lastResultText = '';
+
+  function loadSave() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return {
+      xp: 0, playerLevel: 1, bestScore: 0, classicLevel: 1,
+      totalFound: 0, badges: [], streak: 0, lastPlayDate: '',
+      dailyBest: 0, dailyDate: '', powerups: { hint: 2, freeze: 1, magnify: 1 }
+    };
+  }
+
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
+  }
+
+  function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+  }
+
+  function playSound(type) {
+    initAudio();
+    const ctx = audioCtx;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    const t = ctx.currentTime;
+
+    if (type === 'found') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(520, t);
+      osc.frequency.exponentialRampToValueAtTime(880, t + 0.1);
+      gain.gain.setValueAtTime(0.15, t);
+      gain.gain.exponentialRampToValueAtTime(0.01, t + 0.2);
+      osc.start(t); osc.stop(t + 0.2);
+    } else if (type === 'wrong') {
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(180, t);
+      osc.frequency.exponentialRampToValueAtTime(100, t + 0.15);
+      gain.gain.setValueAtTime(0.08, t);
+      gain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
+      osc.start(t); osc.stop(t + 0.15);
+    } else if (type === 'win') {
+      [523, 659, 784, 1047].forEach((f, i) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.type = 'sine';
+        o.frequency.value = f;
+        g.gain.setValueAtTime(0.12, t + i * 0.1);
+        g.gain.exponentialRampToValueAtTime(0.01, t + i * 0.1 + 0.2);
+        o.start(t + i * 0.1); o.stop(t + i * 0.1 + 0.2);
+      });
+    } else if (type === 'lose') {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(300, t);
+      osc.frequency.exponentialRampToValueAtTime(80, t + 0.5);
+      gain.gain.setValueAtTime(0.1, t);
+      gain.gain.exponentialRampToValueAtTime(0.01, t + 0.5);
+      osc.start(t); osc.stop(t + 0.5);
+    } else if (type === 'powerup') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(400, t);
+      osc.frequency.exponentialRampToValueAtTime(1200, t + 0.15);
+      gain.gain.setValueAtTime(0.1, t);
+      gain.gain.exponentialRampToValueAtTime(0.01, t + 0.2);
+      osc.start(t); osc.stop(t + 0.2);
+    } else if (type === 'levelup') {
+      [440, 554, 659, 880].forEach((f, i) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.type = 'triangle';
+        o.frequency.value = f;
+        g.gain.setValueAtTime(0.1, t + i * 0.08);
+        g.gain.exponentialRampToValueAtTime(0.01, t + i * 0.08 + 0.15);
+        o.start(t + i * 0.08); o.stop(t + i * 0.08 + 0.15);
+      });
+    }
+  }
+
+  function seededRandom(seed) {
+    let s = seed;
+    return function () {
+      s = (s * 16807 + 0) % 2147483647;
+      return (s - 1) / 2147483646;
+    };
+  }
+
+  function getDailySeed() {
+    const d = new Date();
+    return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  }
+
+  function getLevelTime(level) {
+    if (LEVEL_TIMES[level]) return LEVEL_TIMES[level];
+    return Math.max(5, 8 - Math.floor((level - 4) / 2));
+  }
+
+  function generateScene(level, seed) {
+    const rng = seededRandom(seed || level * 7919 + 42);
+    const difficulty = Math.min(level, 10);
+    const elCount = 12 + difficulty * 3;
+    const elements = [];
+    const usedPositions = [];
+
+    for (let i = 0; i < elCount; i++) {
+      let x, y, attempts = 0;
+      do {
+        x = 8 + rng() * 75;
+        y = 8 + rng() * 75;
+        attempts++;
+      } while (attempts < 20 && usedPositions.some(p => Math.hypot(p.x - x, p.y - y) < 12));
+
+      const size = Math.max(6, 18 - difficulty * 0.8 + rng() * 8);
+      const el = {
+        id: i,
+        type: SHAPES[Math.floor(rng() * SHAPES.length)],
+        x, y,
+        size,
+        color: COLORS[Math.floor(rng() * COLORS.length)],
+        rotation: rng() * 360,
+        opacity: 0.7 + rng() * 0.3
+      };
+      elements.push(el);
+      usedPositions.push({ x, y });
+    }
+
+    const diffIndices = [];
+    while (diffIndices.length < DIFFS_PER_LEVEL) {
+      const idx = Math.floor(rng() * elements.length);
+      if (!diffIndices.includes(idx)) diffIndices.push(idx);
+    }
+
+    const differences = diffIndices.map((idx, di) => {
+      const el = elements[idx];
+      const diffType = Math.floor(rng() * 4);
+      const hitRadius = Math.max(14, el.size * 0.8 + (5 - Math.min(difficulty, 5)));
+      let change = {};
+
+      if (diffType === 0) {
+        let newColor;
+        do { newColor = COLORS[Math.floor(rng() * COLORS.length)]; } while (newColor === el.color);
+        change = { type: 'color', value: newColor };
+      } else if (diffType === 1) {
+        change = { type: 'missing' };
+      } else if (diffType === 2) {
+        change = { type: 'size', value: el.size * (rng() > 0.5 ? 1.5 : 0.6) };
+      } else {
+        change = { type: 'position', dx: (rng() - 0.5) * 12, dy: (rng() - 0.5) * 12 };
+      }
+
+      return {
+        id: di,
+        elementIdx: idx,
+        x: el.x,
+        y: el.y,
+        hitRadius,
+        change,
+        found: false
+      };
+    });
+
+    if (level >= 5) {
+      const extraTypes = Math.min(level - 4, 2);
+      for (let e = 0; e < extraTypes; e++) {
+        const idx = differences[e].elementIdx;
+        differences[e] = {
+          id: e,
+          elementIdx: -1,
+          x: 12 + rng() * 70,
+          y: 12 + rng() * 70,
+          hitRadius: Math.max(9, 14 - level * 0.5),
+          change: { type: 'extra', color: COLORS[Math.floor(rng() * COLORS.length)], size: 7 + rng() * 5 },
+          found: false,
+          isExtra: true
+        };
+      }
+      differences.forEach(d => {
+        if (!d.isExtra) d.hitRadius = Math.max(10, d.hitRadius - (level - 4) * 1.2);
+      });
+    }
+
+    const decoyCount = Math.floor(difficulty / 2);
+    const decoys = [];
+    for (let d = 0; d < decoyCount; d++) {
+      decoys.push({
+        x: 5 + rng() * 85,
+        y: 5 + rng() * 85,
+        radius: 8 + rng() * 6
+      });
+    }
+
+    return { elements, differences, decoys, seed: seed || level };
+  }
+
+  function renderScene(panel, scene, side) {
+    panel.innerHTML = '';
+    const bg = document.createElement('div');
+    bg.className = 'scene-bg';
+    panel.appendChild(bg);
+
+    for (let i = 0; i < 15; i++) {
+      const star = document.createElement('div');
+      star.className = 'scene-star';
+      const sz = 1 + Math.random() * 2;
+      star.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*40}%;animation-delay:${Math.random()*3}s`;
+      panel.appendChild(star);
+    }
+
+    const diffMap = {};
+    scene.differences.forEach(d => { diffMap[d.elementIdx] = d; });
+
+    scene.elements.forEach((el, idx) => {
+      const diff = diffMap[idx];
+      if (side === 'right' && diff && diff.change.type === 'missing') return;
+      if (side === 'right' && diff && diff.change.type === 'extra') return;
+
+      const div = document.createElement('div');
+      div.className = `scene-el ${el.type}`;
+      let color = el.color;
+      let size = el.size;
+      let x = el.x;
+      let y = el.y;
+      let opacity = el.opacity;
+
+      if (side === 'right' && diff) {
+        if (diff.change.type === 'color') color = diff.change.value;
+        if (diff.change.type === 'size') size = diff.change.value;
+        if (diff.change.type === 'position') { x += diff.change.dx; y += diff.change.dy; }
+      }
+
+      if (el.type === 'triangle') {
+        const hs = size / 2;
+        div.style.cssText = `
+          left:${x}%;top:${y}%;transform:rotate(${el.rotation}deg);
+          border-left-width:${hs}px;border-right-width:${hs}px;border-bottom-width:${size}px;
+          border-bottom-color:${color};opacity:${opacity};
+        `;
+      } else {
+        div.style.cssText = `
+          left:${x}%;top:${y}%;width:${size}px;height:${size}px;
+          background:${color};opacity:${opacity};
+          transform:rotate(${el.rotation}deg);
+        `;
+      }
+      panel.appendChild(div);
+    });
+
+    if (side === 'right') {
+      scene.differences.forEach(d => {
+        if (d.isExtra && d.change.type === 'extra') {
+          const div = document.createElement('div');
+          div.className = 'scene-el circle';
+          div.style.cssText = `
+            left:${d.x}%;top:${d.y}%;width:${d.change.size}px;height:${d.change.size}px;
+            background:${d.change.color};opacity:0.85;
+          `;
+          panel.appendChild(div);
+        }
+      });
+    }
+
+    scene.differences.filter(d => d.found).forEach(d => {
+      const marker = document.createElement('div');
+      marker.className = 'diff-marker';
+      const r = d.hitRadius;
+      marker.style.cssText = `left:calc(${d.x}% - ${r}px);top:calc(${d.y}% - ${r}px);width:${r*2}px;height:${r*2}px`;
+      panel.appendChild(marker);
+    });
+  }
+
+  function updateStreak() {
+    const today = new Date().toDateString();
+    if (saveData.lastPlayDate === today) return;
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if (saveData.lastPlayDate === yesterday.toDateString()) {
+      saveData.streak++;
+      if (saveData.streak % 3 === 0) {
+        saveData.powerups = saveData.powerups || { hint: 2, freeze: 1, magnify: 1 };
+        saveData.powerups.hint = Math.min(5, (saveData.powerups.hint || 0) + 1);
+        saveData.powerups.freeze = Math.min(3, (saveData.powerups.freeze || 0) + 1);
+        showToast('🔥 Streak reward! +1 Hint & Freeze');
+      }
+    } else {
+      saveData.streak = 1;
+    }
+    saveData.lastPlayDate = today;
+    save();
+  }
+
+  function xpForLevel(lv) { return lv * 500; }
+
+  function addXP(amount) {
+    saveData.xp += amount;
+    while (saveData.xp >= xpForLevel(saveData.playerLevel)) {
+      saveData.xp -= xpForLevel(saveData.playerLevel);
+      saveData.playerLevel++;
+      playSound('levelup');
+      showToast(`🎉 Level Up! Spotter Lv.${saveData.playerLevel}`);
+    }
+    save();
+    checkBadges();
+  }
+
+  function checkBadges() {
+    const unlock = (id) => {
+      if (!saveData.badges.includes(id)) {
+        saveData.badges.push(id);
+        const b = BADGES.find(x => x.id === id);
+        showAchievement(b.icon, b.name, b.desc);
+        save();
+      }
+    };
+    if (saveData.classicLevel > 1 || (game && game.sessionLevels >= 1)) unlock('beginner');
+    if (saveData.totalFound >= 50) unlock('sharp_eye');
+    if (saveData.classicLevel >= 5) unlock('detective');
+    if (saveData.playerLevel >= 10) unlock('master');
+    if (game && game.score >= 10000) unlock('legend');
+  }
+
+  function showAchievement(icon, title, desc) {
+    document.getElementById('achIcon').textContent = icon;
+    document.getElementById('achTitle').textContent = title;
+    document.getElementById('achDesc').textContent = desc;
+    const popup = document.getElementById('achievementPopup');
+    popup.classList.add('show');
+    playSound('levelup');
+    setTimeout(() => popup.classList.remove('show'), 3000);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function updateMenu() {
+    document.getElementById('playerLevel').textContent = saveData.playerLevel;
+    document.getElementById('avatarEl').textContent = saveData.playerLevel;
+    document.getElementById('playerTitle').textContent = TITLES[Math.min(saveData.playerLevel - 1, TITLES.length - 1)];
+    document.getElementById('bestScoreMenu').textContent = saveData.bestScore.toLocaleString();
+    document.getElementById('classicLevelMenu').textContent = saveData.classicLevel;
+    document.getElementById('totalFoundMenu').textContent = saveData.totalFound;
+    const xpNeeded = xpForLevel(saveData.playerLevel);
+    document.getElementById('xpText').textContent = `${saveData.xp} / ${xpNeeded}`;
+    document.getElementById('xpFill').style.width = `${(saveData.xp / xpNeeded) * 100}%`;
+    document.getElementById('streakBanner').innerHTML =
+      `🔥 <strong>${saveData.streak} day</strong> streak — Play daily to grow your reward streak!`;
+
+    const row = document.getElementById('badgesRow');
+    row.innerHTML = '';
+    BADGES.forEach(b => {
+      const el = document.createElement('div');
+      el.className = 'badge-icon' + (saveData.badges.includes(b.id) ? ' unlocked' : '');
+      el.textContent = b.icon;
+      el.title = b.name + ': ' + b.desc;
+      row.appendChild(el);
+    });
+  }
+
+  window.startGame = function (mode) {
+    initAudio();
+    updateStreak();
+
+    const hints = saveData.powerups?.hint ?? 2;
+    const freezes = saveData.powerups?.freeze ?? 1;
+    const magnifies = saveData.powerups?.magnify ?? 1;
+
+    game = {
+      mode,
+      level: mode === 'classic' ? saveData.classicLevel : 1,
+      score: 0,
+      combo: 0,
+      maxCombo: 0,
+      found: 0,
+      foundThisSession: 0,
+      timeLeft: 0,
+      totalTime: 0,
+      timerInterval: null,
+      frozen: false,
+      freezeTimeout: null,
+      scene: null,
+      sessionLevels: 0,
+      levelComboBonus: 0,
+      powerups: { hint: hints, freeze: freezes, magnify: magnifies },
+      magnified: false,
+      speedTimeLeft: mode === 'speed' ? 60 : 0,
+      gameOver: false,
+      hintEl: null,
+      wrongClicks: 0
+    };
+
+    if (mode === 'daily') {
+      const seed = getDailySeed();
+      const today = new Date().toLocaleDateString();
+      document.getElementById('dailyBanner').style.display = 'block';
+      document.getElementById('dailyDate').textContent = today;
+      const dayKey = new Date().toDateString();
+      document.getElementById('dailyBest').textContent = (saveData.dailyDate === dayKey ? saveData.dailyBest : 0);
+    } else {
+      document.getElementById('dailyBanner').style.display = 'none';
+    }
+
+    document.getElementById('speedLevelStat').style.display = mode === 'speed' ? 'block' : 'none';
+    document.getElementById('hudMode').textContent = mode.toUpperCase();
+    document.getElementById('bestDisplay').textContent = saveData.bestScore.toLocaleString();
+
+    showScreen('gameScreen');
+    startLevel();
+  };
+
+  function startLevel() {
+    if (game.gameOver) return;
+
+    const seed = game.mode === 'daily' ? getDailySeed() : game.level * 9973 + Date.now() % 1000;
+    game.scene = generateScene(game.level, seed);
+    game.found = 0;
+    game.combo = 0;
+
+    if (game.mode === 'speed') {
+      if (game.speedTimeLeft <= 0 && game.sessionLevels > 0) {
+        endGame(false);
+        return;
+      }
+      game.timeLeft = getLevelTime(game.level);
+      game.totalTime = game.timeLeft;
+    } else {
+      game.timeLeft = getLevelTime(game.level);
+      game.totalTime = game.timeLeft;
+    }
+
+    document.getElementById('hudLevel').textContent =
+      game.mode === 'daily' ? 'Daily Challenge' : `Level ${game.level}`;
+    updateHUD();
+    updatePowerups();
+
+    const left = document.getElementById('panelLeft');
+    const right = document.getElementById('panelRight');
+    left.classList.remove('magnified');
+    right.classList.remove('magnified');
+    game.magnified = false;
+
+    renderScene(left, game.scene, 'left');
+    renderScene(right, game.scene, 'right');
+
+    if (game.hintEl) { game.hintEl.remove(); game.hintEl = null; }
+
+    right.onclick = (e) => handleClick(e, right);
+    left.onclick = (e) => handleClick(e, left);
+
+    clearInterval(game.timerInterval);
+    game.timerInterval = setInterval(tick, 100);
+  }
+
+  function tick() {
+    if (game.frozen || game.gameOver) return;
+
+    game.timeLeft -= 0.1;
+
+    if (game.mode === 'speed') {
+      game.speedTimeLeft -= 0.1;
+      if (game.speedTimeLeft <= 0) {
+        game.speedTimeLeft = 0;
+        clearInterval(game.timerInterval);
+        endSpeedRun();
+        return;
+      }
+      document.getElementById('timerNum').textContent = Math.ceil(game.speedTimeLeft);
+      document.getElementById('timerLabel').textContent = 'Speed Timer';
+    }
+
+    const display = game.mode === 'speed' ? game.timeLeft : game.timeLeft;
+    if (game.mode !== 'speed') {
+      document.getElementById('timerNum').textContent = Math.max(0, Math.ceil(display));
+      document.getElementById('timerLabel').textContent = 'Seconds Left';
+    }
+
+    const timerEl = document.getElementById('timerNum');
+    timerEl.classList.toggle('warning', game.timeLeft <= 3 && game.timeLeft > 0);
+    timerEl.classList.toggle('frozen', game.frozen);
+
+    if (game.timeLeft <= 0) {
+      game.timeLeft = 0;
+      clearInterval(game.timerInterval);
+      endGame(false);
+    }
+  }
+
+  function handleClick(e, panel) {
+    if (game.gameOver) return;
+    initAudio();
+
+    const rect = panel.getBoundingClientRect();
+
+    let hit = null;
+    for (const d of game.scene.differences) {
+      if (d.found) continue;
+      const dx = e.clientX - (rect.left + (d.x / 100) * rect.width);
+      const dy = e.clientY - (rect.top + (d.y / 100) * rect.height);
+      const distPx = Math.hypot(dx, dy);
+      if (distPx < d.hitRadius * 1.35) { hit = d; break; }
+    }
+
+    if (hit) {
+      hit.found = true;
+      game.found++;
+      game.foundThisSession++;
+      game.combo++;
+      if (game.combo > game.maxCombo) game.maxCombo = game.combo;
+      saveData.totalFound++;
+
+      const comboMult = Math.min(game.combo, 10);
+      const points = 100 + (comboMult - 1) * 25;
+      game.score += points;
+      game.levelComboBonus += (comboMult - 1) * 25;
+
+      playSound('found');
+      spawnParticles(e.clientX, e.clientY);
+      showToast(ENCOURAGE[Math.floor(Math.random() * ENCOURAGE.length)] + ` +${points}`);
+
+      if (game.hintEl) { game.hintEl.remove(); game.hintEl = null; }
+
+      panel.classList.add('found-flash');
+      setTimeout(() => panel.classList.remove('found-flash'), 400);
+
+      renderScene(document.getElementById('panelLeft'), game.scene, 'left');
+      renderScene(document.getElementById('panelRight'), game.scene, 'right');
+
+      updateHUD();
+
+      if (game.found >= game.scene.differences.length) {
+        clearInterval(game.timerInterval);
+        setTimeout(() => completeLevel(), 400);
+      }
+    } else {
+      game.combo = 0;
+      game.wrongClicks++;
+      playSound('wrong');
+      const flash = document.createElement('div');
+      flash.className = 'wrong-flash';
+      panel.appendChild(flash);
+      setTimeout(() => flash.remove(), 400);
+      updateHUD();
+    }
+  }
+
+  function completeLevel() {
+    const timeBonus = Math.floor(game.timeLeft * 20);
+    game.score += timeBonus;
+    game.sessionLevels++;
+
+    const xpGain = 100 + game.found * 25;
+    addXP(xpGain);
+
+    if (game.score > saveData.bestScore) saveData.bestScore = game.score;
+
+    if (game.mode === 'classic' && game.level >= saveData.classicLevel) {
+      saveData.classicLevel = game.level + 1;
+    }
+
+    if (game.mode === 'daily') {
+      const dayKey = new Date().toDateString();
+      if (saveData.dailyDate !== dayKey) { saveData.dailyDate = dayKey; saveData.dailyBest = 0; }
+      if (game.score > saveData.dailyBest) saveData.dailyBest = game.score;
+    }
+
+    save();
+    checkBadges();
+    playSound('win');
+    showFullscreenFx('success');
+
+    if (game.mode === 'speed') {
+      game.level++;
+      if (game.speedTimeLeft > 0) {
+        showToast('Level cleared! Next level loading...');
+        setTimeout(() => startLevel(), 800);
+        return;
+      }
+    }
+
+    if (game.mode === 'classic' || game.mode === 'daily') {
+      showResult(true, timeBonus, xpGain);
+    }
+  }
+
+  function endSpeedRun() {
+    game.gameOver = true;
+    if (game.freezeTimeout) clearTimeout(game.freezeTimeout);
+    if (game.score > saveData.bestScore) saveData.bestScore = game.score;
+    const xpGain = game.found * 25 + game.sessionLevels * 50;
+    addXP(xpGain);
+    save();
+    checkBadges();
+    playSound('win');
+    showFullscreenFx('success');
+    setTimeout(() => showResult(true, 0, xpGain), 600);
+  }
+
+  function endGame(won) {
+    game.gameOver = true;
+    clearInterval(game.timerInterval);
+    if (game.freezeTimeout) clearTimeout(game.freezeTimeout);
+
+    if (game.score > saveData.bestScore) saveData.bestScore = game.score;
+    save();
+    checkBadges();
+
+    playSound(won ? 'win' : 'lose');
+    showFullscreenFx(won ? 'success' : 'fail');
+
+    const xpGain = game.found * 25;
+    addXP(xpGain);
+
+    setTimeout(() => showResult(won, 0, xpGain), 600);
+  }
+
+  function showResult(won, timeBonus, xpGain) {
+    const overlay = document.getElementById('resultOverlay');
+    document.getElementById('resultTitle').textContent = won ? '🎉 Level Complete!' : '⏰ Time\'s Up!';
+    document.getElementById('resultSubtitle').textContent = won
+      ? 'You spotted every difference!'
+      : `Found ${game.found}/${game.scene.differences.length} differences`;
+    document.getElementById('resultScore').textContent = game.score.toLocaleString();
+    document.getElementById('resultTimeBonus').textContent = '+' + timeBonus;
+    document.getElementById('resultComboBonus').textContent = '+' + game.levelComboBonus;
+    document.getElementById('resultXp').textContent = '+' + xpGain;
+    document.getElementById('resultLevels').textContent = game.sessionLevels;
+
+    const msgs = won
+      ? ['You\'re unstoppable!', 'Spotix champion in the making!', 'Flawless victory!', 'The legend continues!']
+      : ['So close! Try again!', 'Your eyes are getting sharper!', 'Don\'t give up, spotter!', 'Next time you\'ve got this!'];
+    document.getElementById('motivationalMsg').textContent = msgs[Math.floor(Math.random() * msgs.length)];
+
+    const continueBtn = document.getElementById('resultContinueBtn');
+    if (game.mode === 'classic' && won) {
+      continueBtn.textContent = `Play Level ${game.level + 1} →`;
+      continueBtn.style.display = 'block';
+    } else if (game.mode === 'speed') {
+      continueBtn.textContent = 'Play Again';
+      continueBtn.style.display = 'block';
+    } else if (game.mode === 'daily' && won) {
+      continueBtn.textContent = 'Challenge Complete!';
+      continueBtn.style.display = 'block';
+    } else {
+      continueBtn.textContent = 'Try Again';
+      continueBtn.style.display = 'block';
+    }
+
+    lastResultText = `SPOTIX CHALLENGE 🎯\nMode: ${game.mode}\nScore: ${game.score}\nLevels: ${game.sessionLevels}\nCombo Max: x${game.maxCombo}\nPlay now!`;
+
+    overlay.classList.add('active');
+  }
+
+  window.continueAfterResult = function () {
+    document.getElementById('resultOverlay').classList.remove('active');
+    if (game.gameOver || !game) return goMenu();
+
+    if (game.mode === 'classic' && game.found >= game.scene.differences.length) {
+      game.level++;
+      game.levelComboBonus = 0;
+      startLevel();
+    } else if (game.mode === 'speed') {
+      startGame('speed');
+    } else if (game.mode === 'daily') {
+      goMenu();
+    } else {
+      startLevel();
+    }
+  };
+
+  window.goMenu = function () {
+    if (game) {
+      clearInterval(game.timerInterval);
+      game.gameOver = true;
+    }
+    document.getElementById('resultOverlay').classList.remove('active');
+    document.getElementById('quitOverlay').classList.remove('active');
+    updateMenu();
+    showScreen('menuScreen');
+  };
+
+  window.confirmQuit = function () {
+    document.getElementById('quitOverlay').classList.add('active');
+  };
+
+  window.closeQuit = function () {
+    document.getElementById('quitOverlay').classList.remove('active');
+  };
+
+  window.shareScore = function () {
+    const text = lastResultText || `I scored ${saveData.bestScore} in SPOTIX CHALLENGE! 🎯`;
+    if (navigator.share) {
+      navigator.share({ title: 'SPOTIX CHALLENGE', text }).catch(() => {});
+    } else {
+      copyResult();
+    }
+  };
+
+  window.copyResult = function () {
+    const text = lastResultText || `SPOTIX CHALLENGE — Best Score: ${saveData.bestScore}`;
+    navigator.clipboard.writeText(text).then(() => showToast('📋 Copied to clipboard!'));
+  };
+
+  window.useHint = function () {
+    if (!game || game.gameOver || game.powerups.hint <= 0) return;
+    const unfound = game.scene.differences.filter(d => !d.found);
+    if (!unfound.length) return;
+
+    initAudio();
+    playSound('powerup');
+    game.powerups.hint--;
+    saveData.powerups = game.powerups;
+    save();
+
+    const d = unfound[0];
+    const panel = document.getElementById('panelRight');
+    if (game.hintEl) game.hintEl.remove();
+    const hint = document.createElement('div');
+    hint.className = 'hint-pulse';
+    const r = d.hitRadius;
+    hint.style.cssText = `left:calc(${d.x}% - ${r}px);top:calc(${d.y}% - ${r}px);width:${r*2}px;height:${r*2}px`;
+    panel.appendChild(hint);
+    game.hintEl = hint;
+    updatePowerups();
+    showToast('💡 Hint revealed!');
+  };
+
+  window.useFreeze = function () {
+    if (!game || game.gameOver || game.frozen || game.powerups.freeze <= 0) return;
+    initAudio();
+    playSound('powerup');
+    game.powerups.freeze--;
+    saveData.powerups = game.powerups;
+    save();
+    game.frozen = true;
+    document.getElementById('timerNum').classList.add('frozen');
+    showToast('❄️ Time frozen for 3 seconds!');
+    updatePowerups();
+
+    game.freezeTimeout = setTimeout(() => {
+      game.frozen = false;
+      document.getElementById('timerNum').classList.remove('frozen');
+    }, 3000);
+  };
+
+  window.useMagnify = function () {
+    if (!game || game.gameOver || game.magnified || game.powerups.magnify <= 0) return;
+    initAudio();
+    playSound('powerup');
+    game.powerups.magnify--;
+    saveData.powerups = game.powerups;
+    save();
+    game.magnified = true;
+    const right = document.getElementById('panelRight');
+    right.classList.add('magnified');
+    updatePowerups();
+    showToast('🔍 Zoom activated!');
+
+    setTimeout(() => {
+      right.classList.remove('magnified');
+      game.magnified = false;
+    }, 5000);
+  };
+
+  function updateHUD() {
+    document.getElementById('scoreDisplay').textContent = game.score.toLocaleString();
+    document.getElementById('comboDisplay').textContent = 'x' + Math.max(1, game.combo);
+    document.getElementById('progressText').textContent = `${game.found} / ${game.scene.differences.length}`;
+    document.getElementById('progressFill').style.width =
+      `${(game.found / game.scene.differences.length) * 100}%`;
+    if (game.mode === 'speed') {
+      document.getElementById('speedLevels').textContent = game.sessionLevels;
+    }
+  }
+
+  function updatePowerups() {
+    document.getElementById('hintCount').textContent = 'x' + game.powerups.hint;
+    document.getElementById('freezeCount').textContent = 'x' + game.powerups.freeze;
+    document.getElementById('magnifyCount').textContent = 'x' + game.powerups.magnify;
+    document.getElementById('hintBtn').disabled = game.powerups.hint <= 0;
+    document.getElementById('freezeBtn').disabled = game.powerups.freeze <= 0 || game.frozen;
+    document.getElementById('magnifyBtn').disabled = game.powerups.magnify <= 0 || game.magnified;
+  }
+
+  function showFullscreenFx(type) {
+    const fx = document.getElementById('fullscreenFx');
+    fx.className = 'fullscreen-fx active ' + type;
+    setTimeout(() => fx.classList.remove('active'), 800);
+  }
+
+  function spawnParticles(x, y) {
+    for (let i = 0; i < 16; i++) {
+      particles.push({
+        x, y,
+        vx: (Math.random() - 0.5) * 8,
+        vy: (Math.random() - 0.5) * 8 - 2,
+        life: 1,
+        color: Math.random() > 0.5 ? '#00d4ff' : '#00ff9d',
+        size: 3 + Math.random() * 4
+      });
+    }
+    if (!animFrame) animateParticles();
+  }
+
+  function animateParticles() {
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles = particles.filter(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.15;
+      p.life -= 0.025;
+      if (p.life <= 0) return false;
+      ctx.globalAlpha = p.life;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+      ctx.fill();
+      return true;
+    });
+    ctx.globalAlpha = 1;
+
+    if (particles.length) {
+      animFrame = requestAnimationFrame(animateParticles);
+    } else {
+      animFrame = null;
+    }
+  }
+
+  updateMenu();
+  window.addEventListener('resize', () => {
+    const canvas = document.getElementById('particles');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+})();
+</script>
+</body>
+</html>

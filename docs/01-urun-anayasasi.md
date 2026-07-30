@@ -92,8 +92,11 @@ Amaç çok oyun yapmak değil; **çocukların matematiği sevmesini sağlamak**.
 | 280 | 1–4 asla saydırılmaz |
 | 281 | 5+ alt grup (3+2, 4+1…) |
 | 282 | Timer / hız baskısı yasak |
-| 283 | Her LS CPA destekler |
-| 284 | Gör → Hisset → İsimlendir |
+| 283 | Kavram nesneden bağımsızdır |
+| 284 | Her kavram en az üç bağlamda yaşatılır |
+| 285 | Tekrar değil, transfer |
+| 286 | Her LS CPA destekler |
+| 287 | Gör → Hisset → İsimlendir |
 
 Ayrıntı: [docs/09…](./09-mavi-kitap-kararlari-234-236.md)
 · [MB-CHAR-002](./10-mb-char-002-bilge-rehberlik-sistemi.md)

@@ -11,6 +11,8 @@ import type { SceneSpec } from '@/mes/types';
  */
 
 const PALAMUT_POOL = ['🌰', '🥜', '🌰'];
+/** Karar 283 — kavram nesneden bağımsız; transfer nesne havuzu. */
+const COMPARE_EMOJI_POOL = ['🌰', '🍎', '🪨', '🍂'];
 
 export const scenes: SceneSpec[] = [
   // ── MİKRO DENEYİM 01 — İlk Bakış ───────────────────────────
@@ -93,8 +95,11 @@ export const scenes: SceneSpec[] = [
     waitIsTeaching: true,
     /** Karar 279 — merak önce. */
     curiosityBeforeConcept: true,
+    /** Karar 283–285 — karşılaştırma; orman bağlamı. */
+    learningConcept: 'karsilastirma',
+    contextId: 'orman_iki_agac',
     pedagogicalGoal:
-      'Karar 268/269/271–279: güvenli karar, saymadan karşılaştırma, davranışla soru, merak önce. ' +
+      'Karar 268/269/271–285: güvenli karar, saymadan karşılaştırma, transfer bağlamı. ' +
       '3 perceptual, 6 conceptual (3+3). Hız baskısı yok (MB-282).',
     targetEmotion: 'merak',
     discoveryBelongsToChild: true,
@@ -156,7 +161,7 @@ export const scenes: SceneSpec[] = [
       success: 'hafif_yildiz',
     },
     visualComposition: { world: 70, interaction: 20, ui: 10 },
-    replay: { countJitter: 1 },
+    replay: { countJitter: 1, emojiPool: COMPARE_EMOJI_POOL },
     accessibilityLabel:
       'İki ağaç. Birinin altında az, diğerinin altında daha fazla palamut var. Hangisinde daha fazla olduğunu seçiyorsun.',
   },
@@ -225,7 +230,7 @@ export const scenes: SceneSpec[] = [
     curiosityBeforeConcept: true,
     pedagogicalGoal:
       '1–4 perceptual subitizing (MB-280): sayma istemez, sayaç göstermez. ' +
-      'Keşif anı çocuğa aittir (MB-274). CPA concrete (MB-283). Merak önce (MB-279).',
+      'Keşif anı çocuğa aittir (MB-274). CPA concrete (MB-286). Merak önce (MB-279).',
     targetEmotion: 'kesif',
     opening: {
       visual: '🌳',
@@ -274,9 +279,11 @@ export const scenes: SceneSpec[] = [
     title: 'İki Kovayı İncele',
     storyToken: 'story.notice',
     motionToken: 'motion.deepBreath',
+    learningConcept: 'karsilastirma',
+    contextId: 'kova_gozlem',
     pedagogicalGoal:
-      'Karşılaştırma öncesi gözlem (MB-269/284): önce gör. 5 conceptual (3+2), 3 perceptual. ' +
-      'Davranışla soru (MB-277); beklemek öğretim (MB-278).',
+      'Karşılaştırma öncesi gözlem (MB-269/287): önce gör. 5 conceptual (3+2), 3 perceptual. ' +
+      'Davranışla soru (MB-277); beklemek öğretim (MB-278). Transfer bağlamı (MB-283–285).',
     worldFeedback: true,
     worldCelebration: true,
     behaviorBeforeSpeech: true,
@@ -317,6 +324,7 @@ export const scenes: SceneSpec[] = [
       success: 'gozlem_tik',
     },
     visualComposition: { world: 70, interaction: 20, ui: 10 },
+    replay: { emojiPool: COMPARE_EMOJI_POOL },
     accessibilityLabel:
       'İki kova. Biri daha dolu görünüyor; saymadan bakıyorsun.',
   },
@@ -328,9 +336,11 @@ export const scenes: SceneSpec[] = [
     title: 'Birebir Eşleştir',
     storyToken: 'story.discover',
     motionToken: 'motion.softBounce',
+    learningConcept: 'karsilastirma',
+    contextId: 'kova_eslestirme',
     pedagogicalGoal:
       'Sayı saymadan karşılaştırma (MB-269/280): birebir eşleştirme artan tarafı sezdirir. ' +
-      'CPA concrete (MB-283). Hata söylenmez (MB-272). Keşif çocuğa ait (MB-274).',
+      'CPA concrete (MB-286). Hata söylenmez (MB-272). Keşif çocuğa ait (MB-274).',
     worldFeedback: true,
     discoveryBelongsToChild: true,
     worldCelebration: true,
@@ -383,10 +393,12 @@ export const scenes: SceneSpec[] = [
     title: 'Daha Çok Olan',
     storyToken: 'story.notice',
     motionToken: 'motion.observe',
+    learningConcept: 'karsilastirma',
+    contextId: 'kova_daha_cok',
     pedagogicalGoal:
-      '"Daha çok"u eşleştirme deneyiminin üzerine oturtmak (MB-269/284). ' +
+      '"Daha çok"u eşleştirme deneyiminin üzerine oturtmak (MB-269/287). ' +
       '3 perceptual saydırılmaz (MB-280); 5 conceptual alt grup (MB-281). ' +
-      'Merak/gözlem sonrası isimlendirme (MB-279). Süreç > sonuç (MB-276).',
+      'Merak/gözlem sonrası isimlendirme (MB-279). Transfer bağlamı (MB-283–285).',
     worldFeedback: true,
     worldCelebration: true,
     curiosityBeforeConcept: true,
@@ -455,9 +467,11 @@ export const scenes: SceneSpec[] = [
     title: 'Daha Az Olan',
     storyToken: 'story.notice',
     motionToken: 'motion.observe',
+    learningConcept: 'karsilastirma',
+    contextId: 'kova_daha_az',
     pedagogicalGoal:
-      '"Daha az"ı "daha çok"un karşıtı olarak kurmak (MB-269/284). ' +
-      'Sayma dili yok; görsel yığın karşılaştırması (MB-280).',
+      '"Daha az"ı "daha çok"un karşıtı olarak kurmak (MB-269/287). ' +
+      'Sayma dili yok; görsel yığın karşılaştırması (MB-280). Transfer (MB-285).',
     worldFeedback: true,
     worldCelebration: true,
     waitIsTeaching: true,
@@ -521,9 +535,11 @@ export const scenes: SceneSpec[] = [
     title: 'Eşit Olunca',
     storyToken: 'story.discover',
     motionToken: 'motion.softBounce',
+    learningConcept: 'karsilastirma',
+    contextId: 'kova_esit',
     pedagogicalGoal:
-      '"Eşit"i birebir eşleştirmede artan olmaması olarak kurmak (MB-269/284). ' +
-      'Her iki taraf 5 — conceptual subitizing / alt grup (MB-281).',
+      '"Eşit"i birebir eşleştirmede artan olmaması olarak kurmak (MB-269/287). ' +
+      'Her iki taraf 5 — conceptual subitizing / alt grup (MB-281). Transfer bağlamı (MB-284).',
     worldFeedback: true,
     worldCelebration: true,
     waitIsTeaching: true,

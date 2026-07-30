@@ -20,6 +20,7 @@
 | Karar 271–273 | Sessizlik · hata hissettirilir · Reflection Time | `src/world/mavi-kitap-271-273.ts` · `reflectionTimeMs` |
 | Karar 274–276 | Keşif çocuğa ait · dünya kutlar · süreç > sonuç | `src/world/mavi-kitap-274-276.ts` |
 | Karar 277–279 | Davranışla soru · beklemek öğretim · merak önce | `src/world/mavi-kitap-277-279.ts` · SceneStage |
+| Karar 283–285 | Kavram bağımsız · ≥3 bağlam · transfer | `src/world/mavi-kitap-283-285.ts` · `concept-transfer.ts` |
 
 ## Sahne sırası (modül içi)
 

@@ -166,7 +166,7 @@ export function runLabQa(scene: SceneSpec): LabQaResult {
     issues.push(`${scene.id}: Saymadan çözülebilirlik zayıf`);
   }
   if (!checklist.cpa) {
-    issues.push(`${scene.id}: MB-283 CPA desteği yetersiz`);
+    issues.push(`${scene.id}: MB-286 CPA desteği yetersiz`);
   }
 
   // Karar 268 / 270 / 272 — çocuk yüzü etiketleri ("yanlış" yok)

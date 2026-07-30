@@ -16,7 +16,7 @@ Yeni anayasa değildir; laboratuvarın ürün üretim standardıdır.
 |---|--------|---------------------|
 | 1 | **Perceptual Subitizing** (1–4 nesne) | `edu.subitize` · MB-280 |
 | 2 | **Conceptual Subitizing** (5+ alt gruplar) | `edu.partWhole` · `edu.grouping` · MB-281 |
-| 3 | **CPA** Concrete → Pictorial → Abstract | Her LS CPA destekler (MB-283) |
+| 3 | **CPA** Concrete → Pictorial → Abstract | Her LS CPA destekler (MB-286) |
 | 4 | **Montessori Sensory Learning** | Doğal dizilim, dokunma, baskısız tempo |
 | 5 | **Finland Play-Based Mathematics** | Hikâye + oyun; test hissi yok |
 | 6 | **OECD Starting Strong** | Erken matematik = ilişki, dil, oyun |
@@ -85,11 +85,23 @@ Sessiz düşünme süresi aktif öğretim bileşenidir; gereksiz yönlendirme yo
 
 Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
 
-### MB-283 — Her LS CPA Destekler
+### MB-283 — Kavram Nesneden Bağımsızdır
+
+Kavram belirli nesneye bağlı öğretilmez; farklı bağlamlarda genellenir.
+
+### MB-284 — Her Kavram En Az Üç Bağlamda Yaşatılır
+
+En az üç farklı nesne/hikâye bağlamı olmadan kavram tamamlanmış sayılmaz.
+
+### MB-285 — Tekrar Değil, Transfer
+
+Aynı etkinlik tekrar ettirilmez; aynı hedef yeni bağlamlarda sunulur.
+
+### MB-286 — Her LS CPA Destekler
 
 Concrete → Picture → Abstract. Her Learning Scene bu zinciri destekler.
 
-### MB-284 — Gör → Hisset → İsimlendir
+### MB-287 — Gör → Hisset → İsimlendir
 
 Matematik önce **görülür**, sonra **hissedilir**, en son **isimlendirilir**.
 

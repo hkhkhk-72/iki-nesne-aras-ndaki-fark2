@@ -30,6 +30,8 @@ import { KARAR_268, KARAR_269, KARAR_270 } from '@/world/mavi-kitap-268-270';
 import { KARAR_271, KARAR_272, KARAR_273, REFLECTION_TIME_METRIC } from '@/world/mavi-kitap-271-273';
 import { KARAR_274, KARAR_275, KARAR_276, PROCESS_AI_METRICS } from '@/world/mavi-kitap-274-276';
 import { KARAR_277, KARAR_278, KARAR_279 } from '@/world/mavi-kitap-277-279';
+import { KARAR_283, KARAR_284, KARAR_285, MIN_CONTEXTS_PER_CONCEPT } from '@/world/mavi-kitap-283-285';
+import { validateConceptTransfer } from '@/mes/concept-transfer';
 import { PRIMARY_AI_METRICS } from '@/ai/decision-engine';
 import { storyTokens, eduTokens, motionTokens, aiTokens, touchTarget } from '@/design-tokens';
 import type { SceneBehavior } from '@/ai/observer';
@@ -224,8 +226,8 @@ for (const exp of MATH_EXPERIENCES) {
   }
 }
 
-// ── Mavi Kitap 268–279 ──
-console.log('\nMavi Kitap Karar 268–279');
+// ── Mavi Kitap 268–285 ──
+console.log('\nMavi Kitap Karar 268–285');
 const reflectionPrimary = PRIMARY_AI_METRICS[0] === REFLECTION_TIME_METRIC;
 const processOk = PROCESS_AI_METRICS.includes('reflection_time');
 console.log(
@@ -263,6 +265,13 @@ for (const exp of MATH_EXPERIENCES) {
   const k277 = firstChoose?.behaviorBeforeSpeech === true;
   const k278 = firstChoose?.waitIsTeaching !== false;
   const k279 = firstChoose?.curiosityBeforeConcept === true;
+  const transfer = validateConceptTransfer(exp);
+  const k283 = KARAR_283.title.includes('Nesneden');
+  const k284 =
+    transfer.ok ||
+    exp.scenes.filter((s) => s.learningConcept).length === 0 ||
+    MIN_CONTEXTS_PER_CONCEPT === 3;
+  const k285 = KARAR_285.title.includes('Transfer');
   const ok =
     k268 &&
     k269 &&
@@ -275,10 +284,17 @@ for (const exp of MATH_EXPERIENCES) {
     k276 &&
     k277 &&
     k278 &&
-    k279;
+    k279 &&
+    transfer.ok &&
+    k283 &&
+    k284 &&
+    k285;
   console.log(
-    `  ${exp.code}: ${KARAR_268.id}…${KARAR_279.id} → ${ok ? 'GEÇTİ' : 'BAŞARISIZ'}`,
+    `  ${exp.code}: ${KARAR_268.id}…${KARAR_285.id} → ${ok ? 'GEÇTİ' : 'BAŞARISIZ'}`,
   );
+  if (!transfer.ok) {
+    console.log('  Transfer/bağlam:', transfer.issues);
+  }
   if (!ok) {
     console.log('  Detay:', {
       k268,
@@ -293,6 +309,7 @@ for (const exp of MATH_EXPERIENCES) {
       k277,
       k278,
       k279,
+      transfer: transfer.ok,
       first: firstChoose?.id,
     });
     failed = true;

@@ -307,6 +307,16 @@ export interface SceneSpec {
    * Karar 279 — merak/gözlem tamamlanmadan kavram adı tanıtılmaz.
    */
   curiosityBeforeConcept?: boolean;
+  /**
+   * Karar 283–285 — öğrenme kavramı (nesneden bağımsız kimlik).
+   * Örn. `karsilastirma`, `daha_cok`.
+   */
+  learningConcept?: string;
+  /**
+   * Karar 284–285 — bağlam kimliği (nesne/hikâye dünyası).
+   * Aynı kavram farklı contextId ile transfer edilir.
+   */
+  contextId?: string;
 }
 
 // ─── Mikro deneyim (ders) ────────────────────────────────────

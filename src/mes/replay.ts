@@ -1,11 +1,10 @@
 import type { SceneGroup, SceneItem, SceneSpec } from './types';
 
 /**
- * Yeniden oynanabilirlik motoru.
+ * Yeniden oynanabilirlik motoru — Karar 285: tekrar değil, transfer.
  *
- * Her girişte nesneler, konumlar, sayılar ve karşılama cümleleri küçük
- * oranlarda değişir; böylece ezber oluşmaz. Değişim pedagojik sınırlar
- * içinde kalır: kavramın doğru cevabı asla bozulmaz.
+ * Aynı öğrenme hedefi yeni görseller / sayılar / bağlamlarla sunulur;
+ * aynı etkinlik kopyalanmaz. Kavramın doğru cevabı bozulmaz.
  */
 
 /** Oturum başına tek sayı; aynı seed aynı sahneyi üretir (test edilebilirlik). */

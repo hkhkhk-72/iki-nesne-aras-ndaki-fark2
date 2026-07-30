@@ -1,7 +1,7 @@
 /**
  * MB-LAB-001 Scientific Foundation v1.2 — APPROVED
  *
- * Mavi Kitap 268–279 + LAB pedagoji 280–284.
+ * Mavi Kitap 268–285 + LAB pedagoji 280–282, 286–287.
  */
 
 export const LAB_ID = 'MB-LAB-001' as const;
@@ -62,7 +62,10 @@ export type PedagogicalRuleId =
   | 'MB-281'
   | 'MB-282'
   | 'MB-283'
-  | 'MB-284';
+  | 'MB-284'
+  | 'MB-285'
+  | 'MB-286'
+  | 'MB-287';
 
 export const PEDAGOGICAL_RULES: Record<
   PedagogicalRuleId,
@@ -130,10 +133,22 @@ export const PEDAGOGICAL_RULES: Record<
     rule: 'Timer, Countdown, LeaderBoard, Speed Bonus yasaktır.',
   },
   'MB-283': {
+    title: 'Kavram Nesneden Bağımsızdır',
+    rule: 'Kavram belirli nesneye bağlı öğretilmez; farklı bağlamlarda genellenir.',
+  },
+  'MB-284': {
+    title: 'Her Kavram En Az Üç Bağlamda Yaşatılır',
+    rule: 'En az üç farklı nesne/hikâye bağlamı olmadan kavram tamamlanmış sayılmaz.',
+  },
+  'MB-285': {
+    title: 'Tekrar Değil, Transfer',
+    rule: 'Aynı etkinlik tekrar ettirilmez; aynı hedef yeni bağlamlarda sunulur.',
+  },
+  'MB-286': {
     title: 'Her LS CPA Destekler',
     rule: 'Concrete → Picture → Abstract zinciri her LS’te desteklenir.',
   },
-  'MB-284': {
+  'MB-287': {
     title: 'Gör → Hisset → İsimlendir',
     rule: 'Matematik önce görülür, sonra hissedilir, en son isimlendirilir.',
   },

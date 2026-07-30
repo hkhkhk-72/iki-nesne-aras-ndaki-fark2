@@ -15,8 +15,8 @@ MiniBilge’nin küresel üretim eşiği. Yeni anayasa değildir; MBA / MES / LA
 |----------|---------------------|
 | Perceptual Subitizing | `edu.subitize` · MB-280 · 1–4 saymadan |
 | Conceptual Subitizing | `edu.grouping` / `edu.partWhole` · MB-281 |
-| Intraparietal Sulcus Based Number Sense | Miktar hissi önce; rakam sonra (MB-269/284) |
-| Concrete → Pictorial → Abstract (CPA) | MB-283 · her LS |
+| Intraparietal Sulcus Based Number Sense | Miktar hissi önce; rakam sonra (MB-269/287) |
+| Concrete → Pictorial → Abstract (CPA) | MB-286 · her LS |
 
 Ayrıntı: [docs/16-mb-lab-001-scientific-foundation.md](./16-mb-lab-001-scientific-foundation.md)
 

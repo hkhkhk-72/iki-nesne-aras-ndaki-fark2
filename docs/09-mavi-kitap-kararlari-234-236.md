@@ -250,13 +250,41 @@ Timer · Countdown · LeaderBoard · Speed Bonus yasaktır.
 
 ---
 
-## 📘 Karar No: 283 — Her LS CPA Destekler
+## 📘 Karar No: 283 — Kavram Nesneden Bağımsızdır
+
+MiniBilge'de matematiksel kavramlar belirli nesnelere bağlı öğretilmez.
+Aynı kavram farklı bağlamlarda tekrar edilerek çocukta genelleme becerisi
+geliştirilir.
+
+**Kod:** `learningConcept` · `contextId` · `COMPARE_EMOJI_POOL` · `src/world/mavi-kitap-283-285.ts`.
+
+---
+
+## 📘 Karar No: 284 — Her Kavram En Az Üç Bağlamda Yaşatılır
+
+Bir matematik kavramı, farklı nesneler ve hikâyeler içinde en az üç kez
+deneyimlenmeden tamamlanmış kabul edilmez.
+
+**Kod:** `MIN_CONTEXTS_PER_CONCEPT = 3` · `validateMinContexts()` · `src/mes/concept-transfer.ts`.
+
+---
+
+## 📘 Karar No: 285 — Tekrar Değil, Transfer
+
+MiniBilge aynı etkinliği tekrar ettirmez. Bunun yerine aynı öğrenme hedefini
+yeni bağlamlarda sunarak kalıcı öğrenmeyi destekler.
+
+**Kod:** `validateTransferNotRepeat()` · `varyScene` / replay transfer.
+
+---
+
+## 📘 Karar No: 286 — Her LS CPA Destekler *(MB-LAB-001)*
 
 Concrete → Pictorial → Abstract. Her Learning Scene bu zinciri destekler.
 
 ---
 
-## 📘 Karar No: 284 — Gör → Hisset → İsimlendir *(MB-LAB-001)*
+## 📘 Karar No: 287 — Gör → Hisset → İsimlendir *(MB-LAB-001)*
 
 Matematik önce görülür, sonra hissedilir, en son isimlendirilir.
 
